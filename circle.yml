@@ -1,3 +1,6 @@
+general:
+  artifacts:
+    - "build" # relative to the build directory
 test:
  override:
   - ./node_modules/.bin/gulp ci
