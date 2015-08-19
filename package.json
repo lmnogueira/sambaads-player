@@ -1,0 +1,9 @@
+{
+  "name": "sambaads-player",
+  "devDependencies": {
+   "gulp": ">=3.9.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
