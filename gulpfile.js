@@ -3,23 +3,33 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
+var rename = require('gulp-rename');
 var del = require('del');
  
 var paths = {
-  scripts: ['scripts/**/*.js'],
-  images:   'images/**/*'
+  scripts:  'src/scripts/',
+  images:   'src/images/**/*',
 };
+
+var buid_verion = process.env.CIRCLE_BUILD_NUM || "development";
 
 gulp.task('clean', function(cb) {
   del(['build'], cb);
 });
 
 gulp.task("build-scripts", ['clean'], function(){
-	return gulp.src(paths.scripts)
+	gulp.src(paths.scripts + "sambaads.player.js")
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(rename('sambaads.player.min.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('build/' + buid_verion + "/"));
+
+    gulp.src(paths.scripts + "player.js")
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest('build/' + buid_verion + "/"));
 });
 
 gulp.task("default", ['watch','build-scripts']);
