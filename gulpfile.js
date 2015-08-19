@@ -17,7 +17,7 @@ gulp.task('clean', function(cb) {
   del(['build'], cb);
 });
 
-gulp.task("build-scripts", ['clean'], function(){
+gulp.task("build-scripts", function(){
 	gulp.src(paths.scripts + "sambaads.player.js")
     .pipe(sourcemaps.init())
     .pipe(uglify())
@@ -32,8 +32,13 @@ gulp.task("build-scripts", ['clean'], function(){
     .pipe(gulp.dest('build/' + buid_verion + "/"));
 });
 
+gulp.task("build-images", function(){
+	gulp.src(paths.images)
+    .pipe(gulp.dest('build/' + buid_verion + "/images/"));
+});
+
 gulp.task("default", ['watch','build-scripts']);
-gulp.task("ci", ['build-scripts']);
+gulp.task("ci", ['clean','build-scripts', 'build-images']);
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['build-scripts']);
