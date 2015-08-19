@@ -18,7 +18,7 @@ gulp.task("build-scripts", ['clean'], function(){
 	return gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
     .pipe(uglify())
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build/'));
 });
 
