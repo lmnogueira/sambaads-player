@@ -22,7 +22,8 @@ gulp.task("build-scripts", ['clean'], function(){
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task("ci", ['watch','build-scripts']);
+gulp.task("default", ['watch','build-scripts']);
+gulp.task("ci", ['build-scripts']);
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['build-scripts']);
