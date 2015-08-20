@@ -5,6 +5,7 @@ var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var del = require('del');
+var concat_util = require('gulp-concat-util');
  
 var paths = {
   scripts:  './src/scripts/',
@@ -22,6 +23,15 @@ gulp.task("build-development", function(){
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(rename('sambaads.player.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
+
+    gulp.src(paths.scripts + "widget/**/*.js")
+    .pipe(sourcemaps.init())
+    .pipe(concat_util.header('\"use strict\";'))
+    .pipe(concat("sambaads.widget.js"))
+    .pipe(uglify())
+    .pipe(rename('sambaads.widget.js'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
