@@ -21,7 +21,7 @@ gulp.task("build-development", function(){
 	gulp.src(paths.scripts + "sambaads.player.js")
     .pipe(sourcemaps.init())
     .pipe(uglify())
-    .pipe(rename('sambaads.player.min.js'))
+    .pipe(rename('sambaads.player.js'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
