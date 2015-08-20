@@ -1,6 +1,5 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 'use strict';
-
 	var ViewabilityMonitorPlugin = function (cw, currentIframe){
 		this.visiblePlayTimeout = 1000;
 		currentIframe.toClearTimeout = 0;

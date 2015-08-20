@@ -7,14 +7,29 @@ var rename = require('gulp-rename');
 var del = require('del');
  
 var paths = {
-  scripts:  'src/scripts/',
-  images:   'src/images/**/*',
+  scripts:  './src/scripts/',
+  images:   './src/images/**/*',
 };
 
 var buid_verion = process.env.CIRCLE_BUILD_NUM || "development";
 
 gulp.task('clean', function(cb) {
   del(['build'], cb);
+});
+
+gulp.task("build-development", function(){
+	gulp.src(paths.scripts + "sambaads.player.js")
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(rename('sambaads.player.min.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
+
+    gulp.src(paths.scripts + "player.js")
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
 });
 
 gulp.task("build-scripts", function(){
@@ -37,10 +52,10 @@ gulp.task("build-images", function(){
     .pipe(gulp.dest('build/' + buid_verion + "/images/"));
 });
 
-gulp.task("default", ['watch','build-scripts']);
+gulp.task("default", ['watch','build-development']);
 gulp.task("ci", ['clean','build-scripts', 'build-images']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['build-scripts']);
-  gulp.watch(paths.images, ['images']);
+  gulp.watch(paths.scripts + "**/*.js", ['build-development']);
+  //gulp.watch(paths.images, ['images']);
 });
