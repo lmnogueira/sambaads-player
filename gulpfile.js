@@ -7,12 +7,15 @@ var rename = require('gulp-rename');
 var del = require('del');
 var concat_util = require('gulp-concat-util');
 var minify_css = require('gulp-minify-css');
+var preprocess = require('gulp-preprocess');
  
 var paths = {
   scripts:  './src/scripts/',
   images:   './src/images/**/*',
   css:      './src/styles/',
 };
+
+var config = require("./app/config/env.json");
 
 var buid_verion = process.env.CIRCLE_BUILD_NUM || "development";
 
@@ -23,6 +26,7 @@ gulp.task('clean', function(cb) {
 gulp.task("build-development", function(){
 	gulp.src(paths.scripts + "sambaads.player.js")
     .pipe(sourcemaps.init())
+    .pipe(preprocess({context: config.development}))
     .pipe(uglify())
     .pipe(rename('sambaads.player.js'))
     .pipe(sourcemaps.write('./'))
@@ -31,6 +35,7 @@ gulp.task("build-development", function(){
     gulp.src([paths.scripts + "widget/sambaads.widget.view.js",
               paths.scripts + "widget/sambaads.widget.controller.js"])
     .pipe(sourcemaps.init())
+    .pipe(preprocess({context: config.development}))
     .pipe(concat_util.header('\"use strict\";'))
     .pipe(concat("sambaads.widget.js"))
     .pipe(uglify())
@@ -40,6 +45,7 @@ gulp.task("build-development", function(){
 
     gulp.src([paths.scripts + "widget/widget.js",paths.scripts + "modal.js"])
     .pipe(sourcemaps.init())
+    .pipe(preprocess({context: config.development}))
     .pipe(concat("widget.js"))
     .pipe(concat_util.header('\"use strict\";(function(cw){'))
     .pipe(concat_util.footer('})(this);'))

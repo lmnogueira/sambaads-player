@@ -68,7 +68,7 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 	options.satmfullref = url;
 
 
-    $.get('//player.sambaads.com/api/v1/collector/satm.gif', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
 	}).error(function(){
@@ -291,7 +291,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
         },
 
         plugins: {
-              'https://cdn-static-secure.liverail.com/js/LiveRail.AdManager.JWPlayer-6.8.1.plugin.js' : {
+              '/* @echo LIVERAIL_PLUGIN_URL */' : {
      			'LR_ADMAP': 'in::0',
                 'LR_URL': this.discoveryHost(),
                 'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
@@ -552,8 +552,8 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
 
-		this.setShareFacebookUrl("https://app.sambaads.com/api/sharer?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
-		this.setShareEmbed("<script src=\"//player.sambaads.com/embed/player.js?"
+		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
+		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
 		  			+ "m=" + this.controller.getCurrentVideo().media_id 
 		  			+ "&p=" + this.controller.response.publisher_info.hash_code
 		  			+ "&sk=blue"
