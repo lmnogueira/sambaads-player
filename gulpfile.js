@@ -26,12 +26,19 @@ gulp.task("build-development", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
-    gulp.src(paths.scripts + "widget/**/*.js")
+    gulp.src([paths.scripts + "widget/sambaads.widget.view.js",
+              paths.scripts + "widget/sambaads.widget.controller.js"])
     .pipe(sourcemaps.init())
     .pipe(concat_util.header('\"use strict\";'))
     .pipe(concat("sambaads.widget.js"))
     .pipe(uglify())
     .pipe(rename('sambaads.widget.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
+
+    gulp.src(paths.scripts + "widget/widget.js")
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 

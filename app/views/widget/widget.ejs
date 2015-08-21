@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="//d3655zppehxyvi.cloudfront.net/player/v1/iframe/css/sambaads.player.css?v=3">
+  <style type="text/css">
+  body {
+    margin: 0px;
+    background: #F5F5F5;
+    padding: 0;
+  }
+  
+  #extensive {
+    box-shadow: 0 0 5px #ccc;
+  }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!-- oembed discovery -->
+  <link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title="" />
+  <link rel="alternate" type="text/xml+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=xml" title="" />
+  <!-- end oembed discovery -->
+</head>
+
+<body>
+  <div class="sambaads-playlist">
+    <div class="sambaads-playlist horizontal">
+      <ul id="playlist-h-items">
+        <li id="playlist-h-item">
+          <div class="playlist-item">
+            <div class="video-thumb">
+              <a href="#">
+                <span class="video-duration" style="display:none;">05:33</span>
+                <img src="" alt="Título do vídeo" />
+              </a>
+            </div>
+            <div class="video-description">
+              <h4>
+                <a href="#">Her: A Spike Jonze love story</a>
+              </h4>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="playlist-item highlight">
+            <div class="video-thumb">
+              <a href="#">
+                <span class="video-duration" style="display:none;">05:33</span>
+                <img src="" alt="Título do vídeo" />
+              </a>
+            </div>
+            <div class="video-description">
+              <h4>
+<a href="#">Her: A Spike Jonze love story</a>
+</h4>
+            </div>
+            <span class="label-patrocinado">Patrocinado</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="<%= info.player_info.script_src %>/sambaads.widget.js"></script>
+  <script src="//d3655zppehxyvi.cloudfront.net/player/v1/iframe/js/circle-progress/circle-progress.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.5/javascripts/jquery.nanoscroller.min.js"></script>
+  <script src="//d3655zppehxyvi.cloudfront.net/player/v1/iframe/js/lightslider/jquery.lightSlider.min.js"></script>
+  <script type="text/javascript">
+    // START SAMBAADS
+    var widget = new WidgetController(<%- JSON.stringify(params) %>, <%- JSON.stringify(info) %>);
+    var smb = new SambaAdsWidgetView();
+    smb.init(widget);
+    // END SAMBAADS
+  </script>
+</body>
+
+</html>
