@@ -101,8 +101,8 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 		$(new_h_item).find("img").attr('src',item.image);
 
 		$(new_h_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
-		
-		$(new_h_item).find("a").attr('data-href', "//192.168.33.10:3000/player/" + self.controller.publisherInfo.hash_code + "?m=" + item.media_id);
+
+		$(new_h_item).find("a").attr('data-href', "//9bb0910a.ngrok.io/player/" + self.controller.publisherInfo.hash_code + "?m=" + item.media_id);
 
 		$("#playlist-h-items").append(new_h_item);
 	});

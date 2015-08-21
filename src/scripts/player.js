@@ -388,7 +388,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
-		parameters.request_domain = parameters.debug == "true" ? "localhost:3000" : "d366amxgkdfvcq.cloudfront.net";
+		parameters.request_domain = parameters.debug == "true" ? "9bb0910a.ngrok.io" : "d366amxgkdfvcq.cloudfront.net";
 
 		//append the iframe player
 		var iframe_data = appendIframe(parameters);
@@ -416,7 +416,7 @@ var ExpandedCinema = function (cw, currentIframe){
 	};
 
 	var onMessageReceive = function(event){
-		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf("localhost:3000") >= 0){
+		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf("9bb0910a.ngrok.io") >= 0){
 
 			var params = event.data.split("::");
 

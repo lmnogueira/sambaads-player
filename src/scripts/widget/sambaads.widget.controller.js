@@ -1,6 +1,5 @@
 function WidgetController(params, data){
 	var self = this;
-	// self.guid = encodeURIComponent(this.guid());
 	self.params = params;
 	self.currentMediaId="";
 	self.currentPlaylistIndex = 0;
@@ -9,11 +8,17 @@ function WidgetController(params, data){
 	self.playlist = data.playlist;
 	self.playerInfo = data.player_info;
 	self.publisherInfo = data.publisher_info;
+	self.iframeId = window.location.hash.split("#")[1];
 }
 
 WidgetController.prototype.getPlaylistItem = function(index) {
 	return this.playlist[index];
 };
+
+WidgetController.prototype.getCurrentItem = function() {
+	return this.getPlaylistItem(this.currentPlaylistIndex)
+}
+
 
 WidgetController.prototype.getPlaylist = function() {
 	return this.playlist;
@@ -27,10 +32,16 @@ WidgetController.prototype.play = function(element) {
 		var win = window.open($(link_url).data("href"), '_blank');
 		win.focus();
 	}else{
-		console.log("abrir modal");
+		this.sendMessage("click", JSON.stringify({publisherId: this.publisherInfo.hash_code, mediaId: this.getCurrentItem().media_id, description: this.getCurrentItem().description}));
 	}
 };
 
 WidgetController.prototype.load = function(first_argument) {
 	// self.updateLoadCount('', this.controller.playerInfo.category_name);
+};
+
+
+WidgetController.prototype.sendMessage = function(smbevent,data){
+	// console.log("IFRAME SENT: " + this.iframeId + "::" + smbevent + "::" + data);
+	window.parent.postMessage(this.iframeId + "::" + smbevent + "::" + data, "*");
 };

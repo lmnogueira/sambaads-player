@@ -6,10 +6,12 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var del = require('del');
 var concat_util = require('gulp-concat-util');
+var minify_css = require('gulp-minify-css');
  
 var paths = {
   scripts:  './src/scripts/',
   images:   './src/images/**/*',
+  css:      './src/styles/',
 };
 
 var buid_verion = process.env.CIRCLE_BUILD_NUM || "development";
@@ -36,8 +38,11 @@ gulp.task("build-development", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
-    gulp.src(paths.scripts + "widget/widget.js")
+    gulp.src([paths.scripts + "widget/widget.js",paths.scripts + "modal.js"])
     .pipe(sourcemaps.init())
+    .pipe(concat("widget.js"))
+    .pipe(concat_util.header('\"use strict\";(function(cw){'))
+    .pipe(concat_util.footer('})(this);'))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
@@ -66,13 +71,22 @@ gulp.task("build-scripts", function(){
 
 gulp.task("build-images", function(){
 	gulp.src(paths.images)
-    .pipe(gulp.dest('build/' + buid_verion + "/images/"));
+    .pipe(gulp.dest('app/public/images/'));
 });
 
-gulp.task("default", ['watch','build-development']);
-gulp.task("ci", ['clean','build-scripts', 'build-images']);
+gulp.task("build-css", function(){
+    gulp.src(paths.css + "sambaads.widget.css")
+    .pipe(sourcemaps.init())
+    .pipe(minify_css())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/stylesheets/'));
+});
+
+gulp.task("default", ['watch','build-development', 'build-css', 'build-images']);
+gulp.task("ci", ['clean','build-scripts', 'build-images', 'build-css']);
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts + "**/*.js", ['build-development']);
-  //gulp.watch(paths.images, ['images']);
+  gulp.watch(paths.css + "**/*.css", ['build-css']);
+  gulp.watch(paths.images, ['build-images']);
 });

@@ -1,6 +1,3 @@
-'use strict';
-
-(function(cw){ 
 
 	var detectScript = function(){
 		var currentScript = document.currentScript || (function() {
@@ -77,58 +74,13 @@
 		var iframe_url = "";
 		var width_height = "";
 
-		// parameters.m = parameters.m || parameters.mid || "";
-		// parameters.p = parameters.p || parameters.pid || "";
-		// parameters.c = parameters.c || parameters.cid || "";
-		// parameters.t = parameters.t || "";
-		// parameters.sk = parameters.sk || "";
-		// parameters.tm = parameters.tm || "";
-		// parameters.plp = parameters.plp || "";
-		// parameters.plw = parameters.plw || "";
-		// parameters.plh = parameters.plh || "";
-		// parameters.ct = parameters.ct || "";
-		// parameters.tb = parameters.tb || "";
-		// parameters.tbbg = parameters.tbbg || "";
-		// parameters.tbfs = parameters.tbfs || "";
 		parameters.rfr = encodeURIComponent(window.location.href);
-		//parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
-
 
 		//se não conseguir obter ao menos o publisher ID não deve renderizar o iframe
 		if(!parameters.p)
 			return;
 		
 		iframe_url = "//" + parameters.request_domain + "/widget/" + parameters.p + "?" + serialize(parameters);
-
-		// if (parameters.m){
-		// 	iframe_url = iframe_url +
-		// 		"m=" + parameters.m +
-		// 		"&t=" + parameters.t +
-		// 		"&sk=" + parameters.sk +
-		// 		"&tm=" + parameters.tm +
-		// 		"&plp=" + parameters.plp +
-		// 		"&plw=" + parameters.plw +
-		// 		"&plh=" + parameters.plh +
-		// 		"&ct=" + parameters.ct +
-		// 		"&tb=" + encodeURIComponent(parameters.tb) +
-		// 		"&tbbg=" + parameters.tbbg +
-		// 		"&tbfs=" + parameters.tbfs +
-		// 		"&rfr=" + parameters.rfr
-		// } else {
-		// 	iframe_url = iframe_url +
-		// 	"c=" + parameters.c +
-		// 	"&t=" + parameters.t +
-		// 	"&sk=" + parameters.sk +
-		// 	"&tm=" + parameters.tm +
-		// 	"&plp=" + parameters.plp +
-		// 	"&plw=" + parameters.plw +
-		// 	"&plh=" + parameters.plh +
-		// 	"&ct=" + parameters.ct +
-		// 	"&tb=" + encodeURIComponent(parameters.tb) +
-		// 	"&tbbg=" + parameters.tbbg +
-		// 	"&tbfs=" + parameters.tbfs +
-		// 	"&rfr=" + parameters.rfr
-		// }
 
 		if(parameters.w){
 			width_height = "width=\"" + parameters.w + "\" ";
@@ -139,11 +91,7 @@
 		}
 
 		//generate iframe embed
-		// if(parameters.m || parameters.c){
-			div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
-		// } else {
-			// div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h2 id='sambaads_now_whatch' class='sambaads_now_whatch' style='margin-top:10px;margin-bottom:10px; width: auto; font-family: verdana, arial, sans-serif;display: inline-block; margin-right: 5px; color:#000000; font-weight: bold; font-size:1.5em;'>ASSISTA AGORA:</h2><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='height: 30px;'><p style=\"font-size: 11px; margin: 0px; color: #B0B0B0; text-align: left; text-align: -webkit-left;\">powered by <a href=\"//www.sambaads.com.br/?utm_campaign=Recomendador&utm_medium=Powered&utm_source=PlayerRecomendador\"><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'></a></p></div></div>";
-		// }
+		div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "#" + iframe_id +"\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
 
 		//Put iframe after de <script> tag
 		insertAfter(currentScript, div.firstChild);
@@ -181,16 +129,12 @@
 	};
 
 	var init = function(){		
-		//parser = new DOMParser()
-		//console.log("Initializing SambaAds JS Player!");
-
-
 		//initialize parameters
 		var parameters = parseQueryString(currentScript.src);	
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
-		parameters.request_domain = parameters.debug == "true" ? "192.168.33.10:3000" : "d366amxgkdfvcq.cloudfront.net";
+		parameters.request_domain = parameters.debug == "true" ? "9bb0910a.ngrok.io" : "d366amxgkdfvcq.cloudfront.net";
 
 		//append the iframe player
 		var iframe_data = appendIframe(parameters);
@@ -200,7 +144,7 @@
 	};
 
 	var onMessageReceive = function(event){
-		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf("192.168.33.10:3000") >= 0){
+		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf("9bb0910a.ngrok.io") >= 0){
 
 			var params = event.data.split("::");
 
@@ -216,7 +160,8 @@
 		 		}
 
 		 		if (params[1] == "click" ){
-		 			console.log("implementar click video modal")
+		 			var modal = new SambaadsModal();
+		 			modal.open(JSON.parse(params[2]));
 		 		}
 
 			}
@@ -236,4 +181,3 @@
 	}
 
 	init();
-})(this);

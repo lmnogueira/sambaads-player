@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/:pid', function(req, res, next) {
 	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
-	request.get('http://localhost:4000/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+	request.get('http://staging-app.sambaads.com/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
 		res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 	});
 });
