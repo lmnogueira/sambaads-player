@@ -32,7 +32,6 @@ WidgetController.prototype.play = function(element) {
 		var win = window.open($(link_url).data("href"), '_blank');
 		win.focus();
 	}else{
-		console.log(this.getCurrentItem().tag_list);
 		this.sendMessage("click", JSON.stringify({publisherId: this.publisherInfo.hash_code, tagList: String(this.getCurrentItem().tag_list), mediaId: this.getCurrentItem().media_id, description: this.getCurrentItem().description, title: this.getCurrentItem().title}));
 	}
 };
