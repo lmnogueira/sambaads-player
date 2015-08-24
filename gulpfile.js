@@ -55,6 +55,7 @@ gulp.task("build-development", function(){
 
     gulp.src(paths.scripts + "player.js")
     .pipe(sourcemaps.init())
+    .pipe(preprocess({context: config.development}))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
