@@ -580,7 +580,24 @@ body {
 }
 
 .horizontal .video-thumb img {
+	display: block;
+  position: relative;
 	width:145px;
+}
+
+.horizontal .video-thumb a::after {
+	content: "";
+	background: transparent url(/images/icon-play-round.png) no-repeat center;
+	top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  background-size: 40px;
+}
+
+.horizontal .video-thumb a:hover::after {
+	opacity: 0.5;
 }
 
 .vertical .video-thumb img {
