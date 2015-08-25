@@ -3,4 +3,4 @@ build/
 .DS_Store
 .svn/
 app/npm-debug.log
-app/public/javascripts/
+app/public/*
