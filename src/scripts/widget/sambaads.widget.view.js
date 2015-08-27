@@ -20,7 +20,7 @@ SambaAdsWidgetView.prototype.init = function(widget){
 
 	self.showDisplay("play");
 
-	if(this.controller.getPlaylist().length > 1)
+	if(this.controller.getPlaylist().length > 0)
 		self.showPlaylist(self.options());
 };
 
@@ -109,24 +109,83 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 
 	$(".sambaads-playlist").show();
 
-	$("#playlist-h-items").lightSlider({
-		item: 3,
-		autoWidth: true,
-		slideMove: 1, // slidemove will be 1 if loop is true
-		slideMargin: 0,
-		mode: "slide",
-		useCSS: true,
-		loop: true,
-		controls: true,
-		prevHtml: '<i class="icon-previous"></i>',
-        nextHtml: '<i class="icon-next"></i>',
-		pager: false,
-		enableTouch:false,
-        enableDrag:false,
-		onSliderLoad: function() {
-			$('#autoWidth').removeClass('cS-hidden');
-		}
-	});
+	if(this.controller.getPlaylistSize() > 1){
+		setTimeout(function(){
+			var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+			var newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var maxRatio = newWidth/newHeight;
+			var currentRatio;
+			var ratio = 0;
+
+			$(".playlist-item").each(function(index, element){
+				var originalWidth = $(element).width();
+				var originalHeight = $(element).height();
+				currentRatio = originalHeight/originalWidth;
+
+				if(currentRatio>maxRatio){
+					ratio = (newWidth / originalWidth);
+					$(element).height(originalHeight*ratio);
+					$(element).width(newWidth);
+					console.log("-----1")
+				}else{
+					ratio = (newHeight / originalHeight);
+					$(element).height(newHeight);
+					$(element).width((originalWidth*ratio));
+					console.log("-----2")
+				}
+
+				// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				// console.log($(element).find(".video-description").height());
+				// console.log(newHeight);
+				// console.log(newWidth);
+				// console.log($(element).width());
+				// console.log($(element).height());
+				// console.log(currentRatio);
+				// console.log(maxRatio);
+				// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+				// masterWidth = ((originalWidth * newHeight) / (originalHeight - newRatio))
+				// masterWidth = (itemRatio * maxRatio) - newRatio
+				// $(element).width(masterWidth);
+			});
+
+			$(".playlist-item").each(function(index, element){
+				console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				console.log($(element).width());
+				console.log($(element).height());
+				console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+				$(element).height($(element).height() - $(element).find(".video-description").height());
+				$(element).width($(element).width() - $(element).find(".video-description").height());
+
+				console.log("******************************");
+				console.log($(element).width());
+				console.log($(element).height());
+				console.log("******************************");
+			});
+
+			
+			$("#playlist-h-items").lightSlider({
+				// item: 3,
+				autoWidth: true,
+				slideMove: 1,
+				slideMargin: 10,
+				mode: "slide",
+				useCSS: true,
+				loop: true,
+				controls: true,
+				prevHtml: '<i class="icon-previous"></i>',
+		    nextHtml: '<i class="icon-next"></i>',
+				pager: false,
+				enableTouch:false,
+		    enableDrag:false,
+		    adaptiveHeight: false,
+				onSliderLoad: function() {
+					$('#autoWidth').removeClass('cS-hidden');
+				}
+			});
+		},9000);
+	}
 
 	$(".nano").nanoScroller();
 

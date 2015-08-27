@@ -538,7 +538,7 @@ body {
 }
 .horizontal .playlist-item {
 	float:left;
-	width:145px;
+	/*width:145px;*/
 	padding:8px 0;
 	margin:0 8px 0 0;
 }
@@ -579,10 +579,16 @@ body {
 	height:auto;
 }
 
+.horizontal ul#playlist-h-item li{
+	max-height: 640px;
+	min-width: 145px;
+}
+
 .horizontal .video-thumb img {
 	display: block;
   position: relative;
-	width:145px;
+	/*width:145px;*/
+	width:100%;
 }
 
 .horizontal .video-thumb a::after {

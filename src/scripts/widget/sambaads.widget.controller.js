@@ -1,14 +1,18 @@
 function WidgetController(params, data){
 	var self = this;
-	self.params = params;
-	self.currentMediaId="";
-	self.currentPlaylistIndex = 0;
-	self.lastPlaylistIndex = 0;
-	self.data = data;
-	self.playlist = data.playlist;
-	self.playerInfo = data.player_info;
-	self.publisherInfo = data.publisher_info;
-	self.iframeId = window.location.hash.split("#")[1];
+	this.params = params;
+	this.currentMediaId="";
+	this.currentPlaylistIndex = 0;
+	this.lastPlaylistIndex = 0;
+	this.data = data;
+	this.playlist = data.playlist;
+
+	if(this.getPlaylistSize() > 0)
+		this.playlist.splice(this.getPlaylistSize());
+
+	this.playerInfo = data.player_info;
+	this.publisherInfo = data.publisher_info;
+	this.iframeId = window.location.hash.split("#")[1];
 }
 
 WidgetController.prototype.getPlaylistItem = function(index) {
@@ -19,6 +23,9 @@ WidgetController.prototype.getCurrentItem = function() {
 	return this.getPlaylistItem(this.currentPlaylistIndex)
 }
 
+WidgetController.prototype.getPlaylistSize = function() {
+	return parseInt(this.params.size || this.playlist.length);
+}
 
 WidgetController.prototype.getPlaylist = function() {
 	return this.playlist;
