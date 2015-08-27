@@ -107,8 +107,6 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 		$("#playlist-h-items").append(new_h_item);
 	});
 
-	$(".sambaads-playlist").show();
-
 	if(this.controller.getPlaylistSize() > 1){
 		setTimeout(function(){
 			var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -116,57 +114,32 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 			var maxRatio = newWidth/newHeight;
 			var currentRatio;
 			var ratio = 0;
+			var heightControlsSlide = 66;
+
+			$(".sambaads-playlist").show();
 
 			$(".playlist-item").each(function(index, element){
-				var originalWidth = $(element).width();
-				var originalHeight = $(element).height();
+				// var myImg = $(this).find("img")[0];
+				// console.log(element);
+				// console.log(myImg);
+				// console.log(myImg.complete);
+
+				var originalWidth = $(this).width();
+				var originalHeight = $(this).height();
 				currentRatio = originalHeight/originalWidth;
 
 				if(currentRatio>maxRatio){
 					ratio = (newWidth / originalWidth);
-					$(element).height(originalHeight*ratio);
-					$(element).width(newWidth);
-					console.log("-----1")
+					$(this).height(originalHeight*ratio);
+					$(this).width(newWidth - heightControlsSlide);
 				}else{
 					ratio = (newHeight / originalHeight);
-					$(element).height(newHeight);
-					$(element).width((originalWidth*ratio));
-					console.log("-----2")
+					$(this).height(newHeight);
+					$(this).width((originalWidth*ratio) - heightControlsSlide);
 				}
-
-				// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-				// console.log($(element).find(".video-description").height());
-				// console.log(newHeight);
-				// console.log(newWidth);
-				// console.log($(element).width());
-				// console.log($(element).height());
-				// console.log(currentRatio);
-				// console.log(maxRatio);
-				// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-				// masterWidth = ((originalWidth * newHeight) / (originalHeight - newRatio))
-				// masterWidth = (itemRatio * maxRatio) - newRatio
-				// $(element).width(masterWidth);
 			});
 
-			$(".playlist-item").each(function(index, element){
-				console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				console.log($(element).width());
-				console.log($(element).height());
-				console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
-				$(element).height($(element).height() - $(element).find(".video-description").height());
-				$(element).width($(element).width() - $(element).find(".video-description").height());
-
-				console.log("******************************");
-				console.log($(element).width());
-				console.log($(element).height());
-				console.log("******************************");
-			});
-
-			
-			$("#playlist-h-items").lightSlider({
-				// item: 3,
+			var slide = $("#playlist-h-items").lightSlider({
 				autoWidth: true,
 				slideMove: 1,
 				slideMargin: 10,
@@ -184,7 +157,29 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 					$('#autoWidth').removeClass('cS-hidden');
 				}
 			});
-		},9000);
+
+			// setTimeout(function(){
+			// 	$(".playlist-item").each(function(index, element){
+			// 		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			// 		console.log($(this).width());
+			// 		console.log($(this).height());
+			// 		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			// 		var heightDesc = $(this).find(".video-description").innerHeight();
+			// 		$(this).height($(this).height() - heightDesc);
+			// 		$(this).width($(this).width() - heightDesc);
+
+			// 		console.log("******************************");
+			// 		console.log(heightDesc);
+			// 		console.log($(this).width());
+			// 		console.log($(this).height());
+			// 		console.log("******************************");
+			// 	});
+
+			// 	slide.refresh();
+			// },2000);	
+		},1000);
+	}else{
+		$(".sambaads-playlist").show();
 	}
 
 	$(".nano").nanoScroller();
