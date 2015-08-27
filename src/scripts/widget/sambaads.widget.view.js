@@ -80,6 +80,79 @@ SambaAdsWidgetView.prototype.options = function(){
 	return _options;
 };
 
+SambaAdsWidgetView.prototype.resizeTimeout = function(){
+	var self = this;
+	setTimeout(function(){
+		if(!self.resizeContent()){
+			self.resizeTimeout();
+		}
+	}, 200);
+}
+
+SambaAdsWidgetView.prototype.resizeContent = function(){
+	var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	var maxRatio = newWidth/newHeight;
+	var currentRatio;
+	var ratio = 0;
+	var heightControlsSlide = 66;
+	var flagLoadImage = true;
+
+	$(".playlist-item").each(function(index, element){
+		var myImg = $(this).find("img")[0];
+		// console.log(element);
+		// console.log(myImg);
+		// console.log(myImg.complete);
+
+		if(!myImg.complete){
+			flagLoadImage = myImg.complete;
+			return false;
+		}
+	});
+
+	if(flagLoadImage){
+		$(".sambaads-playlist").show();
+
+		$(".playlist-item").each(function(index, element){
+			var originalWidth = $(this).width();
+			var originalHeight = $(this).height();
+			currentRatio = originalHeight/originalWidth;
+
+			if(currentRatio>maxRatio){
+				ratio = (newWidth / originalWidth);
+				$(this).height(originalHeight*ratio);
+				$(this).width(newWidth - heightControlsSlide);
+			}else{
+				ratio = (newHeight / originalHeight);
+				$(this).height(newHeight);
+				$(this).width((originalWidth*ratio) - heightControlsSlide);
+			}
+		});
+		this.applyLightSlider();
+	}
+	return flagLoadImage;
+}
+
+SambaAdsWidgetView.prototype.applyLightSlider = function(){
+	var slide = $("#playlist-h-items").lightSlider({
+		autoWidth: true,
+		slideMove: 1,
+		slideMargin: 10,
+		mode: "slide",
+		useCSS: true,
+		loop: true,
+		controls: true,
+		prevHtml: '<i class="icon-previous"></i>',
+		nextHtml: '<i class="icon-next"></i>',
+		pager: false,
+		enableTouch:false,
+		enableDrag:false,
+		adaptiveHeight: false,
+		onSliderLoad: function() {
+			$('#autoWidth').removeClass('cS-hidden');
+		}
+	});
+}
 
 SambaAdsWidgetView.prototype.showPlaylist = function(options){
 	var self = this;
@@ -108,76 +181,7 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 	});
 
 	if(this.controller.getPlaylistSize() > 1){
-		setTimeout(function(){
-			var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-			var newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-			var maxRatio = newWidth/newHeight;
-			var currentRatio;
-			var ratio = 0;
-			var heightControlsSlide = 66;
-
-			$(".sambaads-playlist").show();
-
-			$(".playlist-item").each(function(index, element){
-				// var myImg = $(this).find("img")[0];
-				// console.log(element);
-				// console.log(myImg);
-				// console.log(myImg.complete);
-
-				var originalWidth = $(this).width();
-				var originalHeight = $(this).height();
-				currentRatio = originalHeight/originalWidth;
-
-				if(currentRatio>maxRatio){
-					ratio = (newWidth / originalWidth);
-					$(this).height(originalHeight*ratio);
-					$(this).width(newWidth - heightControlsSlide);
-				}else{
-					ratio = (newHeight / originalHeight);
-					$(this).height(newHeight);
-					$(this).width((originalWidth*ratio) - heightControlsSlide);
-				}
-			});
-
-			var slide = $("#playlist-h-items").lightSlider({
-				autoWidth: true,
-				slideMove: 1,
-				slideMargin: 10,
-				mode: "slide",
-				useCSS: true,
-				loop: true,
-				controls: true,
-				prevHtml: '<i class="icon-previous"></i>',
-		    nextHtml: '<i class="icon-next"></i>',
-				pager: false,
-				enableTouch:false,
-		    enableDrag:false,
-		    adaptiveHeight: false,
-				onSliderLoad: function() {
-					$('#autoWidth').removeClass('cS-hidden');
-				}
-			});
-
-			// setTimeout(function(){
-			// 	$(".playlist-item").each(function(index, element){
-			// 		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-			// 		console.log($(this).width());
-			// 		console.log($(this).height());
-			// 		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-			// 		var heightDesc = $(this).find(".video-description").innerHeight();
-			// 		$(this).height($(this).height() - heightDesc);
-			// 		$(this).width($(this).width() - heightDesc);
-
-			// 		console.log("******************************");
-			// 		console.log(heightDesc);
-			// 		console.log($(this).width());
-			// 		console.log($(this).height());
-			// 		console.log("******************************");
-			// 	});
-
-			// 	slide.refresh();
-			// },2000);	
-		},1000);
+		this.resizeTimeout();
 	}else{
 		$(".sambaads-playlist").show();
 	}
