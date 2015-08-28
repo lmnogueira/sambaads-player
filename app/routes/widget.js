@@ -15,5 +15,12 @@ router.get('/:pid', function(req, res, next) {
 	});
 });
 
+router.get('/:pid/:mid', function(req, res, next) {
+	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
+	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?m=' + req.params.mid, function(error, response, body){
+		res.render('layout/index', { base_url: urlFinal, info: JSON.parse(body), params: req.query });
+	});
+});
+
 
 module.exports = router;

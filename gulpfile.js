@@ -11,7 +11,7 @@ var preprocess = require('gulp-preprocess');
  
 var paths = {
   scripts:  './src/scripts/',
-  images:   './src/images/**/*',
+  images:   './src/images/',
   css:      './src/styles/',
 };
 
@@ -59,6 +59,13 @@ gulp.task("build-development", function(){
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
+
+    gulp.src([paths.scripts + "layout/jquery-1.11.3.min.js",paths.scripts + "layout/jquery.dotdotdot.js", paths.scripts + "layout/jquery.colorbox.js", paths.scripts + "layout/bootstrap.js"])
+    .pipe(sourcemaps.init())
+    .pipe(concat("sambaads.base.js"))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
 });
 
 gulp.task("build-scripts", function(){
@@ -77,13 +84,23 @@ gulp.task("build-scripts", function(){
 });
 
 gulp.task("build-images", function(){
-	gulp.src(paths.images)
+	gulp.src(paths.images + "*.*")
+    .pipe(gulp.dest('app/public/images/'));
+
+    gulp.src(paths.images + "/layout/**/*")
     .pipe(gulp.dest('app/public/images/'));
 });
 
 gulp.task("build-css", function(){
     gulp.src(paths.css + "sambaads.widget.css")
     .pipe(sourcemaps.init())
+    .pipe(minify_css())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/stylesheets/'));
+
+    gulp.src([paths.css + "layout/bootstrap.css", paths.css + "layout/widget_pagina_videos.css", paths.css + "layout/colorbox.css"])
+    .pipe(sourcemaps.init())
+    .pipe(concat("sambaads.base.css"))
     .pipe(minify_css())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/stylesheets/'));
