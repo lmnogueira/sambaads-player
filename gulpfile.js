@@ -60,7 +60,7 @@ gulp.task("build-development", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
-    gulp.src([paths.scripts + "layout/jquery-1.11.3.min.js",paths.scripts + "layout/jquery.dotdotdot.js", paths.scripts + "layout/jquery.colorbox.js", paths.scripts + "layout/bootstrap.js"])
+    gulp.src([paths.scripts + "layout/jquery-1.11.3.min.js",paths.scripts + "layout/jquery.dotdotdot.js", paths.scripts + "layout/jquery.colorbox.js", paths.scripts + "layout/bootstrap.js", paths.scripts + "layout/sambaads.layout.js"])
     .pipe(sourcemaps.init())
     .pipe(concat("sambaads.base.js"))
     .pipe(uglify())

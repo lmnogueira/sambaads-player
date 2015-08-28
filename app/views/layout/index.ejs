@@ -32,43 +32,36 @@
     <!-- HEADER ROW-->
     <div id="video_container" class="row">
       <div id="video_principal" class="row col-xs-12">
-        <img class="img-responsive" src="/images/video_principal.png" alt="thumb do video" />
+        <script src='/javascripts/player.js?m=<%= media %>&p=<%= publisher %>&sk=blue&tm=light&tb=&tbbg=&w=990&h=556&debug=true'></script>
       </div>
       <!-- THUMB VIDEO PRINCIPAL -->
       <div id="nome_produtor" class="row col-xs-12">
-        nzn
+        <%= media_info.owner_name %>
       </div>
       <!-- NOME PRODUTOR -->
       <div id="titulo_video_principal" class="row col-xs-12">
-        Veja o que o zoom insano da câmera nikon coolpix p900 é capaz de fazer - Tecmundo
+        <%= media_info.title %>
       </div>
       <!-- TITULO VIDEO PRINCIPAL -->
       <div id="descricao_video_principal" class="row col-xs-12">
-        Esse monstrinho é capaz de aproximar a imagem 83 vezes e fazer qualquer um se sentir um verdadeiro espião. Confira o que o superzoom dessa câmera é capaz de fazer. Análise da Nikon COOLPIX P900: http://www.tecmundo.com.br/nikon-coolpix-p900/84337-veja-o-zoom-camera-nikon-coolpix-p900-capaz-fazer-video.htm
+        <%= media_info.description %>
       </div>
       <!-- TITULO VIDEO PRINCIPAL -->
       <div id="titulo_tags" class="col-xs-6">
         TAGS -
         <span class="tags">
-            
-              ciência, tecnologia, universo, exploração
-            
-            </span>
+          <%= media_info.tag_list %>
+        </span>
       </div>
       <!-- NOME PRODUTOR -->
       <div id="titulo_compartilhar" class="col-xs-6">
         COMPARTILHAR -
         <span class="social_thumbs">
-          
-            <a href="#"><img src="/images/facebook.png" /></a>
-            
-            <a href="#"><img src="/images/twitter.png" /></a>
-            
-            <a href="#"><img src="/images/pinterest.png" /></a>
-            
-            <a href="#"><img src="/images/whatsapp.png" /></a>
-          
-          </span>
+          <a href="#"><img src="/images/facebook.png" /></a>
+          <a href="#"><img src="/images/twitter.png" /></a>
+          <a href="#"><img src="/images/pinterest.png" /></a>
+          <a href="#"><img src="/images/whatsapp.png" /></a>
+        </span>
       </div>
       <!-- NOME PRODUTOR -->
     </div>
@@ -80,96 +73,7 @@
     <div id="assista_tambem" class="row col-xs-12">
       Assista também
     </div>
-    <!-- ASSISTA TAMBEM ROW -->
-    <div id="1_linha_assista_tambem" class="row">
-      <!-- ------ 1 LINHA ------ -->
-      <div style="padding:0 10px 10px 10px;" id="1_video_1_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video1.png" alt="video1" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem1">
-          Apple Music vs Spotify vs Deezer vs Rdio: qual é o melhor? [Comparativo]
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 1 VIDEO 1 LINHA -->
-      <div style="padding:0 10px 10px 10px;" id="1_video_1_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video2.png" alt="video2" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem2">
-          Hoje no TecMundo (10/08) — Xperia Z3+, apps de Android no Windows 10 e teclado para o S6 edge Plus
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 2 VIDEO 1 LINHA -->
-      <div style="padding:0 10px 10px 10px;" id="3_video_1_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video3.png" alt="video3" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem3">
-          5 programas gratuitos para editar vídeos - Baixaki
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 3 VIDEO 1 LINHA -->
-    </div>
-    <!-- ROW -->
-    <!-- ------ 1 LINHA ------ -->
-    <hr class="divisor_videos"></hr>
-    <div id="2_linha_assista_tambem" class="row">
-      <!-- ------ 2 LINHA ------ -->
-      <div style="padding:0 10px 10px 10px;" id="1_video_2_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video4.png" alt="video4" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem4">
-          Como saber se pessoas estão roubando seu Wi-Fi pelo smartphone
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 1 VIDEO 2 LINHA -->
-      <div style="padding:0 10px 10px 10px;" id="2_video_2_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video5.png" alt="video5" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem5">
-          Conheça 2 melhores alternativas grátis de Netflix
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 2 VIDEO 2 LINHA -->
-      <div style="padding:0 10px 10px 10px;" id="3_video_2_linha" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <a href="#">
-          <img class="img-responsive" src="/images/video6.png" alt="video6" />
-        </a>
-        <div id="produtor_assista_tambem">
-          Canaltech
-        </div>
-        <div id="titulo_assista_tambem6">
-          Como restaurar conversas apagadas do WhatsApp
-        </div>
-        <!-- TITULO ASSISTA TAMBEM -->
-      </div>
-      <!-- 3 VIDEO 2 LINHA -->
-    </div>
-    <!-- ROW -->
-    <!-- ------ 2 LINHA ------ -->
+    <div id="sambaads-content"></div>
   </div>
   <!-- CONTAINER -->
   <div id="footer" class="container-fluid">
@@ -188,6 +92,8 @@
 
   <script>
   $(document).ready(function() {
+    var sambaads = new SambaadsLayout(<%- JSON.stringify(info) %>);
+    sambaads.create();
 
     $("#titulo_assista_tambem1, #titulo_assista_tambem2, #titulo_assista_tambem3, #titulo_assista_tambem4, #titulo_assista_tambem5, #titulo_assista_tambem6").dotdotdot({
       watch: 'false'
