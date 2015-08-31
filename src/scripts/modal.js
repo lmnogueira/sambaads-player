@@ -99,10 +99,11 @@ SambaadsModal.prototype.defineStylePage = function(div){
 	div.style.bottom = "0";
 	div.style.left = "0";
 	div.style.zIndex = "99999999";
-	div.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+	div.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
 	div.style.textAlign = "center";
 	div.style.overflow = "auto";
 	div.tabIndex = "-1";
+	this.createListeners(div);
 
 	body.appendChild(div);
 };
