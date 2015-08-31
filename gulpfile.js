@@ -23,7 +23,7 @@ gulp.task('clean', function(cb) {
   del(['build'], cb);
 });
 
-gulp.task("build-development", function(){
+gulp.task("build-javascripts", function(){
 	gulp.src(paths.scripts + "sambaads.player.js")
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: config.development}))
@@ -106,11 +106,13 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['watch','build-development', 'build-css', 'build-images']);
+gulp.task("default", ['watch','build-javascripts', 'build-css', 'build-images']);
+gulp.task("staging", ['watch','build-javascripts', 'build-css', 'build-images']);
+gulp.task("production", ['watch','build-javascripts', 'build-css', 'build-images']);
 gulp.task("ci", ['clean','build-scripts', 'build-images', 'build-css']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts + "**/*.js", ['build-development']);
+  gulp.watch(paths.scripts + "**/*.js", ['build-javascripts']);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.images, ['build-images']);
 });
