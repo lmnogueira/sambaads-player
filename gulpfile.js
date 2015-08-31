@@ -107,8 +107,8 @@ gulp.task("build-css", function(){
 });
 
 gulp.task("default", ['watch','build-javascripts', 'build-css', 'build-images']);
-gulp.task("staging", ['watch','build-javascripts', 'build-css', 'build-images']);
-gulp.task("production", ['watch','build-javascripts', 'build-css', 'build-images']);
+gulp.task("staging", ['build-javascripts', 'build-css', 'build-images']);
+gulp.task("production", ['build-javascripts', 'build-css', 'build-images']);
 gulp.task("ci", ['clean','build-scripts', 'build-images', 'build-css']);
 
 gulp.task('watch', function() {
