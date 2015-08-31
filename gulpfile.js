@@ -16,8 +16,21 @@ var paths = {
 };
 
 var config = require("./app/config/env.json");
+var contextEnv = {};
 
 var buid_verion = process.env.CIRCLE_BUILD_NUM || "development";
+
+gulp.task("production-context", function(){
+    contextEnv = config.production;
+});
+
+gulp.task("staging-context", function(){
+    contextEnv = config.staging;
+});
+
+gulp.task("development-context", function(){
+    contextEnv = config.development;
+});
 
 gulp.task('clean', function(cb) {
   del(['build'], cb);
@@ -26,7 +39,7 @@ gulp.task('clean', function(cb) {
 gulp.task("build-javascripts", function(){
 	gulp.src(paths.scripts + "sambaads.player.js")
     .pipe(sourcemaps.init())
-    .pipe(preprocess({context: config.development}))
+    .pipe(preprocess({context: contextEnv}))
     .pipe(uglify())
     .pipe(rename('sambaads.player.js'))
     .pipe(sourcemaps.write('./'))
@@ -35,7 +48,7 @@ gulp.task("build-javascripts", function(){
     gulp.src([paths.scripts + "widget/sambaads.widget.view.js",
               paths.scripts + "widget/sambaads.widget.controller.js"])
     .pipe(sourcemaps.init())
-    .pipe(preprocess({context: config.development}))
+    .pipe(preprocess({context: contextEnv}))
     .pipe(concat_util.header('\"use strict\";'))
     .pipe(concat("sambaads.widget.js"))
     .pipe(uglify())
@@ -45,7 +58,7 @@ gulp.task("build-javascripts", function(){
 
     gulp.src([paths.scripts + "widget/widget.js",paths.scripts + "modal.js"])
     .pipe(sourcemaps.init())
-    .pipe(preprocess({context: config.development}))
+    .pipe(preprocess({context: contextEnv}))
     .pipe(concat("widget.js"))
     .pipe(concat_util.header('\"use strict\";(function(cw){'))
     .pipe(concat_util.footer('})(this);'))
@@ -55,7 +68,7 @@ gulp.task("build-javascripts", function(){
 
     gulp.src(paths.scripts + "player.js")
     .pipe(sourcemaps.init())
-    .pipe(preprocess({context: config.development}))
+    .pipe(preprocess({context: contextEnv}))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
@@ -106,9 +119,9 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['watch','build-javascripts', 'build-css', 'build-images']);
-gulp.task("staging", ['build-javascripts', 'build-css', 'build-images']);
-gulp.task("production", ['build-javascripts', 'build-css', 'build-images']);
+gulp.task("default", ['development-context', 'watch','build-javascripts', 'build-css', 'build-images']);
+gulp.task("staging", ['staging-context', 'build-javascripts', 'build-css', 'build-images']);
+gulp.task("production", ['production-context', 'build-javascripts', 'build-css', 'build-images']);
 gulp.task("ci", ['clean','build-scripts', 'build-images', 'build-css']);
 
 gulp.task('watch', function() {
