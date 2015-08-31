@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
 
-var routes = require('./routes/index');
 var widget = require('./routes/widget');
 var player = require('./routes/player');
 
@@ -28,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+// app.use('/', routes);
 app.use('/widget', widget);
 app.use('/player', player);
 app.use('/iframe', player);
