@@ -118,8 +118,9 @@ SambaadsModal.prototype.close = function(){
 
 SambaadsModal.prototype.createListeners = function(element){
 	var self = this;
-	element.onclick = function(){
-		self.close();
+	element.onclick = function(evt){
+		if(evt.target.className == "sambaads-modal-body" || evt.target.className == "sambaads-close-modal")
+			self.close();
 	};
 };
 
