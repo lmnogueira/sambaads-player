@@ -22,7 +22,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push('node_modules', 'app/node_modules
 # Default value for keep_releases is 5
 set :keep_releases, 1
 
-
 namespace :npm do
   desc <<-DESC
         Install the project dependencies via npm. By default, devDependencies \
@@ -66,3 +65,33 @@ namespace :gulp do
 		end
 	end
 end
+
+namespace :forever do
+  desc "restart forever"
+  task :restart do
+    on roles :all do
+      within release_path do
+        execute :forever, :stopall
+        execute :forever, :start, "app/bin/www"
+      end
+    end
+  end
+
+  desc "start forever"
+  task :start do
+    within release_path do
+      execute :forever, :start, "app/bin/www"
+    end
+  end
+
+  desc "stop forever"
+  task :stop do
+    within release_path do
+      execute :forever, :stopall
+    end
+  end
+end
+
+after 'deploy:updated', 'npm:install'
+after 'npm:install', 'gulp:build'
+after 'gulp:build', 'forever:restart'
