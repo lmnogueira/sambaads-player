@@ -145,7 +145,7 @@ SambaAdsWidgetView.prototype.applyLightSlider = function(){
 		prevHtml: '<i class="icon-previous"></i>',
 		nextHtml: '<i class="icon-next"></i>',
 		pager: false,
-		enableTouch:false,
+		enableTouch:true,
 		enableDrag:false,
 		adaptiveHeight: false,
 		onSliderLoad: function() {
