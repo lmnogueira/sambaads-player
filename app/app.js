@@ -13,6 +13,7 @@ var app = express();
 var config = require('./config/env.json');
 
 nconf.argv().env();
+console.log(app.get('env'));
 nconf.overrides(config[app.get('env')]);
 
 // view engine setup
