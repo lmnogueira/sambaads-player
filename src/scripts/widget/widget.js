@@ -3,7 +3,7 @@
 		var currentScript = document.currentScript || (function() {
       		var scripts = document.getElementsByTagName('script');
 
-      		if(scripts[scripts.length - 1].src.indexOf('/* @echo WIDGET_DOMAIN */') != 0)
+      		if(scripts[scripts.length - 1].src.indexOf('/* @echo NGINX_WIDGET_DOMAIN */') != 0)
       			return scripts[scripts.length - 1];
     	})();
 
@@ -134,7 +134,7 @@
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
-		parameters.request_domain = '/* @echo CDN_DOMAIN */';
+		parameters.request_domain = '/* @echo CDN_WIDGET_DOMAIN */';
 
 		//append the iframe player
 		var iframe_data = appendIframe(parameters);
@@ -144,7 +144,7 @@
 	};
 
 	var onMessageReceive = function(event){
-		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf('/* @echo CDN_DOMAIN */') >= 0){
+		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf('/* @echo CDN_WIDGET_DOMAIN */') >= 0){
 
 			var params = event.data.split("::");
 
