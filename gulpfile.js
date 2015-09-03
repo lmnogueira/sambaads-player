@@ -45,7 +45,11 @@ gulp.task("build-javascripts", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
-    gulp.src([paths.scripts + "widget/sambaads.widget.view.js",
+    gulp.src([paths.scripts + "vendor/jquery.1.11.0.min.js",
+              paths.scripts + "vendor/circle-progress.js",
+              paths.scripts + "vendor/jquery.nanoscroller.min.js",
+              paths.scripts + "vendor/jquery.lightSlider.min.js",
+              paths.scripts + "widget/sambaads.widget.view.js",
               paths.scripts + "widget/sambaads.widget.controller.js"])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
