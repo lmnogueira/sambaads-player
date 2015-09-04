@@ -6,7 +6,7 @@
 #   - ./node_modules/.bin/gulp ci
 
 deployment:
-	staging:
-		branch: master
-		commands:
-  		- bundle exec cap staging deploy
+ staging:
+  branch: master
+   commands:
+    - bundle exec cap staging deploy
