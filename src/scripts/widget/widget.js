@@ -128,13 +128,20 @@
 		return iframe_data;
 	};
 
+	var testProtocol = function(){
+		var protocolsUrl = {"http:": '/* @echo CDN_WIDGET_DOMAIN */', "https:": '/* @echo CDN_WIDGET_SECURE_DOMAIN */'};
+		return protocolsUrl[document.location.protocol]
+	}
+
 	var init = function(){		
 		//initialize parameters
 		var parameters = parseQueryString(currentScript.src);	
 
+		
+
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
-		parameters.request_domain = '/* @echo CDN_WIDGET_DOMAIN */';
+		parameters.request_domain = testProtocol();
 
 		//append the iframe player
 		var iframe_data = appendIframe(parameters);
@@ -144,7 +151,7 @@
 	};
 
 	var onMessageReceive = function(event){
-		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf('/* @echo CDN_WIDGET_DOMAIN */') >= 0){
+		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf(testProtocol()) >= 0){
 
 			var params = event.data.split("::");
 
