@@ -4,3 +4,7 @@ general:
 test:
  override:
   - ./node_modules/.bin/gulp ci
+staging:
+ branch: master
+ commands:
+  - bundle exec cap staging deploy

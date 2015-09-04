@@ -4,7 +4,7 @@ lock '3.4.0'
 set :application, 'widget-player'
 set :repo_url, 'git@widget_player.github.com:sambaads/sambaads-player.git'
 
-ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, 'master'
 
 set :deploy_to, '/app/widget_player'
 
