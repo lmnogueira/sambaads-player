@@ -8,5 +8,5 @@
 deployment:
  staging:
   branch: master
-   commands:
-    - bundle exec cap staging deploy
+  commands:
+   - bundle exec cap staging deploy
