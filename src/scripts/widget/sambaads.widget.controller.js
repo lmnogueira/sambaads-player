@@ -31,6 +31,11 @@ WidgetController.prototype.getPlaylist = function() {
 	return this.playlist;
 };
 
+WidgetController.prototype.getUrlIframe = function() {
+	var protocolsUrl = {"http:": '/* @echo WIDGET_IFRAME_URL */', "https:": '/* @echo WIDGET_IFRAME_SECURE_URL */'};
+	return protocolsUrl[document.location.protocol];
+};
+
 WidgetController.prototype.play = function(element) {
 	var index = element.id.split("-")[1];
 	this.currentPlaylistIndex = index;
