@@ -593,13 +593,16 @@ body {
 
 .horizontal .video-thumb a::after {
 	content: "";
-	background: transparent url(/images/icon-play-round.png) no-repeat center;
+	background: url(/images/icon-play-round.png) no-repeat 50%;
 	top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: absolute;
-  background-size: 40px;
+  background-size: 100% auto;
+  margin: auto;
+  max-width: 80px;
+  width: 20%;
 }
 
 .horizontal .video-thumb a:hover::after {
