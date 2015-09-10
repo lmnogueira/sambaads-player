@@ -44,7 +44,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
 	var divTitle = document.createElement('div');
 	divTitle.textContent = arguments.title;
-	divTitle.style.fontSize = "1.5em";
+	divTitle.style.fontSize = "16px";
 	divTitle.style.color = "#000";
 	divTitle.style.fontFamily = "helvetica,sans-serif";
 	divTitle.style.fontWeight = "bold";
@@ -53,7 +53,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
 	var divDescription = document.createElement('div');
 	divDescription.textContent = arguments.description;
-	divDescription.style.fontSize = "0.99em";
+	divDescription.style.fontSize = "16px";
 	divDescription.style.color = "#000";
 	divDescription.style.margin = "0 10px";
 	divDescription.style.fontFamily = "helvetica,sans-serif";
@@ -64,24 +64,31 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divTags.style.fontWeight = "bold";
 	divTags.style.margin = "10px 0 0px 10px";
 	divTags.style.textAlign = "left";
-	divTags.textContent = arguments.tagList;
+	divTags.textContent = "Tags: " + arguments.tagList;
 
 	var linkClose = document.createElement('a');
 	linkClose.href = "#";
-	linkClose.textContent = "Fechar";
-	linkClose.style.float = "right";
 	linkClose.style.color = "#999";
-	linkClose.style.textDecoration = "none";
-	linkClose.className = "sambaads-close-modal";
+	linkClose.style.width = '36px';
+  linkClose.style.height = '36px';
+  linkClose.style.color = 'rgb(153, 153, 153)';
+  linkClose.style.textDecoration = 'none';
+  linkClose.style.background = 'url("/images/close_modal.png")';
+  linkClose.style.display = 'block';
+  linkClose.style.backgroundSize = '100% auto';
+  linkClose.style.position = 'absolute';
+  linkClose.style.right = '-18px';
+  linkClose.style.top = '-18px';
+  linkClose.className = "sambaads-close-modal";
 
 	modal.appendChild(divMaster);
+	divMaster.appendChild(linkClose);
 	divMaster.appendChild(divChildren);
 	divScript.appendChild(script);
 	divChildren.appendChild(divScript);
 	divContext.appendChild(divTitle);
 	divContext.appendChild(divDescription);
-	divContext.appendChild(divTags);
-	divTags.appendChild(linkClose);
+	divContext.appendChild(divTags);	
 	divChildren.appendChild(divContext);
 
 	// divMaster.style.top = (h - divMaster.clientHeight)/2 + "px";
