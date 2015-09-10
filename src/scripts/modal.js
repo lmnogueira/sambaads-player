@@ -37,7 +37,8 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
 	var script = document.createElement('script');
 	script.type= 'text/javascript';
-	script.src= '/javascripts/player.js?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360&debug=true';
+	// script.src= '/javascripts/player.js?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360&debug=true';
+	script.src= '/* @echo PLAYER_SCRIPT_URL */' + '?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360&debug=true';
 
 	var divContext = document.createElement('div');
 
