@@ -23,6 +23,10 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 	divMaster.style.position = "absolute";
 	divMaster.id = "sambaads-master";
+	divMaster.style.width = "640px";
+	divMaster.style.margin = "10% auto";
+	divMaster.style.left = "0";
+	divMaster.style.right = "0";
 
 	var divChildren = document.createElement('div');
 	divChildren.style.backgroundColor = "#fff";
@@ -30,14 +34,12 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
 	var divScript = document.createElement('div');
 	divScript.style.height = "360px";
-	divScript.style.width = "640px";
 
 	var script = document.createElement('script');
 	script.type= 'text/javascript';
-	script.src= '/javascripts/player.js?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&tb=&tbbg=&w=640&h=360&debug=true';
+	script.src= '/javascripts/player.js?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360&debug=true';
 
 	var divContext = document.createElement('div');
-	divContext.style.width = "640px";
 
 	var divTitle = document.createElement('div');
 	divTitle.textContent = arguments.title;
@@ -81,8 +83,8 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divTags.appendChild(linkClose);
 	divChildren.appendChild(divContext);
 
-	divMaster.style.top = (h - divMaster.clientHeight)/2 + "px";
-	divMaster.style.left = (w - divMaster.clientWidth)/2 + "px";
+	// divMaster.style.top = (h - divMaster.clientHeight)/2 + "px";
+	// divMaster.style.left = (w - divMaster.clientWidth)/2 + "px";
 
 	this.createListeners(linkClose);
 	modal.focus();
@@ -91,6 +93,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
 SambaadsModal.prototype.defineStylePage = function(div){
 	var body = document.getElementsByTagName("body")[0];
+	body.style.overflow = "hidden";
 
 	div.className = "sambaads-modal-body";
 	div.style.position = "fixed";
@@ -112,6 +115,7 @@ SambaadsModal.prototype.defineStylePage = function(div){
 SambaadsModal.prototype.close = function(){
 	var body = document.getElementsByTagName("body")[0];
 	var modal = document.getElementsByClassName("sambaads-modal-body")[0];
+	body.style.overflow = "";
 	body.removeChild(modal);
 };
 
