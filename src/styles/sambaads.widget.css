@@ -630,6 +630,8 @@ body {
 .video-description {
 	overflow:hidden;
 	position:relative;
+	padding:0 5px;
+	
 }
 .description {
 	display: table;
@@ -644,6 +646,7 @@ body {
 }
 .video-description h4 {
 	font-size:13px;
+	color:#000000;
 	line-height:15px;
 	font-weight:bold;
 	display:table-cell;

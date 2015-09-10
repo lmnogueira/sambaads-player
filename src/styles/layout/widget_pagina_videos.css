@@ -31,7 +31,7 @@ body {
 #nome_produtor {
     text-transform: uppercase;
     font-weight: 800;
-    font-size: 2em;
+    font-size: 0.8em;
     color: black;
     padding: 5px;
 }
@@ -39,13 +39,13 @@ body {
 #titulo_video_principal {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1em;
     color: black;
     padding: 5px;
 }
 
 #descricao_video_principal {
-    font-size: 1.2em;
+    font-size: 0.8em;
     text-align: justify;
     padding: 5px 5px 30px 5px;
 }
@@ -53,7 +53,7 @@ body {
 #titulo_tags {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1em;
     color: black;
     padding: 5px;
 }
@@ -69,14 +69,14 @@ body {
 #titulo_compartilhar {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1em;
     color: black;
     text-align: right;
 }
 
 .social_thumbs img {
-    width: 7%;
-    height: 7%;
+    width: 5%;
+    height: 5%;
     margin: 0 3px 3px 3px;
 }
 
@@ -94,7 +94,7 @@ body {
 
 @media screen and (max-width: 767px) {
     #nome_produtor {
-        font-size: 1.3em;
+        font-size: 0.8em;
         padding: 5px 10px 5px 10px;
     }
     #titulo_video_principal {
@@ -102,16 +102,16 @@ body {
         padding: 5px 10px 5px 10px;
     }
     #descricao_video_principal {
-        font-size: 0.9em;
+        font-size: 0.8em;
         padding: 5px 10px 5px 10px;
     }
     #titulo_tags,
     #titulo_compartilhar {
-        font-size: 0.9em;
+        font-size: 1em;
         padding: 5px 10px 5px 10px;
     }
     #assista_tambem {
-        font-size: 0.8em;
+        font-size: 1em;
         padding: 5px 10px 5px 10px;
     }
     #footer_content {
@@ -136,7 +136,7 @@ body {
 #assista_tambem {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1em;
     color: black;
     margin-bottom: 10px;
     padding: 10px;
@@ -172,7 +172,7 @@ body {
 }
 
 #produtor_assista_tambem {
-    font-size: 1.2em;
+    font-size: 0.9em;
     font-weight: 800;
     color: black;
     padding: 5px;
