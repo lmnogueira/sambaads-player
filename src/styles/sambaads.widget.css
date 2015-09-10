@@ -646,7 +646,6 @@ body {
 }
 .video-description h4 {
 	font-size:13px;
-	color:#000000;
 	line-height:15px;
 	font-weight:bold;
 	display:table-cell;
@@ -660,6 +659,7 @@ body {
 	padding-bottom:10px;
 }
 .video-description h4 a {
+	color:#000000;
 	opacity:0.6;
 	filter: alpha(opacity=60);
 	-webkit-transition: opacity .15s ease-out;
