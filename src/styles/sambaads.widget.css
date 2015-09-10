@@ -630,6 +630,8 @@ body {
 .video-description {
 	overflow:hidden;
 	position:relative;
+	padding:0 5px;
+	
 }
 .description {
 	display: table;
@@ -657,6 +659,7 @@ body {
 	padding-bottom:10px;
 }
 .video-description h4 a {
+	color:#000000;
 	opacity:0.6;
 	filter: alpha(opacity=60);
 	-webkit-transition: opacity .15s ease-out;
