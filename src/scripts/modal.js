@@ -177,7 +177,7 @@ SambaadsModal.prototype.open = function(arguments){
 		stWidget.addEntry({
 			"service": type,
 			"element": document.getElementById('titulo_compartilhar'),
-			"url": encodeURIComponent('/* @echo FACEBOOK_SHARER_URL */' + "?mid=" + arguments.id + "&pid=" + arguments.publisherId),
+			"url": encodeURIComponent('/* @echo FACEBOOK_SHARER_URL */' + "?mid=" + arguments.mediaId + "&pid=" + arguments.publisherId),
 			"title": arguments.title,
 			"type":"large",
 			"image":"",
