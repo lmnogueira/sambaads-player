@@ -30,7 +30,6 @@ body {
 }
 
 #nome_produtor {
-    text-transform: uppercase;
     font-weight: 800;
     font-size: 0.8em;
     color: black;
