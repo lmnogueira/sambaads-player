@@ -34,7 +34,7 @@ body {
     font-weight: 800;
     font-size: 0.8em;
     color: black;
-    padding: 5px;
+    padding: 0 5px 10px 5px;
 }
 
 #titulo_video_principal {
@@ -42,7 +42,7 @@ body {
     font-weight: bold;
     font-size: 1.2em;
     color: black;
-    padding: 5px;
+    padding: 5px 5px 0 5px;
 }
 
 #descricao_video_principal {
