@@ -59,12 +59,26 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divDescription.style.fontFamily = "helvetica,sans-serif";
 	divDescription.style.textAlign = "justify";
 
+	var divContextTagsAndShared = document.createElement('div');
+	divContextTagsAndShared.className = 'cf-sambaads';
+
 	var divTags = document.createElement('div');
 	divTags.style.fontSize = "0.8em";
 	divTags.style.fontWeight = "bold";
 	divTags.style.margin = "10px 0 0px 10px";
 	divTags.style.textAlign = "left";
-	divTags.textContent = "Tags: " + arguments.tagList;
+
+	var tags = "Tags: " + arguments.tagList;
+	divTags.textContent = tags.split(",").join(", ");
+	divTags.style.fontSize = "0.8em";
+  divTags.style.fontWeight = "bold";
+  divTags.style.margin = "10px 0px 0px 10px";
+  divTags.style.textAlign = "left";
+  divTags.style.overflow = "hidden";
+
+	var divShared = document.createElement("div");
+	divShared.id = "titulo_compartilhar";
+	divShared.style.float = "right";
 
 	var linkClose = document.createElement('a');
 	linkClose.href = "#";
@@ -81,6 +95,18 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
   linkClose.style.top = '-18px';
   linkClose.className = "sambaads-close-modal";
 
+  var css = '.cf-sambaads:before,.cf-sambaads:after {content: " ";display: table;}';
+	var style = document.createElement('style');
+	style.type = 'text/css';
+
+	if (style.styleSheet){
+	 	style.styleSheet.cssText = css;
+	} else {
+	  style.appendChild(document.createTextNode(css));
+	}
+
+	document.body.appendChild(style);
+
 	modal.appendChild(divMaster);
 	divMaster.appendChild(linkClose);
 	divMaster.appendChild(divChildren);
@@ -88,7 +114,9 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divChildren.appendChild(divScript);
 	divContext.appendChild(divTitle);
 	divContext.appendChild(divDescription);
-	divContext.appendChild(divTags);	
+	divContextTagsAndShared.appendChild(divShared);
+	divContextTagsAndShared.appendChild(divTags);
+	divContext.appendChild(divContextTagsAndShared);
 	divChildren.appendChild(divContext);
 
 	// divMaster.style.top = (h - divMaster.clientHeight)/2 + "px";
@@ -141,6 +169,21 @@ SambaadsModal.prototype.open = function(arguments){
 	var div = document.createElement('div');
 	this.defineStylePage(div);
 	this.createElementPlayer(arguments);
+	stLight.options({'publisher': "f7e96c33-f1d5-4759-bbc3-d33cdab556ad", 'doNotHash': false, 'doNotCopy': false, 'hashAddressBar': false});
+
+	var type_shares = ["facebook", "twitter", "googleplus", "linkedin", "pinterest"];
+
+	type_shares.forEach(function(type){ 
+		stWidget.addEntry({
+			"service": type,
+			"element": document.getElementById('titulo_compartilhar'),
+			"url": encodeURIComponent('/* @echo FACEBOOK_SHARER_URL */' + "?mid=" + arguments.id + "&pid=" + arguments.publisherId),
+			"title": arguments.title,
+			"type":"large",
+			"image":"",
+			"summary": arguments.description
+		});
+	})
 };
 
 cw.sambaads.SambaadsModal = SambaadsModal;

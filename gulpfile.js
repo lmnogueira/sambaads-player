@@ -60,11 +60,11 @@ gulp.task("build-javascripts", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
-    gulp.src([paths.scripts + "widget/widget.js",paths.scripts + "modal.js"])
+    gulp.src([paths.scripts + "widget/widget.js", paths.scripts + "vendor/buttons.js", paths.scripts + "modal.js"])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("widget.js"))
-    .pipe(concat_util.header('\"use strict\";(function(cw){'))
+    .pipe(concat_util.header('(function(cw){'))
     .pipe(concat_util.footer('})(this);'))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
