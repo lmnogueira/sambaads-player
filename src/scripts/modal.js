@@ -55,7 +55,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divDescription.textContent = arguments.description;
 	divDescription.style.fontSize = "16px";
 	divDescription.style.color = "#000";
-	divDescription.style.margin = "0 10px";
+	divDescription.style.margin = "0 10px 15px 10px";
 	divDescription.style.fontFamily = "helvetica,sans-serif";
 	divDescription.style.textAlign = "justify";
 
