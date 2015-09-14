@@ -44,13 +44,15 @@
         <script src='/javascripts/player.js?m=<%= media %>&p=<%= publisher %>&sk=blue&tm=light&tb=&tbbg=&debug=true'></script>
       </div>
       <!-- THUMB VIDEO PRINCIPAL -->
+      
+      <div id="titulo_video_principal" class="row col-xs-12">
+        <%= media_info.title %>
+      </div>
       <div id="nome_produtor" class="row col-xs-12">
         <%= media_info.owner_name %>
       </div>
       <!-- NOME PRODUTOR -->
-      <div id="titulo_video_principal" class="row col-xs-12">
-        <%= media_info.title %>
-      </div>
+      
       <!-- TITULO VIDEO PRINCIPAL -->
       <div id="descricao_video_principal" class="row col-xs-12">
         <%= media_info.description %>
