@@ -171,7 +171,7 @@ SambaadsModal.prototype.open = function(arguments){
 	this.createElementPlayer(arguments);
 	stLight.options({'publisher': "f7e96c33-f1d5-4759-bbc3-d33cdab556ad", 'doNotHash': false, 'doNotCopy': false, 'hashAddressBar': false});
 
-	var type_shares = ["facebook", "twitter", "googleplus", "linkedin", "pinterest"];
+	var type_shares = ["facebook", "twitter", "googleplus"];
 
 	type_shares.forEach(function(type){ 
 		stWidget.addEntry({
