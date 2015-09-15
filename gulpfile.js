@@ -71,7 +71,14 @@ gulp.task("build-javascripts-widget-view-controller", function(){
 });
 
 gulp.task("build-javascripts-base", function(){
-    gulp.src([paths.scripts + "layout/jquery-1.11.3.min.js",paths.scripts + "layout/jquery.dotdotdot.js", paths.scripts + "layout/jquery.colorbox.js", paths.scripts + "layout/bootstrap.js", paths.scripts + "layout/sambaads.layout.js"])
+    gulp.src([
+      paths.scripts + "layout/jquery-1.11.3.min.js",
+      paths.scripts + "layout/jquery.dotdotdot.js", 
+      paths.scripts + "layout/jquery.colorbox.js", 
+      paths.scripts + "layout/bootstrap.js", 
+      paths.scripts + "vendor/buttons.js",
+      paths.scripts + "layout/sambaads.layout.js"
+    ])
     .pipe(sourcemaps.init())
     .pipe(concat("sambaads.base.js"))
     .pipe(uglify())
@@ -80,7 +87,11 @@ gulp.task("build-javascripts-base", function(){
 });
 
 gulp.task("build-javascripts-widget-modal", function(){
-    gulp.src([paths.scripts + "widget/widget.js", paths.scripts + "vendor/buttons.js", paths.scripts + "modal.js"])
+    gulp.src([
+      paths.scripts + "widget/widget.js", 
+      paths.scripts + "vendor/buttons.js", 
+      paths.scripts + "modal.js"
+    ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("widget.js"))

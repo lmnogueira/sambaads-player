@@ -4,6 +4,11 @@ function SambaadsLayout(params){
 	this.mediaSelect = params.playlist[0];
 }
 
+SambaadsLayout.prototype.runExtraDependence = function() {
+	$(".titulo_assista_tambem").dotdotdot({ watch: 'false' });
+  $(".titulo-principal").dotdotdot({ watch: 'false' });
+}
+
 SambaadsLayout.prototype.chunk = function(arr, len){
   var chunks = [],
       i = 0,
@@ -45,6 +50,8 @@ SambaadsLayout.prototype.create = function() {
 				$("#sambaads-content").append(hrDivisor);
 			}
 		}
+
+		self.runExtraDependence();
 	});
 }
 
@@ -81,6 +88,7 @@ SambaadsLayout.prototype.elementTemplate = function(element) {
 	var divTitle = document.createElement("div");
 	divTitle.className = "titulo_assista_tambem";
 	divTitle.textContent = element.title;
+	divTitle.setAttribute('title', element.title);
 	divMedia.appendChild(divTitle);
 	return divMedia;
 };

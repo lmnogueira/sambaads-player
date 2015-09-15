@@ -45,7 +45,7 @@
       </div>
       <!-- THUMB VIDEO PRINCIPAL -->
       
-      <div id="titulo_video_principal" class="row col-xs-12">
+      <div id="titulo_video_principal" class="row col-xs-12 titulo-principal" title="<%= media_info.title %>">
         <%= media_info.title %>
       </div>
       <div id="nome_produtor" class="row col-xs-12">
@@ -109,24 +109,12 @@
   <script src="/javascripts/sambaads.base.js"></script>
 
   <script>
-  $(document).ready(function() {
-    var sambaads = new SambaadsLayout(<%- JSON.stringify(info) %>);
-    sambaads.create();
-
-    $("#titulo_assista_tambem1, #titulo_assista_tambem2, #titulo_assista_tambem3, #titulo_assista_tambem4, #titulo_assista_tambem5, #titulo_assista_tambem6").dotdotdot({
-      watch: 'false'
+    $(document).ready(function() {
+      var sambaads = new SambaadsLayout(<%- JSON.stringify(info) %>);
+      sambaads.create();
     });
-
-    $(".iframe").colorbox({
-      iframe: true,
-      width: 640,
-      height: 620,
-      scrolling: false
-    });
-  });
   </script>
 
-  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
   <script type="text/javascript">stLight.options({'publisher': "f7e96c33-f1d5-4759-bbc3-d33cdab556ad", 'doNotHash': false, 'doNotCopy': false, 'hashAddressBar': false, 'shorten': false});</script>
 
 </body>
