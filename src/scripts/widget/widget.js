@@ -14,8 +14,8 @@
 	var currentScript = detectScript();
 	var currentLocation = cw.location;
 	var currentIframe = {}
-	
-	if(!cw.sambaads){ 
+
+	if(!cw.sambaads){
 		cw.sambaads = {};
 		cw.sambaads.players = []
 
@@ -23,7 +23,7 @@
 
 			iframeId = iframeId || "sambaads_0";
 
-			for (var i = 0; i < cw.sambaads.players.length; i++) { 
+			for (var i = 0; i < cw.sambaads.players.length; i++) {
 				if(cw.sambaads.players[i].id == iframeId){
 					return cw.sambaads.players[i];
 				}
@@ -79,7 +79,7 @@
 		//se não conseguir obter ao menos o publisher ID não deve renderizar o iframe
 		if(!parameters.p)
 			return;
-		
+
 		iframe_url = "//" + parameters.request_domain + "/widget/" + parameters.p + "?" + serialize(parameters);
 
 		if(parameters.w){
@@ -91,7 +91,7 @@
 		}
 
 		//generate iframe embed
-		div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "#" + iframe_id +"\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
+		div.innerHTML = "<iframe id=\"" + iframe_id + "\" style=\"max-width: 100%;\" " + width_height + "src=\"" + iframe_url + "#" + iframe_id +"\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
 
 		//Put iframe after de <script> tag
 		insertAfter(currentScript, div.firstChild);
@@ -133,11 +133,11 @@
 		return protocolsUrl[document.location.protocol]
 	}
 
-	var init = function(){		
+	var init = function(){
 		//initialize parameters
-		var parameters = parseQueryString(currentScript.src);	
+		var parameters = parseQueryString(currentScript.src);
 
-		
+
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
@@ -181,7 +181,7 @@
 		} else {
 			attachEvent("onmessage", onMessageReceive)
 		};
-		
+
 		currentIframe.isReady = setInterval(function(){
 			currentIframe.sendMessage("ready","")
 		},2000)
