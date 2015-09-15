@@ -80,6 +80,18 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 	divShared.id = "titulo_compartilhar";
 	divShared.style.float = "right";
 
+	var spanFacebook = document.createElement("span");
+	spanFacebook.id = "sambaads-facebook";
+	divShared.appendChild(spanFacebook);
+	var spanTwitter = document.createElement("span");
+	spanTwitter.id = "sambaads-twitter";
+	spanTwitter.setAttribute('st_via', 'sambaads');
+	divShared.appendChild(spanTwitter);
+	var spanGoogle = document.createElement("span");
+	spanGoogle.id = "sambaads-googleplus";
+	divShared.appendChild(spanGoogle);
+
+
 	var linkClose = document.createElement('a');
 	linkClose.href = "#";
 	linkClose.style.color = "#999";
@@ -169,18 +181,18 @@ SambaadsModal.prototype.open = function(arguments){
 	var div = document.createElement('div');
 	this.defineStylePage(div);
 	this.createElementPlayer(arguments);
-	stLight.options({'publisher': "f7e96c33-f1d5-4759-bbc3-d33cdab556ad", 'doNotHash': false, 'doNotCopy': false, 'hashAddressBar': false});
+	stLight.options({'publisher': "f7e96c33-f1d5-4759-bbc3-d33cdab556ad", 'doNotHash': false, 'doNotCopy': false, 'hashAddressBar': false, 'shorten': false});
 
 	var type_shares = ["facebook", "twitter", "googleplus"];
 
 	type_shares.forEach(function(type){ 
 		stWidget.addEntry({
 			"service": type,
-			"element": document.getElementById('titulo_compartilhar'),
+			"element": document.getElementById('sambaads-' + type),
 			"url": encodeURIComponent('/* @echo FACEBOOK_SHARER_URL */' + "?mid=" + arguments.mediaId + "&pid=" + arguments.publisherId),
 			"title": arguments.title,
 			"type":"large",
-			"image":"",
+			"image": arguments.image,
 			"summary": arguments.description
 		});
 	})
