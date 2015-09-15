@@ -48,11 +48,17 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     divTitle.style.color = "#000";
     divTitle.style.fontWeight = "bold";
     divTitle.style.textAlign = "left";
-    divTitle.style.margin = "10px 10px";
+    divTitle.style.margin = "10px 10px 4px";
+
+    var divPublisher = document.createElement('div');
+    divPublisher.style.fontSize = '.8em';
+    divPublisher.style.textAlign = 'left';
+    divPublisher.style.margin = '0 10px 20px 10px';
+    divPublisher.textContent = arguments.publisherName;
 
     var divDescription = document.createElement('div');
     divDescription.textContent = arguments.description;
-    divDescription.style.fontSize = "0.8em";
+    divDescription.style.fontSize = ".8em";
     divDescription.style.color = "#000";
     divDescription.style.margin = "0 10px 15px 10px";
     divDescription.style.textAlign = "justify";
@@ -125,6 +131,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     divScript.appendChild(script);
     divChildren.appendChild(divScript);
     divContext.appendChild(divTitle);
+    divContext.appendChild(divPublisher);
     divContext.appendChild(divDescription);
     divContextTagsAndShared.appendChild(divShared);
     divContextTagsAndShared.appendChild(divTags);
