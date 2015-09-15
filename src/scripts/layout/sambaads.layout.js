@@ -73,12 +73,17 @@ SambaadsLayout.prototype.elementTemplate = function(element) {
 	var linkImg = document.createElement("a");
 	linkImg.href = "/widget/" + this.publisherInfo.hash_code + "/" + element.media_id;
 
+	var divThumb = document.createElement("div");
+	divThumb.className = 'video-thumb';
+
 	var img = document.createElement("img");
 	img.src = element.image;
 	img.alt = element.title;
 	img.className = "img-responsive";
+
 	linkImg.appendChild(img);
-	divMedia.appendChild(linkImg);
+	divThumb.appendChild(linkImg);
+	divMedia.appendChild(divThumb);
 
 	var divProduct = document.createElement("div");
 	divProduct.id = "produtor_assista_tambem";

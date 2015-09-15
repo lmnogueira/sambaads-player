@@ -194,3 +194,34 @@ body {
     text-decoration: none;
     color: #cccccc;
 }
+
+.video-thumb {
+    float: none;
+    margin-right: 0;
+    width: auto;
+    position: relative;
+}
+
+.video-thumb img {
+    display: block;
+    position: relative;
+    width:100%;
+}
+
+.video-thumb a::after {
+  content: "";
+  background: url(/images/icon-play-round.png) no-repeat 50%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  background-size: 100% auto;
+  margin: auto;
+  max-width: 80px;
+  width: 20%;
+}
+
+.video-thumb a:hover::after {
+    opacity: 0.5;
+}
