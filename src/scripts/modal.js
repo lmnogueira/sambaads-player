@@ -14,6 +14,19 @@ SambaadsModal.prototype.setKeyDownElements = function(element, self){
     }
 };
 
+SambaadsModal.createStyleTag = function(styleString) {
+    var styleTag = document.createElement('style');
+    styleTag.type = 'text/css';
+
+    if (styleTag.styleSheet){
+        styleTag.styleSheet.cssText = styleString;
+    } else {
+      styleTag.appendChild(document.createTextNode(styleString));
+    }
+
+    document.body.appendChild(styleTag);
+}
+
 SambaadsModal.prototype.createElementPlayer = function(arguments){
     var self = this,
         modal = document.getElementsByClassName("sambaads-modal-body")[0],
@@ -97,67 +110,49 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
 
     var linkClose = document.createElement('a');
     linkClose.href = "#";
-    linkClose.style.color = "#999";
-    linkClose.style.width = '36px';
-    linkClose.style.height = '36px';
-    linkClose.style.color = 'rgb(153, 153, 153)';
-    linkClose.style.textDecoration = 'none';
-    linkClose.style.background = 'url("//' + '/* @echo NGINX_WIDGET_DOMAIN */' + '/images/close_modal.png")';
-    linkClose.style.display = 'block';
-    linkClose.style.backgroundSize = '100% auto';
-    linkClose.style.position = 'absolute';
-    linkClose.style.right = '-18px';
-    linkClose.style.top = '-18px';
     linkClose.className = "sambaads-close-modal";
 
-    var css = '.cf-sambaads:before,.cf-sambaads:after {content: " ";display: table;}';
-    var style = document.createElement('style');
-    style.type = 'text/css';
+    var cssStyles =
+        '.cf-sambaads:before, \
+        .cf-sambaads:after { \
+            content: " "; \
+            display: table; \
+        } \
+        .sambaads-master { \
+            max-width: 640px; \
+            position: absolute; \
+            margin: 10% auto; \
+            left: 0px; \
+            right: 0px; \
+        } \
+        .sambaads-modal-script { \
+            height: 360px; \
+        } \
+        .sambaads-close-modal { \
+            color: rgb(153, 153, 153); \
+            width: 36px; \
+            height: 36px; \
+            text-decoration: none; \
+            display: block; \
+            position: absolute; \
+            top: -18px; \
+            right: -18px; \
+            background: url("//' + '/* @echo NGINX_WIDGET_DOMAIN */' + '/images/close_modal.png")
+        } \
+        @media screen and (max-width: 45em) { \
+            .sambaads-master { \
+                max-width: 100% !important; \
+            } \
+            .sambaads-modal-script { \
+                height: 190px; \
+            } \
+            .sambaads-close-modal { \
+                top: -20px; \
+                right: -3px; \
+            } \
+        }';
 
-    if (style.styleSheet){
-        style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
-    }
-
-    document.body.appendChild(style);
-
-    var responsiveStyle =
-        '.sambaads-master {'+
-            'max-width: 640px;'+
-            'position: absolute;'+
-            'margin: 10% auto;'+
-            'left: 0px;'+
-            'right: 0px;'+
-        '}'+
-        '.sambaads-modal-script {'+
-            'height: 360px;'+
-        '}'+
-        '@media screen and (max-width: 45em) {'+
-            '.sambaads-master {'+
-                'max-width: 100% !important;'+
-            '}'+
-            '.sambaads-modal-script {'+
-                'height: 190px;'+
-            '}'+
-        '}';
-
-    console.log(responsiveStyle);
-
-    var createStyleTag = function(styleString) {
-        var styleTag = document.createElement('style');
-        styleTag.type = 'text/css';
-
-        if (styleTag.styleSheet){
-            styleTag.styleSheet.cssText = styleString;
-        } else {
-          styleTag.appendChild(document.createTextNode(styleString));
-        }
-
-        document.body.appendChild(styleTag);
-    }
-
-    createStyleTag(responsiveStyle);
+    SambaadsModal.createStyleTag(cssStyles);
 
     modal.appendChild(divMaster);
     divMaster.appendChild(linkClose);
