@@ -137,7 +137,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
             position: absolute; \
             top: -18px; \
             right: -18px; \
-            background: url("//' + '/* @echo NGINX_WIDGET_DOMAIN */' + '/images/close_modal.png")
+            background: url("//' + '/* @echo NGINX_WIDGET_DOMAIN */' + '/images/close_modal.png") \
         } \
         @media screen and (max-width: 45em) { \
             .sambaads-master { \
