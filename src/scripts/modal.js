@@ -21,24 +21,21 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
         w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
         h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    divMaster.style.position = "absolute";
     divMaster.id = "sambaads-master";
-    divMaster.style.width = "640px";
-    divMaster.style.margin = "10% auto";
-    divMaster.style.left = "0";
-    divMaster.style.right = "0";
+    divMaster.className = "sambaads-master";
 
     var divChildren = document.createElement('div');
     divChildren.style.backgroundColor = "#fff";
     divChildren.style.padding = "13px";
 
     var divScript = document.createElement('div');
-    divScript.style.height = "360px";
+    divScript.id = "sambaads-modal-script";
+    divScript.className = "sambaads-modal-script";
 
     var script = document.createElement('script');
     script.type= 'text/javascript';
     // script.src= '/javascripts/player.js?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360&debug=true';
-    script.src= '/* @echo PLAYER_SCRIPT_URL */' + '?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=360';
+    script.src= '/* @echo PLAYER_SCRIPT_URL */' + '?m=' + arguments.mediaId + '&p=' + arguments.publisherId + '&sk=blue&tm=light&h=100%';
 
     var divContext = document.createElement('div');
 
@@ -113,7 +110,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     linkClose.style.top = '-18px';
     linkClose.className = "sambaads-close-modal";
 
-  var css = '.cf-sambaads:before,.cf-sambaads:after {content: " ";display: table;}';
+    var css = '.cf-sambaads:before,.cf-sambaads:after {content: " ";display: table;}';
     var style = document.createElement('style');
     style.type = 'text/css';
 
@@ -124,6 +121,43 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     }
 
     document.body.appendChild(style);
+
+    var responsiveStyle =
+        '.sambaads-master {'+
+            'max-width: 640px;'+
+            'position: absolute;'+
+            'margin: 10% auto;'+
+            'left: 0px;'+
+            'right: 0px;'+
+        '}'+
+        '.sambaads-modal-script {'+
+            'height: 360px;'+
+        '}'+
+        '@media screen and (max-width: 45em) {'+
+            '.sambaads-master {'+
+                'max-width: 100% !important;'+
+            '}'+
+            '.sambaads-modal-script {'+
+                'height: 190px;'+
+            '}'+
+        '}';
+
+    console.log(responsiveStyle);
+
+    var createStyleTag = function(styleString) {
+        var styleTag = document.createElement('style');
+        styleTag.type = 'text/css';
+
+        if (styleTag.styleSheet){
+            styleTag.styleSheet.cssText = styleString;
+        } else {
+          styleTag.appendChild(document.createTextNode(styleString));
+        }
+
+        document.body.appendChild(styleTag);
+    }
+
+    createStyleTag(responsiveStyle);
 
     modal.appendChild(divMaster);
     divMaster.appendChild(linkClose);
