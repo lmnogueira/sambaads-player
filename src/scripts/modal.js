@@ -210,6 +210,7 @@ SambaadsModal.prototype.createListeners = function(element){
     var self = this;
     element.onclick = function(evt){
         evt.preventDefault();
+        evt.stopPropagation();
         if(evt.target.className == "sambaads-modal-body" || evt.target.className == "sambaads-close-modal")
             self.close();
     };
