@@ -110,7 +110,9 @@
 			toClearTimeout: 0,
 			isReady: false,
 			contentWindow: function(){
-				return document.getElementById(this.id).contentWindow;
+				if (document.getElementById(this.id)) {
+					return document.getElementById(this.id).contentWindow;
+				}
 			},
 			sendMessage: function(smbevent,data){
 				if(this.contentWindow().postMessage){
