@@ -112,6 +112,8 @@
 			contentWindow: function(){
 				if (document.getElementById(this.id)) {
 					return document.getElementById(this.id).contentWindow;
+				} else {
+					return false;
 				}
 			},
 			sendMessage: function(smbevent,data){
