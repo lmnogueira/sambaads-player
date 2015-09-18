@@ -40,11 +40,12 @@ WidgetController.prototype.play = function(element) {
 	var index = element.id.split("-")[1];
 	this.currentPlaylistIndex = index;
 	var link_url = $(element).find("a")[0];
-	if(this.params.target == "blank"){
+
+	if(this.params.target == "blank") {
 		var win = window.open($(link_url).data("href"), '_blank');
 		win.focus();
-	}else{
-		this.sendMessage("click", JSON.stringify({image: this.getCurrentItem().image, publisherName: this.publisherInfo.name, publisherId: this.publisherInfo.hash_code, tagList: String(this.getCurrentItem().tag_list), mediaId: this.getCurrentItem().media_id, description: this.getCurrentItem().description, title: this.getCurrentItem().title}));
+	} else {
+		this.sendMessage("click", JSON.stringify({image: this.getCurrentItem().image, ownerName: this.getCurrentItem().owner_name, publisherId: this.publisherInfo.hash_code, tagList: String(this.getCurrentItem().tag_list), mediaId: this.getCurrentItem().media_id, description: this.getCurrentItem().description, title: this.getCurrentItem().title}));
 	}
 };
 

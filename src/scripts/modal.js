@@ -60,11 +60,11 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     divTitle.style.textAlign = "left";
     divTitle.style.margin = "10px 10px 4px";
 
-    var divPublisher = document.createElement('div');
-    divPublisher.style.fontSize = '.8em';
-    divPublisher.style.textAlign = 'left';
-    divPublisher.style.margin = '0 10px 20px 10px';
-    divPublisher.textContent = arguments.publisherName;
+    var ownerName = document.createElement('div');
+    ownerName.style.fontSize = '.8em';
+    ownerName.style.textAlign = 'left';
+    ownerName.style.margin = '0 10px 20px 10px';
+    ownerName.textContent = arguments.ownerName;
 
     var divDescription = document.createElement('div');
     divDescription.textContent = arguments.description;
@@ -160,7 +160,7 @@ SambaadsModal.prototype.createElementPlayer = function(arguments){
     divScript.appendChild(script);
     divChildren.appendChild(divScript);
     divContext.appendChild(divTitle);
-    divContext.appendChild(divPublisher);
+    divContext.appendChild(ownerName);
     divContext.appendChild(divDescription);
     divContextTagsAndShared.appendChild(divShared);
     divContextTagsAndShared.appendChild(divTags);
