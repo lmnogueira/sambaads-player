@@ -5,11 +5,11 @@ SambaAdsWidgetView = function (){
 	this.displayOverlayShare 	 = document.getElementById("display-overlay-share");
 	this.displayOverlayPlay 	 = document.getElementById("display-overlay-play");
 	this.displayOverlayNextVideo = document.getElementById("display-overlay-next");
-	
+
 	this.playButtom = document.getElementById("display-buttom-play");
 	this.videoTitleBar = document.getElementById("video-title-bar");
 	this.videoTitle = document.getElementById("video-title");
-	
+
 };
 
 SambaAdsWidgetView.prototype.showDisplay = function(option){};
@@ -90,13 +90,13 @@ SambaAdsWidgetView.prototype.resizeTimeout = function(){
 }
 
 SambaAdsWidgetView.prototype.resizeContent = function(){
-	var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	var newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-	var maxRatio = newWidth/newHeight;
-	var currentRatio;
-	var ratio = 0;
-	var heightControlsSlide = 66;
-	var flagLoadImage = true;
+	var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+		newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+		maxRatio = newWidth/newHeight,
+		currentRatio,
+		ratio = 0,
+		heightControlsSlide = 66,
+		flagLoadImage = true;
 
 	$(".playlist-item").each(function(index, element){
 		var myImg = $(this).find("img")[0];
@@ -114,18 +114,17 @@ SambaAdsWidgetView.prototype.resizeContent = function(){
 		$(".sambaads-playlist").show();
 
 		$(".playlist-item").each(function(index, element){
-			var originalWidth = $(this).width();
-			var originalHeight = $(this).height();
+			var originalWidth = $(this).width(),
+				originalHeight = $(this).height();
+
 			currentRatio = originalHeight/originalWidth;
 
-			if(currentRatio>maxRatio){
+			if(currentRatio > maxRatio){
 				ratio = (newWidth / originalWidth);
-				$(this).height(originalHeight*ratio);
-				$(this).width(newWidth - heightControlsSlide);
-			}else{
+				$(this).height(originalHeight*ratio).width(newWidth);
+			} else {
 				ratio = (newHeight / originalHeight);
-				$(this).height(newHeight);
-				$(this).width((originalWidth*ratio) - heightControlsSlide);
+				$(this).height(newHeight).width((originalWidth*ratio));
 			}
 		});
 		this.applyLightSlider();
@@ -173,7 +172,9 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 
 		$(new_h_item).find("img").attr('src',item.image);
 
-		$(new_h_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
+		$(new_h_item).find(".video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
+
+		$(new_h_item).find(".video-owner").text(item.owner_name);
 
 		$(new_h_item).find("a").attr('data-href', self.controller.getUrlIframe() + self.controller.publisherInfo.hash_code + "/" + item.media_id);
 
@@ -197,7 +198,7 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 
 SambaAdsWidgetView.prototype.onPlay = function(){
 	this.controller.updateViewsCount(
-			this.options.playlist[this.controller.currentPlaylistIndex].media_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].owner_id, 
+			this.options.playlist[this.controller.currentPlaylistIndex].media_id,
+			this.options.playlist[this.controller.currentPlaylistIndex].owner_id,
 			this.options.playlist[this.controller.currentPlaylistIndex].category_name);
 };
