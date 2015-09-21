@@ -1127,3 +1127,13 @@ ul.lightSlider {
     opacity: 0.3;
     transition: opacity .15s ease-out;
 }
+
+.cf-sambaads:before,
+.cf-sambaads:after {
+    content: " ";
+    display: table;
+}
+
+.cf-sambaads:after {
+    clear: both;
+}
