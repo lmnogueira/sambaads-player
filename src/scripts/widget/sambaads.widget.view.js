@@ -91,7 +91,7 @@ SambaAdsWidgetView.prototype.resizeTimeout = function(){
 
 SambaAdsWidgetView.prototype.resizeContent = function(){
 	var newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-		newHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+		newHeight = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 24,
 		maxRatio = newWidth/newHeight,
 		currentRatio,
 		ratio = 0,
@@ -121,7 +121,7 @@ SambaAdsWidgetView.prototype.resizeContent = function(){
 
 			if(currentRatio > maxRatio){
 				ratio = (newWidth / originalWidth);
-				$(this).height(originalHeight*ratio).width(newWidth);
+				$(this).height((originalHeight*ratio)).width(newWidth);
 			} else {
 				ratio = (newHeight / originalHeight);
 				$(this).height(newHeight).width((originalWidth*ratio));

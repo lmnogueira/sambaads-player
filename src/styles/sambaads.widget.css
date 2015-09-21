@@ -1090,3 +1090,11 @@ body {
 ul.lightSlider {
 	height:auto !important;
 }
+
+.sambaads-powered {
+    font-size: .6em;
+    text-align: left;
+    color: #B0B0B0;
+    margin: 0;
+    padding: 0 10px;
+}
