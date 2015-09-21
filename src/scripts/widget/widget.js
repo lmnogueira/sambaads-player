@@ -82,33 +82,44 @@
 
 		iframe_url = "//" + parameters.request_domain + "/widget/" + parameters.p + "?" + serialize(parameters);
 
-		// if(parameters.w){
-		// 	width_height = ' width="' + parameters.w + '"';
-		// }
+		var iframeHeight = parameters.h,
+			iframeWidth = parameters.w;
 
-		// if(parameters.h){
-		// 	width_height = width_height + ' height="' + parameters.h + '"';
-		// }
+		if (iframeWidth !== '100%') {
+			iframeWidth = parameters.w.split('%');
 
-
-		var widthValue = parameters.w.split('%');
-
-		if(typeof widthValue[1] === 'undefined') {
-		    widthValue = (parameters.w - 20);
-		    widthValue = widthValue + 'px';
+			if (typeof iframeWidth[1] === 'undefined') {
+			    iframeWidth = (parameters.w - 20);
+			    iframeWidth = iframeWidth + 'px';
+			} else {
+				iframeWidth = iframeWidth + '%';
+			}
 		}
 
-		var iframeHeight = parameters.h;
-		iframeHeight = currentScript.parentNode.offsetHeight;
-		iframeHeight = iframeHeight - 73;
-		iframeHeight = iframeHeight + 'px';
+		console.log(parameters);
+		console.log(iframeHeight);
 
-		width_height = ' width="' + parameters.w +'" height="' + iframeHeight + '"';
+		if (iframeHeight !== '100%') {
+			iframeHeight = parameters.w.split('%');
 
-		var playerHeader = '<h2 id="sambaads_now_whatch" class="sambaads_now_whatch" style="margin-top:10px;margin-bottom:10px; width: auto; font-family: verdana, arial, sans-serif;display: inline-block; margin-right: 5px; color:#000000; font-weight: bold; font-size:1.5em;">ASSISTA AGORA</h2>',
+			if (typeof iframeHeight[1] === 'undefined') {
+			    iframeHeight = iframeHeight[0] + 'px';
+			} else {
+				// Regra de três para saber altura
+				iframeHeight = iframeHeight[0] + '%';
+			}
+		} {
+			iframeHeight = currentScript.parentNode.offsetHeight;
+			iframeHeight = iframeHeight - 73;
+		    iframeHeight = iframeHeight + 'px';
+		}
+
+		width_height = ' width="' + iframeWidth +'" height="' + iframeHeight + '"';
+
+		var playerHeader = '<h2 id="sambaads_now_whatch" class="sambaads_now_whatch" style="margin-top:10px;margin-bottom:10px; width: 100%; font-family: verdana, arial, sans-serif;display: inline-block; margin-right: 5px; color:#000000; font-weight: bold; font-size:1.5em;">ASSISTA AGORA</h2>',
 			iframeContent = '<iframe id="' + iframe_id + '" style="max-width: 100%; height: ' + iframeHeight + '" ' + width_height + ' src="' + iframe_url + '#' + iframe_id +'" frameborder="0" scrolling="no"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>',
 			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: left; text-align: -webkit-left; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
-			divContent = '<div style="height: 100%; min-height: 100%;">' + playerHeader + iframeContent + playerFooter + '</div>';
+			divContent = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%;">' + playerHeader + iframeContent + playerFooter + '</div>';
 
 		div.innerHTML = divContent;
 
