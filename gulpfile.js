@@ -8,7 +8,7 @@ var del = require('del');
 var concat_util = require('gulp-concat-util');
 var minify_css = require('gulp-minify-css');
 var preprocess = require('gulp-preprocess');
- 
+
 var paths = {
   scripts:  './src/scripts/',
   images:   './src/images/',
@@ -73,9 +73,9 @@ gulp.task("build-javascripts-widget-view-controller", function(){
 gulp.task("build-javascripts-base", function(){
     gulp.src([
       paths.scripts + "layout/jquery-1.11.3.min.js",
-      paths.scripts + "layout/jquery.dotdotdot.js", 
-      paths.scripts + "layout/jquery.colorbox.js", 
-      paths.scripts + "layout/bootstrap.js", 
+      paths.scripts + "layout/jquery.dotdotdot.js",
+      paths.scripts + "layout/jquery.colorbox.js",
+      paths.scripts + "layout/bootstrap.js",
       paths.scripts + "vendor/buttons.js",
       paths.scripts + "layout/sambaads.layout.js"
     ])
@@ -88,8 +88,8 @@ gulp.task("build-javascripts-base", function(){
 
 gulp.task("build-javascripts-widget-modal", function(){
     gulp.src([
-      paths.scripts + "widget/widget.js", 
-      paths.scripts + "vendor/buttons.js", 
+      paths.scripts + "widget/widget.js",
+      paths.scripts + "vendor/buttons.js",
       paths.scripts + "modal.js"
     ])
     .pipe(sourcemaps.init())

@@ -593,17 +593,18 @@ body {
 }
 
 .horizontal .video-thumb a::after {
-	content: "";
-	background: url(/images/icon-play-round.png) no-repeat 50%;
-	top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  background-size: 100% auto;
-  margin: auto;
-  max-width: 80px;
-  width: 20%;
+    content: "";
+    background: url(/images/icon-play-round.png) no-repeat 50%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    background-size: 100% auto;
+    margin: auto;
+    max-width: 80px;
+    width: 20%;
+    z-index: 50;
 }
 
 .horizontal .video-thumb a:hover::after {
@@ -631,7 +632,7 @@ body {
 .video-description {
 	overflow: hidden;
 	position: absolute;
-	padding: 5px 10px;
+	padding: 2px 10px;
     top: 0;
     left: 0;
     right: 0;
@@ -661,13 +662,15 @@ body {
 .horizontal .video-description h4 {
 	display:block;
 	vertical-align:inherit;
-	margin-top:6px;
+	margin-top: 3px;
 	text-align:left;
-	padding-bottom:10px;
+	padding-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .video-description h4 a {
 	color: #fff;
-	opacity: .8;
+	opacity: .9;
 	filter: alpha(opacity=80);
 	-webkit-transition: opacity .15s ease-out;
 	-moz-transition: opacity .15s ease-out;
@@ -687,8 +690,9 @@ body {
 }
 
 .video-owner {
-    font-size: .8em;
+    font-size: .7em;
     color: #fff;
+    font-weight: normal;
 }
 
 .label-patrocinado {
@@ -1097,4 +1101,29 @@ ul.lightSlider {
     color: #B0B0B0;
     margin: 0;
     padding: 0 10px;
+}
+
+.titlebar {
+    overflow: hidden;
+    border-bottom: 1px solid #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: relative;
+    height: 40px;
+    padding: 10px;
+}
+
+.titlebar h2 {
+    font-size: 17px;
+    color: #fff;
+    font-weight: bold;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.logo-sambaads {
+    position: absolute;
+    right: 9px;
+    top: 9px;
+    opacity: 0.3;
+    transition: opacity .15s ease-out;
 }
