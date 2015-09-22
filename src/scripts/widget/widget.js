@@ -129,7 +129,7 @@
 
 		width_height = ' width="' + iframeWidth +'" height="' + iframeHeight + '"';
 
-		var playerHeader = '<h3 id="sambaads-now-whatch" class="sambaads-now-whatch" style="margin: .5em 5px;">ASSISTA AGORA</h3>',
+		var playerHeader = '<h3 id="sambaads-now-whatch" class="sambaads-now-whatch" style="margin: .5em 5px;">Vídeos Recomendados para Você</h3>',
 			iframeContent = '<iframe id="' + iframe_id + '" style="max-width: 100%; height: ' + iframeHeight + '" ' + width_height + ' src="' + iframe_url + '#' + iframe_id +'" frameborder="0" scrolling="no"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>',
 			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
 			divContent = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%; width:' + iframeWidth + '">' + playerHeader + iframeContent + playerFooter + '</div>';
