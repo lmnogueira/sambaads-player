@@ -174,7 +174,7 @@ SambaAdsWidgetView.prototype.showPlaylist = function(options){
 
 		$(new_h_item).find(".video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
 
-		$(new_h_item).find(".video-owner").text('enviado por: ' + item.owner_name);
+		$(new_h_item).find(".video-owner").text('por ' + item.owner_name);
 
 		$(new_h_item).find("a").attr('data-href', self.controller.getUrlIframe() + self.controller.publisherInfo.hash_code + "/" + item.media_id);
 
