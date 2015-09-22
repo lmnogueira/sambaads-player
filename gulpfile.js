@@ -92,13 +92,13 @@ gulp.task("build-javascripts-widget-modal", function(){
       paths.scripts + "vendor/buttons.js",
       paths.scripts + "modal.js"
     ])
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("widget.js"))
     .pipe(concat_util.header('(function(cw){'))
     .pipe(concat_util.footer('})(this);'))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
+    //.pipe(uglify())
+    //.pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 });
 
@@ -140,7 +140,7 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['development-context', 'watch', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-widget-view-controller", "build-javascripts-base", "build-javascripts-widget-modal"]);
+gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-widget-view-controller", "build-javascripts-base", "build-javascripts-widget-modal", 'watch']);
 gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-widget-view-controller", "build-javascripts-base", "build-javascripts-widget-modal"]);
 gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-widget-view-controller", "build-javascripts-base", "build-javascripts-widget-modal"]);
 gulp.task("ci", ['clean', 'build-images', 'build-css']);

@@ -89,24 +89,37 @@
 			iframeWidth = parameters.w.split('%');
 
 			if (typeof iframeWidth[1] === 'undefined') {
-			    iframeWidth = (parameters.w - 20);
+			    iframeWidth = parameters.w;
 			    iframeWidth = iframeWidth + 'px';
 			} else {
 				iframeWidth = iframeWidth + '%';
 			}
 		}
 
-		console.log(parameters);
-		console.log(iframeHeight);
+		// console.log(parameters);
+		// console.log(iframeHeight);
+		// console.log('test6');
 
 		if (iframeHeight !== '100%') {
-			iframeHeight = parameters.w.split('%');
+			var iframeHeightSplit = parameters.h.split('%');
 
-			if (typeof iframeHeight[1] === 'undefined') {
-			    iframeHeight = iframeHeight[0] + 'px';
+			if (typeof iframeHeightSplit[1] === 'undefined') {
+			    var scriptHolder = document.createElement('div');
+			    scriptHolder.id = 'sambaads-script-holder';
+			    scriptHolder.style.height = iframeHeightSplit[0] + 'px';
+
+			    var parentContainer = currentScript.parentNode;
+				parentContainer.insertBefore(scriptHolder, currentScript);
+
+			    scriptHolder.appendChild(currentScript);
+
+			    iframeHeight = currentScript.parentNode.offsetHeight;
+				iframeHeight = iframeHeightSplit[0] - 73;
+			    iframeHeight = iframeHeight + 'px';
 			} else {
+
 				// Regra de três para saber altura
-				iframeHeight = iframeHeight[0] + '%';
+				iframeHeight = iframeHeightSplit[0] + '%';
 			}
 		} {
 			iframeHeight = currentScript.parentNode.offsetHeight;
@@ -116,10 +129,10 @@
 
 		width_height = ' width="' + iframeWidth +'" height="' + iframeHeight + '"';
 
-		var playerHeader = '<h2 id="sambaads_now_whatch" class="sambaads_now_whatch" style="margin-top:10px;margin-bottom:10px; width: 100%; font-family: verdana, arial, sans-serif;display: inline-block; margin-right: 5px; color:#000000; font-weight: bold; font-size:1.5em;">ASSISTA AGORA</h2>',
+		var playerHeader = '<h3 id="sambaads-now-whatch" class="sambaads-now-whatch" style="margin: .5em 5px;">ASSISTA AGORA</h3>',
 			iframeContent = '<iframe id="' + iframe_id + '" style="max-width: 100%; height: ' + iframeHeight + '" ' + width_height + ' src="' + iframe_url + '#' + iframe_id +'" frameborder="0" scrolling="no"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>',
-			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: left; text-align: -webkit-left; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
-			divContent = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%;">' + playerHeader + iframeContent + playerFooter + '</div>';
+			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
+			divContent = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%; width:' + iframeWidth + '">' + playerHeader + iframeContent + playerFooter + '</div>';
 
 		div.innerHTML = divContent;
 
