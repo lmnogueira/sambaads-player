@@ -72,7 +72,7 @@ namespace :forever do
     on roles :all do
       within release_path do
         execute :forever, :stopall
-        execute "NODE_ENV=production forever start #{release_path}/app/bin/www"
+        execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
       end
     end
   end
@@ -80,7 +80,7 @@ namespace :forever do
   desc "start forever"
   task :start do
     within release_path do
-      execute "NODE_ENV=production forever start #{release_path}/app/bin/www"
+      execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
     end
   end
 
