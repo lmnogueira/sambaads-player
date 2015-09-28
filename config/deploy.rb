@@ -4,7 +4,7 @@ lock '3.4.0'
 set :application, 'sambaads_player'
 set :repo_url, 'git@sambaads_player.github.com:sambaads/sambaads-player.git'
 
-set :branch, 'master'
+set :branch, 'REFACTOR_remove_widget'
 
 set :deploy_to, '/app/sambaads_player'
 
@@ -71,8 +71,8 @@ namespace :forever do
   task :restart do
     on roles :all do
       within release_path do
-        execute :forever, :stopall
-        execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
+        execute "NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"
+        execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
       end
     end
   end
@@ -80,7 +80,7 @@ namespace :forever do
   desc "start forever"
   task :start do
     within release_path do
-      execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
+      execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
     end
   end
 
