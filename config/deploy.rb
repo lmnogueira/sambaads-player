@@ -72,7 +72,7 @@ namespace :forever do
     on roles :all do
       within release_path do
         execute "NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"
-        execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
+        execute "NODE_ENV=#{fetch(:node_env)} forever start -a --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
       end
     end
   end
@@ -81,7 +81,7 @@ namespace :forever do
   task :start do
     on roles :all do
       within release_path do
-        execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
+        execute "NODE_ENV=#{fetch(:node_env)} forever start -a --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
       end
     end
   end
@@ -90,7 +90,7 @@ namespace :forever do
   task :stop do
     on roles :all do
       within release_path do
-        execute :forever, :stopall
+        execute "NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"
       end
     end
   end
