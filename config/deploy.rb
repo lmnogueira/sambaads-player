@@ -79,15 +79,19 @@ namespace :forever do
 
   desc "start forever"
   task :start do
-    within release_path do
-      execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
+    on roles :all do
+      within release_path do
+        execute "NODE_ENV=#{fetch(:node_env)} forever start --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
+      end
     end
   end
 
   desc "stop forever"
   task :stop do
-    within release_path do
-      execute :forever, :stopall
+    on roles :all do
+      within release_path do
+        execute :forever, :stopall
+      end
     end
   end
 end
