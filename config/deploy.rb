@@ -1,12 +1,12 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'widget-player'
-set :repo_url, 'git@widget_player.github.com:sambaads/sambaads-player.git'
+set :application, 'sambaads_player'
+set :repo_url, 'git@sambaads_player.github.com:sambaads/sambaads-player.git'
 
 set :branch, 'master'
 
-set :deploy_to, '/app/widget_player'
+set :deploy_to, '/app/sambaads_player'
 
 set :scm, :git
 

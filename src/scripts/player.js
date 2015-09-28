@@ -88,6 +88,7 @@ var ExpandedCinema = function (cw, currentIframe){
 	this.detectContainerPositions = function(iframeId){
 		try{
 			var el = document.getElementById(iframeId);
+			el.style["z-index"] = "20000";
 			var viewportOffset = el.getBoundingClientRect();
 			var top = viewportOffset.top;
 			var left = viewportOffset.left;
@@ -114,7 +115,7 @@ var ExpandedCinema = function (cw, currentIframe){
 				wrapper.style["box-sizing"] = "border-box";
 				wrapper.style["margin-top"] = "0px";
 				wrapper.style["text-align"] = "left";
-				wrapper.style["z-index"] = "300000002";
+				wrapper.style["z-index"] = "10000";
 				wrapper.style["cursor"] = "pointer";
 
 				wrapper.innerHTML="<a id='btnClose." + iframeId + "' href='#' style='width: 30px;position: absolute;margin-left: 98%;margin-top: -1.5%; display:none;'><img id='btnCloseImg." + iframeId + "' src='//d3655zppehxyvi.cloudfront.net/lib/close.png' style='width: 30px; display:none;'></a><object id='sambaads_expanded_cinema_swf." + iframeId + "' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' name='sambaads_expanded_cinema_swf." + iframeId + "'><param name='movie' value='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"'><param name='wmode' value='transparent'><param name='allowfullscreen' value='true'><param name='align' value='middle'><param name='allowscriptaccess' value='always'><embed src='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"' wmode='transparent' quality='high' id='sambaads_expanded_cinema_swf_embed." + iframeId + "' name='sambaads_expanded_cinema_swf_embed." + iframeId + "' align='middle' allowscriptaccess='always' allowfullscreen='true' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></object>";
