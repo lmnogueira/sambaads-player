@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'sambaads_player'
-set :repo_url, 'git@sambaads_player.github.com:sambaads/sambaads-player.git'
+set :repo_url, 'git@player.github.com:sambaads/sambaads-player.git'
 
 set :branch, 'REFACTOR_remove_widget'
 
@@ -38,6 +38,19 @@ namespace :npm do
       within_targets do
         with fetch(:npm_env_variables, {}) do
           execute :npm, 'install', fetch(:npm_flags)
+        end
+      end
+    end
+  end
+
+  desc "install gulp"
+  namespace :install do
+    task :gulp do
+      on roles fetch(:npm_roles) do
+        within_targets do
+          with fetch(:npm_env_variables, {}) do
+            execute :npm, 'install', 'gulp'
+          end
         end
       end
     end
@@ -97,5 +110,5 @@ namespace :forever do
 end
 
 after 'deploy:updated', 'npm:install'
-after 'npm:install', 'gulp:build'
-after 'gulp:build', 'forever:restart'
+# after 'npm:install', 'gulp:build'
+# after 'gulp:build', 'forever:restart'
