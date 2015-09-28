@@ -68,7 +68,7 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 	options.satmfullref = url;
 
 
-    $.get('//player.sambaads.com/api/v1/collector/satm.gif', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
 	}).error(function(){
@@ -284,14 +284,12 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
     var player_config_options = {
         displaytitle: false,
-        
         advertising:{
           client:'vast',
           tag: decodeURIComponent(this.response.player_info.custom_tag)
         },
-
         plugins: {
-              'https://cdn-static-secure.liverail.com/js/LiveRail.AdManager.JWPlayer-6.8.1.plugin.js' : {
+              '/* @echo LIVERAIL_PLUGIN_URL */' : {
      			'LR_ADMAP': 'in::0',
                 'LR_URL': this.discoveryHost(),
                 'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
@@ -551,9 +549,10 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
+		$("#titlebar-title").text(this.controller.getCurrentVideo().title);
 
-		this.setShareFacebookUrl("https://app.sambaads.com/api/sharer?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
-		this.setShareEmbed("<script src=\"//player.sambaads.com/embed/player.js?"
+		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
+		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
 		  			+ "m=" + this.controller.getCurrentVideo().media_id 
 		  			+ "&p=" + this.controller.response.publisher_info.hash_code
 		  			+ "&sk=blue"
@@ -653,21 +652,45 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	$( "div.sambaads-embed" )
 	.mousemove(function(event) {
-		$("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 11 + "px")
-		$("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 11) + "px" )
+		// $("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 11 + "px")
+		// $("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 11) + "px" )
 		$("#share-button-dock").css("z-index","2")
 
-		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share")
+		$("#titlebar").css("z-index","1")
+		$("#titlebar").css("position","absolute")
+		$("#titlebar").css("color","#fff")
+		$("#titlebar h3").css("font-size","14px")
+
+		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
 			$("#share-button-dock").show();
+			$("#titlebar").show();
+		}
 	})
 	.mouseleave(function(event) {
 		$("#share-button-dock").hide();
+		$("#titlebar").hide();
+	});
+
+	$( "#titlebar" )
+	.mousemove(function(event) {
+		$("#titlebar").css("z-index","1")
+		$("#titlebar").css("position","absolute")
+		$("#titlebar").css("color","#fff")
+		$("#titlebar h3").css("font-size","14px")
+
+		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
+			$("#share-button-dock").show();
+			$("#titlebar").show();
+		}
+	}).mouseleave(function(event) {
+		$("#share-button-dock").hide();
+		$("#titlebar").hide();
 	});
 
 	$( "#share-button-dock" )
 	.mousemove(function(event) {
-		$("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 10 + "px")
-		$("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 10) + "px" )
+		// $("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 10 + "px")
+		// $("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 10) + "px" )
 		$("#share-button-dock").css("z-index","2")
 
 		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share")

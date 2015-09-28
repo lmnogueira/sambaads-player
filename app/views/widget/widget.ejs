@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/sambaads.widget.css">
+  <style type="text/css">
+    body {
+      margin: 0px;
+      background: #F5F5F5;
+      padding: 0;
+    }
+
+    #extensive {
+      box-shadow: 0 0 5px #ccc;
+    }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!-- oembed discovery -->
+  <link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title="" />
+  <link rel="alternate" type="text/xml+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=xml" title="" />
+  <!-- end oembed discovery -->
+</head>
+
+<body>
+<!--   <p class="sambaads-powered">
+    powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&utm_medium=Powered&utm_source=PlayerRecomendador\">
+    <img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'>
+    </a>
+  </p> -->
+
+  <div class="sambaads-playlist">
+    <div class="sambaads-playlist horizontal">
+      <ul id="playlist-h-items">
+        <li id="playlist-h-item" class="cf-sambaads">
+          <div class="playlist-item">
+            <div class="video-thumb">
+              <a href="#">
+                <img src="" alt="Título do vídeo" />
+                <span class="video-duration" style="display:none;">05:33</span>
+              </a>
+            </div>
+            <div class="video-description">
+              <h4>
+                <a href="#">Her: A Spike Jonze love story</a>
+              </h4>
+              <h5 class="video-owner">
+                  Lorem ipsum
+              </h5>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="playlist-item highlight">
+            <div class="video-thumb">
+              <a href="#">
+                <img src="" alt="Título do vídeo" />
+                <span class="video-duration" style="display:none;">05:33</span>
+              </a>
+            </div>
+            <div class="video-description">
+              <h4>
+                <a href="#">Her: A Spike Jonze love story</a>
+              </h4>
+            </div>
+            <span class="label-patrocinado">Patrocinado</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="/javascripts/sambaads.widget.js"></script>
+  <script type="text/javascript">
+    // START SAMBAADS
+    var widget = new WidgetController(<%- JSON.stringify(params) %>, <%- JSON.stringify(info) %>);
+    var smb = new SambaAdsWidgetView();
+    smb.init(widget);
+    // END SAMBAADS
+  </script>
+</body>
+
+</html>

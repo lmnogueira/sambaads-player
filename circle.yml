@@ -1,6 +1,12 @@
-general:
-  artifacts:
-    - "build" # relative to the build directory
-test:
- override:
-  - ./node_modules/.bin/gulp ci
+# general:
+#   artifacts:
+#     - "build" # relative to the build directory
+# test:
+#  override:
+#   - ./node_modules/.bin/gulp ci
+
+deployment:
+ staging:
+  branch: master
+  commands:
+   - bundle exec cap staging deploy

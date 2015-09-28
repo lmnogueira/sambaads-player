@@ -67,7 +67,7 @@ var ExpandedCinema = function (cw, currentIframe){
 	};
 
 	this.scrollOffset = function() {
-		var scrOfX = 0, 
+		var scrOfX = 0,
 			scrOfY = 0;
 
 		if( typeof( window.pageYOffset ) == 'number' ) {
@@ -83,14 +83,14 @@ var ExpandedCinema = function (cw, currentIframe){
 
 		cw.sambaads.expandedCinema.scrOfX = scrOfX;
 		cw.sambaads.expandedCinema.scrOfY = scrOfY;
-	};	
+	};
 
 	this.detectContainerPositions = function(iframeId){
 		try{
 			var el = document.getElementById(iframeId);
 			var viewportOffset = el.getBoundingClientRect();
 			var top = viewportOffset.top;
-			var left = viewportOffset.left;	
+			var left = viewportOffset.left;
 
 			return top + "," + left;
 		}
@@ -129,26 +129,26 @@ var ExpandedCinema = function (cw, currentIframe){
 				setTimeout(function(){
 					var btnClose = document.getElementById('btnClose.' + iframeId);
 					var btnCloseImg = document.getElementById('btnCloseImg.' + iframeId);
-					
+
 					btnClose.style["display"] = "block";
 					btnCloseImg.style["display"] = "block";
 				}, 5000);
 
-			} catch(e) { 
-				//console.log(e); 
-			} 
+			} catch(e) {
+				//console.log(e);
+			}
 	};
 
 	this.close = function(iframeId){
 		try {
 			//console.log(iframeId);
 			var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
-			wrapper.parentNode.removeChild(wrapper);											
-		} catch(e) {} 
+			wrapper.parentNode.removeChild(wrapper);
+		} catch(e) {}
 	};
 };
 
-(function(cw){ 
+(function(cw){
 
 	var detectScript = function(){
 		var currentScript = document.currentScript || (function() {
@@ -165,8 +165,8 @@ var ExpandedCinema = function (cw, currentIframe){
 	var currentScript = detectScript();
 	var currentLocation = cw.location;
 	var currentIframe = {}
-	
-	if(!cw.sambaads){ 
+
+	if(!cw.sambaads){
 		cw.sambaads = {};
 		cw.sambaads.players = []
 
@@ -174,7 +174,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
 			iframeId = iframeId || "sambaads_0";
 
-			for (var i = 0; i < cw.sambaads.players.length; i++) { 
+			for (var i = 0; i < cw.sambaads.players.length; i++) {
 				if(cw.sambaads.players[i].id == iframeId){
 					return cw.sambaads.players[i];
 				}
@@ -253,7 +253,7 @@ var ExpandedCinema = function (cw, currentIframe){
 		//se não conseguir obter ao menos o publisher ID não deve renderizar o iframe
 		if(!parameters.p)
 			return;
-		
+
 		iframe_url = "//" + parameters.request_domain + "/iframe/" + parameters.p + "?";
 
 		if (parameters.m){
@@ -318,7 +318,10 @@ var ExpandedCinema = function (cw, currentIframe){
 			toClearTimeout: 0,
 			isReady: false,
 			contentWindow: function(){
-				return document.getElementById(this.id).contentWindow;
+				if(document.getElementById(this.id)) {
+					return document.getElementById(this.id).contentWindow;
+				}
+				return false;
 			},
 			sendMessage: function(smbevent,data){
 				if(this.contentWindow().postMessage){
@@ -326,28 +329,28 @@ var ExpandedCinema = function (cw, currentIframe){
 				}
 			},
 			doPlay:function(){
-				
+
 				if(this.contentWindow().postMessage){
 					//console.log("CORE SEND:" + this.id + "::play::");
 					this.contentWindow().postMessage( this.id + "::play::", this.iframe_target_host )
 				}
-					
+
 			},
 			setVisible:function(data){
-				
+
 				if(this.contentWindow().postMessage){
 					//console.log("CORE SEND:" + this.id + "::play::");
 					this.contentWindow().postMessage( this.id + "::visible::" + data, this.iframe_target_host )
 				}
-					
+
 			},
 			setMute:function(data){
-				
+
 				if(this.contentWindow().postMessage){
 					//console.log("CORE SEND:" + this.id + "::play::");
 					this.contentWindow().postMessage( this.id + "::mute::" + data, this.iframe_target_host )
 				}
-					
+
 			},
 			doPause:function(){
 				if(this.contentWindow().postMessage){
@@ -378,17 +381,17 @@ var ExpandedCinema = function (cw, currentIframe){
 		return iframe_data;
 	};
 
-	var init = function(){		
+	var init = function(){
 		//parser = new DOMParser()
 		//console.log("Initializing SambaAds JS Player!");
 
 
 		//initialize parameters
-		var parameters = parseQueryString(currentScript.src);	
+		var parameters = parseQueryString(currentScript.src);
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
-		parameters.request_domain = parameters.debug == "true" ? "localhost" : "d366amxgkdfvcq.cloudfront.net";
+		parameters.request_domain = '/* @echo CDN_PLAYER_DOMAIN */';
 
 		//append the iframe player
 		var iframe_data = appendIframe(parameters);
@@ -416,7 +419,7 @@ var ExpandedCinema = function (cw, currentIframe){
 	};
 
 	var onMessageReceive = function(event){
-		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf("localhost") >= 0){
+		if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf('/* @echo CDN_PLAYER_DOMAIN */') >= 0){
 
 			var params = event.data.split("::");
 
@@ -461,7 +464,7 @@ var ExpandedCinema = function (cw, currentIframe){
 		} else {
 			attachEvent("onmessage", onMessageReceive)
 		};
-		
+
 		currentIframe.isReady = setInterval(function(){
 			currentIframe.sendMessage("ready","")
 		},2000)
