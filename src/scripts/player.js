@@ -397,7 +397,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
         parameters.w = parameters.w ? parameters.w : "100%";
         parameters.h = parameters.h ? parameters.h : "100%";
-        parameters.request_domain = 'staging-player.sambaads.com';
+        parameters.request_domain = '/* @echo CDN_PLAYER_DOMAIN */';
 
         //append the iframe player
         var iframe_data = appendIframe(parameters);
