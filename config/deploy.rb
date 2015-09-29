@@ -1,17 +1,17 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'widget-player'
-set :repo_url, 'git@widget_player.github.com:sambaads/sambaads-player.git'
+set :application, 'sambaads_player'
+set :repo_url, 'git@player.github.com:sambaads/sambaads-player.git'
 
-set :branch, 'master'
+set :branch, 'REFACTOR_remove_widget'
 
-set :deploy_to, '/app/widget_player'
+set :deploy_to, '/app/sambaads_player'
 
 set :scm, :git
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('node_modules', 'app/node_modules')
@@ -43,6 +43,19 @@ namespace :npm do
     end
   end
 
+  desc "install gulp"
+  namespace :install do
+    task :gulp do
+      on roles fetch(:npm_roles) do
+        within_targets do
+          with fetch(:npm_env_variables, {}) do
+            execute :npm, 'install', 'gulp'
+          end
+        end
+      end
+    end
+  end
+
   def within_targets
     npm_targets = []
     npm_targets |= [fetch(:npm_target_path, release_path)]
@@ -66,32 +79,49 @@ namespace :gulp do
 	end
 end
 
+set :forever_pid_path, -> {"#{shared_path}/player.pid"}
+
 namespace :forever do
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} forever restart -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www"}
+  set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"}
+
   desc "restart forever"
   task :restart do
     on roles :all do
-      within release_path do
-        execute :forever, :stopall
-        execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
+      within current_path do
+        execute "#{fetch(:command_restart)} || #{fetch(:command_start)}"
       end
     end
   end
 
   desc "start forever"
   task :start do
-    within release_path do
-      execute "NODE_ENV=#{fetch(:node_env)} forever start #{release_path}/app/bin/www"
+    on roles :all do
+      within current_path do
+        execute fetch(:command_start)
+      end
     end
   end
 
   desc "stop forever"
   task :stop do
-    within release_path do
-      execute :forever, :stopall
+    on roles :all do
+      within current_path do
+        execute fetch(:command_stop)
+      end
     end
   end
 end
 
 after 'deploy:updated', 'npm:install'
 after 'npm:install', 'gulp:build'
-after 'gulp:build', 'forever:restart'
+after 'deploy:published', 'forever:restart'
+
+namespace :monit do
+  desc "Setup all Monit configuration"
+  task :setup do
+    monit_config "forever_player"
+    monit_reload
+  end
+end
