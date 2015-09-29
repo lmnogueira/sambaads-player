@@ -69,10 +69,10 @@
 	};
 
 	var appendIframe = function(parameters){
-		var div = document.createElement('div');
-		var iframe_id = "sambaads_" + cw.sambaads.players.length;
-		var iframe_url = "";
-		var width_height = "";
+		var div = document.createElement('div'),
+			iframe_id = "sambaads_" + cw.sambaads.players.length,
+			iframe_url = "",
+			width_height = "";
 
 		parameters.rfr = encodeURIComponent(window.location.href);
 
@@ -81,6 +81,17 @@
 			return;
 
 		iframe_url = "//" + parameters.request_domain + "/widget/" + parameters.p + "?" + serialize(parameters);
+
+
+		var playerHeader = '<h3 id="sambaads-now-whatch" class="sambaads-now-whatch" style="margin: .5em 5px; text-align: left;">Vídeos Recomendados para Você</h3>',
+			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
+			playerMargin = 73;
+
+		if(parameters.wl === 'true') {
+			playerHeader = '';
+			playerFooter = '';
+			playerMargin = 0;
+		}
 
 		var iframeHeight = parameters.h,
 			iframeWidth = parameters.w;
@@ -95,10 +106,6 @@
 				iframeWidth = iframeWidth + '%';
 			}
 		}
-
-		// console.log(parameters);
-		// console.log(iframeHeight);
-		// console.log('test6');
 
 		if (iframeHeight !== '100%') {
 			var iframeHeightSplit = parameters.h.split('%');
@@ -116,7 +123,7 @@
 			    scriptHolder.appendChild(currentScript);
 
 			    iframeHeight = currentScript.parentNode.offsetHeight;
-				iframeHeight = iframeHeightSplit[0] - 73;
+				iframeHeight = iframeHeightSplit[0] - playerMargin;
 			    iframeHeight = iframeHeight + 'px';
 			} else {
 
@@ -125,18 +132,15 @@
 			}
 		} {
 			iframeHeight = currentScript.parentNode.offsetHeight;
-			iframeHeight = iframeHeight - 73;
+			iframeHeight = iframeHeight - playerMargin;
 		    iframeHeight = iframeHeight + 'px';
 		}
 
 		width_height = ' width="' + iframeWidth +'" height="' + iframeHeight + '"';
 
-		var playerHeader = '<h3 id="sambaads-now-whatch" class="sambaads-now-whatch" style="margin: .5em 5px; text-align: left;">Vídeos Recomendados para Você</h3>',
-			iframeContent = '<iframe id="' + iframe_id + '" style="max-width: 100%; height: ' + iframeHeight + '" ' + width_height + ' src="' + iframe_url + '#' + iframe_id +'" frameborder="0" scrolling="no"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>',
-			playerFooter = '<div style="width: '+ parameters.w +';height: 30px;"><p style="font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;">powered by <a href="//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador"><img src="//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png" style="vertical-align:middle; width:100px !important; height: 24px !important"> </a></p></div>',
-			divContent = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%; width:' + iframeWidth + ';">' + playerHeader + iframeContent + playerFooter + '</div>';
+		var iframeContent = '<iframe id="' + iframe_id + '" style="max-width: 100%; height: ' + iframeHeight + '" ' + width_height + ' src="' + iframe_url + '#' + iframe_id +'" frameborder="0" scrolling="no"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>';
 
-		div.innerHTML = divContent;
+		div.innerHTML = '<div id="holder-' + iframe_id + '" style="height: 100%; min-height: 100%; width:' + iframeWidth + ';">' + playerHeader + iframeContent + playerFooter + '</div>';
 
 		//Put iframe after de <script> tag
 		insertAfter(currentScript, div.firstChild);
@@ -185,8 +189,6 @@
 	var init = function(){
 		//initialize parameters
 		var parameters = parseQueryString(currentScript.src);
-
-
 
 		parameters.w = parameters.w ? parameters.w : "100%";
 		parameters.h = parameters.h ? parameters.h : "100%";
