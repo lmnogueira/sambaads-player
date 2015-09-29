@@ -114,4 +114,4 @@ end
 
 after 'deploy:updated', 'npm:install'
 after 'npm:install', 'gulp:build'
-after 'gulp:build', 'forever:restart'
+after 'deploy:published', 'forever:restart'
