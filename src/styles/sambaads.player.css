@@ -119,6 +119,14 @@ body {
 	height:100%;
 }
 
+.section-display-title-share{
+	display: none;
+	z-index: 5;
+	position:absolute;
+	left:0; top:0;
+	width:100%;
+}
+
 /*
 .display-overlay.size-180 {
 	width:320px;

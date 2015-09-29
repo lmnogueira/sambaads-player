@@ -524,6 +524,7 @@ SambaAdsPlayerView = function (){
 	this.debug = true;
 	this.displayOverlayShare 	 = document.getElementById("display-overlay-share");
 	this.displayOverlayPlay 	 = document.getElementById("display-overlay-play");
+	this.displayOverlayTitleShare 	 = document.getElementById("display-overlay-title-share");
 	this.displayOverlayNextVideo = document.getElementById("display-overlay-next");
 	
 	this.playButtom = document.getElementById("display-buttom-play");
@@ -540,16 +541,18 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 
 	this.currentDisplay = option;
 	this.displayOverlayPlay.style.display 		= "none";
+	this.displayOverlayTitleShare.style.display 		= "none";
 	$("#display-overlay-loader").hide();
 	this.displayOverlayShare.style.display 		= "none";
 	this.displayOverlayNextVideo.style.display 	= "none";
 
 	if(option == 'play'){
 		this.displayOverlayPlay.style.display = "block";
+		this.displayOverlayTitleShare.style.display = "block";
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
-		$("#titlebar-title").text(this.controller.getCurrentVideo().title);
+		// $("#titlebar-title").text(this.controller.getCurrentVideo().title);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
@@ -615,15 +618,22 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	document.getElementById("share-button").onclick = function(){
 		self.controller.shareLastState = self.controller.newstate;
+		
+		if(self.controller.shareLastState == "PLAYING"){
+			self.controller.play();
+		}
+
 		self.showDisplay("share");
 	}
 
 	document.getElementById("close-button").onclick = function(){
 		self.showDisplay("play");
 		
-		if(self.shareLastState == "PLAYING"){
+		if(self.controller.shareLastState == "PLAYING"){
 			self.controller.play();
 		}
+			
+		self.controller.shareLastState = self.controller.newstate;
 	}
 
 	document.getElementById("next-counter").onclick = function() {
@@ -652,52 +662,29 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	$( "div.sambaads-embed" )
 	.mousemove(function(event) {
-		// $("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 11 + "px")
-		// $("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 11) + "px" )
 		$("#share-button-dock").css("z-index","2")
-
-		$("#titlebar").css("z-index","1")
-		$("#titlebar").css("position","absolute")
-		$("#titlebar").css("color","#fff")
-		$("#titlebar h3").css("font-size","14px")
 
 		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
 			$("#share-button-dock").show();
-			$("#titlebar").show();
+			$("#display-overlay-title-share").show();
 		}
 	})
 	.mouseleave(function(event) {
-		$("#share-button-dock").hide();
-		$("#titlebar").hide();
-	});
-
-	$( "#titlebar" )
-	.mousemove(function(event) {
-		$("#titlebar").css("z-index","1")
-		$("#titlebar").css("position","absolute")
-		$("#titlebar").css("color","#fff")
-		$("#titlebar h3").css("font-size","14px")
-
 		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
-			$("#share-button-dock").show();
-			$("#titlebar").show();
+			$("#share-button-dock").hide();
+			$("#display-overlay-title-share").hide();
 		}
-	}).mouseleave(function(event) {
-		$("#share-button-dock").hide();
-		$("#titlebar").hide();
 	});
 
-	$( "#share-button-dock" )
-	.mousemove(function(event) {
-		// $("#share-button-dock").css("top", $( "div.sambaads-embed" ).offset().top + 10 + "px")
-		// $("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 10) + "px" )
-		$("#share-button-dock").css("z-index","2")
+	// $( "#share-button-dock" )
+	// .mousemove(function(event) {
+	// 	$("#share-button-dock").css("z-index","2")
 
-		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share")
-			$("#share-button-dock").show();
-	}).mouseleave(function(event) {
-		$("#share-button-dock").hide();
-	});
+	// 	if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share")
+	// 		$("#share-button-dock").show();
+	// }).mouseleave(function(event) {
+	// 	$("#share-button-dock").hide();
+	// });
 };
 
 SambaAdsPlayerView.prototype.playVideo = function(video){

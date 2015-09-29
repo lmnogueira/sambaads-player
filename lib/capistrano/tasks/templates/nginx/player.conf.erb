@@ -1,0 +1,35 @@
+server {
+  listen 80;
+  server_name <%= fetch(:nginx_sever_name) %>;
+  root <%= current_path %>/app/public;
+
+  location /javascripts\/player.js/ {
+    expires 5m;
+    add_header Cache-Control public;
+    add_header Last-Modified "";
+    add_header ETag "";
+    break;
+  }
+
+  location ~ ^/scripts/(player.js)$ {
+    alias <%= current_path %>/app/public/javascripts/$1;
+    expires 5m;
+    add_header Cache-Control public;
+    add_header Last-Modified "";
+    add_header ETag "";
+    break;
+  }
+  
+  location ~ ^/embed/(player.js)$ {
+    alias <%= current_path %>/app/public/javascripts/$1;
+    expires 5m;
+    add_header Cache-Control public;
+    add_header Last-Modified "";
+    add_header ETag "";
+    break;
+  }
+
+  location / {
+      proxy_pass <%= fetch(:nginx_host) %>;
+  }
+}
