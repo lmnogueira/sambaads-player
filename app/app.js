@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
 
-var widget = require('./routes/widget');
 var player = require('./routes/player');
 
 var app = express();
@@ -29,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', routes);
-app.use('/widget', widget);
 app.use('/player', player);
 app.use('/iframe', player);
 
