@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', routes);
-app.use('/player', player);
+app.use('/', player);
 app.use('/iframe', player);
 
 // catch 404 and forward to error handler

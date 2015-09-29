@@ -15,4 +15,8 @@ router.get('/teste/:type_player', function(req, res, next) {
 	res.render('player/teste', { type_player: req.params.type_player });
 });
 
+router.get('/status/ping', function(req, res, next) {
+	res.send('ok');
+});
+
 module.exports = router;
