@@ -549,7 +549,7 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
-		$("#titlebar-title").text(this.controller.getCurrentVideo().title);
+		// $("#titlebar-title").text(this.controller.getCurrentVideo().title);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
@@ -656,36 +656,36 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 		// $("#share-button-dock").css("right", ($( window ).width() - $( "div.sambaads-embed" ).width() + 11) + "px" )
 		$("#share-button-dock").css("z-index","2")
 
-		$("#titlebar").css("z-index","1")
-		$("#titlebar").css("position","absolute")
-		$("#titlebar").css("color","#fff")
-		$("#titlebar h3").css("font-size","14px")
+		// $("#titlebar").css("z-index","1")
+		// $("#titlebar").css("position","absolute")
+		// $("#titlebar").css("color","#fff")
+		// $("#titlebar h3").css("font-size","14px")
 
 		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
 			$("#share-button-dock").show();
-			$("#titlebar").show();
+			// $("#titlebar").show();
 		}
 	})
 	.mouseleave(function(event) {
 		$("#share-button-dock").hide();
-		$("#titlebar").hide();
+		// $("#titlebar").hide();
 	});
 
-	$( "#titlebar" )
-	.mousemove(function(event) {
-		$("#titlebar").css("z-index","1")
-		$("#titlebar").css("position","absolute")
-		$("#titlebar").css("color","#fff")
-		$("#titlebar h3").css("font-size","14px")
+	// $( "#titlebar" )
+	// .mousemove(function(event) {
+	// 	$("#titlebar").css("z-index","1")
+	// 	$("#titlebar").css("position","absolute")
+	// 	$("#titlebar").css("color","#fff")
+	// 	$("#titlebar h3").css("font-size","14px")
 
-		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
-			$("#share-button-dock").show();
-			$("#titlebar").show();
-		}
-	}).mouseleave(function(event) {
-		$("#share-button-dock").hide();
-		$("#titlebar").hide();
-	});
+	// 	if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
+	// 		$("#share-button-dock").show();
+	// 		$("#titlebar").show();
+	// 	}
+	// }).mouseleave(function(event) {
+	// 	$("#share-button-dock").hide();
+	// 	$("#titlebar").hide();
+	// });
 
 	$( "#share-button-dock" )
 	.mousemove(function(event) {
