@@ -11,7 +11,7 @@ server {
     break;
   }
 
-  location /scripts\/player.js/ {
+  location ~ ^/scripts/(player.js)$ {
     alias <%= current_path %>/app/public/javascripts/$1;
     expires 5m;
     add_header Cache-Control public;
