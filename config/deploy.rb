@@ -80,14 +80,14 @@ namespace :gulp do
 end
 
 namespace :forever do
-  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{shared_path}/player.pid --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www" }
-  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} forever restart --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"}
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{shared_path}/player.pid --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} forever restart -a --pidFile #{shared_path}/player.pid --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www"}
   set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"}
 
   desc "restart forever"
   task :restart do
     on roles :all do
-      within release_path do
+      within current_path do
         execute "#{fetch(:command_restart)} || #{fetch(:command_start)}"
       end
     end
@@ -96,7 +96,7 @@ namespace :forever do
   desc "start forever"
   task :start do
     on roles :all do
-      within release_path do
+      within current_path do
         execute fetch(:command_start)
       end
     end
@@ -105,7 +105,7 @@ namespace :forever do
   desc "stop forever"
   task :stop do
     on roles :all do
-      within release_path do
+      within current_path do
         execute fetch(:command_stop)
       end
     end
