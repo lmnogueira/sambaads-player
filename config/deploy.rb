@@ -80,9 +80,9 @@ namespace :gulp do
 end
 
 namespace :forever do
-  set :command_start, "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{shared_path}/player.pid --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
-  set :command_restart, "NODE_ENV=#{fetch(:node_env)} forever restart --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"
-  set :command_stop, "NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{shared_path}/player.pid --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} forever restart --uid #{fetch(:node_env)}_player #{release_path}/app/bin/www"}
+  set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"}
 
   desc "restart forever"
   task :restart do
