@@ -80,10 +80,11 @@ namespace :gulp do
 end
 
 set :forever_pid_path, -> {"#{shared_path}/player.pid"}
+set :newrelic_log_path, -> { "#{current_path}/newrelic_agent.log" }
 
 namespace :forever do
-  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} forever start -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www" }
-  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} forever restart -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www"}
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} forever start -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} forever restart -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www"}
   set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"}
 
   desc "restart forever"
