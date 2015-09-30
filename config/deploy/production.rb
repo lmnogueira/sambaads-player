@@ -23,5 +23,5 @@ set :npm_roles, :all
 set :npm_target_path, -> { [release_path, release_path.join('app/')] }
 
 set :nginx_sever_name, "production-player.sambaads.com player.sambaads.com"
-set :nginx_host, "http://localhost:3000/"
+set :nginx_host, "http://localhost:3002/"
 set :nginx_file_name, "player.conf"
