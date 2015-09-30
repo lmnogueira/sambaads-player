@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 
-// require('newrelic');
+if(process.env.NODE_ENV==='production'){
+  require('newrelic');
+}
 var app = require('../app');
 var debug = require('debug')('app:server');
 var http = require('http');
