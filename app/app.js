@@ -11,9 +11,6 @@ var player = require('./routes/player');
 var app = express();
 var config = require('./config/env.json');
 
-if (app.get('env') === 'production')
-  require('newrelic');
-
 nconf.argv().env();
 console.log(app.get('env'));
 nconf.overrides(config[app.get('env')]);
