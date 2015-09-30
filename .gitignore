@@ -4,3 +4,4 @@ build/
 .svn/
 app/npm-debug.log
 app/public/*
+newrelic_agent.log
