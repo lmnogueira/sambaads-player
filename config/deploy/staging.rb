@@ -16,4 +16,4 @@ set :npm_target_path, -> { [release_path, release_path.join('app/')] }
 
 set :nginx_sever_name, "staging-player.sambaads.com"
 set :nginx_host, "http://localhost:3000/"
-set :nginx_file_name, "staging-player.conf"
+set :nginx_file_name, "player.conf"

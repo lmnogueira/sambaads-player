@@ -3,6 +3,15 @@ server {
   server_name <%= fetch(:nginx_sever_name) %>;
   root <%= current_path %>/app/public;
 
+  location ~ ^/collector/log/(?<fwd_path>.*)$ {
+    proxy_pass http://my_app/api/v1/collector/$fwd_path$is_args$args;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+
+  location /status/player/nginx {
+    stub_status;
+  }
+
   location /javascripts\/player.js/ {
     expires 5m;
     add_header Cache-Control public;
