@@ -392,7 +392,7 @@ var ExpandedCinema = function (cw, currentIframe){
         videoContainer = currentScript.parentNode;
 
         // Check script is dynamic append in DOM
-        if(dynamicScript) {
+        if(typeof dynamicScript !== 'undefined') {
             parameters = parseQueryString(dynamicScript);
             videoContainer = document.getElementById(videoContainerId);
         }
