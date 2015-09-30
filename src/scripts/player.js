@@ -246,7 +246,7 @@ var ExpandedCinema = function (cw, currentIframe){
         parameters.tb = parameters.tb || "";
         parameters.tbbg = parameters.tbbg || "";
         parameters.tbfs = parameters.tbfs || "";
-        parameters.rfr = encodeURIComponent(window.location.href);
+        parameters.rfr = encodeURIComponent(window.location.href.replace(/%/g, ""));
         //parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
 
 
