@@ -3,6 +3,14 @@ server {
   server_name <%= fetch(:nginx_sever_name) %>;
   root <%= current_path %>/app/public;
 
+  location /iframe/data {
+    return 404;
+  }
+
+  location /iframe/robots.txt {
+    return 404;
+  }
+
   location ~ ^/collector/log/(?<fwd_path>.*)$ {
     proxy_pass http://my_app/api/v1/collector/$fwd_path$is_args$args;
     proxy_set_header X-Real-IP $remote_addr;
