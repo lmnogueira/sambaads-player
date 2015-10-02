@@ -99,6 +99,8 @@ var ExpandedCinema = function (cw, currentIframe){
 	this.load = function(_swfUrl, width, height, iframeId){
 			try {
 
+                document.getElementById(iframeId).width=width;
+
 				this.scrollOffset();
 
 				var dcp = this.detectContainerPositions(iframeId);
@@ -143,6 +145,8 @@ var ExpandedCinema = function (cw, currentIframe){
 			//console.log(iframeId);
 			var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
 			wrapper.parentNode.removeChild(wrapper);
+
+            document.getElementById(iframeId).width=currentIframe.width;
 		} catch(e) {}
 	};
 };
