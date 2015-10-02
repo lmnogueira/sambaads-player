@@ -59,96 +59,95 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
 //CLASS EXPANDED CINEMA PLUGIN
 var ExpandedCinema = function (cw, currentIframe){
 
-	this.sendEvent = function(iframeId, event){
-		var player = cw.sambaads.getPlayer(iframeId);
-		player.contentWindow().postMessage( player.id + "::expandedCinema::" + event, player.iframe_target_host )
-	};
+    this.sendEvent = function(iframeId, event){
+        var player = cw.sambaads.getPlayer(iframeId);
+        player.contentWindow().postMessage( player.id + "::expandedCinema::" + event, player.iframe_target_host )
+    };
 
-	this.scrollOffset = function() {
-		var scrOfX = 0,
-			scrOfY = 0;
+    this.scrollOffset = function() {
+        var scrOfX = 0,
+            scrOfY = 0;
 
-		if( typeof( window.pageYOffset ) == 'number' ) {
-			scrOfY = window.pageYOffset;
-			scrOfX = window.pageXOffset;
-		} else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
-			scrOfY = document.body.scrollTop;
-			scrOfX = document.body.scrollLeft;
-		} else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
-			scrOfY = document.documentElement.scrollTop;
-			scrOfX = document.documentElement.scrollLeft;
-		}
+        if( typeof( window.pageYOffset ) == 'number' ) {
+            scrOfY = window.pageYOffset;
+            scrOfX = window.pageXOffset;
+        } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+            scrOfY = document.body.scrollTop;
+            scrOfX = document.body.scrollLeft;
+        } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+            scrOfY = document.documentElement.scrollTop;
+            scrOfX = document.documentElement.scrollLeft;
+        }
 
-		cw.sambaads.expandedCinema.scrOfX = scrOfX;
-		cw.sambaads.expandedCinema.scrOfY = scrOfY;
-	};
+        cw.sambaads.expandedCinema.scrOfX = scrOfX;
+        cw.sambaads.expandedCinema.scrOfY = scrOfY;
+    };
 
-	this.detectContainerPositions = function(iframeId){
-		try{
-			var el = document.getElementById(iframeId);
-			el.style["z-index"] = "20000";
-			var viewportOffset = el.getBoundingClientRect();
-			var top = viewportOffset.top;
-			var left = viewportOffset.left;
+    this.detectContainerPositions = function(iframeId){
+        try{
+            var el = document.getElementById(iframeId);
+            el.style["z-index"] = "20000";
+            var viewportOffset = el.getBoundingClientRect();
+            var top = viewportOffset.top;
+            var left = viewportOffset.left;
 
-			return top + "," + left;
-		}
-		catch(e){}
-	};
+            return top + "," + left;
+        }
+        catch(e){}
+    };
 
-	this.load = function(_swfUrl, width, height, iframeId){
-			try {
+    this.load = function(_swfUrl, width, height, iframeId){
+            try {
 
                 document.getElementById(iframeId).width=width;
 
-				this.scrollOffset();
+                this.scrollOffset();
 
-				var dcp = this.detectContainerPositions(iframeId);
+                var dcp = this.detectContainerPositions(iframeId);
 
-				var top = dcp.split(",")[0];
-				var left = dcp.split(",")[1];
+                var top = dcp.split(",")[0];
+                var left = dcp.split(",")[1];
 
-				var wrapper= document.createElement('div');
-				wrapper.id = "sambaadsExpandedCinema." + iframeId;
-				wrapper.style["position"] = "absolute";
-				wrapper.style["margin-left"] = "0px";
-				wrapper.style["box-sizing"] = "border-box";
-				wrapper.style["margin-top"] = "0px";
-				wrapper.style["text-align"] = "left";
-				wrapper.style["z-index"] = "10000";
-				wrapper.style["cursor"] = "pointer";
+                var wrapper= document.createElement('div');
+                wrapper.id = "sambaadsExpandedCinema." + iframeId;
+                wrapper.style["position"] = "absolute";
+                wrapper.style["margin-left"] = "0px";
+                wrapper.style["box-sizing"] = "border-box";
+                wrapper.style["margin-top"] = "0px";
+                wrapper.style["text-align"] = "left";
+                wrapper.style["z-index"] = "10000";
+                wrapper.style["cursor"] = "pointer";
 
-				wrapper.innerHTML="<a id='btnClose." + iframeId + "' href='#' style='width: 30px;position: absolute;margin-left: 98%;margin-top: -1.5%; display:none;'><img id='btnCloseImg." + iframeId + "' src='//d3655zppehxyvi.cloudfront.net/lib/close.png' style='width: 30px; display:none;'></a><object id='sambaads_expanded_cinema_swf." + iframeId + "' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' name='sambaads_expanded_cinema_swf." + iframeId + "'><param name='movie' value='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"'><param name='wmode' value='transparent'><param name='allowfullscreen' value='true'><param name='align' value='middle'><param name='allowscriptaccess' value='always'><embed src='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"' wmode='transparent' quality='high' id='sambaads_expanded_cinema_swf_embed." + iframeId + "' name='sambaads_expanded_cinema_swf_embed." + iframeId + "' align='middle' allowscriptaccess='always' allowfullscreen='true' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></object>";
+                wrapper.innerHTML="<a id='btnClose." + iframeId + "' href='#' style='width: 30px;position: absolute;margin-left: 98%;margin-top: -1.5%; display:none;'><img id='btnCloseImg." + iframeId + "' src='//d3655zppehxyvi.cloudfront.net/lib/close.png' style='width: 30px; display:none;'></a><object id='sambaads_expanded_cinema_swf." + iframeId + "' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' name='sambaads_expanded_cinema_swf." + iframeId + "'><param name='movie' value='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"'><param name='wmode' value='transparent'><param name='allowfullscreen' value='true'><param name='align' value='middle'><param name='allowscriptaccess' value='always'><embed src='" + _swfUrl + "?playerWidth="+width+"&amp;playerHeight="+height+"&amp;playerTop="+top+"&amp;playerLeft="+left+"&amp;iframeId="+iframeId+"' wmode='transparent' quality='high' id='sambaads_expanded_cinema_swf_embed." + iframeId + "' name='sambaads_expanded_cinema_swf_embed." + iframeId + "' align='middle' allowscriptaccess='always' allowfullscreen='true' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></object>";
 
-				document.body.appendChild(wrapper);
+                document.body.appendChild(wrapper);
 
-				document.getElementById("btnClose." + iframeId).onclick = function(evt) {
-					window.sambaads.expandedCinema.close(iframeId);
-					return false;
-      			};
+                document.getElementById("btnClose." + iframeId).onclick = function(evt) {
+                    window.sambaads.expandedCinema.close(iframeId);
+                    return false;
+                };
 
-				setTimeout(function(){
-					var btnClose = document.getElementById('btnClose.' + iframeId);
-					var btnCloseImg = document.getElementById('btnCloseImg.' + iframeId);
+                setTimeout(function(){
+                    var btnClose = document.getElementById('btnClose.' + iframeId);
+                    var btnCloseImg = document.getElementById('btnCloseImg.' + iframeId);
 
-					btnClose.style["display"] = "block";
-					btnCloseImg.style["display"] = "block";
-				}, 5000);
+                    btnClose.style["display"] = "block";
+                    btnCloseImg.style["display"] = "block";
+                }, 5000);
 
-			} catch(e) {
-				//console.log(e);
-			}
-	};
+            } catch(e) {
+                //console.log(e);
+            }
+    };
 
-	this.close = function(iframeId){
-		try {
-			//console.log(iframeId);
-			var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
-			wrapper.parentNode.removeChild(wrapper);
-
+    this.close = function(iframeId){
+        try {
+            //console.log(iframeId);
+            var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
+            wrapper.parentNode.removeChild(wrapper);
             document.getElementById(iframeId).width=currentIframe.width;
-		} catch(e) {}
-	};
+        } catch(e) {}
+    };
 };
 
 (function(cw){
@@ -250,7 +249,7 @@ var ExpandedCinema = function (cw, currentIframe){
         parameters.tb = parameters.tb || "";
         parameters.tbbg = parameters.tbbg || "";
         parameters.tbfs = parameters.tbfs || "";
-        parameters.rfr = encodeURIComponent(window.location.href);
+        parameters.rfr = encodeURIComponent(window.location.href.replace(/%/g, ""));
         //parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
 
 
@@ -395,8 +394,10 @@ var ExpandedCinema = function (cw, currentIframe){
 
         videoContainer = currentScript.parentNode;
 
-        if(parameters.vidcontid) {
-            videoContainer = document.getElementById(parameters.vidcontid);
+        // Check script is dynamic append in DOM
+        if(typeof dynamicScript !== 'undefined') {
+            parameters = parseQueryString(dynamicScript);
+            videoContainer = document.getElementById(videoContainerId);
         }
 
         parameters.w = parameters.w ? parameters.w : "100%";

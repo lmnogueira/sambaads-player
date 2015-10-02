@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+if(process.env.NODE_ENV==='production'){
+  require('newrelic');
+}
 var app = require('../app');
 var debug = require('debug')('app:server');
 var http = require('http');
@@ -12,7 +15,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3002');
 app.set('port', port);
 
 /**
