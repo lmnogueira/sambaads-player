@@ -87,6 +87,7 @@ var ExpandedCinema = function (cw, currentIframe){
         try{
             var el = document.getElementById(iframeId);
             el.style["z-index"] = "20000";
+            el.style["position"] = "relative";
             var viewportOffset = el.getBoundingClientRect();
             var top = viewportOffset.top;
             var left = viewportOffset.left;
@@ -99,7 +100,9 @@ var ExpandedCinema = function (cw, currentIframe){
     this.load = function(_swfUrl, width, height, iframeId){
             try {
 
+                document.getElementById(iframeId).dataset.oldwidth = document.getElementById(iframeId).width;
                 document.getElementById(iframeId).width=width;
+
 
                 this.scrollOffset();
 
@@ -145,7 +148,8 @@ var ExpandedCinema = function (cw, currentIframe){
             //console.log(iframeId);
             var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
             wrapper.parentNode.removeChild(wrapper);
-            document.getElementById(iframeId).width=currentIframe.width;
+
+            document.getElementById(iframeId).width=document.getElementById(iframeId).dataset.oldwidth;
         } catch(e) {}
     };
 };

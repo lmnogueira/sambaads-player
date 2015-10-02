@@ -9,7 +9,7 @@ namespace :monit do
   desc "Start all service"
   task(:start_all) { monit_start_all }
 
-  after "deploy:updated", :start_all
+  # after "deploy:updated", :start_all
 
   %w[start stop restart status reload].each do |command|
     desc "Run Monit #{command} script"
