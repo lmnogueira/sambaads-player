@@ -4,18 +4,31 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
+        var percentage_of_exposition = 0.8;
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
         }
 
         var rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (cw.innerHeight || document.documentElement.clientHeight) && //or $(window).height()
-            rect.right <= (cw.innerWidth || document.documentElement.clientWidth) //or $(window).width()
-        );
+
+        var windowHeight = (cw.innerHeight || document.documentElement.clientHeight);
+        var windowWidth = (cw.innerWidth || document.documentElement.clientWidth);
+        
+        //validate 20% of top
+        var widthDiff = rect.width * (1-percentage_of_exposition);
+        var heightDiff = rect.height * (1-percentage_of_exposition);
+
+        var checkWidth = rect.width - widthDiff;
+        var checkHeight = rect.height - heightDiff;
+
+        if(rect.top <= 0 && (checkHeight <= windowHeight) && (rect.bottom >= checkHeight) ){
+            return true;
+        } else if(rect.top >= 0 && (checkHeight <= windowHeight) && ((windowHeight - rect.top) >= checkHeight)){
+            return true;
+        } else {
+            return false;
+        }
     };
 
     this.fireIfElementVisible = function(el) {
