@@ -67,14 +67,12 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 	options.satmref = a.hostname;
 	options.satmfullref = url;
 
-	console.log(this.response.player_info)
-
-    //$.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
-	//}).error(function(){
+	}).error(function(){
 			//alert("error load cont");
-	//});
+	});
 
 };
 
