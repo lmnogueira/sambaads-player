@@ -253,6 +253,7 @@ var ExpandedCinema = function (cw, currentIframe){
         parameters.tb = parameters.tb || "";
         parameters.tbbg = parameters.tbbg || "";
         parameters.tbfs = parameters.tbfs || "";
+        parameters.org = parameters.org || "";
         parameters.rfr = encodeURIComponent(window.location.href.replace(/%/g, ""));
         //parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
 
@@ -276,6 +277,7 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&tb=" + encodeURIComponent(parameters.tb) +
                 "&tbbg=" + parameters.tbbg +
                 "&tbfs=" + parameters.tbfs +
+                "&org=" + parameters.org +
                 "&rfr=" + parameters.rfr
         } else {
             iframe_url = iframe_url +
@@ -290,6 +292,7 @@ var ExpandedCinema = function (cw, currentIframe){
             "&tb=" + encodeURIComponent(parameters.tb) +
             "&tbbg=" + parameters.tbbg +
             "&tbfs=" + parameters.tbfs +
+            "&org=" + parameters.org +
             "&rfr=" + parameters.rfr
         }
 

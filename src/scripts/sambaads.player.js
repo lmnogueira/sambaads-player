@@ -67,13 +67,14 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 	options.satmref = a.hostname;
 	options.satmfullref = url;
 
+	console.log(this.response.player_info)
 
-    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
+    //$.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
-	}).error(function(){
+	//}).error(function(){
 			//alert("error load cont");
-	});
+	//});
 
 };
 
@@ -94,6 +95,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmcid": cid,
 		    "satmref": "",
 		    "satmfullref": "",
+		    "satmorigin":this.response.player_info.origin,
 		    'satmenv': this.getEnvironment()
 		});
 	};
@@ -108,6 +110,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 	"satmcid": cid,
 	"satmref": "",
 	"satmfullref": "",
+	"satmorigin":this.response.player_info.origin,
 	'satmenv': this.getEnvironment()
 	});
 };
@@ -144,6 +147,12 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 		window.sambaads.parentIframeID = params[0]; //iframe id received from parent
 		this.sendMessage("ready",this.response.publisher_info.auto_start + "," + this.calculatePlayerWidth() + "," + this.calculatePlayerHeight() );
 		this.sendMessage("onNowWatchTitle", this.getCurrentVideo().title);
+
+		// start video if is highlights widget
+		if(this.response.player_info.origin === 'widgethighlights'){
+			this.play();
+			this.view.updateItemCurrent();
+		}
 	};
 
 	if(params[1] == "debug"){
@@ -295,7 +304,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
                 'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
             }
         },
-     
         playlist: this._options.playlist,
         skin: "http:" + this.response.player_info.skin_url,
         width: player_width,

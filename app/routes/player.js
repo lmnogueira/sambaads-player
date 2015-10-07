@@ -6,6 +6,7 @@ var router = express.Router();
 
 router.get('/:pid', function(req, res, next) {
 	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
+
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
