@@ -72,6 +72,11 @@ gulp.task("build-images", function(){
     .pipe(gulp.dest('app/public/images/'));
 });
 
+gulp.task("build-crossdomain", function(){
+  gulp.src('./src/crossdomain/*.*')
+    .pipe(gulp.dest('app/public/'));
+});
+
 gulp.task("build-css", function(){
     gulp.src(paths.css + "sambaads.player.css")
     .pipe(sourcemaps.init())
@@ -81,8 +86,8 @@ gulp.task("build-css", function(){
 });
 
 gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", 'watch']);
-gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base"]);
-gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base"]);
+gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
+gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "sambaads.player.js", paths.scripts + "player.js"], ["build-javascripts-player"]);
