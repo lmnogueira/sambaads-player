@@ -145,12 +145,6 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 		window.sambaads.parentIframeID = params[0]; //iframe id received from parent
 		this.sendMessage("ready",this.response.publisher_info.auto_start + "," + this.calculatePlayerWidth() + "," + this.calculatePlayerHeight() );
 		this.sendMessage("onNowWatchTitle", this.getCurrentVideo().title);
-
-		// start video if is highlights widget
-		if(this.response.player_info.origin === 'widgethighlights'){
-			this.play();
-			this.view.updateItemCurrent();
-		}
 	};
 
 	if(params[1] == "debug"){
@@ -307,7 +301,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
         width: player_width,
         height: player_height,
         captions : captions,
-        //aspectratio: "16:9",
+        autostart : this.canAutoStart(),
         primary: "flash",
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
@@ -406,13 +400,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	window.jwplayer(self.player).onAdError(function(evt){
 		
 		smb.hideDisplay();
-		/*
-		if(!self._options.playlist[self.currentPlaylistIndex].running_youtube && (self._options.playlist[self.currentPlaylistIndex].file_youtube.length > 0)){
-			self._options.playlist[self.currentPlaylistIndex].running_youtube = true;
-			window.jwplayer(this.player).load({ file: "http://www.youtube.com/watch?v=" + self._options.playlist[self.currentPlaylistIndex].file_youtube });
-			window.jwplayer(this.player).play();
-		}
-		*/
 	});
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
@@ -426,6 +413,17 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	window.jwplayer(self.player).onBeforePlay(function(evt){
 		smb.hideDisplay();
 	});
+};
+
+SambaAdsPlayerControler.prototype.canAutoStart = function(){
+	var can = false;
+
+	if(this.response.player_info.origin === 'widgethighlights'){
+		can = true;
+	} else if(this.response.player_info.origin === 'brandedchannels'){
+		can = true;
+	}
+	 return can;
 };
 
 SambaAdsPlayerControler.prototype.onLoad = function(){
@@ -603,7 +601,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	self.player = player;
 	self.options = options;
 
-	self.showDisplay("play");
+	//self.showDisplay("play");
 
 	if(options.playlist.length > 1)
 		self.showPlaylist(options);
