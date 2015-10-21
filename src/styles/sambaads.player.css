@@ -141,6 +141,11 @@ body {
 	height:360px;
 }
 */
+
+.cursor {
+	cursor: pointer;
+}
+
 .display-buttom {
 	display:block;
 	position:absolute;

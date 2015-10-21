@@ -285,15 +285,15 @@ SambaAdsPlayerControler.prototype.init = function(data){
     var player_config_options = {
         displaytitle: false,
         advertising:{
-          client:'vast',
-          tag: decodeURIComponent(this.response.player_info.custom_tag)
+         client:'vast',
+         tag: decodeURIComponent(this.response.player_info.custom_tag)
         },
         plugins: {
-              '/* @echo LIVERAIL_PLUGIN_URL */' : {
+             '/* @echo LIVERAIL_PLUGIN_URL */' : {
      			'LR_ADMAP': 'in::0',
-                'LR_URL': this.discoveryHost(),
-                'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-            }
+               'LR_URL': this.discoveryHost(),
+               'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
+           }
         },
      
         playlist: this._options.playlist,
@@ -301,7 +301,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
         width: player_width,
         height: player_height,
         captions : captions,
-        //aspectratio: "16:9",
         primary: "flash",
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
@@ -604,7 +603,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	$("#display-overlay-loader").hide();
 
-	$("#display-buttom-play").click(function() {
+	$("#display-overlay-play").click(function() {
 		self.controller.play();
 		self.updateItemCurrent();
 	});
@@ -637,7 +636,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	}
 
 	document.getElementById("next-counter").onclick = function() {
-		clearInterval(self.controller.startNextIn)
+		clearInterval(self.startNextIn);
 		self.controller.playNext();
 		self.updateItemCurrent();
 	};
@@ -881,7 +880,7 @@ SambaAdsPlayerView.prototype.onComplete = function(){
 			if(i==0){
 				self.hideDisplay();
 				self.controller.playNext();
-				clearInterval(self.startNextIn)
+				clearInterval(self.startNextIn);
 				self.updateItemCurrent();
 			}
 			i--
