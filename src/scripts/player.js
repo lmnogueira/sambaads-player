@@ -100,7 +100,6 @@ var ExpandedCinema = function (cw, currentIframe){
         try{
             var el = document.getElementById(iframeId);
             el.style["z-index"] = "20000";
-            el.style["position"] = "relative";
             var viewportOffset = el.getBoundingClientRect();
             var top = viewportOffset.top;
             var left = viewportOffset.left;
@@ -112,10 +111,6 @@ var ExpandedCinema = function (cw, currentIframe){
 
     this.load = function(_swfUrl, width, height, iframeId){
             try {
-
-                document.getElementById(iframeId).dataset.oldwidth = document.getElementById(iframeId).width;
-                document.getElementById(iframeId).width=width;
-
 
                 this.scrollOffset();
 
@@ -161,8 +156,6 @@ var ExpandedCinema = function (cw, currentIframe){
             //console.log(iframeId);
             var wrapper= document.getElementById('sambaadsExpandedCinema.' + iframeId);
             wrapper.parentNode.removeChild(wrapper);
-
-            document.getElementById(iframeId).width=document.getElementById(iframeId).dataset.oldwidth;
         } catch(e) {}
     };
 };
@@ -321,7 +314,7 @@ var ExpandedCinema = function (cw, currentIframe){
         if(parameters.m || parameters.c){
             div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
         } else {
-            div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h2 id='sambaads_now_whatch' class='sambaads_now_whatch' style='margin-top:10px;margin-bottom:10px; width: auto; font-family: verdana, arial, sans-serif;display: inline-block; margin-right: 5px; color:#000000; font-weight: bold; font-size:1.5em;'>ASSISTA AGORA:</h2><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='height: 30px;'><p style=\"font-size: 11px; margin: 0px; color: #B0B0B0; text-align: left; text-align: -webkit-left;\">powered by <a href=\"//www.sambaads.com.br/?utm_campaign=Recomendador&utm_medium=Powered&utm_source=PlayerRecomendador\"><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'></a></p></div></div>";
+            div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h3 id='sambaads-now-whatch' class='sambaads-now-whatch' style='margin: .5em 5px; text-align: left; display: inline-block;'>Assista Agora</h3><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='width: 640;height: 30px;'><p style='font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;'>powered by <a href='//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador'><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'> </a></p></div></div>";
         }
 
         //Put iframe after de <script> tag
@@ -415,7 +408,7 @@ var ExpandedCinema = function (cw, currentIframe){
         videoContainer = currentScript.parentNode;
 
         // Check script is dynamic append in DOM
-        if(typeof dynamicScript !== 'undefined') {
+        if(typeof dynamicScript != 'undefined') {
             parameters = parseQueryString(dynamicScript);
             videoContainer = document.getElementById(videoContainerId);
         }
