@@ -1,4 +1,5 @@
 'use strict';
+jwplayer.key="fg2E6RxmRfFIhFDYCJYLPglvuybnkF6v0sjOSA";
 
 var SambaAdsPlayerControler = {};
 
@@ -282,20 +283,23 @@ SambaAdsPlayerControler.prototype.init = function(data){
                 windowOpacity: 0
     };
 
+
+        //advertising:{
+        //  client:'vast',
+        //  tag: decodeURIComponent(this.response.player_info.custom_tag)
+        //},
+        
+        //plugins: {
+        //      '/* @echo LIVERAIL_PLUGIN_URL */' : {
+     	//		'LR_ADMAP': 'in::0',
+        //        'LR_URL': this.discoveryHost(),
+        //        'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
+        //    }
+        //},
+
     var player_config_options = {
         displaytitle: false,
-        advertising:{
-          client:'vast',
-          tag: decodeURIComponent(this.response.player_info.custom_tag)
-        },
-        plugins: {
-              '/* @echo LIVERAIL_PLUGIN_URL */' : {
-     			'LR_ADMAP': 'in::0',
-                'LR_URL': this.discoveryHost(),
-                'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-            }
-        },
-     
+
         playlist: this._options.playlist,
         skin: "http:" + this.response.player_info.skin_url,
         width: player_width,
@@ -315,31 +319,31 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(this.player).setup(player_config_options);
 
-    window.jwplayer(self.player).onReady(function() {
+    window.jwplayer(self.player).on('ready', function() {
 		smb.init(self.player, self._options);
 		self.onLoad();
     });
 
-    window.jwplayer(self.player).onFullscreen(function(fullscreen){
+    window.jwplayer(self.player).on('fullscreen', function(fullscreen){
     	smb.onFullscreen(fullscreen);
     });
 
-    window.jwplayer(self.player).onPlay(function(evt){
+    window.jwplayer(self.player).on('play', function(evt){
     	self.response.publisher_info.auto_start = true;
     	self.computeComscore("04","sambaads_content");
     	window.jwplayer(self.player).setControls(true);
 		smb.onPlay();
 		
-		self.oldstate = self.newstate;
-		self.newstate = evt.newstate;
+		self.oldstate = self.newstate.toUpperCase();
+		self.newstate = evt.newstate.toUpperCase();
 
 		self.sendMessage("onStateChange",evt.newstate);
 	});
 
-	window.jwplayer(self.player).onMute(function(evt){
+	window.jwplayer(self.player).on('mute', function(evt){
 	});
 
-	window.jwplayer(self.player).onPause(function(evt){
+	window.jwplayer(self.player).on('pause', function(evt){
 
 		if(!smb.fullscreenActive){
 			//hack para solucionar delay do request de ad...
@@ -359,7 +363,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		self.sendMessage("onStateChange",evt.newstate);
 	});
 
-	window.jwplayer(self.player).onBuffer(function(evt){
+	window.jwplayer(self.player).on('buffer', function(evt){
 
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
@@ -367,24 +371,24 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		smb.showDisplay("buffer");
 	});
 
-	window.jwplayer(self.player).onIdle(function(evt){
+	window.jwplayer(self.player).on('idle', function(evt){
 		smb.hideDisplay();
 
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
 	});
 
-	window.jwplayer(self.player).onTime(function(evt){
+	window.jwplayer(self.player).on('time', function(evt){
 		smb.hideDisplay();
 	});
 
-	window.jwplayer(self.player).onBeforeComplete(function(evt){
+	window.jwplayer(self.player).on('beforeComplete', function(evt){
 
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
 	});
 
-	window.jwplayer(self.player).onComplete(function(evt){
+	window.jwplayer(self.player).on('complete', function(evt){
 
 		smb.onComplete();
 		self.stop();
@@ -393,11 +397,11 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		self.oldstate = "PLAYING";
 	});
 
-	window.jwplayer(self.player).onAdTime(function(evt){
+	window.jwplayer(self.player).on('adTime', function(evt){
 		smb.hideDisplay();
 	});
 
-	window.jwplayer(self.player).onAdError(function(evt){
+	window.jwplayer(self.player).on('adError',function(evt){
 		
 		smb.hideDisplay();
 		/*
@@ -409,15 +413,15 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		*/
 	});
 
-	window.jwplayer(self.player).onAdImpression(function(evt){
+	window.jwplayer(self.player).on('adImpression', function(evt){
 		smb.hideDisplay();
 	});
 
-	window.jwplayer(self.player).onAdComplete(function(evt){
+	window.jwplayer(self.player).on('adComplete', function(evt){
 		
 	});
 
-	window.jwplayer(self.player).onBeforePlay(function(evt){
+	window.jwplayer(self.player).on('beforePlay', function(evt){
 		smb.hideDisplay();
 	});
 };
@@ -497,12 +501,12 @@ SambaAdsPlayerControler.prototype.setMute = function(mute){
 
 SambaAdsPlayerControler.prototype.play = function(){
     window.jwplayer(this.player).play();
-    window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
+    //window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
 };
 
 SambaAdsPlayerControler.prototype.pause = function(){
     window.jwplayer(this.player).pause();
-    window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
+    //window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
 };
 
 SambaAdsPlayerControler.prototype.seekTo = function(seek_to){
@@ -618,7 +622,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	document.getElementById("share-button").onclick = function(){
 		self.controller.shareLastState = self.controller.newstate;
-		
+
 		if(self.controller.shareLastState == "PLAYING"){
 			self.controller.play();
 		}
@@ -675,16 +679,6 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 			$("#display-overlay-title-share").hide();
 		}
 	});
-
-	// $( "#share-button-dock" )
-	// .mousemove(function(event) {
-	// 	$("#share-button-dock").css("z-index","2")
-
-	// 	if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share")
-	// 		$("#share-button-dock").show();
-	// }).mouseleave(function(event) {
-	// 	$("#share-button-dock").hide();
-	// });
 };
 
 SambaAdsPlayerView.prototype.playVideo = function(video){

@@ -9,6 +9,7 @@ var concat_util = require('gulp-concat-util');
 var minify_css = require('gulp-minify-css');
 var preprocess = require('gulp-preprocess');
 
+var jwplayer_version = "7.1.4";
 var paths = {
   scripts:  './src/scripts/',
   images:   './src/images/',
@@ -67,6 +68,13 @@ gulp.task("build-javascripts-base", function(){
     .pipe(gulp.dest('app/public/javascripts/'));
 });
 
+gulp.task("build-jwplayer", function(){
+    gulp.src([
+      paths.scripts + 'vendor/jwplayer-' + jwplayer_version + '/**/*'
+      ])
+    .pipe(gulp.dest('app/public/javascripts/player'));
+});
+
 gulp.task("build-images", function(){
 	gulp.src(paths.images + "*.*")
     .pipe(gulp.dest('app/public/images/'));
@@ -85,9 +93,9 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", 'watch']);
-gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
-gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
+gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-jwplayer", 'watch']);
+gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain", "build-jwplayer",]);
+gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain", "build-jwplayer",]);
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "sambaads.player.js", paths.scripts + "player.js"], ["build-javascripts-player"]);
