@@ -604,7 +604,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	$("#display-overlay-loader").hide();
 
-	$("#display-buttom-play").click(function() {
+	$("#display-overlay-play").click(function() {
 		self.controller.play();
 		self.updateItemCurrent();
 	});
