@@ -38,11 +38,22 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task("build-javascripts-player", function(){
-    gulp.src(paths.scripts + "sambaads.player.js")
+  gulp.src([
+      paths.scripts + "player.messagebroker.js",
+      paths.scripts + "player.event.js",
+      paths.scripts + "player.util.js",
+      paths.scripts + "player.core.js",
+      paths.scripts + "player.view.js",
+      paths.scripts + "player.view.playlist.js",
+      paths.scripts + "player.view.buffer.js",
+      paths.scripts + "player.view.descriptionbar.js",
+      paths.scripts + "player.view.share.js",
+      paths.scripts + "player.controller.js"
+    ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
+    .pipe(concat("sambaads.player.js"))
     .pipe(uglify())
-    .pipe(rename('sambaads.player.js'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
@@ -98,7 +109,12 @@ gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-jav
 gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain", "build-jwplayer",]);
 
 gulp.task('watch', function() {
-  gulp.watch([paths.scripts + "sambaads.player.js", paths.scripts + "player.js"], ["build-javascripts-player"]);
+  gulp.watch([paths.scripts + "player.core.js",
+              paths.scripts + "player.view.buffer.js",
+              paths.scripts + "player.view.descriptionbar.js",
+              paths.scripts + "player.view.share.js",
+              paths.scripts + "player.view.playlist.js",
+              paths.scripts + "player.js"], ["build-javascripts-player"]);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.images, ['build-images']);
 });
