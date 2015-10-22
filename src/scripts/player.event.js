@@ -1,5 +1,7 @@
 var Event = {
 	IDLE:"idle",
+	PLAY:"play",
+	PAUSE:"pause",
 	READY:"ready",
 	BUFFER:"buffer",
 	RESIZE:"resize",
@@ -8,6 +10,7 @@ var Event = {
 	PLAY_LIST_ITEM:"playListItem",
 	TOGGLE_SHARE:"toggleShare",
 	HIDE_DISPLAYS:"hideDisplays",
-	PLATFORM_METADATA_LOADED:"platformMetadataLoaded"
+	PLATFORM_METADATA_LOADED:"platformMetadataLoaded",
+	TRACKER:"tracker"
 };
 

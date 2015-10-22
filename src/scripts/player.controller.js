@@ -5,6 +5,20 @@ SambaAdsPlayerControler = function (player, view, data){
 
 	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
 	self.init( data );
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
+
+		var evtObject = new SambaAdsPlayerControlerCollectorTracker(TypeTrackEvent.LOAD);
+
+		SambaAdsPlayerMessageBroker().send(Event.TRACKER,evtObject);
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY, function(e){
+
+		var evtObject = new SambaAdsPlayerControlerCollectorTracker(TypeTrackEvent.PLAY);
+
+		SambaAdsPlayerMessageBroker().send(Event.TRACKER, evtObject);
+	});
 };
 
 SambaAdsPlayerControler.prototype.init = function(data){

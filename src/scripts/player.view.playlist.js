@@ -12,7 +12,8 @@ SambaAdsPlayerViewPlaylist = function (){
 		self.player_width = e.detail.data.width;
 		self.player_height = e.detail.data.height;
 		
-		self.applyStyle("dark");
+		console.log(">>> implementar valors de layout dinamicos para playlist")
+		self.applyStyle("light", "right", self.player_height);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
@@ -20,36 +21,30 @@ SambaAdsPlayerViewPlaylist = function (){
 	});
 };
 
-SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme){
+SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, height){
 	var self = this;
-	$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
-	$("#playlist-h-items").hide();
-	$("#sambaads-embed").addClass("pull-left");
-	
-	$(".nano").css( "height", self.player_height);
+
+	if(position == "right"){
+		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
+		$("#playlist-h-items").hide();
+		$("#sambaads-embed").addClass("pull-left");
+		
+		$(".nano").css( "height", height);
+	}else if(position == "bottom-vertical"){
+		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
+		$("#playlist-h-items").hide();
+		$("#playlist-v-items").show();
+		
+		$(".nano").css( "height", height );
+	}else if(position == "bottom-horizontal"){
+		$($.find("div.sambaads-playlist.horizontal")[0]).addClass(theme);
+		$("#playlist-h-items").show();
+	}
 };
 
 SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	var self = this;
 	self.cleanPlaylist();
-
-	/*
-	if(options.player_info.playlist_position == "right"){
-		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
-		$("#playlist-h-items").hide();
-		$("#sambaads-embed").addClass("pull-left");
-		
-		$(".nano").css( "height", window.jwplayer(self.player).getHeight() );
-	}else if(options.player_info.playlist_position == "bottom-vertical"){
-		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
-		$("#playlist-h-items").hide();
-		$("#playlist-v-items").show();
-		
-		$(".nano").css( "height", options.playlistHeight );
-	}else if(options.player_info.playlist_position == "bottom-horizontal"){
-		$($.find("div.sambaads-playlist.horizontal")[0]).addClass(options.playlistStyle);
-		$("#playlist-h-items").show();
-	}*/
 
 	options.playlist.forEach(function(item){
 		var new_v_item = self.clone("vertical");
@@ -94,10 +89,12 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	$( "div.playlist-item" ).click(function() {
 		var index = this.id.split("-")[1];
 
+		/*
 		self.controller.loadPlaylist(+index);
 		self.controller.play();
 
 		self.updateItemCurrent();
+		*/
 	});
 };
 

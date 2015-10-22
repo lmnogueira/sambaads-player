@@ -48,15 +48,19 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 	this.JWPlayer.on('bufferChange', function(e){
 	});
-	this.JWPlayer.on('play', function(evt){
-		
+
+	this.JWPlayer.on('play', function(e){
+		SambaAdsPlayerMessageBroker().send(Event.PLAY, e);
 	});
-	this.JWPlayer.on('pause', function(evt){
-		
+
+	this.JWPlayer.on('pause', function(e){
+		SambaAdsPlayerMessageBroker().send(Event.PAUSE, e);
 	});
+	
 	this.JWPlayer.on('buffer', function(e){
 		SambaAdsPlayerMessageBroker().send(Event.BUFFER, e);
 	});
+
 	this.JWPlayer.on('idle', function(evt){
 		
 	});

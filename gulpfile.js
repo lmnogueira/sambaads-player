@@ -48,7 +48,9 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.view.buffer.js",
       paths.scripts + "player.view.descriptionbar.js",
       paths.scripts + "player.view.share.js",
-      paths.scripts + "player.controller.js"
+      paths.scripts + "player.controller.js",
+      paths.scripts + "player.controller.collector.js",
+      paths.scripts + "player.controller.collector.tracker.js"
     ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
@@ -110,6 +112,9 @@ gulp.task("production", ['production-context', 'build-css', 'build-images', "bui
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "player.core.js",
+              paths.scripts + "player.controller.js",
+              paths.scripts + "player.controller.conllector.js",
+              paths.scripts + "player.controller.conllector.tracker.js",
               paths.scripts + "player.view.buffer.js",
               paths.scripts + "player.view.descriptionbar.js",
               paths.scripts + "player.view.share.js",
