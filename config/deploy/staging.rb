@@ -1,4 +1,5 @@
 set :stage, :staging
+set :branch, 'staging'
 
 set :node_env, 'staging'
 
