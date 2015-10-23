@@ -67,7 +67,6 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 	options.satmref = a.hostname;
 	options.satmfullref = url;
 
-
     $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
@@ -94,6 +93,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmcid": cid,
 		    "satmref": "",
 		    "satmfullref": "",
+		    "satmorigin":this.response.player_info.origin,
 		    'satmenv': this.getEnvironment()
 		});
 	};
@@ -108,6 +108,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 	"satmcid": cid,
 	"satmref": "",
 	"satmfullref": "",
+	"satmorigin":this.response.player_info.origin,
 	'satmenv': this.getEnvironment()
 	});
 };
@@ -295,12 +296,12 @@ SambaAdsPlayerControler.prototype.init = function(data){
                'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
            }
         },
-     
         playlist: this._options.playlist,
         skin: "http:" + this.response.player_info.skin_url,
         width: player_width,
         height: player_height,
         captions : captions,
+        autostart : this.canAutoStart(),
         primary: "flash",
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
@@ -399,13 +400,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	window.jwplayer(self.player).onAdError(function(evt){
 		
 		smb.hideDisplay();
-		/*
-		if(!self._options.playlist[self.currentPlaylistIndex].running_youtube && (self._options.playlist[self.currentPlaylistIndex].file_youtube.length > 0)){
-			self._options.playlist[self.currentPlaylistIndex].running_youtube = true;
-			window.jwplayer(this.player).load({ file: "http://www.youtube.com/watch?v=" + self._options.playlist[self.currentPlaylistIndex].file_youtube });
-			window.jwplayer(this.player).play();
-		}
-		*/
 	});
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
@@ -419,6 +413,18 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	window.jwplayer(self.player).onBeforePlay(function(evt){
 		smb.hideDisplay();
 	});
+};
+
+SambaAdsPlayerControler.prototype.canAutoStart = function(){
+	var can = false;
+
+	if(this.response.player_info.origin === 'widgethighlights'){
+		can = true;
+	} else if(this.response.player_info.origin === 'brandedchannels'){
+		can = true;
+	}
+	
+	return can;
 };
 
 SambaAdsPlayerControler.prototype.onLoad = function(){
@@ -540,7 +546,7 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 
 	this.currentDisplay = option;
 	this.displayOverlayPlay.style.display 		= "none";
-	this.displayOverlayTitleShare.style.display 		= "none";
+	this.displayOverlayTitleShare.style.display = "none";
 	$("#display-overlay-loader").hide();
 	this.displayOverlayShare.style.display 		= "none";
 	this.displayOverlayNextVideo.style.display 	= "none";
@@ -551,7 +557,6 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
-		// $("#titlebar-title").text(this.controller.getCurrentVideo().title);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
@@ -596,7 +601,12 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	self.player = player;
 	self.options = options;
 
-	self.showDisplay("play");
+	if(self.controller.canAutoStart()){
+		self.hideDisplay();
+	} else {
+		self.showDisplay("play");
+	}
+	
 
 	if(options.playlist.length > 1)
 		self.showPlaylist(options);
@@ -666,6 +676,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 		if(self.controller.newstate != "IDLE" && self.controller.newstate != "PAUSED" && self.currentDisplay != "share"){
 			$("#share-button-dock").show();
 			$("#display-overlay-title-share").show();
+			$("#video-title").text(self.controller.getCurrentVideo().title);
 		}
 	})
 	.mouseleave(function(event) {
