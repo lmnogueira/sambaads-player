@@ -411,6 +411,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onBeforePlay(function(evt){
+		$("#display-overlay-title-share").hide();
 		smb.hideDisplay();
 	});
 };
