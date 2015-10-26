@@ -4,8 +4,6 @@ lock '3.4.0'
 set :application, 'sambaads_player'
 set :repo_url, 'git@player.github.com:sambaads/sambaads-player.git'
 
-set :branch, 'master'
-
 set :deploy_to, '/app/sambaads_player'
 
 set :scm, :git
