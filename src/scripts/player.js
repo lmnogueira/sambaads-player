@@ -30,6 +30,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
             return false;
         }
     };
+    
 
     this.fireIfElementVisible = function(el) {
       var self = this;
