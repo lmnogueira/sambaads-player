@@ -24,8 +24,8 @@ SambaAdsPlayerControler = function (player, view, data){
 	this.view.setController(this);
 
 	if(data == undefined || data == null){
-		/*$.get( "//app.sambaads.com/iframe/846dae1ccb4553649d9706ed535d7f09/data", 
-			{ skin: "blue" } 
+		/*$.get( "//app.sambaads.com/iframe/846dae1ccb4553649d9706ed535d7f09/data",
+			{ skin: "blue" }
 		)
 		.done(function( data ) {
 			self.init(data);
@@ -59,7 +59,7 @@ SambaAdsPlayerControler.prototype.guid = function() {
 	     s4() + '-' + s4() + s4() + s4();
 };
 
-        
+
 
 SambaAdsPlayerControler.prototype.sendGif = function(options){
 	var url = document.referrer || window.location.href
@@ -190,7 +190,7 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 	  			}
 			}
 		}
-		
+
 	};
 
 	if(params[1] == "mouseover"){
@@ -258,7 +258,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	if (this._options.position == "bottom-vertical") {
 		this._options.playlistHeight = this.response.player_info.playlist_height || 150;
 		this._options.playlistWidth = 0;
-	} 
+	}
 
 	if (this._options.position == "bottom-horizontal") {
 		this._options.playlistWidth = 0;
@@ -288,7 +288,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
         //  client:'vast',
         //  tag: decodeURIComponent(this.response.player_info.custom_tag)
         //},
-        
+
         //plugins: {
         //      '/* @echo LIVERAIL_PLUGIN_URL */' : {
      	//		'LR_ADMAP': 'in::0',
@@ -311,13 +311,16 @@ SambaAdsPlayerControler.prototype.init = function(data){
            }
         },
         playlist: this._options.playlist,
-        skin: "http:" + this.response.player_info.skin_url,
+        skin: {
+        	name: 'sambaads',
+        	url: '/stylesheets/skin/jw-skin-sambaads.css'
+        },
         width: player_width,
         height: player_height,
         captions : captions,
-        primary: "flash",
-        abouttext: "SambaAds - no cats playing piano.",
-        aboutlink: "http://www.sambaads.com.br/publishers"
+        primary: 'flash',
+        abouttext: 'SambaAds - no cats playing piano.',
+        aboutlink: 'http://www.sambaads.com.br/publishers'
     };
 
     if(!this.response.player_info.custom_tag){
@@ -342,7 +345,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
     	self.computeComscore("04","sambaads_content");
     	window.jwplayer(self.player).setControls(true);
 		smb.onPlay();
-		
+
 		self.oldstate = self.newstate.toUpperCase();
 		self.newstate = evt.newstate.toUpperCase();
 
@@ -411,7 +414,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).on('adError',function(evt){
-		
+
 		smb.hideDisplay();
 		/*
 		if(!self._options.playlist[self.currentPlaylistIndex].running_youtube && (self._options.playlist[self.currentPlaylistIndex].file_youtube.length > 0)){
@@ -427,7 +430,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).on('adComplete', function(evt){
-		
+
 	});
 
 	window.jwplayer(self.player).on('beforePlay', function(evt){
@@ -482,7 +485,7 @@ SambaAdsPlayerControler.prototype.calculatePlayerWidth = function(){
 	if(this._options.playlist.length > 1){
 		player_width = player_width - this._options.playlistWidth;
 	};
-    
+
     return player_width;
 };
 
@@ -504,7 +507,7 @@ SambaAdsPlayerControler.prototype.loadPlaylist = function(index){
 
 SambaAdsPlayerControler.prototype.setMute = function(mute){
 	if( typeof Boolean(mute) === 'boolean'){
-		window.jwplayer(this.player).setMute(mute);			
+		window.jwplayer(this.player).setMute(mute);
 	}
 };
 
@@ -539,11 +542,11 @@ SambaAdsPlayerView = function (){
 	this.displayOverlayPlay 	 = document.getElementById("display-overlay-play");
 	this.displayOverlayTitleShare 	 = document.getElementById("display-overlay-title-share");
 	this.displayOverlayNextVideo = document.getElementById("display-overlay-next");
-	
+
 	this.playButtom = document.getElementById("display-buttom-play");
 	this.videoTitleBar = document.getElementById("video-title-bar");
 	this.videoTitle = document.getElementById("video-title");
-	
+
 };
 
 SambaAdsPlayerView.prototype.showDisplay = function(option){
@@ -562,17 +565,17 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 	if(option == 'play'){
 		this.displayOverlayPlay.style.display = "block";
 		this.displayOverlayTitleShare.style.display = "block";
-		
+
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
 		// $("#titlebar-title").text(this.controller.getCurrentVideo().title);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
-		  			+ "m=" + this.controller.getCurrentVideo().media_id 
+		  			+ "m=" + this.controller.getCurrentVideo().media_id
 		  			+ "&p=" + this.controller.response.publisher_info.hash_code
 		  			+ "&sk=blue"
-		  			+ "&tm=light" 
+		  			+ "&tm=light"
 		  			+ "&plp="
 		  			+ "&plw="
 		  			+ "&plh=&w=640&h=360\"></script>");
@@ -641,11 +644,11 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 
 	document.getElementById("close-button").onclick = function(){
 		self.showDisplay("play");
-		
+
 		if(self.controller.shareLastState == "PLAYING"){
 			self.controller.play();
 		}
-			
+
 		self.controller.shareLastState = self.controller.newstate;
 	}
 
@@ -715,7 +718,7 @@ SambaAdsPlayerView.prototype.setTitleBar = function(title_text, color){
 
 SambaAdsPlayerView.prototype.setShareLink = function(url){
 	var input = document.getElementById("share-link");
-	
+
 	if(input)
 		input.value = url;
 }
@@ -771,13 +774,13 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
-		
+
 		$(".nano").css( "height", window.jwplayer(self.player).getHeight() );
 	}else if(options.position == "bottom-vertical"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
 		$("#playlist-v-items").show();
-		
+
 		$(".nano").css( "height", options.playlistHeight );
 	}else if(options.position == "bottom-horizontal"){
 		$($.find("div.sambaads-playlist.horizontal")[0]).addClass(options.playlistStyle);
@@ -838,8 +841,8 @@ SambaAdsPlayerView.prototype.onPlay = function(){
 	this.hideDisplay();
 
 	this.controller.updateViewsCount(
-			this.options.playlist[this.controller.currentPlaylistIndex].media_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].owner_id, 
+			this.options.playlist[this.controller.currentPlaylistIndex].media_id,
+			this.options.playlist[this.controller.currentPlaylistIndex].owner_id,
 			this.options.playlist[this.controller.currentPlaylistIndex].category_name);
 
 	if(this.options.playlist[this.controller.currentPlaylistIndex + 1]) {
