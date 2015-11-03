@@ -419,10 +419,10 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).on('adComplete', function(evt){
-
 	});
 
 	window.jwplayer(self.player).on('beforePlay', function(evt){
+		$("#display-overlay-title-share").hide();
 		smb.hideDisplay();
 	});*/
 };
