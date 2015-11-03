@@ -1,11 +1,8 @@
-'use strict';
-jwplayer.key="fg2E6RxmRfFIhFDYCJYLPglvuybnkF6v0sjOSA";
-
 var SambaAdsPlayerControler = {};
 
 SambaAdsPlayerControler = function (player, view, data){
 	var self = this;
-	window.sambaads = {};
+	window.sambaads = window.sambaads || {};
 	window.sambaads.parentIframeID = "";
 
 	self.player = player;
@@ -296,20 +293,10 @@ SambaAdsPlayerControler.prototype.init = function(data){
         //        'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
         //    }
         //},
-
+        //skin: "http:" + this.response.player_info.skin_url,
     var player_config_options = {
         displaytitle: false,
-        advertising:{
-         client:'vast',
-         tag: decodeURIComponent(this.response.player_info.custom_tag)
-        },
-        plugins: {
-             '/* @echo LIVERAIL_PLUGIN_URL */' : {
-     			'LR_ADMAP': 'in::0',
-               'LR_URL': this.discoveryHost(),
-               'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-           }
-        },
+        displaydescription: false,
         playlist: this._options.playlist,
         skin: {
         	name: 'sambaads',
@@ -329,7 +316,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		delete player_config_options.plugins;
 	}
 
-	window.jwplayer(this.player).setup(player_config_options);
+	new SambaAdsPlayerCore(player_config_options);
+
+	/*window.jwplayer(this.player).setup(player_config_options);
 
     window.jwplayer(self.player).on('ready', function() {
 		smb.init(self.player, self._options);
@@ -422,7 +411,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 			window.jwplayer(this.player).load({ file: "http://www.youtube.com/watch?v=" + self._options.playlist[self.currentPlaylistIndex].file_youtube });
 			window.jwplayer(this.player).play();
 		}
-		*/
+		*
 	});
 
 	window.jwplayer(self.player).on('adImpression', function(evt){
@@ -435,7 +424,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).on('beforePlay', function(evt){
 		smb.hideDisplay();
-	});
+	});*/
 };
 
 SambaAdsPlayerControler.prototype.onLoad = function(){

@@ -40,13 +40,26 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task("build-javascripts-player", function(){
-    gulp.src(paths.scripts + "sambaads.player.js")
-        .pipe(sourcemaps.init())
-        .pipe(preprocess({context: contextEnv}))
-        .pipe(uglify())
-        .pipe(rename('sambaads.player.js'))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('app/public/javascripts/'));
+  gulp.src([
+      paths.scripts + "player.messagebroker.js",
+      paths.scripts + "player.event.js",
+      paths.scripts + "player.util.js",
+      paths.scripts + "player.core.js",
+      paths.scripts + "player.view.js",
+      paths.scripts + "player.view.playlist.js",
+      paths.scripts + "player.view.buffer.js",
+      paths.scripts + "player.view.descriptionbar.js",
+      paths.scripts + "player.view.share.js",
+      paths.scripts + "player.controller.js",
+      paths.scripts + "player.controller.collector.js",
+      paths.scripts + "player.controller.collector.tracker.js"
+    ])
+    .pipe(sourcemaps.init())
+    .pipe(preprocess({context: contextEnv}))
+    .pipe(concat("sambaads.player.js"))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('app/public/javascripts/'));
 
     gulp.src(paths.scripts + "player.js")
         .pipe(sourcemaps.init())
@@ -105,16 +118,18 @@ gulp.task('build-css-skin', function(){
 });
 
 gulp.task('watch', function() {
-    gulp.watch(
-        [
-            paths.scripts + "sambaads.player.js",
-            paths.scripts + "player.js"
-        ],
-        ["build-javascripts-player"]
-    );
-    gulp.watch(paths.css + "**/*.css", ['build-css']);
-    gulp.watch(paths.skins + '**/*.css', ['build-css-skin'])
-    gulp.watch(paths.images, ['build-images']);
+  gulp.watch([paths.scripts + "player.core.js",
+              paths.scripts + "player.controller.js",
+              paths.scripts + "player.controller.conllector.js",
+              paths.scripts + "player.controller.conllector.tracker.js",
+              paths.scripts + "player.view.buffer.js",
+              paths.scripts + "player.view.descriptionbar.js",
+              paths.scripts + "player.view.share.js",
+              paths.scripts + "player.view.playlist.js",
+              paths.scripts + "player.js"], ["build-javascripts-player"]);
+  gulp.watch(paths.css + "**/*.css", ['build-css']);
+  gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
+  gulp.watch(paths.images, ['build-images']);
 });
 
 gulp.task("default",
