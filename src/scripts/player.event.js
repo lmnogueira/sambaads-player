@@ -11,6 +11,10 @@ var Event = {
 	TOGGLE_SHARE:"toggleShare",
 	HIDE_DISPLAYS:"hideDisplays",
 	PLATFORM_METADATA_LOADED:"platformMetadataLoaded",
-	TRACKER:"tracker"
+	TRACKER:"tracker",
+
+	PLAYLIST_CONFIGURED:"playlistConfigured",
+
+	CONFIGURATION_READY:"configurationReady"
 };
 

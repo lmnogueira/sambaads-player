@@ -50,6 +50,7 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.view.buffer.js",
       paths.scripts + "player.view.descriptionbar.js",
       paths.scripts + "player.view.share.js",
+      paths.scripts + "player.configurator.js",
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
       paths.scripts + "player.controller.collector.tracker.js"
@@ -119,6 +120,7 @@ gulp.task('build-css-skin', function(){
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "player.core.js",
+              paths.scripts + "player.configurator.js",
               paths.scripts + "player.controller.js",
               paths.scripts + "player.controller.conllector.js",
               paths.scripts + "player.controller.conllector.tracker.js",

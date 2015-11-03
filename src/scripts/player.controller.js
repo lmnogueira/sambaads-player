@@ -2,9 +2,11 @@ var SambaAdsPlayerControler = {};
 
 SambaAdsPlayerControler = function (player, view, data){
 	var self = this;
+	self.data = data;
 
-	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
-	self.init( data );
+	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
+		self.init( e.detail.data );
+	})
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 
@@ -19,41 +21,20 @@ SambaAdsPlayerControler = function (player, view, data){
 
 		SambaAdsPlayerMessageBroker().send(Event.TRACKER, evtObject);
 	});
+
+	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
 };
 
 SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
-	this.response =  data ;
+	this.configuration =  data;
 
-	this._options = {
-			//position:"rigth",
-			//position:"bottom-vertical",
-			//position:"bottom-horizontal",
-			position: this.response.player_info.playlist_position || self.discoveryPlaylistInfo().plp,
-			playlistStyle: this.response.player_info.theme || self.discoveryPlaylistInfo().tm,
-			playlist:[]
-	};
+	console.log(data)
 
-	if (this._options.position == "right") {
-		this._options.playlistHeight = 0;
-		this._options.playlistWidth = this.response.player_info.playlist_width   || 280;
-	}
+	this._options = {};
 
-	if (this._options.position == "bottom-vertical") {
-		this._options.playlistHeight = this.response.player_info.playlist_height || 150;
-		this._options.playlistWidth = 0;
-	} 
+	//this._options.playlist = data.playlist.playlist;
 
-	if (this._options.position == "bottom-horizontal") {
-		this._options.playlistWidth = 0;
-		this._options.playlistHeight = 143;
-	}
-
-	this._options.playlist = this.response.playlist;
-
-	//calculate player size
-	var player_width = this.calculatePlayerWidth();
-	var player_height = this.calculatePlayerHeight();
 
 	var captions = {
                 color: '#FFFFFF',
@@ -81,54 +62,33 @@ SambaAdsPlayerControler.prototype.init = function(data){
         //    }
         //},
         //skin: "http:" + this.response.player_info.skin_url,
+        
     var player_config_options = {
         displaytitle: false,
         displaydescription: false,
-        playlist: this._options.playlist,
+        visualplaylist: false,
+        playlist: data.playlist.playlist,
 
-        width: player_width,
-        height: player_height,
+        skin: {
+        	name: 'sambaads',
+        	url: '/stylesheets/skin/jw-skin-sambaads.css'
+        },
+
+        width: data.player.width,
+        height: data.player.height,
         captions : captions,
         primary: "flash",
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
     };
 
-    if(!this.response.player_info.custom_tag){
+    if(!data.player.custom_tag){
     	delete player_config_options.advertising;
 	} else {
 		delete player_config_options.plugins;
 	}
 
 	new SambaAdsPlayerCore(player_config_options);
-};
-
-SambaAdsPlayerControler.prototype.calculatePlayerHeight = function(){
-	var player_height = 0;
-	if($("#titlebar").is(':visible')){
-		player_height = ( $( document ).height() - $("#titlebar").outerHeight());
-
-	} else {
-		player_height = ( $( document ).height());
-	};
-
-	if(this._options.playlist.length > 1){
-		player_height = player_height - this._options.playlistHeight;
-	};
-
-	return player_height;
-};
-
-SambaAdsPlayerControler.prototype.calculatePlayerWidth = function(){
-	var player_width = 0;
-
-	player_width = $( document ).width();
-
-	if(this._options.playlist.length > 1){
-		player_width = player_width - this._options.playlistWidth;
-	};
-    
-    return player_width;
 };
 
 SambaAdsPlayerControler.prototype.getPlaylist = function(){

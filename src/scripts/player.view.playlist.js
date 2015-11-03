@@ -11,12 +11,14 @@ SambaAdsPlayerViewPlaylist = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
 		self.player_width = e.detail.data.width;
 		self.player_height = e.detail.data.height;
-		
-		console.log(">>> implementar valors de layout dinamicos para playlist")
-		self.applyStyle("light", "right", self.player_height);
 	});
 
-	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
+
+		console.log(e.detail.data);
+		console.log(">>> implementar valores de layout dinamicos para playlist")
+		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position, self.player_height);
+
 		self.init(e.detail.data);
 	});
 };
@@ -89,6 +91,8 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	$( "div.playlist-item" ).click(function() {
 		var index = this.id.split("-")[1];
 
+		SambaAdsPlayerMessageBroker().send(Event.LoadMedia, +index);
+
 		/*
 		self.controller.loadPlaylist(+index);
 		self.controller.play();
@@ -118,4 +122,4 @@ SambaAdsPlayerViewPlaylist.prototype.clone = function(type){
 	}
 };
 
-new SambaAdsPlayerViewPlaylist();
+//new SambaAdsPlayerViewPlaylist();
