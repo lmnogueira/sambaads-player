@@ -558,7 +558,8 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
-		$("#video-author").text("por " + this.controller.getCurrentVideo().owner_name);
+		 var visualizacoes = " - 342.400 visualizações"
+		$("#video-author").text("por " + this.controller.getCurrentVideo().owner_name + visualizacoes);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
@@ -679,7 +680,10 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 			$("#share-button-dock").show();
 			$("#display-overlay-title-share").show();
 			$("#video-title").text(self.controller.getCurrentVideo().title);
-			$("#video-author").text("por " + self.controller.getCurrentVideo().owner_name);
+
+			var visualizacoes = " - 342.400 visualizações";
+
+			$("#video-author").text("por " + self.controller.getCurrentVideo().owner_name + visualizacoes);
 		}
 	})
 	.mouseleave(function(event) {
