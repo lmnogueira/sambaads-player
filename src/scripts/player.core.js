@@ -50,10 +50,12 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 
 	this.JWPlayer.on('play', function(e){
+		self.JWPlayer.setControls(true);
 		SambaAdsPlayerMessageBroker().send(Event.PLAY, e);
 	});
 
 	this.JWPlayer.on('pause', function(e){
+		self.JWPlayer.setControls(false);
 		SambaAdsPlayerMessageBroker().send(Event.PAUSE, e);
 	});
 	
@@ -148,10 +150,22 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 				self.oldState = self.newState;
 				self.newState = currentState;
 				SambaAdsPlayerMessageBroker().send(Event.PLAYER_STATE_CHANGE, { oldState: self.oldState, newState: self.newState });
-			}	
+			}
 		} catch (e){
 			console.log("player Instance not available");
 		}
 	},100);
+
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(e){
+		self.JWPlayer.play();
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.STOP, function(e){
+		self.JWPlayer.stop();
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(e){
+		self.JWPlayer.load([e.detail.data]);
+	});
 };
 

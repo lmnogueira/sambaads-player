@@ -4,7 +4,7 @@ SambaAdsPlayerControlerCollector = function (){
 	var self = this;
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TRACKER, function(e){
-		console.log(e.detail);
+		//console.log(e.detail);
 		//self.sendGif(e.datail.data);
 	});
 };

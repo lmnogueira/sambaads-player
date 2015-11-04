@@ -11,33 +11,27 @@ SambaAdsPlayerViewPlaylist = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
 		self.player_width = e.detail.data.width;
 		self.player_height = e.detail.data.height;
+
+		$(".nano").css( "height", self.player_height);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
-
-		console.log(e.detail.data);
-		console.log(">>> implementar valores de layout dinamicos para playlist")
-		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position, self.player_height);
-
+		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position);
 		self.init(e.detail.data);
 	});
 };
 
-SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, height){
+SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position){
 	var self = this;
 
 	if(position == "right"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
-		
-		$(".nano").css( "height", height);
 	}else if(position == "bottom-vertical"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
 		$("#playlist-h-items").hide();
 		$("#playlist-v-items").show();
-		
-		$(".nano").css( "height", height );
 	}else if(position == "bottom-horizontal"){
 		$($.find("div.sambaads-playlist.horizontal")[0]).addClass(theme);
 		$("#playlist-h-items").show();
@@ -47,8 +41,9 @@ SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, heig
 SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	var self = this;
 	self.cleanPlaylist();
+	self.playlist = options.playlist;
 
-	options.playlist.forEach(function(item){
+	self.playlist.forEach(function(item){
 		var new_v_item = self.clone("vertical");
 		var new_h_item = self.clone("horizontal");
 
@@ -88,17 +83,42 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	$(".nano").nanoScroller();
 
 
-	$( "div.playlist-item" ).click(function() {
+	$( "div.playlist-item" ).click(function(e) {
 		var index = this.id.split("-")[1];
 
-		SambaAdsPlayerMessageBroker().send(Event.LoadMedia, +index);
+		index = +index;
 
-		/*
-		self.controller.loadPlaylist(+index);
-		self.controller.play();
+		if(self.currentPlaylistIndex != index){
+			SambaAdsPlayerMessageBroker().send(DoEvent.STOP);
+
+			self.lastPlaylistIndex = self.currentPlaylistIndex;
+			self.currentPlaylistIndex = index;
+
+			self.playlist[index].running_youtube = false;
+
+			SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
+			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+		}
 
 		self.updateItemCurrent();
-		*/
+		
+	});
+};
+
+SambaAdsPlayerViewPlaylist.prototype.updateItemCurrent = function(){
+	var self = this;
+	
+	$("div.playlist-item").each(function(idex, item){
+		if(item.id.indexOf(self.currentPlaylistIndex) >= 0){
+			$(item).find("span.video-duration").text("ASSISTINDO");
+			$(item).find("span.video-duration").show();
+		}
+
+		if(item.id.indexOf(self.lastPlaylistIndex) >= 0){
+			if(self.lastPlaylistIndex != self.currentPlaylistIndex){
+				$(item).find("span.video-duration").hide();
+			}
+		}
 	});
 };
 
@@ -117,9 +137,9 @@ SambaAdsPlayerViewPlaylist.prototype.clone = function(type){
 	var self = this;
 	if(type=="vertical"){
 		return self.vertical_factory_item.clone();
-	} else if(type="horizontal"){
+	} else if(type=="horizontal"){
 		return self.horizontal_factory_item.clone();
 	}
 };
 
-//new SambaAdsPlayerViewPlaylist();
+new SambaAdsPlayerViewPlaylist();

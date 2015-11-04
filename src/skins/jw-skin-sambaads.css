@@ -385,7 +385,7 @@
     width: 16px;
     height: 22px;
     display: inline-block;
-    background: url('/images/icon-play-bar.png') no-repeat;
+    background: url('/images/icon-pause-bar.png') no-repeat;
     vertical-align: sub;
 }
 
@@ -394,7 +394,7 @@
     width: 16px;
     height: 22px;
     display: inline-block;
-    background: url('/images/icon-pause-bar.png') no-repeat;
+    background: url('/images/icon-play-bar.png') no-repeat;
     vertical-align: sub;
 }
 

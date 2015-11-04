@@ -5,7 +5,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 	self.displayOverlayDescriptionBar = $("#display-overlay-title-share");
 	self.buttonShare = $("#share-button");
 
-	SambaAdsPlayerMessageBroker().addEventListener(Event.IDLE, function(e){
+	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
 		self.show();
 	});
 

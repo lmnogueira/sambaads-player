@@ -21,7 +21,7 @@ SambaAdsPlayerControler = function (player, view, data){
 
 		SambaAdsPlayerMessageBroker().send(Event.TRACKER, evtObject);
 	});
-
+	
 	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
 };
 
@@ -29,12 +29,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
 	this.configuration =  data;
 
-	console.log(data)
-
 	this._options = {};
-
-	//this._options.playlist = data.playlist.playlist;
-
 
 	var captions = {
                 color: '#FFFFFF',
@@ -95,17 +90,7 @@ SambaAdsPlayerControler.prototype.getPlaylist = function(){
     return this._options.playlist;
 };
 
-SambaAdsPlayerControler.prototype.loadPlaylist = function(index){
-	if(this.currentPlaylistIndex != index){
-		this.stop();
-		this.lastPlaylistIndex = this.currentPlaylistIndex;
-		this.currentPlaylistIndex = index;
-		this._options.playlist[index].running_youtube = false;
-		window.jwplayer(this.player).load([this._options.playlist[index]]);
-	}
 
-	this.view.videoTitle.innerHTML = this._options.playlist[index].title;
-};
 
 SambaAdsPlayerControler.prototype.setMute = function(mute){
 	if( typeof Boolean(mute) === 'boolean'){

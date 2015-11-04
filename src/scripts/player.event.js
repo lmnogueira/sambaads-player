@@ -1,6 +1,7 @@
 var Event = {
 	IDLE:"idle",
 	PLAY:"play",
+	PLAY:"Play",
 	PAUSE:"pause",
 	READY:"ready",
 	BUFFER:"buffer",
@@ -18,3 +19,8 @@ var Event = {
 	CONFIGURATION_READY:"configurationReady"
 };
 
+var DoEvent = {
+	PLAY:"doPlay",
+	STOP:"doStop",
+	LOAD_MEDIA:"loadMedia"
+}
