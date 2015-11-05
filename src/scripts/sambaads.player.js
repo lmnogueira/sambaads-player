@@ -558,6 +558,13 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		
 		$("#video-title").show();
 		$("#video-title").text(this.controller.getCurrentVideo().title);
+		
+		if(this.controller.getCurrentVideo().total_views == undefined || this.controller.getCurrentVideo().total_views == 0){
+			$("#video-views").remove();
+		}
+
+		$("#video-author").text("por " + this.controller.getCurrentVideo().owner_name);
+		$("#video-views-number").text(this.controller.getCurrentVideo().total_views);
 
 		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
@@ -678,6 +685,13 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 			$("#share-button-dock").show();
 			$("#display-overlay-title-share").show();
 			$("#video-title").text(self.controller.getCurrentVideo().title);
+
+			if(self.controller.getCurrentVideo().total_views == undefined || self.controller.getCurrentVideo().total_views == 0){
+				$("#video-views").remove();
+			}
+
+			$("#video-author").text("por " + self.controller.getCurrentVideo().owner_name);
+			$("#video-views-number").text(self.controller.getCurrentVideo().views);
 		}
 	})
 	.mouseleave(function(event) {
