@@ -1,5 +1,5 @@
 set :stage, :staging
-set :branch, 'staging'
+set :branch, 'NEW_more_media_information_player'
 
 set :node_env, 'staging'
 

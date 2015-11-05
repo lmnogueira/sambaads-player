@@ -51,6 +51,11 @@ server {
   }
 
   location / {
+      expires 5m;
+      add_header Cache-Control public;
+      add_header Last-Modified "";
+      add_header ETag "";
+      
       proxy_pass <%= fetch(:nginx_host) %>;
   }
 }

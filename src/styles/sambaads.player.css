@@ -69,10 +69,23 @@ body {
 	padding:15px 60px 0 15px;
 }
 .video-title h3 {
-	font-size:14px;
+	font-size:17px;
 	color:#fff;
 	font-weight:bold;
+	margin-bottom: 0.2em;
 }
+
+.video-title h2 {
+	color: #EEE;
+    font-weight: normal;
+    font-size: 12px;
+    margin-bottom: 0.2em;
+}
+
+.video-title h2 span {
+    font-weight: bold;
+}
+
 .share-button {
 	background: rgba(0, 0, 0, 0.65);
 	-webkit-border-radius: 4px;
