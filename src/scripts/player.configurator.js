@@ -2,6 +2,7 @@ var SambaAdsPlayerConfigurator = {};
 
 SambaAdsPlayerConfigurator = function (){
 	var self = this;
+	self.pertmitWidthAutoStart = 320;
 	
 	self.configuration = {
 		playlist : {},
@@ -11,6 +12,7 @@ SambaAdsPlayerConfigurator = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
 		self.configurePlaylist(e.detail.data);
 		self.configurePlayer(e.detail.data);
+		self.configureClient(e.detail.data);
 
 		SambaAdsPlayerMessageBroker().send(Event.CONFIGURATION_READY, self.configuration);
 	});
@@ -42,13 +44,18 @@ SambaAdsPlayerConfigurator.prototype.configurePlayer = function(data){
 		if(self.configuration.playlist.playlist.length > 1){
 			player_width = player_width -  self.configuration.playlist.playlistWidth;
 		};
-	    
 	    return player_width;
 	};
 
 	self.configuration.player.width = calculatePlayerWidth();
 	self.configuration.player.height = calculatePlayerHeight();
+	self.configuration.player.pertmitWidthAutoStart = self.pertmitWidthAutoStart;
 
+};
+
+SambaAdsPlayerConfigurator.prototype.configureClient = function(data){
+	var self = this;
+	self.configuration.client = data.publisher_info;
 };
 
 SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(data){

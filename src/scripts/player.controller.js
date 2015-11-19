@@ -74,14 +74,12 @@ SambaAdsPlayerControler.prototype.init = function(data){
         captions : captions,
         primary: "flash",
         abouttext: "SambaAds - no cats playing piano.",
-        aboutlink: "http://www.sambaads.com.br/publishers"
+        aboutlink: "http://www.sambaads.com.br/publishers",
+        advertising: {
+            client: "googima",
+            admessage: "Anúncio publicitário terminará em XX segundos."
+        }
     };
-
-    if(!data.player.custom_tag){
-    	delete player_config_options.advertising;
-	} else {
-		delete player_config_options.plugins;
-	}
 
 	new SambaAdsPlayerCore(player_config_options);
 };

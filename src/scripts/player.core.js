@@ -11,6 +11,7 @@ var PlayerViewState = {
 	DISPLAYING_DESCRIPTION_BAR: "displayingDescriptionBar",
 	DISPLAYING_SHARE: "displayingShare",
 	DISPLAYING_BUFFER: "displayingBuffer",
+	DISPLAYING_ADS: "displayingAds",
 	INITIALIZE: "initialize"
 };
 
@@ -21,128 +22,128 @@ SambaAdsPlayerCore = function (options){
 	window.sambaads.JWPlayer = self.JWPlayer;
 
 	if (options) {
-		this.setup(options);
+		self.setup(options);
 	}
 };
 
 SambaAdsPlayerCore.prototype.setup = function(options){
 	var self = this;
 	
-	this.JWPlayer.setup(options);
+	self.JWPlayer.setup(options);
 
-	this.JWPlayer.on('ready', function(e){
+	self.JWPlayer.on('ready', function(e){
 		SambaAdsPlayerMessageBroker().send(Event.READY, e);
 	});
 
-	this.JWPlayer.on('setupError', function(evt){
+	self.JWPlayer.on('setupError', function(evt){
 		
 	});
-	this.JWPlayer.on('playlist', function(evt){
+	self.JWPlayer.on('playlist', function(evt){
 		
 	});
-	this.JWPlayer.on('playlistItem', function(e){
+	self.JWPlayer.on('playlistItem', function(e){
 		SambaAdsPlayerMessageBroker().send(Event.PLAY_LIST_ITEM, e);
 	});
-	this.JWPlayer.on('playlistComplete', function(evt){
+	self.JWPlayer.on('playlistComplete', function(evt){
 		
 	});
-	this.JWPlayer.on('bufferChange', function(e){
+	self.JWPlayer.on('bufferChange', function(e){
 	});
 
-	this.JWPlayer.on('play', function(e){
+	self.JWPlayer.on('play', function(e){
 		self.JWPlayer.setControls(true);
 		SambaAdsPlayerMessageBroker().send(Event.PLAY, e);
 	});
 
-	this.JWPlayer.on('pause', function(e){
+	self.JWPlayer.on('pause', function(e){
 		self.JWPlayer.setControls(false);
 		SambaAdsPlayerMessageBroker().send(Event.PAUSE, e);
 	});
 	
-	this.JWPlayer.on('buffer', function(e){
+	self.JWPlayer.on('buffer', function(e){
 		SambaAdsPlayerMessageBroker().send(Event.BUFFER, e);
 	});
 
-	this.JWPlayer.on('idle', function(evt){
+	self.JWPlayer.on('idle', function(evt){
 		
 	});
-	this.JWPlayer.on('complete', function(evt){
+	self.JWPlayer.on('complete', function(evt){
 		
 	});
-	this.JWPlayer.on('error', function(evt){
+	self.JWPlayer.on('error', function(evt){
 		
 	});
-	this.JWPlayer.on('seek', function(evt){
+	self.JWPlayer.on('seek', function(evt){
 		
 	});
-	this.JWPlayer.on('seeked', function(evt){
+	self.JWPlayer.on('seeked', function(evt){
 		
 	});
-	this.JWPlayer.on('time', function(evt){
-
+	self.JWPlayer.on('time', function(evt){
 	});
-	this.JWPlayer.on('mute', function(evt){
+	self.JWPlayer.on('mute', function(evt){
 		
 	});
-	this.JWPlayer.on('volume', function(evt){
+	self.JWPlayer.on('volume', function(evt){
 		
 	});
-	this.JWPlayer.on('fullscreen', function(evt){
+	self.JWPlayer.on('fullscreen', function(evt){
 		
 	});
-	this.JWPlayer.on('resize', function(e){
+	self.JWPlayer.on('resize', function(e){
 		SambaAdsPlayerMessageBroker().send(Event.RESIZE, e);
 	});
-	this.JWPlayer.on('levels', function(evt){
+	self.JWPlayer.on('levels', function(evt){
 		
 	});
-	this.JWPlayer.on('levelsChanged', function(evt){
+	self.JWPlayer.on('levelsChanged', function(evt){
 		
 	});
-	this.JWPlayer.on('captionsList', function(evt){
+	self.JWPlayer.on('captionsList', function(evt){
 		
 	});
-	this.JWPlayer.on('captionsChange', function(evt){
+	self.JWPlayer.on('captionsChange', function(evt){
 		
 	});
-	this.JWPlayer.on('controls', function(evt){
+	self.JWPlayer.on('controls', function(evt){
 		
 	});
-	this.JWPlayer.on('displayClick', function(evt){
-		
+	self.JWPlayer.on('displayClick', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adClick', function(evt){
-		
+	self.JWPlayer.on('adClick', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adCompanions', function(evt){
-		
+	self.JWPlayer.on('adCompanions', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adComplete', function(evt){
-		
+	self.JWPlayer.on('adComplete', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adError', function(evt){
-		
+	self.JWPlayer.on('adError', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adImpression', function(evt){
-		
+	self.JWPlayer.on('adImpression', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adTime', function(evt){
-		
+	self.JWPlayer.on('adTime', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('adSkipped', function(evt){
-		
+	self.JWPlayer.on('adSkipped', function(evt){
+		console.log(evt);
 	});
-	this.JWPlayer.on('beforePlay', function(evt){
-		
+	self.JWPlayer.on('beforePlay', function(evt){
+		self.JWPlayer.playAd("http://ad4.liverail.com/?LR_PUBLISHER_ID=14403&LR_SCHEMA=vast2&LR_TAGS=sbtgeral&LR_VIDEO_POSITION=0&LR_URL=__referrer__&LR_FORMAT=VIDEO/MP4");
+		//self.JWPlayer.playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/RedeParceiros/SBT/Geral&cust_params=position%3Dpreroll&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=&description_url=&correlator=123");
 	});
-	this.JWPlayer.on('beforeComplete', function(evt){
-		
+	self.JWPlayer.on('beforeComplete', function(evt){
+		self.JWPlayer.playAd("http://ad4.liverail.com/?LR_PUBLISHER_ID=14403&LR_SCHEMA=vast2&LR_TAGS=sbtgeral&LR_VIDEO_POSITION=0&LR_URL=__referrer__&LR_FORMAT=VIDEO/MP4");
 	});
-	this.JWPlayer.on('meta', function(evt){
+	self.JWPlayer.on('meta', function(evt){
 		
 	});
 
-	this.getStatePropagator = setInterval(function(){
+	self.getStatePropagator = setInterval(function(){
 		try{
 			var currentState = self.JWPlayer.getState();
 
@@ -156,16 +157,31 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		}
 	},100);
 
-	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(e){
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PAUSE, function(evt){
+		console.log(self.newState)
+		if(self.newState == PlayerState.PLAYING){
+			self.JWPlayer.pause();
+		}
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(evt){
 		self.JWPlayer.play();
 	});
 
-	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.STOP, function(e){
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.STOP, function(evt){
 		self.JWPlayer.stop();
 	});
 
-	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(e){
-		self.JWPlayer.load([e.detail.data]);
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(evt){
+		self.JWPlayer.load([evt.detail.data]);
+	});
+
+	$( "div.sambaads-embed" )
+	.mousemove(function(evt) {
+		SambaAdsPlayerMessageBroker().send(Event.MOUSE_MOVE, evt);
+	})
+	.mouseleave(function(evt) {
+		SambaAdsPlayerMessageBroker().send(Event.MOUSE_LEAVE, evt);
 	});
 };
 

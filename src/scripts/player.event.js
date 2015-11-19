@@ -13,14 +13,15 @@ var Event = {
 	HIDE_DISPLAYS:"hideDisplays",
 	PLATFORM_METADATA_LOADED:"platformMetadataLoaded",
 	TRACKER:"tracker",
-
 	PLAYLIST_CONFIGURED:"playlistConfigured",
-
-	CONFIGURATION_READY:"configurationReady"
+	CONFIGURATION_READY:"configurationReady",
+	MOUSE_MOVE:"mouseMove",
+	MOUSE_LEAVE:"mouseLeave"
 };
 
 var DoEvent = {
 	PLAY:"doPlay",
 	STOP:"doStop",
+	PAUSE:"doPause",
 	LOAD_MEDIA:"loadMedia"
 }

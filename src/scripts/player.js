@@ -348,7 +348,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
-                    this.contentWindow().postMessage( this.id + "::play::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onPlay::", this.iframe_target_host )
                 }
 
             },
@@ -356,7 +356,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
-                    this.contentWindow().postMessage( this.id + "::visible::" + data, this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onVisible::" + data, this.iframe_target_host )
                 }
 
             },
@@ -364,26 +364,26 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
-                    this.contentWindow().postMessage( this.id + "::mute::" + data, this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onMute::" + data, this.iframe_target_host )
                 }
 
             },
             doPause:function(){
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::pause::");
-                    this.contentWindow().postMessage( this.id + "::pause::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onPause::", this.iframe_target_host )
                 }
             },
             seek:function(seek_position){
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::pause::");
-                    this.contentWindow().postMessage( this.id + "::seek::"+seek_position, this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onSeek::"+seek_position, this.iframe_target_host )
                 }
             },
             debug:function(){
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::pause::");
-                    this.contentWindow().postMessage( this.id + "::debug::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onDebug::", this.iframe_target_host )
                 }
             }
         };
@@ -463,7 +463,7 @@ var ExpandedCinema = function (cw, currentIframe){
             if(params[0] == currentIframe.id){
                 //console.log("CORE RECEIVED:" + event.data)
 
-                if (params[1] == "ready" ){
+                if (params[1] == "onReady" ){
                     clearInterval(currentIframe.isReady);
                     currentIframe.isReady = true;
                     currentIframe.player_width = params[2].split(",")[1];
@@ -475,12 +475,12 @@ var ExpandedCinema = function (cw, currentIframe){
                     currentIframe.state = params[2];
                 }
 
-                if (params[1] == "loadExpandedCinema" ){
+                if (params[1] == "onLoadExpandedCinema" ){
                     var player = cw.sambaads.getPlayer(params[0]);
                     cw.sambaads.expandedCinema.load(params[2], player.player_width, player.player_height, player.id);
                 }
 
-                if (params[1] == "removeExpandedCinema" ){
+                if (params[1] == "onRemoveExpandedCinema" ){
                     var player = cw.sambaads.getPlayer(params[0]);
                     cw.sambaads.expandedCinema.close(player.id);
                 }
@@ -497,13 +497,13 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var crossMessageInitialization = function(iframeData){
         if (cw.addEventListener){
-            cw.addEventListener("message", onMessageReceive, false)
+            cw.addEventListener("message", onMessageReceive, false);
         } else {
-            attachEvent("onmessage", onMessageReceive)
+            attachEvent("onmessage", onMessageReceive);
         };
 
         iframeData.isReady = setInterval(function(){
-            iframeData.sendMessage("ready","")
+            iframeData.sendMessage("onReady","");
         },2000)
     }
 

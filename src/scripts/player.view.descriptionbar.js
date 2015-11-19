@@ -10,7 +10,9 @@ SambaAdsPlayerViewDescriptionBar = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
-		if(e.detail.data.newState == PlayerState.PAUSED || e.detail.data.newState == PlayerState.IDLE){
+		self.currentState = e.detail.data.newState;
+
+		if((e.detail.data.newState == PlayerState.PAUSED && self.currentViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE){
 			self.show();
 		}
 		else if(e.detail.data.newState == PlayerState.PLAYING || e.detail.data.newState == PlayerState.BUFFERING){
@@ -24,9 +26,21 @@ SambaAdsPlayerViewDescriptionBar = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.VIEW_STATE_CHANGE, function(e){
 		self.hide();
-
+		self.currentViewState = e.detail.data;
 		if(e.detail.data == PlayerViewState.INITIALIZE){
 			self.show();
+		}
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, function(e){
+		if(self.currentViewState != PlayerViewState.DISPLAYING_SHARE){
+			self.show();
+		}
+	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_LEAVE, function(e){
+		if(self.currentState != PlayerState.IDLE && self.currentState != PlayerState.PAUSED){
+			self.hide();
 		}
 	});
 

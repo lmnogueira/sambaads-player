@@ -41,8 +41,9 @@ gulp.task('clean', function(cb) {
 
 gulp.task("build-javascripts-player", function(){
   gulp.src([
-      paths.scripts + "player.messagebroker.js",
       paths.scripts + "player.event.js",
+      paths.scripts + "player.messagebroker.js",
+      paths.scripts + "player.postmessage.js",
       paths.scripts + "player.util.js",
       paths.scripts + "player.core.js",
       paths.scripts + "player.view.js",
@@ -121,6 +122,7 @@ gulp.task('build-css-skin', function(){
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "player.core.js",
+              paths.scripts + "player.postmessage.js",
               paths.scripts + "player.configurator.js",
               paths.scripts + "player.controller.js",
               paths.scripts + "player.controller.conllector.js",

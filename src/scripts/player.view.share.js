@@ -6,8 +6,9 @@ SambaAdsPlayerViewShare = function (){
 	self.buttonClose = $("#close-button");
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TOGGLE_SHARE, function(e){
-		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_SHARE);
+		SambaAdsPlayerMessageBroker().send(DoEvent.PAUSE);
 		self.show();
+		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_SHARE);
 	});
 
 	self.buttonClose.click(function(){
