@@ -72,11 +72,12 @@ SambaAdsPlayerControler.prototype.init = function(data){
         width: data.player.width,
         height: data.player.height,
         captions : captions,
-        primary: "flash",
+        primary: "html",
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers",
         advertising: {
-            client: "googima",
+            //client: "googima",
+            client: "vast",
             admessage: "Anúncio publicitário terminará em XX segundos."
         }
     };

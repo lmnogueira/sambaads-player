@@ -13,6 +13,10 @@ SambaAdsPlayerViewBuffer = function (){
 			self.hide();
 		}
 	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_TIME, function(e){
+		self.hide();
+	});
 };
 
 SambaAdsPlayerViewBuffer.prototype.show = function(){

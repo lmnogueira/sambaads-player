@@ -16,7 +16,8 @@ var Event = {
 	PLAYLIST_CONFIGURED:"playlistConfigured",
 	CONFIGURATION_READY:"configurationReady",
 	MOUSE_MOVE:"mouseMove",
-	MOUSE_LEAVE:"mouseLeave"
+	MOUSE_LEAVE:"mouseLeave",
+	AD_TIME:"adTime"
 };
 
 var DoEvent = {

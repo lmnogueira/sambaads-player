@@ -33,7 +33,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, function(e){
-		if(self.currentViewState != PlayerViewState.DISPLAYING_SHARE){
+		if(self.currentViewState != PlayerViewState.DISPLAYING_SHARE && self.currentViewState != PlayerViewState.DISPLAYING_ADS){
 			self.show();
 		}
 	});
