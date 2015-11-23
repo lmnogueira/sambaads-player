@@ -812,8 +812,8 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 
 		new_v_item.attr("id", "v-" + $("#playlist-v-items").children().length);//item.mediaid || item.id);
 		new_h_item.find("div.playlist-item").attr("id", "h-" + $("#playlist-h-items").children().length);
-		$(new_v_item).find("img").attr('src',item.image)
-		$(new_h_item).find("img").attr('src',item.image)
+		$(new_v_item).find("img").attr('src', (item.thumbnails['90'] || item.image))
+		$(new_h_item).find("img").attr('src',(item.thumbnails['90'] || item.image))
 
 		$(new_v_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
 		$(new_h_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
@@ -866,7 +866,7 @@ SambaAdsPlayerView.prototype.onPlay = function(){
 
 	if(this.options.playlist[this.controller.currentPlaylistIndex + 1]) {
 		$("#video-next-title").text(this.options.playlist[this.controller.currentPlaylistIndex + 1].title);
-		$("#video-next-thumbnail").attr('src',this.options.playlist[this.controller.currentPlaylistIndex + 1].image);
+		$("#video-next-thumbnail").attr('src',this.options.playlist[this.controller.currentPlaylistIndex + 1].thumbnails['90'] || this.options.playlist[this.controller.currentPlaylistIndex + 1].image);
 	}
 }
 
