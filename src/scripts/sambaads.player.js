@@ -566,7 +566,7 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		$("#video-author").text("por " + this.controller.getCurrentVideo().owner_name);
 		$("#video-views-number").text(this.controller.getCurrentVideo().total_views);
 
-		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code+"&t=" + this.controller.getCurrentVideo().title);
+		this.setShareFacebookUrl("/* @echo FACEBOOK_SHARER_URL */?mid="+ this.controller.getCurrentVideo().media_id +"&pid="+this.controller.response.publisher_info.hash_code);
 		this.setShareEmbed("<script src=\"/* @echo PLAYER_SCRIPT_URL */?"
 		  			+ "m=" + this.controller.getCurrentVideo().media_id 
 		  			+ "&p=" + this.controller.response.publisher_info.hash_code
