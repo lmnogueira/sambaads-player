@@ -298,7 +298,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
            }
         },
         playlist: this._options.playlist,
-        skin: "http:" + this.response.player_info.skin_url,
+        skin: location.protocol + this.response.player_info.skin_url,
         width: player_width,
         height: player_height,
         captions : captions,
