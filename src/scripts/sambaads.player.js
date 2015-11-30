@@ -16,6 +16,7 @@ SambaAdsPlayerControler = function (player, view, data){
 	self.newstate = "IDLE";
 	self.oldstate = null;
 	self.startNextIn = null;
+	self.userHasInteracted = false;
 	self.pertmitWidthAutoStart = 320;
 	//self.propagateMute = null;
 	self.firstPlay = true;
@@ -162,7 +163,7 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 			if(this.response.publisher_info.auto_start){
 
 				if(this.newstate != "PLAYING"){
-					if(w > this.pertmitWidthAutoStart) {
+					if(w > this.pertmitWidthAutoStart && !this.userHasInteracted) {
 			  			this.play();
 			  			this.view.updateItemCurrent();
 			  		}
@@ -297,7 +298,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
            }
         },
         playlist: this._options.playlist,
-        skin: "http:" + this.response.player_info.skin_url,
+        skin: location.protocol + this.response.player_info.skin_url,
         width: player_width,
         height: player_height,
         captions : captions,
@@ -853,6 +854,10 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		self.controller.play();
 
 		self.updateItemCurrent();
+	});
+
+	$( "div.sambaads-player-container" ).mousedown(function() {
+		self.controller.userHasInteracted = true;
 	});
 };
 
