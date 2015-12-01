@@ -854,6 +854,7 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		self.controller.play();
 
 		self.updateItemCurrent();
+		clearInterval(self.startNextIn);
 	});
 
 	$( "div.sambaads-player-container" ).mousedown(function() {
