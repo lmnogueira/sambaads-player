@@ -560,7 +560,9 @@ SambaAdsPlayerView.prototype.showDisplay = function(option){
 		$("#video-title").text(this.controller.getCurrentVideo().title);
 		
 		if(this.controller.getCurrentVideo().total_views == undefined || this.controller.getCurrentVideo().total_views == 0){
-			$("#video-views").remove();
+			$("#video-views").hide();
+		} else {
+			$("#video-views").show();
 		}
 
 		$("#video-author").text("por " + this.controller.getCurrentVideo().owner_name);
@@ -687,11 +689,13 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 			$("#video-title").text(self.controller.getCurrentVideo().title);
 
 			if(self.controller.getCurrentVideo().total_views == undefined || self.controller.getCurrentVideo().total_views == 0){
-				$("#video-views").remove();
+				$("#video-views").hide();
+			} else {
+				$("#video-views").show();
 			}
 
 			$("#video-author").text("por " + self.controller.getCurrentVideo().owner_name);
-			$("#video-views-number").text(self.controller.getCurrentVideo().views);
+			$("#video-views-number").text(self.controller.getCurrentVideo().total_views);
 		}
 	})
 	.mouseleave(function(event) {
