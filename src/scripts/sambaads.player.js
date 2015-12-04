@@ -15,7 +15,6 @@ SambaAdsPlayerControler = function (player, view, data){
 	self.lastPlaylistIndex = 0;
 	self.newstate = "IDLE";
 	self.oldstate = null;
-	self.startNextIn = null;
 	self.userHasInteracted = false;
 	self.pertmitWidthAutoStart = 320;
 	//self.propagateMute = null;
@@ -661,7 +660,7 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	};
 
 	document.getElementById("replay-button").onclick = function() {
-		clearInterval(self.controller.startNextIn);
+		clearInterval(self.startNextIn);
 		window.jwplayer(self.player).play();
 	};
 
@@ -849,12 +848,12 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 
 	$( "div.playlist-item" ).click(function() {
 		var index = this.id.split("-")[1];
+		clearInterval(self.startNextIn);
 
 		self.controller.loadPlaylist(+index);
 		self.controller.play();
 
 		self.updateItemCurrent();
-		clearInterval(self.startNextIn);
 	});
 
 	$( "div.sambaads-player-container" ).mousedown(function() {
