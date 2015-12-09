@@ -7,13 +7,13 @@ set :with_user, "sambaads"
 
 set :smartseed1, '52.7.210.178'
 set :smartseed2, '54.86.48.111'
-set :smartseed3, '54.175.17.141'
+set :smartseed3, '52.91.150.219'
 
 set :hostname_list, {smartseed1: fetch(:smartseed1), smartseed2: fetch(:smartseed2)}
 
 server fetch(:smartseed1), user: fetch(:with_user), roles: %w{app db web}
 server fetch(:smartseed2), user: fetch(:with_user), roles: %w{app db web}
-# server fetch(:smartseed3), user: fetch(:with_user), roles: %w{app db web}
+server fetch(:smartseed3), user: fetch(:with_user), roles: %w{app db web}
 
 set :nvm_type, :user
 set :nvm_node, 'v0.12.2'
