@@ -136,12 +136,16 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 	self.JWPlayer.on('beforePlay', function(evt){
 		//self.JWPlayer.playAd("http://ad4.liverail.com/?LR_PUBLISHER_ID=14403&LR_SCHEMA=vast2&LR_TAGS=sbtgeral&LR_VIDEO_POSITION=0&LR_URL=__referrer__&LR_FORMAT=VIDEO/MP4");
+		//google.ima.settings.setVpaidMode(google.ima.ImaSdkSettings.VpaidMode.ENABLED);
+		//var adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById("jw_sambaads_player"));
+		//var adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+		//adsLoader.getSettings().setVpaidMode(google.ima.ImaSdkSettings.VpaidMode.INSECURE);
 
 		self.JWPlayer.playAd("http://local-advertising.sambaads.com/expanded_cinema.xml");
 		//self.JWPlayer.playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/RedeParceiros/SBT/Geral&cust_params=position%3Dpreroll&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=&description_url=&correlator=123");
 	});
 	self.JWPlayer.on('beforeComplete', function(evt){
-		self.JWPlayer.playAd("http://ad4.liverail.com/?LR_PUBLISHER_ID=14403&LR_SCHEMA=vast2&LR_TAGS=sbtgeral&LR_VIDEO_POSITION=0&LR_URL=__referrer__&LR_FORMAT=VIDEO/MP4");
+		self.JWPlayer.playAd();
 	});
 	self.JWPlayer.on('meta', function(evt){
 		
