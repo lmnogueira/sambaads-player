@@ -42,6 +42,8 @@ gulp.task('clean', function(cb) {
 gulp.task("build-javascripts-player", function(){
   gulp.src([
       paths.scripts + "player.event.js",
+      paths.scripts + "player.view.state.js",
+
       paths.scripts + "player.messagebroker.js",
       paths.scripts + "player.postmessage.js",
       paths.scripts + "player.util.js",
@@ -52,6 +54,7 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.view.buffer.js",
       paths.scripts + "player.view.descriptionbar.js",
       paths.scripts + "player.view.share.js",
+      paths.scripts + "player.view.next.js",
       paths.scripts + "player.configurator.js",
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
@@ -132,6 +135,7 @@ gulp.task('watch', function() {
               paths.scripts + "player.view.descriptionbar.js",
               paths.scripts + "player.view.share.js",
               paths.scripts + "player.view.playlist.js",
+              paths.scripts + "player.view.next.js",
               paths.scripts + "player.js"], ["build-javascripts-player"]);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);

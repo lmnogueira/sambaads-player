@@ -42,22 +42,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
                 windowColor: '#000000',
                 windowOpacity: 0
     };
-
-
-        //advertising:{
-        //  client:'vast',
-        //  tag: decodeURIComponent(this.response.player_info.custom_tag)
-        //},
-        
-        //plugins: {
-        //      '/* @echo LIVERAIL_PLUGIN_URL */' : {
-     	//		'LR_ADMAP': 'in::0',
-        //        'LR_URL': this.discoveryHost(),
-        //        'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-        //    }
-        //},
-        //skin: "http:" + this.response.player_info.skin_url,
-        
+    
     var player_config_options = {
         displaytitle: false,
         displaydescription: false,
@@ -76,8 +61,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers",
         advertising: {
-            //client: "googima",
-            client: "vast",
+            client:'googima',
+            vpaidmode:'insecure',
+            //client: "vast",
             admessage: "Anúncio publicitário terminará em XX segundos."
         }
     };

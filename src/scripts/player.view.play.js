@@ -4,28 +4,22 @@ SambaAdsPlayerViewPlay = function (){
 	var self = this;
 	self.displayOverlayPlay = $("#display-overlay-play");
 
-	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
+	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(evt){
 		self.show();
 	});
 
-	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
-		if(e.detail.data.newState == PlayerState.PLAYING || e.detail.data.newState == PlayerState.BUFFERING){
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
+		if(
+			(evt.detail.data.newState == PlayerState.PAUSED || evt.detail.data.newState == PlayerState.IDLE) && 
+			(evt.detail.data.newViewState == PlayerViewState.INITIALIZE)
+		){
+			self.show();
+		} else {
 			self.hide();
-		} else if((e.detail.data.newState == PlayerState.PAUSED) && (self.currentViewState == PlayerViewState.INITIALIZE)){
-			self.show();
 		}
 	});
 
-	SambaAdsPlayerMessageBroker().addEventListener(Event.VIEW_STATE_CHANGE, function(e){
-		self.hide();
-		self.currentViewState = e.detail.data;
-
-		if(e.detail.data == PlayerViewState.INITIALIZE){
-			self.show();
-		}
-	});
-
-	self.displayOverlayPlay.click(function(e) {
+	self.displayOverlayPlay.click(function(evt) {
 		SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 	});
 };
