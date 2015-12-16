@@ -705,6 +705,11 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 		}
 	});
 
+	$( "div.sambaads-player-container" ).mousedown(function() {
+		console.log("interact");
+		self.controller.userHasInteracted = true;
+	});
+
 	// $( "#share-button-dock" )
 	// .mousemove(function(event) {
 	// 	$("#share-button-dock").css("z-index","2")
@@ -858,10 +863,6 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		self.controller.play();
 
 		self.updateItemCurrent();
-	});
-
-	$( "div.sambaads-player-container" ).mousedown(function() {
-		self.controller.userHasInteracted = true;
 	});
 };
 
