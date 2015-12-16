@@ -111,6 +111,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 			self.playlist[index].running_youtube = false;
 
 			SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
+
 			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 		} else {
 			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
@@ -123,6 +124,7 @@ SambaAdsPlayerViewPlaylist.prototype.playNext = function(){
 
 	self.updateIndex();
 
+	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[self.currentPlaylistIndex]);
 	SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 

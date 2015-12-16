@@ -128,8 +128,6 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_COMLETE, evt);
 	});
 
-	
-
 	self.getStatePropagator = setInterval(function(){
 		try{
 			var currentState = self.JWPlayer.getState();
@@ -166,11 +164,14 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(evt){
-		self.JWPlayer.play();
+		if(self.newState == PlayerState.PAUSED || self.newState == PlayerState.IDLE){
+			self.JWPlayer.play();
+		}
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.STOP, function(evt){
 		self.JWPlayer.stop();
+		self.newState = PlayerState.IDLE;
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(evt){

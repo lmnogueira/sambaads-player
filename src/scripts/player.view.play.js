@@ -9,10 +9,7 @@ SambaAdsPlayerViewPlay = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
-		if(
-			(evt.detail.data.newState == PlayerState.PAUSED || evt.detail.data.newState == PlayerState.IDLE) && 
-			(evt.detail.data.newViewState == PlayerViewState.INITIALIZE)
-		){
+		if((evt.detail.data.newState == PlayerState.PAUSED || evt.detail.data.newState == PlayerState.IDLE) && (evt.detail.data.newViewState == PlayerViewState.INITIALIZE)){
 			self.show();
 		} else {
 			self.hide();
@@ -26,10 +23,10 @@ SambaAdsPlayerViewPlay = function (){
 
 SambaAdsPlayerViewPlay.prototype.show = function(){
 	this.displayOverlayPlay.show();
-}
+};
 
 SambaAdsPlayerViewPlay.prototype.hide = function(){
 	this.displayOverlayPlay.hide();
-}
+};
 
 new SambaAdsPlayerViewPlay();

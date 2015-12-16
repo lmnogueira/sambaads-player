@@ -38,7 +38,7 @@ SambaAdsPlayerViewNext.prototype.show = function(){
 
 SambaAdsPlayerViewNext.prototype.startCount = function(){
 	var self = this;
-	var i = 10;
+	self.i = 10;
 
 	$('.progress-circle').circleProgress({
 		value: 1.0,
@@ -50,15 +50,15 @@ SambaAdsPlayerViewNext.prototype.startCount = function(){
 		fill: { color: '#fff' }
 	});
 
-	$("#counter-down").text(i);
+	$("#counter-down").text(self.i);
 	self.startNextIn = setInterval(function(){
-		$("#counter-down").text(i);
-		if(i==0){
+		$("#counter-down").text(self.i);
+		if(self.i==0){
 			self.hide();
 			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY_NEXT);
 			clearInterval(self.startNextIn);
 		}
-		i--
+		self.i--
 	},1000);
 };
 

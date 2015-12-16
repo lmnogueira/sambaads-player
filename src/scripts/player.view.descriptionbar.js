@@ -62,7 +62,7 @@ SambaAdsPlayerViewDescriptionBar.prototype.setViews = function(views){
 	if(views > 0)
 		$("#video-views-number").text(views);
 	else
-		$("#video-views").hide()
+		$("#video-views").hide();
 };
 
 SambaAdsPlayerViewDescriptionBar.prototype.show = function(){

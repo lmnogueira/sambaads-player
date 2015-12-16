@@ -27,4 +27,4 @@ var DoEvent = {
 	STOP: "doStop",
 	PAUSE: "doPause",
 	LOAD_MEDIA: "loadMedia"
-}
+};
