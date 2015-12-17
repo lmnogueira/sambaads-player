@@ -424,7 +424,11 @@ SambaAdsPlayerControler.prototype.canAutoStart = function(){
 	} else if(this.response.player_info.origin === 'brandedchannels'){
 		can = true;
 	}
-	
+
+	if(typeof window.orientation !== 'undefined'){
+		can = false;
+	}
+
 	return can;
 };
 
