@@ -16,11 +16,20 @@ namespace :nginx do
 	  	erb = File.read(File.expand_path("#{fetch(:nginx_from)}/#{fetch(:nginx_file_name)}.erb", __FILE__))
 		  data = ERB.new(erb).result(binding)
 	    upload!  StringIO.new(data), "/tmp/nginx_#{fetch(:nginx_file_name)}"
-	    
+
 	    destination = "#{fetch(:nginx_config_dir)}/#{fetch(:nginx_file_name)}"
 	    execute :sudo, "mv -u /tmp/nginx_#{fetch(:nginx_file_name)} #{destination}"
 	    execute :sudo, "chown root:root #{destination}"
     	execute :sudo, "chmod 644 #{destination}"
 	  end
+	end
+
+	["reload", "restart"].each do |task_name|
+		desc "nginx #{task_name}"
+		task task_name do
+			on roles fetch(:nginx_roles) do
+				execute :sudo, "service nginx #{task_name}"
+			end
+		end
 	end
 end
