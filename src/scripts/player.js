@@ -240,6 +240,12 @@ var ExpandedCinema = function (cw, currentIframe){
         videoContainer.insertBefore(newNode, referenceNode.nextSibling);
     };
 
+    var validateCategory = function(category){
+        var entretenimento = 'humor',
+        new_category = entretenimento.indexOf(category) > -1 ? 'entretenimento' : category;
+        return new_category;
+    };
+
     var appendIframe = function(parameters){
         //console.log(JSON.stringify(parameters));
         var div = document.createElement('div');
@@ -249,7 +255,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
         parameters.m = parameters.m || parameters.mid || "";
         parameters.p = parameters.p || parameters.pid || "";
-        parameters.c = parameters.c || parameters.cid || "";
+        parameters.c = validateCategory(parameters.c) || validateCategory(parameters.cid) || "";
         parameters.t = parameters.t || parameters.tags || "";
         parameters.sk = parameters.sk || "";
         parameters.tm = parameters.tm || "";
@@ -506,7 +512,9 @@ var ExpandedCinema = function (cw, currentIframe){
         iframeData.isReady = setInterval(function(){
             iframeData.sendMessage("ready","")
         },2000)
-    }
+    };
+
+
 
     init();
 })(this);

@@ -59,4 +59,14 @@ server {
       proxy_set_header X-Forwarded-For $remote_addr;
       proxy_pass <%= fetch(:nginx_host) %>;
   }
+
+  error_page 502 /502.html;
+  location = /502.html {
+      root  <%= current_path %>/app/public/502.html;
+  }
+
+  error_page 404 /404.html;
+  location = /404.html {
+      root  <%= current_path %>/app/public/404.html;
+  }
 }
