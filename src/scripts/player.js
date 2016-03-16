@@ -467,6 +467,13 @@ var ExpandedCinema = function (cw, currentIframe){
 
             var params = event.data.split("::");
 
+            if (params[1] == "onSetupError" ){
+                if(document.getElementById("sambaads_now_whatch_div") ){
+                    document.getElementById("sambaads_0").remove();
+                    document.getElementById("sambaads_now_whatch_div").remove();
+                }
+            }
+
             if(params[0] == currentIframe.id){
                 //console.log("CORE RECEIVED:" + event.data)
 
@@ -490,12 +497,6 @@ var ExpandedCinema = function (cw, currentIframe){
                 if (params[1] == "removeExpandedCinema" ){
                     var player = cw.sambaads.getPlayer(params[0]);
                     cw.sambaads.expandedCinema.close(player.id);
-                }
-
-                if (params[1] == "onSetupError" ){
-                    if(document.getElementById("sambaads_now_whatch_div") ){
-                        document.getElementById("sambaads_now_whatch_div").remove();
-                    }
                 }
 
                 if (params[1] == "onNowWatchTitle" ) {
