@@ -492,6 +492,12 @@ var ExpandedCinema = function (cw, currentIframe){
                     cw.sambaads.expandedCinema.close(player.id);
                 }
 
+                if (params[1] == "onSetupError" ){
+                    if(document.getElementById("sambaads_now_whatch_div") ){
+                        document.getElementById("sambaads_now_whatch_div").remove();
+                    }
+                }
+
                 if (params[1] == "onNowWatchTitle" ) {
                     //console.log(params[2])
                     if(document.getElementById("sambaads_now_whatch_title_" + params[0])){

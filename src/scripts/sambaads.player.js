@@ -322,6 +322,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
     window.jwplayer(self.player).onSetupError(function(evt) {
     	if(self.response.player_info.environment == 'magiccontent') {
+    		self.sendMessage("onSetupError","");
 			$('#jw_sambaads_player p').text('Ops! não foi possível recomendar um vídeo para esta página.');
 		} else {
 			$('#jw_sambaads_player p').text('Ops! não foi possível encontrar o vídeo.');
