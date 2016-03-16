@@ -8,7 +8,7 @@
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <!--
+    <% if(nfo.playlist.length > 0){ %>
     <meta property="fb:app_id" content="903775732996455" />
     <meta property="og:title" content="<%=info.playlist[0].title%>" /> 
     <meta property="og:description" content="<%=info.playlist[0].description%>" />
@@ -22,7 +22,7 @@
     <meta property="og:image" content="http:<%=info.playlist[0].thumbnails['180'] %>" />
     <meta property="og:image:secure_url" content="https:<%=info.playlist[0].thumbnails['180'] %>">
     <meta property="og:image:type" content="image/jpeg">
-    -->
+    <% } %>
 
     <!-- oembed discovery -->
     <link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title="" />
