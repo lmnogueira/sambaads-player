@@ -8,7 +8,7 @@ SambaAdsPlayerControler = function (player, view, data){
 	window.sambaads.parentIframeID = "";
 
 	self.player = player;
-	self.guid = encodeURIComponent(this.guid());
+	self.guid = encodeURIComponent(this.session());
 	self.view = view;
 	self.currentMediaId="";
 	self.currentPlaylistIndex = 0;
@@ -54,11 +54,38 @@ SambaAdsPlayerControler.prototype.guid = function() {
 	        .toString(16)
 	        .substring(1);
 		};
-	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-	     s4() + '-' + s4() + s4() + s4();
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+
 };
 
-        
+SambaAdsPlayerControler.prototype.setCookie = function(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+SambaAdsPlayerControler.prototype.getCookie = function(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+SambaAdsPlayerControler.prototype.session = function() {
+	var cookie = this.getCookie("sambaads_player_session");
+	
+	if (!cookie) {
+		this.setCookie("sambaads_player_session", this.guid(), 365);
+	}
+
+	return cookie;
+};
+
 
 SambaAdsPlayerControler.prototype.sendGif = function(options){
 	var url = document.referrer || window.location.href
@@ -76,6 +103,21 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 
 };
 
+SambaAdsPlayerControler.prototype.sendGif_v2 = function(options){
+	var url = document.referrer || window.location.href
+	var a = $('<a>', { href:url } )[0];
+
+	options.satm_domain = a.hostname;
+
+    $.get('/* @echo COLLECTOR_URL */?', options).done(function(msg) {
+    //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
+		//alert("success load cont");
+	}).error(function(){
+			//alert("error load cont");
+	});
+
+};
+
 SambaAdsPlayerControler.prototype.getEnvironment = function(){
 	return this.response.player_info.environment;
 };
@@ -85,7 +127,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 	  	this.currentMediaId = mid;
 
 		this.sendGif({
-		    "satms": this.guid,
+		    "satms": this.session(),
 		    "satmtag": "media.play",
 		    "satmpid": this.response.publisher_info.hash_code,
 		    "satmoid": oid,
@@ -100,17 +142,47 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 };
 
 SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
+
 	this.sendGif({
-	"satms": this.guid,
+	"satms": this.session(),
 	"satmtag": "media.load",
 	"satmpid": this.response.publisher_info.hash_code,
 	"satmoid": oid,
 	"satmcid": cid,
-	"satmref": "",
-	"satmfullref": "",
 	"satmorigin":this.response.player_info.origin,
 	'satmenv': this.getEnvironment()
 	});
+};
+
+SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
+
+	var percent = Math.floor(position/duration*100);
+	var percent_frequency=2;
+
+	this.time_position = this.time_position || 0;
+
+	if((position != this.time_position) && (this.old_percent != percent)){
+
+		this.time_position = position;
+		this.old_percent = percent;
+
+		if(this.old_percent%percent_frequency == 0){
+			this.sendGif_v2({
+				"satm_session": this.session(),
+				"satm_client_id": "",
+				"satm_time_slot": duration*percent_frequency/100,
+				"satm_tag": "video.watched." + percent,
+				"satm_site_id": this.response.publisher_info.hash_code || this.response.site_info.hash_code,
+				"satm_media_id": parseInt(this._options.playlist[this.currentPlaylistIndex].media_id),
+				"satm_channel_id": parseInt(this._options.playlist[this.currentPlaylistIndex].channel_id || this._options.playlist[this.currentPlaylistIndex].owner_id),
+				"satm_domain": "",
+				"satm_duration": parseInt(duration),
+				"satm_origin": this.response.player_info.origin,
+				'satm_environment': this.getEnvironment()
+			});
+		}
+
+	}
 };
 
 SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
@@ -375,6 +447,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onTime(function(evt){
+
+		self.watchedCount(Math.floor(evt.position), Math.floor(evt.duration));
+
 		smb.hideDisplay();
 	});
 
