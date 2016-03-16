@@ -20,6 +20,7 @@ exports.config = {
      * production applications.
      */
     level: 'info',
-    agent_enabled: process.env.NODE_ENV==='production'
+    agent_enabled: process.env.NODE_ENV==='production',
+    filepath : '/app/sambaads_player/current/newrelic_agent.log'
   }
 }
