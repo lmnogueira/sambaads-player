@@ -7,11 +7,11 @@ set :with_user, "sambaads"
 
 # set :smartseed1, '52.7.210.178'
 # set :smartseed2, '54.86.48.111'
-# set :smartseed3, '52.91.150.219'
+set :smartseed3, '52.91.150.219'
 
-set :smartseed1, '52.201.230.77'
-set :smartseed2, '54.172.141.91'
-set :smartseed3, '52.90.63.130'
+#set :smartseed1, '52.201.230.77'
+#set :smartseed2, '54.172.141.91'
+#set :smartseed3, '52.90.63.130'
 
 
 #set :smartseed1, '52.201.230.77'
