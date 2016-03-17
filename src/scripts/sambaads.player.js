@@ -331,7 +331,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
     		self.sendMessage("onSetupError","");
 			$('#jw_sambaads_player p').text('Ops! não foi possível recomendar um vídeo para esta página.');
 		} else {
-			self.sendMessage("onSetupError","");
 			$('#jw_sambaads_player p').text('Ops! não foi possível encontrar o vídeo.');
 		}
     });
