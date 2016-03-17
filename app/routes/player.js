@@ -11,7 +11,11 @@ router.get('/:pid', function(req, res, next) {
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
-			res.sendStatus(response.statusCode);
+			if(nconf.get("DEBUG") == 'true'){
+				res.sendStatus(response.statusCode);
+			} else {
+				res.sendStatus(204);
+			}
 		}
 	});
 });
@@ -26,7 +30,11 @@ router.get('/player/single_player/:media_id/:pid', function(req, res, next) {
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
-			res.sendStatus(response.statusCode);
+			if(nconf.get("DEBUG") == 'true'){
+				res.sendStatus(response.statusCode);
+			} else {
+				res.sendStatus(204);
+			}
 		}
 	});
 });
@@ -40,7 +48,11 @@ router.get('/player/:category/:size', function(req, res, next) {
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
-			res.sendStatus(response.statusCode);
+			if(nconf.get("DEBUG") == 'true'){
+				res.sendStatus(response.statusCode);
+			} else {
+				res.sendStatus(204);
+			}
 		}
 	});
 });
@@ -54,7 +66,11 @@ router.get('/player/:category/:size/:pid', function(req, res, next) {
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
-			res.sendStatus(response.statusCode);
+			if(nconf.get("DEBUG") == 'true'){
+				res.sendStatus(response.statusCode);
+			} else {
+				res.sendStatus(204);
+			}
 		}
 	});
 });
@@ -69,7 +85,12 @@ router.get('/player/:category/:size/:pid/:tags', function(req, res, next) {
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
-			res.sendStatus(response.statusCode);
+			if(nconf.get("DEBUG") == 'true'){
+				res.sendStatus(response.statusCode);
+			} else {
+				res.sendStatus(204);
+			}
+			
 		}
 	});
 });
