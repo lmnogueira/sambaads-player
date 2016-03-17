@@ -20,8 +20,8 @@ set :smartseed3, '52.91.150.219'
 
 set :hostname_list, {smartseed1: fetch(:smartseed1), smartseed2: fetch(:smartseed2)}
 
-server fetch(:smartseed1), user: fetch(:with_user), roles: %w{app db web}
-server fetch(:smartseed2), user: fetch(:with_user), roles: %w{app db web}
+#server fetch(:smartseed1), user: fetch(:with_user), roles: %w{app db web}
+#server fetch(:smartseed2), user: fetch(:with_user), roles: %w{app db web}
 server fetch(:smartseed3), user: fetch(:with_user), roles: %w{app db web}
 
 set :nvm_type, :user
