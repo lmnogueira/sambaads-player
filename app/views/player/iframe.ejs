@@ -8,21 +8,22 @@
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <% if(info.playlist.length > 0 ){%>
-    <meta property="fb:app_id" content="903775732996455" />
-    <meta property="og:title" content="<%=info.playlist[0].title%>" /> 
-    <meta property="og:description" content="<%=info.playlist[0].description%>" />
-    <meta property="og:url" content="" /> 
-    <meta property="og:type" content="video" /> 
-    <meta property="og:video:url" content="http://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist[0].media_id%>&sk=blue&tm=light" />
-    <meta property="og:video:secure_url" content="https://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist[0].media_id%>&sk=blue&tm=light" />
-    <meta property="og:video:type" content="text/html" />
-    <meta property="og:video:height" content="273" /> 
-    <meta property="og:video:width" content="486" /> 
-    <meta property="og:image" content="http:<%=info.playlist[0].thumbnails['180'] %>" />
-    <meta property="og:image:secure_url" content="https:<%=info.playlist[0].thumbnails['180'] %>">
-    <meta property="og:image:type" content="image/jpeg">
-    <%}%>
+    <% if(info.playlist.length > 0){ %>
+        <!--
+        <meta property="fb:app_id" content="903775732996455" />
+        <meta property="og:title" content="<%=info.playlist[0].title%>" /> 
+        <meta property="og:description" content="<%=info.playlist[0].description%>" />
+        <meta property="og:url" content="" /> 
+        <meta property="og:type" content="video" /> 
+        <meta property="og:video:url" content="http://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist[0].media_id%>&sk=blue&tm=light" />
+        <meta property="og:video:secure_url" content="https://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist[0].media_id%>&sk=blue&tm=light" />
+        <meta property="og:video:type" content="text/html" />
+        <meta property="og:video:height" content="273" /> 
+        <meta property="og:video:width" content="486" /> 
+        <meta property="og:image" content="http:<%=info.playlist[0].thumbnails['180'] %>" />
+        <meta property="og:image:secure_url" content="https:<%=info.playlist[0].thumbnails['180'] %>">
+        <meta property="og:image:type" content="image/jpeg">-->
+    <% } %>
 
     <!-- oembed discovery -->
     <link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title="" />

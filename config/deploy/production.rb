@@ -14,6 +14,10 @@ set :smartseed2, '54.172.141.91'
 set :smartseed3, '52.90.63.130'
 
 
+#set :smartseed1, '52.201.230.77'
+#set :smartseed2, '54.172.141.91'
+#set :smartseed3, '52.90.63.130'
+
 set :hostname_list, {smartseed1: fetch(:smartseed1), smartseed2: fetch(:smartseed2)}
 
 server fetch(:smartseed1), user: fetch(:with_user), roles: %w{app db web}

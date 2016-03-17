@@ -216,7 +216,12 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 	if(params[1] == "ready"){
 		window.sambaads.parentIframeID = params[0]; //iframe id received from parent
 		this.sendMessage("ready",this.response.publisher_info.auto_start + "," + this.calculatePlayerWidth() + "," + this.calculatePlayerHeight() );
-		this.sendMessage("onNowWatchTitle", this.getCurrentVideo().title);
+		
+		try{	
+			this.sendMessage("onNowWatchTitle", this.getCurrentVideo().title);
+		} catch(e){
+			//console.log(e);
+		}
 	};
 
 	if(params[1] == "debug"){
@@ -309,7 +314,7 @@ SambaAdsPlayerControler.prototype.discoveryPlaylistInfo = function(){
 
 SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
-	this.response =  data ;
+	this.response =  data;
 
 	self.updateLoadCount('', this.response.player_info.category_name);
 
@@ -390,6 +395,16 @@ SambaAdsPlayerControler.prototype.init = function(data){
     window.jwplayer(self.player).onReady(function() {
 		smb.init(self.player, self._options);
 		self.onLoad();
+    });
+
+    window.jwplayer(self.player).onSetupError(function(evt) {
+    	self.initilizeSmbMessanger();
+    	if(self.response.player_info.environment == 'magiccontent') {
+    		self.sendMessage("onSetupError","");
+			$('#jw_sambaads_player p').text('Ops! não foi possível recomendar um vídeo para esta página.');
+		} else {
+			$('#jw_sambaads_player p').text('Ops! não foi possível encontrar o vídeo.');
+		}
     });
 
     window.jwplayer(self.player).onFullscreen(function(fullscreen){
