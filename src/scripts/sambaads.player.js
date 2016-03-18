@@ -159,6 +159,14 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 	var percent = Math.floor(position/duration*100);
 	var percent_frequency=2;
 
+	if(percent < 0 ){
+		percent = 0;
+	}
+
+	if(percent > 100 ){
+		percent = 100;
+	}
+
 	this.time_position = this.time_position || 0;
 
 	if((position != this.time_position) && (this.old_percent != percent)){
