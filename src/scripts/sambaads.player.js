@@ -87,14 +87,14 @@ SambaAdsPlayerControler.prototype.session = function() {
 };
 
 
-SambaAdsPlayerControler.prototype.sendGif = function(options){
+SambaAdsPlayerControler.prototype.sendGif = function(type, options){
 	var url = document.referrer || window.location.href
 	var a = $('<a>', { href:url } )[0];
 
 	options.satmref = a.hostname;
 	options.satmfullref = url;
 
-    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */' + type, options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
 	}).error(function(){
@@ -103,13 +103,13 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 
 };
 
-SambaAdsPlayerControler.prototype.sendGif_v2 = function(options){
+SambaAdsPlayerControler.prototype.sendGif_v2 = function(type, options){
 	var url = document.referrer || window.location.href
 	var a = $('<a>', { href:url } )[0];
 
 	options.satm_domain = a.hostname;
 
-    $.get('/* @echo COLLECTOR_URL */?', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */' + type + '?', options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
 	}).error(function(){
@@ -126,7 +126,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 	if (this.currentMediaId != mid) {
 	  	this.currentMediaId = mid;
 
-		this.sendGif({
+		this.sendGif('events', {
 		    "satms": this.session(),
 		    "satmtag": "media.play",
 		    "satmpid": this.response.publisher_info.hash_code,
@@ -143,7 +143,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 
 SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 
-	this.sendGif({
+	this.sendGif('events', {
 	"satms": this.session(),
 	"satmtag": "media.load",
 	"satmpid": this.response.publisher_info.hash_code,
@@ -173,7 +173,7 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 		this.old_percent = percent;
 
 		if(this.old_percent%percent_frequency == 0){
-			this.sendGif_v2({
+			this.sendGif_v2('watched',{
 				"satm_session": this.session(),
 				"satm_client_id": "",
 				"satm_time_slot": duration*percent_frequency/100,
