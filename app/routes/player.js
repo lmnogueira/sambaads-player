@@ -8,6 +8,7 @@ router.get('/:pid', function(req, res, next) {
 	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
 
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+		res.header('Content-Type', 'text/html');
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
@@ -27,6 +28,7 @@ router.get('/player/single_player/:media_id/:pid', function(req, res, next) {
 	req.query.id = req.params.pid;
 	req.query.m  = req.params.media_id;
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+		res.header('Content-Type', 'text/html');
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
@@ -45,6 +47,7 @@ router.get('/player/:category/:size', function(req, res, next) {
 	req.query.t  = (req.query.tags || "");
 
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.query.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+		res.header('Content-Type', 'text/html');
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
@@ -63,6 +66,7 @@ router.get('/player/:category/:size/:pid', function(req, res, next) {
 	req.query.t  = (req.query.tags || "");
 
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+		res.header('Content-Type', 'text/html');
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
@@ -82,6 +86,8 @@ router.get('/player/:category/:size/:pid/:tags', function(req, res, next) {
 	req.query.t  = req.params.tags;
 
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+		res.header('Content-Type', 'text/html');
+		
 		if(response.statusCode == 200){
 			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
 		}else{
