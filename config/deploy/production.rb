@@ -5,10 +5,12 @@ set :node_env, 'production'
 
 set :with_user, "sambaads"
 
+#HOSTS=52.7.210.178,54.86.48.111,52.87.230.121 bundle exec cap production deploy
 set :server1, '52.7.210.178'
 set :server2, '54.86.48.111'
 set :server3, '52.87.230.121'
 
+#HOSTS=52.201.230.77,54.172.141.91,52.90.63.130 bundle exec cap production deploy
 set :server4, '52.201.230.77'
 set :server5, '54.172.141.91'
 set :server6, '52.90.63.130'

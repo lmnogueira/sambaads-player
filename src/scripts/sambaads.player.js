@@ -396,7 +396,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		delete player_config_options.plugins;
 	}
 
-	window.jwplayer(this.player).setup(player_config_options);
+	window.jwplayer(self.player).setup(player_config_options);
+
 
     window.jwplayer(self.player).onReady(function() {
 		smb.init(self.player, self._options);
@@ -510,6 +511,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		$("#display-overlay-title-share").hide();
 		smb.hideDisplay();
 	});
+
 };
 
 SambaAdsPlayerControler.prototype.canAutoStart = function(){
@@ -806,7 +808,6 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	});
 
 	$( "div.sambaads-player-container" ).mousedown(function() {
-		console.log("interact");
 		self.controller.userHasInteracted = true;
 	});
 
