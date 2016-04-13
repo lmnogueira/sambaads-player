@@ -3,6 +3,14 @@ server {
   server_name <%= fetch(:nginx_sever_name) %>;
   root <%= current_path %>/app/public;
 
+  gzip on;
+  gzip_proxied any;
+  gzip_types application/json text/json application/javascript text/xml text/plain text/css application/x-javascript;
+  gzip_vary on;
+  gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+  gzip_static  on;
+
   location /iframe/data {
     return 404;
   }
