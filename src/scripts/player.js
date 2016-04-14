@@ -517,8 +517,8 @@ var ExpandedCinema = function (cw, currentIframe){
         };
 
         iframeData.isReady = setInterval(function(){
-            iframeData.sendMessage("ready","")
-        },2000)
+            iframeData.sendMessage("ready","");
+        },1000)
     };
 
     function documentReady(funcName, baseObj) {
@@ -581,12 +581,12 @@ var ExpandedCinema = function (cw, currentIframe){
                 // otherwise if we don't have event handlers installed, install them
                 if (document.addEventListener) {
                     // first choice is DOMContentLoaded event
-                    document.addEventListener("DOMContentLoaded", ready, false);
+                    //document.addEventListener("DOMContentLoaded", ready, false);
                     // backup is window load event
                     window.addEventListener("load", ready, false);
                 } else {
                     // must be IE
-                    document.attachEvent("onreadystatechange", readyStateChange);
+                    //document.attachEvent("onreadystatechange", readyStateChange);
                     window.attachEvent("onload", ready);
                 }
                 readyEventHandlersInstalled = true;
