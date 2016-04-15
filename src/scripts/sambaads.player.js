@@ -48,7 +48,7 @@ SambaAdsPlayerControler.prototype.sendMessage = function(smbevent,data){
 	window.parent.postMessage(window.sambaads.parentIframeID + "::" + smbevent + "::" + data, "*");
 };
 
-SambaAdsPlayerControler.prototype.guid = function() {
+SambaAdsPlayerControler.prototype.generateGuid = function() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
 	        .toString(16)
@@ -80,7 +80,7 @@ SambaAdsPlayerControler.prototype.session = function() {
 	var cookie = this.getCookie("sambaads_player_session");
 	
 	if (!cookie) {
-		this.setCookie("sambaads_player_session", this.guid(), 365);
+		this.setCookie("sambaads_player_session", this.generateGuid(), 365);
 	}
 
 	return cookie;
