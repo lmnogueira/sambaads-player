@@ -595,6 +595,13 @@ var ExpandedCinema = function (cw, currentIframe){
         }
     }
 
-    documentReady("docReady", this);
-    docReady(init,this);
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if(!iOS){
+        documentReady("docReady", this);
+        docReady(init,this);        
+    } else {
+        init();
+    }
+
 })(this);
