@@ -242,7 +242,8 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var validateCategory = function(category){
         var entretenimento = 'humor',
-        new_category = entretenimento.indexOf(category) > -1 ? 'entretenimento' : category;
+        new_category = entretenimento === category ? 'entretenimento' : category;
+
         return new_category;
     };
 
