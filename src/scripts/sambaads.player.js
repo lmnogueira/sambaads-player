@@ -155,7 +155,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 };
 
 SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
-
+	console.log(duration)
 	var percent = Math.floor(position/duration*100);
 	var percent_frequency=2;
 
@@ -199,20 +199,30 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 		|| document.body.clientWidth;
 
 	if(params[1] == "play"){
-		if(this.response.publisher_info.auto_start){
-			if(w > this.pertmitWidthAutoStart) {
-	  			this.play();
-	  			this.view.updateItemCurrent();
-	  		}
-	  	}
+		if(params[2] === 'true'){
+			this.play();
+		  	this.view.updateItemCurrent();
+		} else {
+			if(this.response.publisher_info.auto_start){
+				if(w > this.pertmitWidthAutoStart) {
+		  			this.play();
+		  			this.view.updateItemCurrent();
+		  		}
+	  		}			
+		}
+
 	};
 
 	if(params[1] == "pause"){
-		if(this.response.publisher_info.auto_start){
-			if(w > this.pertmitWidthAutoStart) {
-	  			this.pause();
-	  		}
-	  	}
+		if(params[2]==='true'){
+			this.pause();
+		} else {
+			if(this.response.publisher_info.auto_start){
+				if(w > this.pertmitWidthAutoStart) {
+		  			this.pause();
+		  		}
+		  	}
+		}
 	};
 
 	if(params[1] == "mute"){

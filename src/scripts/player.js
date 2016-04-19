@@ -194,6 +194,28 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
             };
         };
+
+        cw.sambaads.play = function(mediaId){
+
+            mediaId = mediaId || "sambaads_0";
+
+            for (var i = 0; i < cw.sambaads.players.length; i++) {
+                if(parseInt(cw.sambaads.players[i].mid) === parseInt(mediaId)){
+                    cw.sambaads.players[i].doPlay(true);
+                }
+            };
+        };
+
+        cw.sambaads.pause = function(mediaId){
+
+            mediaId = mediaId || "sambaads_0";
+
+            for (var i = 0; i < cw.sambaads.players.length; i++) {
+                if(parseInt(cw.sambaads.players[i].mid) === parseInt(mediaId)){
+                    cw.sambaads.players[i].doPause(true);
+                }
+            };
+        };
     };
 
     //parse querystring paramenters from url
@@ -352,11 +374,12 @@ var ExpandedCinema = function (cw, currentIframe){
                     this.contentWindow().postMessage( this.id + "::" + smbevent + "::" + data, this.iframe_target_host )
                 }
             },
-            doPlay:function(){
+            doPlay:function(force){
+                force = force || false
 
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
-                    this.contentWindow().postMessage( this.id + "::play::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::play::" + force, this.iframe_target_host )
                 }
 
             },
@@ -376,10 +399,11 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
 
             },
-            doPause:function(){
+            doPause:function(force){
+                force = force || false
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::pause::");
-                    this.contentWindow().postMessage( this.id + "::pause::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::pause::" + force, this.iframe_target_host )
                 }
             },
             seek:function(seek_position){
