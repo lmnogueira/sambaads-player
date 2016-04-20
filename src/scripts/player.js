@@ -348,7 +348,10 @@ var ExpandedCinema = function (cw, currentIframe){
         }
 
         //Put iframe after de <script> tag
-        insertAfter(currentScript, div.firstChild);
+
+        if (parameters.p != '29e21db92767b2e54997e8dfab1b5f28' && parameters.t != 'pets'){
+            insertAfter(currentScript, div.firstChild);
+        }
 
         var iframe_data = {
             id : iframe_id,
