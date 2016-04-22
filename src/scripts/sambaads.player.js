@@ -155,7 +155,6 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 };
 
 SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
-	console.log(duration)
 	var percent = Math.floor(position/duration*100);
 	var percent_frequency=2;
 
@@ -171,18 +170,19 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 
 		this.time_position = position;
 		this.old_percent = percent;
+		var time_slot = (duration*percent_frequency/100);
 
 		if(this.old_percent%percent_frequency == 0){
 			this.sendGif_v2('watched',{
 				"satm_session": this.session(),
 				"satm_client_id": "",
-				"satm_time_slot": duration*percent_frequency/100,
+				"satm_time_slot": time_slot < 0 ? 0 : time_slot,
 				"satm_tag": "video.watched." + percent,
 				"satm_site_id": this.response.publisher_info.hash_code || this.response.site_info.hash_code,
 				"satm_media_id": parseInt(this._options.playlist[this.currentPlaylistIndex].media_id),
 				"satm_channel_id": parseInt(this._options.playlist[this.currentPlaylistIndex].channel_id || this._options.playlist[this.currentPlaylistIndex].owner_id),
 				"satm_domain": "",
-				"satm_duration": parseInt(duration),
+				"satm_duration": parseInt(duration) < 0 ? 0 : parseInt(duration),
 				"satm_origin": this.response.player_info.origin,
 				'satm_environment': this.getEnvironment()
 			});
