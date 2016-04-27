@@ -906,6 +906,9 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, player_height){
 	var self = this;
 
+	$("#sambaads-embed").width(player_width);
+	$("#sambaads-embed").height(player_height);
+
 	self.vitem = $("#playlist-v-item");
 	self.hitem = $("#playlist-h-item");
 
@@ -913,7 +916,6 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 	$("#playlist-h-items").empty();
 
 	if(options.position == "right"){
-		$("#sambaads-embed").width(player_width);
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
