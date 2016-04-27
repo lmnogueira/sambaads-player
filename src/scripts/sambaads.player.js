@@ -855,6 +855,7 @@ SambaAdsPlayerView.prototype.setTitleBar = function(title_text, color){
 	if(title_text.length > 0){
 		$("#titlebar-title").text(decodeURIComponent(title_text));
 		$("#titlebar").show();
+		$('body').css("backgroundColor", "transparent");
 	}
 };
 
