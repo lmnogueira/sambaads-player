@@ -184,6 +184,10 @@ var ExpandedCinema = function (cw, currentIframe){
         cw.sambaads = {};
         cw.sambaads.players = []
 
+        cw.sambaads.onStateChange = function(onStateChangeFunction){
+            cw.sambaads._onStateChange = onStateChangeFunction;
+        };
+
         cw.sambaads.getPlayer = function(iframeId){
 
             iframeId = iframeId || "sambaads_0";
@@ -515,6 +519,16 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if (params[1] == "onStateChange" ){
                     currentIframe.state = params[2];
+
+                    if( typeof cw.sambaads._onStateChange === 'function'){
+
+                        var evt = {
+                            iframeId : currentIframe.id,
+                            mediaId : currentIframe.mid,
+                            state : currentIframe.state
+                        }
+                        cw.sambaads._onStateChange(evt);
+                    }
                 }
 
                 if (params[1] == "loadExpandedCinema" ){
