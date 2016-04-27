@@ -29,6 +29,7 @@ body {
 
 .titlebar {
 	overflow:hidden;
+	display: none;
 	/*background-color:#126cb0;*/
 	border-bottom:1px solid #fff;
 	-webkit-border-top-left-radius: 5px;

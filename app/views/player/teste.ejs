@@ -18,7 +18,7 @@
     <% if(type_player == "singleplayer") { %>
     <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=light&tb=&tbbg=&w=640&h=360&debug=true'></script>
     <% } else if(type_player == "smartplayerv") { %>
-    <script src='/javascripts/player.js?c=business&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true'></script>
+    <script src='/javascripts/player.js?c=business&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=light&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
     <% } else if(type_player == "smartplayerh") { %>
     <script src='/javascripts/player.js?c=business&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
     <% } else if(type_player == "smarttags") { %>
@@ -28,4 +28,11 @@
     <% } else if(type_player == "custom") { %>
     <script src='//player.sambaads.com/embed/player.js?p=4a18cb3a99886cfed639fa8cad31cfe0&c=&d=custom&t=bem-star,papo-astral,pensando-magro,vida-saudavel,yoga&sk=yellow&tm=dark&plp=r&plw=280&plh=&tb=&tbbg=&w=940&h=377'></script>
     <% } %>
+
+    <script type="text/javascript">
+             window.onload = function () {
+                var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart; 
+                console.log('Page load time is '+ loadTime);
+            }
+    </script>
 </body>

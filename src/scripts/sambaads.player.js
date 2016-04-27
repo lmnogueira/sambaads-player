@@ -410,6 +410,10 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		delete player_config_options.plugins;
 	}
 
+
+	if(self._options.playlist.length > 1)
+		smb.showPlaylist(self._options, player_width, player_height);
+
 	window.jwplayer(self.player).setup(player_config_options);
 
 
@@ -732,10 +736,6 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	} else {
 		self.showDisplay("play");
 	}
-	
-
-	if(options.playlist.length > 1)
-		self.showPlaylist(options);
 
 	$("#display-overlay-loader").hide();
 
@@ -852,10 +852,9 @@ SambaAdsPlayerView.prototype.hideDisplay = function(){
 SambaAdsPlayerView.prototype.setTitleBar = function(title_text, color){
 	$("#titlebar").css("backgroundColor", color);
 
-	if(title_text.length == 0){
-		$("#titlebar").hide();
-	} else {
+	if(title_text.length > 0){
 		$("#titlebar-title").text(decodeURIComponent(title_text));
+		$("#titlebar").show();
 	}
 };
 
@@ -904,7 +903,7 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 	});
 };
 
-SambaAdsPlayerView.prototype.showPlaylist = function(options){
+SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, player_height){
 	var self = this;
 
 	self.vitem = $("#playlist-v-item");
@@ -918,7 +917,7 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
 		
-		$(".nano").css( "height", window.jwplayer(self.player).getHeight() );
+		$(".nano").css( "height", player_height );
 	}else if(options.position == "bottom-vertical"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
