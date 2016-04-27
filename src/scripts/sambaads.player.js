@@ -905,7 +905,6 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 
 SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, player_height){
 	var self = this;
-	$("#sambaads-embed").width(player_width);
 
 	self.vitem = $("#playlist-v-item");
 	self.hitem = $("#playlist-h-item");
@@ -914,6 +913,7 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 	$("#playlist-h-items").empty();
 
 	if(options.position == "right"){
+		$("#sambaads-embed").width(player_width);
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
@@ -946,7 +946,22 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 		$("#playlist-h-items").append(new_h_item);
 	});
 
-	$("#playlist-h-items").lightSlider({
+	$( "div.playlist-item" ).click(function() {
+		var index = this.id.split("-")[1];
+		clearInterval(self.startNextIn);
+
+		self.controller.loadPlaylist(+index);
+		self.controller.play();
+
+		self.updateItemCurrent();
+	});
+
+
+
+	setTimeout(function(){
+		$(".sambaads-playlist").show();
+
+		$("#playlist-h-items").lightSlider({
 		item: 3,
 		autoWidth: true,
 		slideMove: 1, // slidemove will be 1 if loop is true
@@ -963,23 +978,9 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 		onSliderLoad: function() {
 			$('#autoWidth').removeClass('cS-hidden');
 		}
-	});
+		});
 
-	$(".nano").nanoScroller();
-
-
-	$( "div.playlist-item" ).click(function() {
-		var index = this.id.split("-")[1];
-		clearInterval(self.startNextIn);
-
-		self.controller.loadPlaylist(+index);
-		self.controller.play();
-
-		self.updateItemCurrent();
-	});
-
-	setTimeout(function(){
-		$(".sambaads-playlist").show();
+		$(".nano").nanoScroller();
 	},150);
 	
 };
