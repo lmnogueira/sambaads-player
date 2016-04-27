@@ -206,20 +206,25 @@
             </div>
         </div>
 </div>
-<script src="/javascripts/sambaads.player.base.js"></script>
-<script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js"></script>
-<script src="/javascripts/sambaads.player.js"></script>
+<script src="/javascripts/sambaads.player.base.js" defer></script>
+<script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js" defer></script>
+<script src="/javascripts/sambaads.player.js" defer></script>
 
 <script type="text/javascript">
 	// START COMSCORE
 	document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
 	// END COMSCORE
 
-	// START SAMBAADS
-    var smb = new SambaAdsPlayerView()
-    smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
-    var smbCtrl = new SambaAdsPlayerControler("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
-    // END SAMBAADS
+    var check = setInterval(function(){
+        if ((typeof SambaAdsPlayerView === 'function') && (typeof SambaAdsPlayerControler === 'function') && jQuery && (typeof window.jwplayer === 'function')){
+            // START SAMBAADS
+            var smb = new SambaAdsPlayerView();
+            smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
+            var smbCtrl = new SambaAdsPlayerControler("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
+            // END SAMBAADS
+            clearInterval(check);
+        }
+    },1);
 </script>
 
 </body>

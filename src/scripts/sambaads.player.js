@@ -410,15 +410,14 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		delete player_config_options.plugins;
 	}
 
-
 	if(self._options.playlist.length > 1)
-		smb.showPlaylist(self._options, player_width, player_height);
+		self.view.showPlaylist(self._options, player_width, player_height);
 
 	window.jwplayer(self.player).setup(player_config_options);
 
 
     window.jwplayer(self.player).onReady(function() {
-		smb.init(self.player, self._options);
+		self.view.init(self.player, self._options);
 		self.onLoad();
     });
 
@@ -433,14 +432,14 @@ SambaAdsPlayerControler.prototype.init = function(data){
     });
 
     window.jwplayer(self.player).onFullscreen(function(fullscreen){
-    	smb.onFullscreen(fullscreen);
+    	self.view.onFullscreen(fullscreen);
     });
 
     window.jwplayer(self.player).onPlay(function(evt){
     	self.response.publisher_info.auto_start = true;
     	self.computeComscore("04","sambaads_content");
     	window.jwplayer(self.player).setControls(true);
-		smb.onPlay();
+		self.view.onPlay();
 		
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
@@ -453,13 +452,13 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onPause(function(evt){
 
-		if(!smb.fullscreenActive){
+		if(!self.view.fullscreenActive){
 			//hack para solucionar delay do request de ad...
 			if( window.jwplayer(self.player).getPosition() > 1 ){
-				smb.showDisplay("play");
+				self.view.showDisplay("play");
 				window.jwplayer(self.player).setControls(false);
 			} else {
-				smb.showDisplay("buffer");
+				self.view.showDisplay("buffer");
 			}
 		} else {
 			window.jwplayer(self.player).setControls(true);
@@ -476,11 +475,11 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
 
-		smb.showDisplay("buffer");
+		self.view.showDisplay("buffer");
 	});
 
 	window.jwplayer(self.player).onIdle(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
 
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
@@ -490,7 +489,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 		self.watchedCount(Math.floor(evt.position), Math.floor(evt.duration));
 
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onBeforeComplete(function(evt){
@@ -501,7 +500,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onComplete(function(evt){
 
-		smb.onComplete();
+		self.view.onComplete();
 		self.stop();
 
 		self.newstate = "IDLE";
@@ -509,16 +508,16 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onAdTime(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onAdError(function(evt){
 		
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onAdComplete(function(evt){
@@ -527,7 +526,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onBeforePlay(function(evt){
 		$("#display-overlay-title-share").hide();
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 };
@@ -906,6 +905,7 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 
 SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, player_height){
 	var self = this;
+	$("#sambaads-embed").width(player_width);
 
 	self.vitem = $("#playlist-v-item");
 	self.hitem = $("#playlist-h-item");
@@ -946,8 +946,6 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 		$("#playlist-h-items").append(new_h_item);
 	});
 
-	$(".sambaads-playlist").show();
-
 	$("#playlist-h-items").lightSlider({
 		item: 3,
 		autoWidth: true,
@@ -979,6 +977,11 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 
 		self.updateItemCurrent();
 	});
+
+	setTimeout(function(){
+		$(".sambaads-playlist").show();
+	},150);
+	
 };
 
 SambaAdsPlayerView.prototype.onPlay = function(){
