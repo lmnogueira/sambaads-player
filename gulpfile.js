@@ -55,10 +55,10 @@ gulp.task("build-javascripts-player", function(){
 
 gulp.task("build-javascripts-base", function(){
     gulp.src([
-      paths.scripts + "vendor/jquery.1.11.0.min.js",
+      //paths.scripts + "vendor/jquery.1.11.0.min.js",
       paths.scripts + "vendor/circle_progress.js",
-      paths.scripts + "vendor/jquery.nanoscroller.min.js",
-      paths.scripts + "vendor/jquery.lightSlider.min.js",
+      //paths.scripts + "vendor/jquery.nanoscroller.min.js",
+      //paths.scripts + "vendor/jquery.lightSlider.min.js",
     ])
     .pipe(sourcemaps.init())
     .pipe(concat("sambaads.player.base.js"))

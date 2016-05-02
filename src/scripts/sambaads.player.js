@@ -22,29 +22,10 @@ SambaAdsPlayerControler = function (player, view, data){
 
 	this.view.setController(this);
 
-	if(data == undefined || data == null){
-		/*$.get( "//app.sambaads.com/iframe/846dae1ccb4553649d9706ed535d7f09/data", 
-			{ skin: "blue" } 
-		)
-		.done(function( data ) {
-			self.init(data);
-    	});*/
-	}else{
-		self.init( data );
-	}
-};
-
-SambaAdsPlayerControler.prototype.discoveryHost = function(){
-	var url = document.referrer || window.location.href
-	//url = window.location.href
-	//var a = $('<a>', { href:url } )[0];
-	//var hostname = a.hostname;
-
-	return url;
+	self.init( data );
 };
 
 SambaAdsPlayerControler.prototype.sendMessage = function(smbevent,data){
-	//console.log("IFRAME SENT: " + window.sambaads.parentIframeID + "::" + smbevent + "::" + data);
 	window.parent.postMessage(window.sambaads.parentIframeID + "::" + smbevent + "::" + data, "*");
 };
 
@@ -78,7 +59,7 @@ SambaAdsPlayerControler.prototype.getCookie = function(cname) {
 
 SambaAdsPlayerControler.prototype.session = function() {
 	var cookie = this.getCookie("sambaads_player_session");
-	
+
 	if (!cookie) {
 		this.setCookie("sambaads_player_session", this.generateGuid(), 365);
 	}
@@ -118,10 +99,6 @@ SambaAdsPlayerControler.prototype.sendGif_v2 = function(type, options){
 
 };
 
-SambaAdsPlayerControler.prototype.getEnvironment = function(){
-	return this.response.player_info.environment;
-};
-
 SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 	if (this.currentMediaId != mid) {
 	  	this.currentMediaId = mid;
@@ -136,7 +113,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmref": "",
 		    "satmfullref": "",
 		    "satmorigin":this.response.player_info.origin,
-		    'satmenv': this.getEnvironment()
+		    'satmenv': this.response.player_info.environment
 		});
 	};
 };
@@ -150,7 +127,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 	"satmoid": oid,
 	"satmcid": cid,
 	"satmorigin":this.response.player_info.origin,
-	'satmenv': this.getEnvironment()
+	'satmenv': this.response.player_info.environment
 	});
 };
 
@@ -188,7 +165,7 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 				"satm_domain": "",
 				"satm_duration": duration,
 				"satm_origin": this.response.player_info.origin,
-				'satm_environment': this.getEnvironment()
+				'satm_environment': this.response.player_info.environment
 			});
 		}
 
@@ -389,7 +366,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
         plugins: {
              '/* @echo LIVERAIL_PLUGIN_URL */' : {
      			'LR_ADMAP': 'in::0',
-               'LR_URL': this.discoveryHost(),
+               'LR_URL': document.referrer || window.location.href,
                'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
            }
         },
