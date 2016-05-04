@@ -170,7 +170,6 @@ var ExpandedCinema = function (cw, currentIframe){
             if(scripts[scripts.length - 1].src.indexOf("player.sambaads.com") >= 0) {
                 return scripts[scripts.length - 1];
             } else {
-
                 for(var i = 0; i<=scripts.length-1; i++){
                     if((scripts[i].src.indexOf("player.sambaads.com") >= 0) || (scripts[i].src.indexOf("/javascripts/player.js") >= 0)){
                         return scripts[i];
