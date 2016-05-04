@@ -164,6 +164,7 @@ var ExpandedCinema = function (cw, currentIframe){
 (function(cw){
 
     var detectScript = function(){
+
         var currentScript = document.currentScript || (function() {
             var scripts = document.getElementsByTagName('script');
 
@@ -646,11 +647,11 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-    if(!iOS){
-        documentReady("docReady", this);
-        docReady(init,this);        
-    } else {
+    // if(!iOS){
+    //     documentReady("docReady", this);
+    //     docReady(init,this);
+    // } else {
         init();
-    }
+    //}
 
 })(this);
