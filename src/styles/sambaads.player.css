@@ -677,6 +677,7 @@ body {
 	filter: alpha(opacity=100);
 }
 .label-patrocinado {
+	display: none;
 	font-size:8px;
 	text-transform:uppercase;
 	font-weight:bold;
