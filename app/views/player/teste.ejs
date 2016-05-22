@@ -12,6 +12,7 @@
     		margin: auto;
     	}
     </style>-->
+    <script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js" ></script>
 </head>
 
 <body>
@@ -29,6 +30,27 @@
     <% } else if(type_player == "custom") { %>
    <script src='/javascripts/player.js?c=&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=noticia&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
 
+    <% } else if(type_player == "jwp6") { %>
+        <div id="container">Loading video player...</div>
+
+        <script type='text/javascript'>
+            jwplayer("container").setup({
+
+            width: 640,
+            height: 360,
+            file: "http://pvbps-sambavideos.akamaized.net/account/259/21/2016-05-14/video/5882e627be9196904780b3c477344bb5/vYY8iMFe-raw20160514-23932-3zz8ei_240p.mp4",
+            primary: 'flash',
+            advertising: {
+                client: 'vast',
+                //tag: 'http://ad4.liverail.com/?LR_PUBLISHER_ID=152191&LR_SCHEMA=vast2-vpaid'
+            },
+
+            });
+
+            jwplayer("container").onBeforePlay(function(evt){
+                jwplayer("container").playAd('http://ad4.liverail.com/?LR_PUBLISHER_ID=152191&LR_SCHEMA=vast2-vpaid');
+            });
+        </script>
     <% } %>
 
     <script type="text/javascript">
@@ -37,4 +59,5 @@
                 console.log('Page load time is '+ loadTime);
             }
     </script>
+
 </body>

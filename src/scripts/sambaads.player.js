@@ -12,7 +12,7 @@ SambaAdsPlayerControler = function (player, view, data){
 	self.view = view;
 	self.currentMediaId="";
 	self.currentPlaylistIndex = 0;
-	self.lastPlaylistIndex = 0;
+	self.lastPlaylistIndex = null;
 	self.newstate = "IDLE";
 	self.oldstate = null;
 	self.userHasInteracted = false;
@@ -361,14 +361,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
         displaytitle: false,
         advertising:{
          client:'vast',
-         tag: decodeURIComponent(this.response.player_info.custom_tag)
-        },
-        plugins: {
-             '/* @echo LIVERAIL_PLUGIN_URL */' : {
-     			'LR_ADMAP': 'in::0',
-               'LR_URL': document.referrer || window.location.href,
-               'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-           }
+         admessage: 'Anúncio publicitário terminará em XX segundos.',
+         skipoffset: '30'
+         //decodeURIComponent(this.response.player_info.custom_tag)
         },
         playlist: this._options.playlist,
         skin: location.protocol + this.response.player_info.skin_url,
@@ -381,11 +376,11 @@ SambaAdsPlayerControler.prototype.init = function(data){
         aboutlink: "http://www.sambaads.com.br/publishers"
     };
 
-    if(!this.response.player_info.custom_tag){
-    	delete player_config_options.advertising;
-	} else {
-		delete player_config_options.plugins;
-	}
+ //    if(!this.response.player_info.custom_tag){
+ //    	delete player_config_options.advertising;
+	// } else {
+	// 	delete player_config_options.plugins;
+	// }
 
 	if(self._options.playlist.length > 1)
 		self.view.showPlaylist(self._options, player_width, player_height);
@@ -477,6 +472,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onComplete(function(evt){
 
+		console.log("teste");
+
 		self.view.onComplete();
 		self.stop();
 
@@ -486,6 +483,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onAdTime(function(evt){
 		self.view.hideDisplay();
+
+		console.log(evt)
 	});
 
 	window.jwplayer(self.player).onAdError(function(evt){
@@ -502,8 +501,18 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onBeforePlay(function(evt){
+		
 		$("#display-overlay-title-share").hide();
 		self.view.hideDisplay();
+
+		setTimeout(function(){
+			if(self.currentPlaylistIndex != self.lastPlaylistIndex){
+				self.lastPlaylistIndex = self.currentPlaylistIndex;
+				var url = encodeURIComponent(document.referrer || window.location.href);
+				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
+				//window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID=114135&LR_SCHEMA=vast2&LR_TAGS=acessorios&LR_VERTICALS=automoveis&LR_PARTNERS=774803&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID=123456&LR_URL=http://www.sambaads.com.br&LR_AUTOPLAY=1");
+			}
+		},5);
 	});
 
 };
