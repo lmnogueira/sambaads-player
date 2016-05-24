@@ -492,7 +492,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
 		self.view.hideDisplay();
-		//self.sendMessage("onStateChange","PLAYING_AD");
+		self.sendMessage("onStateChange","PLAYING_AD");
 	});
 
 	window.jwplayer(self.player).onAdComplete(function(evt){
