@@ -11,15 +11,11 @@ server {
 
   gzip_static  on;
 
-  location /iframe/data {
+  location ~ ^/(robots.txt|manager) {
     return 404;
   }
 
-  location /iframe/iframe/data {
-    return 404;
-  }
-
-  location /iframe/robots.txt {
+  location ~ ^/iframe/(data|vast.js|iframe|jwplayer.js|robots.txt).* {
     return 404;
   }
 

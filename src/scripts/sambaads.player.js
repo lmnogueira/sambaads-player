@@ -361,8 +361,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
         displaytitle: false,
         advertising:{
          client:'vast',
-         admessage: 'Anúncio publicitário terminará em XX segundos.',
-         skipoffset: '30'
+         admessage: 'Anúncio publicitário terminará em XX segundos.'
+         // skipoffset: '30'
          //decodeURIComponent(this.response.player_info.custom_tag)
         },
         playlist: this._options.playlist,
