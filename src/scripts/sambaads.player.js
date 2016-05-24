@@ -361,8 +361,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
         displaytitle: false,
         advertising:{
          client:'vast',
-         admessage: 'Anúncio publicitário terminará em XX segundos.'
-         // skipoffset: '30'
+         admessage: 'Anúncio publicitário terminará em XX segundos.',
+         skipoffset: '30',
          //decodeURIComponent(this.response.player_info.custom_tag)
         },
         playlist: this._options.playlist,
@@ -472,7 +472,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onComplete(function(evt){
 
-		console.log("teste");
+		//console.log("teste");
 
 		self.view.onComplete();
 		self.stop();
@@ -483,8 +483,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onAdTime(function(evt){
 		self.view.hideDisplay();
-
-		console.log(evt)
 	});
 
 	window.jwplayer(self.player).onAdError(function(evt){
@@ -494,6 +492,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
 		self.view.hideDisplay();
+		//self.sendMessage("onStateChange","PLAYING_AD");
 	});
 
 	window.jwplayer(self.player).onAdComplete(function(evt){
@@ -509,7 +508,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 			if(self.currentPlaylistIndex != self.lastPlaylistIndex){
 				self.lastPlaylistIndex = self.currentPlaylistIndex;
 				var url = encodeURIComponent(document.referrer || window.location.href);
-				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
+				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_SKIP_POSITION=1,-5,1,-50&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
 				//window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID=114135&LR_SCHEMA=vast2&LR_TAGS=acessorios&LR_VERTICALS=automoveis&LR_PARTNERS=774803&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID=123456&LR_URL=http://www.sambaads.com.br&LR_AUTOPLAY=1");
 			}
 		},5);
