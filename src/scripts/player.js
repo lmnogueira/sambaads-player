@@ -162,7 +162,6 @@ var ExpandedCinema = function (cw, currentIframe){
 };
 
 (function(cw){
-
     var detectScript = function(){
 
         var currentScript = document.currentScript || (function() {
@@ -228,6 +227,13 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
             };
         };
+
+        cw.sambaads.appendPlayer = function(elementId, customParams){
+            customParams.w = customParams.w ? customParams.w : "100%";
+            customParams.h = customParams.h ? customParams.h : "100%";
+            customParams.request_domain = '/* @echo CDN_PLAYER_DOMAIN */';
+            appendIframe(customParams, document.getElementById(elementId));
+        };
     };
 
     //parse querystring paramenters from url
@@ -270,8 +276,13 @@ var ExpandedCinema = function (cw, currentIframe){
         cw.sambaads.expandedCinema = new ExpandedCinema(cw, currentIframe);
     }
 
-    var insertAfter = function (referenceNode, newNode) {
-        videoContainer.insertBefore(newNode, referenceNode.nextSibling);
+    var insert = function (referenceNode, newNode) {
+        
+        if (referenceNode.tagName != "SCRIPT"){
+            referenceNode.appendChild(newNode);
+        } else {
+            videoContainer.insertBefore(newNode, referenceNode.nextSibling);
+        }
     };
 
     var validateCategory = function(category){
@@ -281,7 +292,7 @@ var ExpandedCinema = function (cw, currentIframe){
         return new_category;
     };
 
-    var appendIframe = function(parameters){
+    var appendIframe = function(parameters, targetElement){
         //console.log(JSON.stringify(parameters));
         var div = document.createElement('div');
         var iframe_id = "sambaads_" + cw.sambaads.players.length;
@@ -358,11 +369,11 @@ var ExpandedCinema = function (cw, currentIframe){
         } else {
             div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h3 id='sambaads-now-whatch' class='sambaads-now-whatch' style='margin: .5em 5px; text-align: left; display: inline-block;'>Assista Agora</h3><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='width: 640;height: 30px;'><p style='font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;'>powered by <a href='//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador'><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'> </a></p></div></div>";
         }
-
+    
         if (parameters.p == '29e21db92767b2e54997e8dfab1b5f28' && parameters.t != 'pets'){
-            insertAfter(currentScript, div.firstChild);
+            insert((targetElement || currentScript), div.firstChild);
         } else if (parameters.p != '29e21db92767b2e54997e8dfab1b5f28'){
-            insertAfter(currentScript, div.firstChild);
+            insert((targetElement || currentScript), div.firstChild);
         }
 
         var iframe_data = {
@@ -451,6 +462,8 @@ var ExpandedCinema = function (cw, currentIframe){
 
         //initialize parameters
         var parameters = parseQueryString(currentScript.src);
+
+        if (parameters.p === undefined) return;
 
         videoContainer = currentScript.parentNode;
 

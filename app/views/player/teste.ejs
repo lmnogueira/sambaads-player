@@ -30,6 +30,45 @@
     <% } else if(type_player == "custom") { %>
    <script src='/javascripts/player.js?c=&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=noticia&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
 
+    <% } else if(type_player == "dynamic") { %>
+        <script src='/javascripts/player.js'></script>
+
+        <script type='text/javascript'>
+            document.addEventListener("DOMContentLoaded", function(){
+
+                //smartPlayer
+                sambaads.appendPlayer("player1", {
+                    c:'automoveis',
+                    d:'custom',
+                    p:'8d32994d37ba5d2b16b8bf8b538bb514',
+                    t:'webmotors',
+                    sk:'red',
+                    tm:'dark',
+                    plp:'bh',
+                    plw:'',
+                    plh:'',
+                    tb:'CONFIRA%20OS%20V%C3%8DDEOS%20DO%20WEBMOTORS%3A',
+                    tbbg:'f52c2c',
+                    w:630,
+                    h:480.375
+                });
+
+                //single Player
+                sambaads.appendPlayer("player2", {
+                    m:46754,
+                    p:'8d32994d37ba5d2b16b8bf8b538bb514',
+                    sk:'blue',
+                    w:840,
+                    h:472.5
+                });
+                
+            }, false);
+
+        </script>
+
+        <div id="player1"></div>
+        <div id="player2"></div>
+
     <% } else if(type_player == "jwp6") { %>
         <div id="container">Loading video player...</div>
 
