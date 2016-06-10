@@ -881,12 +881,14 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 	var self = this;
 
 	$("div.playlist-item").each(function(idex, item){
-		if(item.id.indexOf(self.controller.currentPlaylistIndex) >= 0){
+
+		if(item.id.split('-')[1] == self.controller.currentPlaylistIndex){
+			console.log(self.controller.currentPlaylistIndex);
 			$(item).find("span.video-duration").text("ASSISTINDO");
 			$(item).find("span.video-duration").show();
 		}
 
-		if(item.id.indexOf(self.controller.lastPlaylistIndex) >= 0){
+		if(item.id.split('-')[1] == self.controller.lastPlaylistIndex){
 			if(self.controller.lastPlaylistIndex != self.controller.currentPlaylistIndex){
 				$(item).find("span.video-duration").hide();
 			}
