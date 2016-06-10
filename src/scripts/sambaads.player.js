@@ -409,7 +409,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
     window.jwplayer(self.player).onPlay(function(evt){
     	self.response.publisher_info.auto_start = true;
-    	self.computeComscore("04","sambaads_content");
     	window.jwplayer(self.player).setControls(true);
 		self.view.onPlay();
 		
@@ -506,10 +505,17 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 		setTimeout(function(){
 			if(self.currentPlaylistIndex != self.lastPlaylistIndex){
+				self.computeComscore("04","sambaads_content");
+				self.updateViewsCount(
+					self._options.playlist[self.currentPlaylistIndex].media_id, 
+					self._options.playlist[self.currentPlaylistIndex].owner_id, 
+					self._options.playlist[self.currentPlaylistIndex].category_name);
+
 				self.lastPlaylistIndex = self.currentPlaylistIndex;
 				var url = encodeURIComponent(document.referrer || window.location.href);
 				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_SKIP_POSITION=1,-5,1,-50&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
 				//window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID=114135&LR_SCHEMA=vast2&LR_TAGS=acessorios&LR_VERTICALS=automoveis&LR_PARTNERS=774803&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID=123456&LR_URL=http://www.sambaads.com.br&LR_AUTOPLAY=1");
+				//window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/441394631/441394871&cust_params=duration%3D%26CNT_Position%3Dpreroll%26category%3Dbeleza%26CNT_PlayerType%3Dsingleplayer%26CNT_MetaTags%3Dteste&cmsid=[value]&vid=[value]&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]");
 			}
 		},5);
 	});
@@ -982,11 +988,6 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, play
 
 SambaAdsPlayerView.prototype.onPlay = function(){
 	this.hideDisplay();
-
-	this.controller.updateViewsCount(
-			this.options.playlist[this.controller.currentPlaylistIndex].media_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].owner_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].category_name);
 
 	if(this.options.playlist[this.controller.currentPlaylistIndex + 1]) {
 		$("#video-next-title").text(this.options.playlist[this.controller.currentPlaylistIndex + 1].title);
