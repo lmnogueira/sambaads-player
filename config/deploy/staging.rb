@@ -1,11 +1,11 @@
 set :stage, :staging
-set :branch, 'staging'
+set :branch, 'v2.0'
 
 set :node_env, 'staging'
 
 set :with_user, "sambaads"
 
-server '52.23.212.206', user: fetch(:with_user), roles: %w{app db web}
+server '54.84.90.95', user: fetch(:with_user), roles: %w{app db web}
 
 set :nvm_type, :user
 set :nvm_node, 'v0.12.2'
