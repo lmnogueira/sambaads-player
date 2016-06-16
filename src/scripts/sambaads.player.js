@@ -8,11 +8,11 @@ SambaAdsPlayerControler = function (player, view, data){
 	window.sambaads.parentIframeID = "";
 
 	self.player = player;
-	self.guid = encodeURIComponent(this.guid());
+	self.guid = encodeURIComponent(this.session());
 	self.view = view;
 	self.currentMediaId="";
 	self.currentPlaylistIndex = 0;
-	self.lastPlaylistIndex = 0;
+	self.lastPlaylistIndex = null;
 	self.newstate = "IDLE";
 	self.oldstate = null;
 	self.userHasInteracted = false;
@@ -22,52 +22,60 @@ SambaAdsPlayerControler = function (player, view, data){
 
 	this.view.setController(this);
 
-	if(data == undefined || data == null){
-		/*$.get( "//app.sambaads.com/iframe/846dae1ccb4553649d9706ed535d7f09/data", 
-			{ skin: "blue" } 
-		)
-		.done(function( data ) {
-			self.init(data);
-    	});*/
-	}else{
-		self.init( data );
-	}
-};
-
-SambaAdsPlayerControler.prototype.discoveryHost = function(){
-	var url = document.referrer || window.location.href
-	//url = window.location.href
-	//var a = $('<a>', { href:url } )[0];
-	//var hostname = a.hostname;
-
-	return url;
+	self.init( data );
 };
 
 SambaAdsPlayerControler.prototype.sendMessage = function(smbevent,data){
-	//console.log("IFRAME SENT: " + window.sambaads.parentIframeID + "::" + smbevent + "::" + data);
 	window.parent.postMessage(window.sambaads.parentIframeID + "::" + smbevent + "::" + data, "*");
 };
 
-SambaAdsPlayerControler.prototype.guid = function() {
+SambaAdsPlayerControler.prototype.generateGuid = function() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
 	        .toString(16)
 	        .substring(1);
 		};
-	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-	     s4() + '-' + s4() + s4() + s4();
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+
 };
 
-        
+SambaAdsPlayerControler.prototype.setCookie = function(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
 
-SambaAdsPlayerControler.prototype.sendGif = function(options){
+SambaAdsPlayerControler.prototype.getCookie = function(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+SambaAdsPlayerControler.prototype.session = function() {
+	var cookie = this.getCookie("sambaads_player_session");
+
+	if (!cookie) {
+		this.setCookie("sambaads_player_session", this.generateGuid(), 365);
+	}
+
+	return cookie;
+};
+
+
+SambaAdsPlayerControler.prototype.sendGif = function(type, options){
 	var url = document.referrer || window.location.href
 	var a = $('<a>', { href:url } )[0];
 
 	options.satmref = a.hostname;
 	options.satmfullref = url;
 
-    $.get('/* @echo COLLECTOR_URL */', options).done(function(msg) {
+    $.get('/* @echo COLLECTOR_URL */' + type, options).done(function(msg) {
     //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
 		//alert("success load cont");
 	}).error(function(){
@@ -76,16 +84,27 @@ SambaAdsPlayerControler.prototype.sendGif = function(options){
 
 };
 
-SambaAdsPlayerControler.prototype.getEnvironment = function(){
-	return this.response.player_info.environment;
+SambaAdsPlayerControler.prototype.sendGif_v2 = function(type, options){
+	var url = document.referrer || window.location.href
+	var a = $('<a>', { href:url } )[0];
+
+	options.satm_domain = a.hostname;
+
+    $.get('/* @echo COLLECTOR_URL */' + type + '?', options).done(function(msg) {
+    //$.get('//192.168.0.51:3000/api/v1/collector/satm.gif', options).done(function(msg) {
+		//alert("success load cont");
+	}).error(function(){
+			//alert("error load cont");
+	});
+
 };
 
 SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 	if (this.currentMediaId != mid) {
 	  	this.currentMediaId = mid;
 
-		this.sendGif({
-		    "satms": this.guid,
+		this.sendGif('events', {
+		    "satms": this.session(),
 		    "satmtag": "media.play",
 		    "satmpid": this.response.publisher_info.hash_code,
 		    "satmoid": oid,
@@ -94,23 +113,63 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmref": "",
 		    "satmfullref": "",
 		    "satmorigin":this.response.player_info.origin,
-		    'satmenv': this.getEnvironment()
+		    'satmenv': this.response.player_info.environment
 		});
 	};
 };
 
 SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
-	this.sendGif({
-	"satms": this.guid,
+
+	this.sendGif('events', {
+	"satms": this.session(),
 	"satmtag": "media.load",
 	"satmpid": this.response.publisher_info.hash_code,
 	"satmoid": oid,
 	"satmcid": cid,
-	"satmref": "",
-	"satmfullref": "",
 	"satmorigin":this.response.player_info.origin,
-	'satmenv': this.getEnvironment()
+	'satmenv': this.response.player_info.environment
 	});
+};
+
+SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
+	var percent = Math.floor(position/duration*100);
+	var percent_frequency=2;
+
+	if(percent < 0 ){
+		percent = 0;
+	} else if(percent > 100 ){
+		percent = 100;
+	}
+
+	this.time_position = this.time_position || 0;
+
+	if((position != this.time_position) && (this.old_percent != percent)){
+
+		this.time_position = parseInt(position);
+		this.old_percent = parseInt(percent);
+
+		duration = parseInt(duration) < 0 || isNaN(duration) ? 0 : parseInt(duration)
+
+		var time_slot = parseFloat((parseInt(duration)*parseInt(percent_frequency)/100));
+		time_slot = time_slot < 0 || isNaN(time_slot) ? 0 : time_slot;
+
+		if(this.old_percent%percent_frequency == 0){
+			this.sendGif_v2('watched',{
+				"satm_session": this.session(),
+				"satm_client_id": "",
+				"satm_time_slot": time_slot,
+				"satm_tag": "video.watched." + percent,
+				"satm_site_id": this.response.publisher_info.hash_code || this.response.site_info.hash_code,
+				"satm_media_id": parseInt(this._options.playlist[this.currentPlaylistIndex].media_id),
+				"satm_channel_id": parseInt(this._options.playlist[this.currentPlaylistIndex].channel_id || this._options.playlist[this.currentPlaylistIndex].owner_id),
+				"satm_domain": "",
+				"satm_duration": duration,
+				"satm_origin": this.response.player_info.origin,
+				'satm_environment': this.response.player_info.environment
+			});
+		}
+
+	}
 };
 
 SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
@@ -121,20 +180,30 @@ SambaAdsPlayerControler.prototype.onMessageReceive = function(event){
 		|| document.body.clientWidth;
 
 	if(params[1] == "play"){
-		if(this.response.publisher_info.auto_start){
-			if(w > this.pertmitWidthAutoStart) {
-	  			this.play();
-	  			this.view.updateItemCurrent();
-	  		}
-	  	}
+		if(params[2] === 'true'){
+			this.play();
+		  	this.view.updateItemCurrent();
+		} else {
+			if(this.response.publisher_info.auto_start){
+				if(w > this.pertmitWidthAutoStart) {
+		  			this.play();
+		  			this.view.updateItemCurrent();
+		  		}
+	  		}			
+		}
+
 	};
 
 	if(params[1] == "pause"){
-		if(this.response.publisher_info.auto_start){
-			if(w > this.pertmitWidthAutoStart) {
-	  			this.pause();
-	  		}
-	  	}
+		if(params[2]==='true'){
+			this.pause();
+		} else {
+			if(this.response.publisher_info.auto_start){
+				if(w > this.pertmitWidthAutoStart) {
+		  			this.pause();
+		  		}
+		  	}
+		}
 	};
 
 	if(params[1] == "mute"){
@@ -292,14 +361,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
         displaytitle: false,
         advertising:{
          client:'vast',
-         tag: decodeURIComponent(this.response.player_info.custom_tag)
-        },
-        plugins: {
-             '/* @echo LIVERAIL_PLUGIN_URL */' : {
-     			'LR_ADMAP': 'in::0',
-               'LR_URL': this.discoveryHost(),
-               'LR_TAGS': this.response.publisher_info.auto_start ? "autostart" : "normal"
-           }
+         admessage: 'Anúncio publicitário terminará em XX segundos.',
+         skipoffset: '30',
+         //decodeURIComponent(this.response.player_info.custom_tag)
         },
         playlist: this._options.playlist,
         skin: location.protocol + this.response.player_info.skin_url,
@@ -312,16 +376,20 @@ SambaAdsPlayerControler.prototype.init = function(data){
         aboutlink: "http://www.sambaads.com.br/publishers"
     };
 
-    if(!this.response.player_info.custom_tag){
-    	delete player_config_options.advertising;
-	} else {
-		delete player_config_options.plugins;
-	}
+ //    if(!this.response.player_info.custom_tag){
+ //    	delete player_config_options.advertising;
+	// } else {
+	// 	delete player_config_options.plugins;
+	// }
 
-	window.jwplayer(this.player).setup(player_config_options);
+	if(self._options.playlist.length > 1)
+		self.view.showPlaylist(self._options, player_width, player_height);
+
+	window.jwplayer(self.player).setup(player_config_options);
+
 
     window.jwplayer(self.player).onReady(function() {
-		smb.init(self.player, self._options);
+		self.view.init(self.player, self._options);
 		self.onLoad();
     });
 
@@ -336,14 +404,13 @@ SambaAdsPlayerControler.prototype.init = function(data){
     });
 
     window.jwplayer(self.player).onFullscreen(function(fullscreen){
-    	smb.onFullscreen(fullscreen);
+    	self.view.onFullscreen(fullscreen);
     });
 
     window.jwplayer(self.player).onPlay(function(evt){
     	self.response.publisher_info.auto_start = true;
-    	self.computeComscore("04","sambaads_content");
     	window.jwplayer(self.player).setControls(true);
-		smb.onPlay();
+		self.view.onPlay();
 		
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
@@ -356,13 +423,13 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onPause(function(evt){
 
-		if(!smb.fullscreenActive){
+		if(!self.view.fullscreenActive){
 			//hack para solucionar delay do request de ad...
 			if( window.jwplayer(self.player).getPosition() > 1 ){
-				smb.showDisplay("play");
+				self.view.showDisplay("play");
 				window.jwplayer(self.player).setControls(false);
 			} else {
-				smb.showDisplay("buffer");
+				self.view.showDisplay("buffer");
 			}
 		} else {
 			window.jwplayer(self.player).setControls(true);
@@ -379,18 +446,21 @@ SambaAdsPlayerControler.prototype.init = function(data){
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
 
-		smb.showDisplay("buffer");
+		self.view.showDisplay("buffer");
 	});
 
 	window.jwplayer(self.player).onIdle(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
 
 		self.oldstate = self.newstate;
 		self.newstate = evt.newstate;
 	});
 
 	window.jwplayer(self.player).onTime(function(evt){
-		smb.hideDisplay();
+
+		self.watchedCount(Math.floor(evt.position), Math.floor(evt.duration));
+
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onBeforeComplete(function(evt){
@@ -401,7 +471,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 	window.jwplayer(self.player).onComplete(function(evt){
 
-		smb.onComplete();
+		//console.log("teste");
+
+		self.view.onComplete();
 		self.stop();
 
 		self.newstate = "IDLE";
@@ -409,16 +481,17 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onAdTime(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onAdError(function(evt){
 		
-		smb.hideDisplay();
+		self.view.hideDisplay();
 	});
 
 	window.jwplayer(self.player).onAdImpression(function(evt){
-		smb.hideDisplay();
+		self.view.hideDisplay();
+		self.sendMessage("onStateChange","PLAYING_AD");
 	});
 
 	window.jwplayer(self.player).onAdComplete(function(evt){
@@ -426,9 +499,27 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onBeforePlay(function(evt){
+		
 		$("#display-overlay-title-share").hide();
-		smb.hideDisplay();
+		self.view.hideDisplay();
+
+		setTimeout(function(){
+			if(self.currentPlaylistIndex != self.lastPlaylistIndex){
+				self.computeComscore("04","sambaads_content");
+				self.updateViewsCount(
+					self._options.playlist[self.currentPlaylistIndex].media_id, 
+					self._options.playlist[self.currentPlaylistIndex].owner_id, 
+					self._options.playlist[self.currentPlaylistIndex].category_name);
+
+				self.lastPlaylistIndex = self.currentPlaylistIndex;
+				var url = encodeURIComponent(document.referrer || window.location.href);
+				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_SKIP_POSITION=1,-5,1,-50&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
+				//window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID=114135&LR_SCHEMA=vast2&LR_TAGS=acessorios&LR_VERTICALS=automoveis&LR_PARTNERS=774803&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID=123456&LR_URL=http://www.sambaads.com.br&LR_AUTOPLAY=1");
+				//window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/441394631/441394871&cust_params=duration%3D%26CNT_Position%3Dpreroll%26category%3Dbeleza%26CNT_PlayerType%3Dsingleplayer%26CNT_MetaTags%3Dteste&cmsid=[value]&vid=[value]&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]");
+			}
+		},5);
 	});
+
 };
 
 SambaAdsPlayerControler.prototype.canAutoStart = function(){
@@ -635,10 +726,6 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	} else {
 		self.showDisplay("play");
 	}
-	
-
-	if(options.playlist.length > 1)
-		self.showPlaylist(options);
 
 	$("#display-overlay-loader").hide();
 
@@ -725,7 +812,6 @@ SambaAdsPlayerView.prototype.init = function(player, options){
 	});
 
 	$( "div.sambaads-player-container" ).mousedown(function() {
-		console.log("interact");
 		self.controller.userHasInteracted = true;
 	});
 
@@ -756,10 +842,10 @@ SambaAdsPlayerView.prototype.hideDisplay = function(){
 SambaAdsPlayerView.prototype.setTitleBar = function(title_text, color){
 	$("#titlebar").css("backgroundColor", color);
 
-	if(title_text.length == 0){
-		$("#titlebar").hide();
-	} else {
+	if(title_text.length > 0){
 		$("#titlebar-title").text(decodeURIComponent(title_text));
+		$("#titlebar").show();
+		$('body').css("backgroundColor", "transparent");
 	}
 };
 
@@ -795,12 +881,14 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 	var self = this;
 
 	$("div.playlist-item").each(function(idex, item){
-		if(item.id.indexOf(self.controller.currentPlaylistIndex) >= 0){
+
+		if(item.id.split('-')[1] == self.controller.currentPlaylistIndex){
+			console.log(self.controller.currentPlaylistIndex);
 			$(item).find("span.video-duration").text("ASSISTINDO");
 			$(item).find("span.video-duration").show();
 		}
 
-		if(item.id.indexOf(self.controller.lastPlaylistIndex) >= 0){
+		if(item.id.split('-')[1] == self.controller.lastPlaylistIndex){
 			if(self.controller.lastPlaylistIndex != self.controller.currentPlaylistIndex){
 				$(item).find("span.video-duration").hide();
 			}
@@ -808,8 +896,11 @@ SambaAdsPlayerView.prototype.updateItemCurrent = function(){
 	});
 };
 
-SambaAdsPlayerView.prototype.showPlaylist = function(options){
+SambaAdsPlayerView.prototype.showPlaylist = function(options, player_width, player_height){
 	var self = this;
+
+	$("#sambaads-embed").width(player_width);
+	$("#sambaads-embed").height(player_height);
 
 	self.vitem = $("#playlist-v-item");
 	self.hitem = $("#playlist-h-item");
@@ -822,7 +913,7 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
 		
-		$(".nano").css( "height", window.jwplayer(self.player).getHeight() );
+		$(".nano").css( "height", player_height );
 	}else if(options.position == "bottom-vertical"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(options.playlistStyle);
 		$("#playlist-h-items").hide();
@@ -843,6 +934,14 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		$(new_v_item).find("img").attr('src', (item.thumbnails['90'] || item.image))
 		$(new_h_item).find("img").attr('src',(item.thumbnails['90'] || item.image))
 
+		if(item.sponsored){
+			new_v_item.addClass("highlight");
+			new_h_item.addClass("highlight");
+
+			$(new_v_item).find('span.label-patrocinado').show();
+			$(new_h_item).find('span.label-patrocinado').show();
+		}
+
 		$(new_v_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
 		$(new_h_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
 
@@ -850,9 +949,22 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		$("#playlist-h-items").append(new_h_item);
 	});
 
-	$(".sambaads-playlist").show();
+	$( "div.playlist-item" ).click(function() {
+		var index = this.id.split("-")[1];
+		clearInterval(self.startNextIn);
 
-	$("#playlist-h-items").lightSlider({
+		self.controller.loadPlaylist(+index);
+		self.controller.play();
+
+		self.updateItemCurrent();
+	});
+
+
+
+	setTimeout(function(){
+		$(".sambaads-playlist").show();
+
+		$("#playlist-h-items").lightSlider({
 		item: 3,
 		autoWidth: true,
 		slideMove: 1, // slidemove will be 1 if loop is true
@@ -869,29 +981,15 @@ SambaAdsPlayerView.prototype.showPlaylist = function(options){
 		onSliderLoad: function() {
 			$('#autoWidth').removeClass('cS-hidden');
 		}
-	});
+		});
 
-	$(".nano").nanoScroller();
-
-
-	$( "div.playlist-item" ).click(function() {
-		var index = this.id.split("-")[1];
-		clearInterval(self.startNextIn);
-
-		self.controller.loadPlaylist(+index);
-		self.controller.play();
-
-		self.updateItemCurrent();
-	});
+		$(".nano").nanoScroller();
+	},150);
+	
 };
 
 SambaAdsPlayerView.prototype.onPlay = function(){
 	this.hideDisplay();
-
-	this.controller.updateViewsCount(
-			this.options.playlist[this.controller.currentPlaylistIndex].media_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].owner_id, 
-			this.options.playlist[this.controller.currentPlaylistIndex].category_name);
 
 	if(this.options.playlist[this.controller.currentPlaylistIndex + 1]) {
 		$("#video-next-title").text(this.options.playlist[this.controller.currentPlaylistIndex + 1].title);
