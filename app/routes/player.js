@@ -7,8 +7,14 @@ var router = express.Router();
 router.get('/:pid', function(req, res, next) {
 	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
 
-	if(req.params.plid){
-		request.get(nconf.get("SMARTSEED_URL") + '/playlist/' + req.params.plid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+	if(req.query.plid){
+		request.get(
+		{
+			//url: "http://staging-v2-api.sambaads.com/api/" + req.params.pid + "/playlists/"+ req.query.plid +"/data",
+			url: nconf.get("SMARTSEED_URL") + '/api/' + req.params.pid +  '/playlists/' + req.query.plid + '/data?' + querystring.stringify(req.query), 
+			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
+		}, function(error, response, body){
+
 			res.header('Content-Type', 'text/html');
 			if(response.statusCode == 200){
 				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });

@@ -313,6 +313,8 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
 	this.response =  data;
 
+	console.log(this.response.player_info);
+
 	self.updateLoadCount('', this.response.player_info.category_name);
 
 	this._options = {
