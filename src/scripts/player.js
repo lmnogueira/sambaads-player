@@ -324,8 +324,14 @@ var ExpandedCinema = function (cw, currentIframe){
         iframe_url = "//" + parameters.request_domain + "/iframe/" + parameters.p + "?";
 
         if (parameters.m){
-            iframe_url = iframe_url +
-                "m=" + parameters.m +
+            iframe_url = iframe_url + "m=" + parameters.m
+        } else if (parameters.plid){
+            iframe_url = iframe_url + "plid=" + parameters.plid
+        } else {
+            iframe_url = iframe_url + "c=" + parameters.c
+        }
+
+        iframe_url = iframe_url +
                 "&t=" + parameters.t +
                 "&sk=" + parameters.sk +
                 "&tm=" + parameters.tm +
@@ -338,22 +344,6 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&tbfs=" + parameters.tbfs +
                 "&org=" + parameters.org +
                 "&rfr=" + parameters.rfr
-        } else {
-            iframe_url = iframe_url +
-            "c=" + parameters.c +
-            "&t=" + parameters.t +
-            "&sk=" + parameters.sk +
-            "&tm=" + parameters.tm +
-            "&plp=" + parameters.plp +
-            "&plw=" + parameters.plw +
-            "&plh=" + parameters.plh +
-            "&ct=" + parameters.ct +
-            "&tb=" + encodeURIComponent(parameters.tb) +
-            "&tbbg=" + parameters.tbbg +
-            "&tbfs=" + parameters.tbfs +
-            "&org=" + parameters.org +
-            "&rfr=" + parameters.rfr
-        }
 
         if(parameters.w){
             width_height = "width=\"" + parameters.w + "\" ";
