@@ -20,8 +20,8 @@
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:height" content="273" /> 
         <meta property="og:video:width" content="486" /> 
-        <meta property="og:image" content="http:<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : ''%>" />
-        <meta property="og:image:secure_url" content="https:<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : '' %>">
+        <meta property="og:image" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : ''%>" />
+        <meta property="og:image:secure_url" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : '' %>">
         <meta property="og:image:type" content="image/jpeg">
     <% } %>
 
