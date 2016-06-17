@@ -1,5 +1,5 @@
 set :stage, :production
-set :branch, 'v2.0'
+set :branch, 'master'
 
 set :node_env, 'production'
 
