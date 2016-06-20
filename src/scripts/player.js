@@ -300,6 +300,7 @@ var ExpandedCinema = function (cw, currentIframe){
         var width_height = "";
 
         parameters.m = parameters.m || parameters.mid || "";
+        parameters.plid = parameters.plid || "";
         parameters.p = parameters.p || parameters.pid || "";
         parameters.c = validateCategory(parameters.c) || validateCategory(parameters.cid) || "";
         parameters.t = parameters.t || parameters.tags || "";
@@ -324,8 +325,14 @@ var ExpandedCinema = function (cw, currentIframe){
         iframe_url = "//" + parameters.request_domain + "/iframe/" + parameters.p + "?";
 
         if (parameters.m){
-            iframe_url = iframe_url +
-                "m=" + parameters.m +
+            iframe_url = iframe_url + "m=" + parameters.m
+        } else if (parameters.plid){
+            iframe_url = iframe_url + "plid=" + parameters.plid
+        } else {
+            iframe_url = iframe_url + "c=" + parameters.c
+        }
+
+        iframe_url = iframe_url +
                 "&t=" + parameters.t +
                 "&sk=" + parameters.sk +
                 "&tm=" + parameters.tm +
@@ -338,22 +345,6 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&tbfs=" + parameters.tbfs +
                 "&org=" + parameters.org +
                 "&rfr=" + parameters.rfr
-        } else {
-            iframe_url = iframe_url +
-            "c=" + parameters.c +
-            "&t=" + parameters.t +
-            "&sk=" + parameters.sk +
-            "&tm=" + parameters.tm +
-            "&plp=" + parameters.plp +
-            "&plw=" + parameters.plw +
-            "&plh=" + parameters.plh +
-            "&ct=" + parameters.ct +
-            "&tb=" + encodeURIComponent(parameters.tb) +
-            "&tbbg=" + parameters.tbbg +
-            "&tbfs=" + parameters.tbfs +
-            "&org=" + parameters.org +
-            "&rfr=" + parameters.rfr
-        }
 
         if(parameters.w){
             width_height = "width=\"" + parameters.w + "\" ";
@@ -364,7 +355,7 @@ var ExpandedCinema = function (cw, currentIframe){
         }
 
         //generate iframe embed
-        if(parameters.m || parameters.c || parameters.t){
+        if(parameters.plid || parameters.m || parameters.c || parameters.t){
             div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
         } else {
             div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h3 id='sambaads-now-whatch' class='sambaads-now-whatch' style='margin: .5em 5px; text-align: left; display: inline-block;'>Assista Agora</h3><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='width: 640;height: 30px;'><p style='font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;'>powered by <a href='//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador'><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'> </a></p></div></div>";

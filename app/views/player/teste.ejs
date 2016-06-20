@@ -19,8 +19,12 @@
 
     <% if(type_player == "singleplayer") { %>
     <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script>
+    <% } if(type_player == "playlist") { %>
+    <script src='/javascripts/player.js?plid=LoovF0te&p=b417f7927e0e950a5ddb2ad9f9b8715b&sk=blue&tm=dark&tb=&tbbg=&w=920&h=360&debug=true' defer></script>
     <% } else if(type_player == "smartplayerv") { %>
-    <script src='/javascripts/player.js?c=business&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
+    <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
+    <% } else if(type_player == "magiccontent") { %>
+    <script src='/javascripts/player.js?c=&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
     <% } else if(type_player == "smartplayerh") { %>
     <script src='/javascripts/player.js?c=business&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
     <% } else if(type_player == "smarttags") { %>

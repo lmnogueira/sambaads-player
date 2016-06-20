@@ -111,6 +111,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmmid": mid,
 		    "satmcid": cid,
 		    "satmref": "",
+		    "satm_playlist_id": this.response.player_info.playlist_id,
 		    "satmfullref": "",
 		    "satmorigin":this.response.player_info.origin,
 		    'satmenv': this.response.player_info.environment
@@ -126,6 +127,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 	"satmpid": this.response.publisher_info.hash_code,
 	"satmoid": oid,
 	"satmcid": cid,
+	"satm_playlist_id": this.response.player_info.playlist_id,
 	"satmorigin":this.response.player_info.origin,
 	'satmenv': this.response.player_info.environment
 	});
@@ -157,6 +159,7 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 			this.sendGif_v2('watched',{
 				"satm_session": this.session(),
 				"satm_client_id": "",
+				"satm_playlist_id": this.response.player_info.playlist_id,
 				"satm_time_slot": time_slot,
 				"satm_tag": "video.watched." + percent,
 				"satm_site_id": this.response.publisher_info.hash_code || this.response.site_info.hash_code,
@@ -312,6 +315,8 @@ SambaAdsPlayerControler.prototype.discoveryPlaylistInfo = function(){
 SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
 	this.response =  data;
+
+	console.log(this.response.player_info);
 
 	self.updateLoadCount('', this.response.player_info.category_name);
 

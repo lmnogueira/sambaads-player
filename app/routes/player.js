@@ -7,18 +7,39 @@ var router = express.Router();
 router.get('/:pid', function(req, res, next) {
 	var urlFinal = req.protocol + "://" + req.hostname + req.originalUrl;
 
-	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
-		res.header('Content-Type', 'text/html');
-		if(response.statusCode == 200){
-			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
-		}else{
-			if(nconf.get("DEBUG") == 'true'){
-				res.sendStatus(response.statusCode);
-			} else {
-				res.sendStatus(204);
+	if(req.query.plid){
+		request.get(
+		{
+			//url: "http://staging-v2-api.sambaads.com/api/" + req.params.pid + "/playlists/"+ req.query.plid +"/data",
+			url: nconf.get("SMARTSEED_URL") + '/api/' + req.params.pid +  '/playlists/' + req.query.plid + '/data?' + querystring.stringify(req.query), 
+			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
+		}, function(error, response, body){
+
+			res.header('Content-Type', 'text/html');
+			if(response.statusCode == 200){
+				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
+			}else{
+				if(nconf.get("DEBUG") == 'true'){
+					res.sendStatus(response.statusCode);
+				} else {
+					res.sendStatus(204);
+				}
 			}
-		}
-	});
+		});
+	} else {
+		request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data?' + querystring.stringify(req.query), function(error, response, body){
+			res.header('Content-Type', 'text/html');
+			if(response.statusCode == 200){
+				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body) });
+			}else{
+				if(nconf.get("DEBUG") == 'true'){
+					res.sendStatus(response.statusCode);
+				} else {
+					res.sendStatus(204);
+				}
+			}
+		});
+	}
 });
 
 // BEGINNIG OF LEGACY ROUTES DO NOT DELETE
