@@ -37,9 +37,10 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task("build-javascripts-player", function(){
-    gulp.src(paths.scripts + "sambaads.player.js")
+    gulp.src([paths.scripts + "vendor/circle_progress.js", paths.scripts + "sambaads.player.js"])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
+    .pipe(concat("sambaads.player.js"))
     .pipe(uglify())
     .pipe(rename('sambaads.player.js'))
     .pipe(sourcemaps.write('./'))
@@ -53,19 +54,19 @@ gulp.task("build-javascripts-player", function(){
     .pipe(gulp.dest('app/public/javascripts/'));
 });
 
-gulp.task("build-javascripts-base", function(){
-    gulp.src([
-      paths.scripts + "vendor/jquery.1.11.0.min.js",
-      paths.scripts + "vendor/circle_progress.js",
-      paths.scripts + "vendor/jquery.nanoscroller.min.js",
-      paths.scripts + "vendor/jquery.lightSlider.min.js",
-    ])
-    .pipe(sourcemaps.init())
-    .pipe(concat("sambaads.player.base.js"))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('app/public/javascripts/'));
-});
+// gulp.task("build-javascripts-base", function(){
+//     gulp.src([
+//       //paths.scripts + "vendor/jquery.1.11.0.min.js",
+//       paths.scripts + "vendor/circle_progress.js",
+//       //paths.scripts + "vendor/jquery.nanoscroller.min.js",
+//       //paths.scripts + "vendor/jquery.lightSlider.min.js",
+//     ])
+//     .pipe(sourcemaps.init())
+//     .pipe(concat("sambaads.player.base.js"))
+//     .pipe(uglify())
+//     .pipe(sourcemaps.write('./'))
+//     .pipe(gulp.dest('app/public/javascripts/'));
+// });
 
 gulp.task("build-images", function(){
 	gulp.src(paths.images + "*.*")
@@ -77,6 +78,11 @@ gulp.task("build-crossdomain", function(){
     .pipe(gulp.dest('app/public/'));
 });
 
+gulp.task("build-error-pages", function(){
+  gulp.src('./src/error_pages/*.*')
+    .pipe(gulp.dest('app/public/'));
+});
+
 gulp.task("build-css", function(){
     gulp.src(paths.css + "sambaads.player.css")
     .pipe(sourcemaps.init())
@@ -85,9 +91,9 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", 'watch']);
-gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
-gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-javascripts-base", "build-crossdomain"]);
+gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", 'watch']);
+gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
+gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "sambaads.player.js", paths.scripts + "player.js"], ["build-javascripts-player"]);
