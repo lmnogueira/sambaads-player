@@ -15,11 +15,23 @@
         <meta property="og:description" content="<%=info.playlist.length >= 1 ? info.playlist[0].description : ''%>" />
         <meta property="og:url" content="" /> 
         <meta property="og:type" content="video" /> 
+        
+        <!-- html5 --
         <meta property="og:video:url" content="http://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>&sk=blue&tm=light" />
         <meta property="og:video:secure_url" content="https://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>&sk=blue&tm=light" />
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:height" content="273" /> 
         <meta property="og:video:width" content="486" /> 
+        <!-- fim html5 -->
+
+        <!-- flash -->
+          <meta property="og:video:url" content="http://d3655zppehxyvi.cloudfront.net/player/5.1/player.swf?config=https%3a%2f%2fapp.sambaads.com%2fapi%2fplayer_config.xml%3fpid%3d<%=info.publisher_info.hash_code %>%26mid%3d<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>" />
+          <meta property="og:video:secure_url" content="https://d3655zppehxyvi.cloudfront.net/player/5.1/player.swf?config=https%3a%2f%2fapp.sambaads.com%2fapi%2fplayer_config.xml%3fpid%3d<%=info.publisher_info.hash_code %>%26mid%3d<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>" />
+          <meta property="og:video:type" content="application/x-shockwave-flash" />
+          <meta property="og:video:height" content="273" /> 
+          <meta property="og:video:width" content="486" /> 
+        <!-- fim flash -->
+
         <meta property="og:image" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : ''%>" />
         <meta property="og:image:secure_url" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : '' %>">
         <meta property="og:image:type" content="image/jpeg">
