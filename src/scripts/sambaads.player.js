@@ -362,21 +362,22 @@ SambaAdsPlayerControler.prototype.init = function(data){
                 windowOpacity: 0
     };
 
+    var skin = this.response.player_info.skin_url.split("/");
+
     var player_config_options = {
         displaytitle: false,
         advertising:{
          client:'vast',
          admessage: 'Anúncio publicitário terminará em XX segundos.',
-         skipoffset: '30',
-         //decodeURIComponent(this.response.player_info.custom_tag)
+         skipoffset: '30'
         },
         playlist: this._options.playlist,
-        skin: location.protocol + this.response.player_info.skin_url,
+        skin: this.getSkin(),
         width: player_width,
         height: player_height,
         captions : captions,
         autostart : this.canAutoStart(),
-        primary: "flash",
+        primary: this.discoveryFormat(),
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
     };
@@ -530,6 +531,30 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 };
+
+
+SambaAdsPlayerControler.prototype.getSkin = function(){
+	if(this.discoveryFormat() === "flash"){
+		console.log(location.protocol + this.response.player_info.skin_url);
+	 	return location.protocol + this.response.player_info.skin_url;
+	} else{
+		var skin = this.response.player_info.skin_url.split('/');
+		return location.protocol + '///* @echo NGINX_PLAYER_DOMAIN *//skins/blue/'+ skin[skin.length-1];
+	}
+};
+
+SambaAdsPlayerControler.prototype.discoveryFormat = function(){
+	var player_width = this.calculatePlayerWidth();
+	var player_height = this.calculatePlayerHeight();
+
+	if (player_width <= 400 && player_height <= 300) {
+		return "html";
+	} else {
+		return "flash";
+	}
+		
+};
+
 
 SambaAdsPlayerControler.prototype.canAutoStart = function(){
 	var can = false;

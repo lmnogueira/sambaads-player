@@ -10,6 +10,7 @@ var minify_css = require('gulp-minify-css');
 var preprocess = require('gulp-preprocess');
 
 var paths = {
+  skins:    './src/skins/', 
   scripts:  './src/scripts/',
   images:   './src/images/',
   css:      './src/styles/',
@@ -68,6 +69,11 @@ gulp.task("build-javascripts-player", function(){
 //     .pipe(gulp.dest('app/public/javascripts/'));
 // });
 
+gulp.task("build-skins", function(){
+  gulp.src(paths.skins + "**/*.*")
+    .pipe(gulp.dest('app/public/skins/'));
+});
+
 gulp.task("build-images", function(){
 	gulp.src(paths.images + "*.*")
     .pipe(gulp.dest('app/public/images/'));
@@ -91,12 +97,13 @@ gulp.task("build-css", function(){
     .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
-gulp.task("default", ['development-context', 'build-css', 'build-images', "build-javascripts-player", 'watch']);
-gulp.task("staging", ['staging-context', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
-gulp.task("production", ['production-context', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
+gulp.task("default", ['development-context', 'build-skins', 'build-css', 'build-images', "build-javascripts-player", 'watch']);
+gulp.task("staging", ['staging-context', 'build-css', 'build-skins', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
+gulp.task("production", ['production-context', 'build-skins', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
 
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "sambaads.player.js", paths.scripts + "player.js"], ["build-javascripts-player"]);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.images, ['build-images']);
+  gulp.watch(paths.skins + "**/*.*", ['build-skins']);
 });

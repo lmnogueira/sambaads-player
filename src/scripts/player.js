@@ -344,6 +344,8 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&tbbg=" + parameters.tbbg +
                 "&tbfs=" + parameters.tbfs +
                 "&org=" + parameters.org +
+                "&w=" + parameters.w +
+                "&h=" + parameters.h +
                 "&rfr=" + parameters.rfr
 
         if(parameters.w){
