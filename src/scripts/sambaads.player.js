@@ -523,8 +523,9 @@ SambaAdsPlayerControler.prototype.init = function(data){
 				self.lastPlaylistIndex = self.currentPlaylistIndex;
 				var url = encodeURIComponent(document.referrer || window.location.href);
 				var tags = self.getCurrentVideo().LR_TAGS;
+
 				var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.getCurrentVideo().LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-				window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/441394631/441394871&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
+				window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
 
 			}
 		},5);
