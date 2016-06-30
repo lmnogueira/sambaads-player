@@ -301,6 +301,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
         parameters.m = parameters.m || parameters.mid || "";
         parameters.plid = parameters.plid || "";
+        parameters.ads = parameters.ads || true;
         parameters.p = parameters.p || parameters.pid || "";
         parameters.c = validateCategory(parameters.c) || validateCategory(parameters.cid) || "";
         parameters.t = parameters.t || parameters.tags || "";
@@ -347,6 +348,10 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&w=" + parameters.w +
                 "&h=" + parameters.h +
                 "&rfr=" + parameters.rfr
+
+        if(parameters.ads=="false"){
+            iframe_url = iframe_url + "&ads=" + parameters.ads
+        }
 
         if(parameters.w){
             width_height = "width=\"" + parameters.w + "\" ";

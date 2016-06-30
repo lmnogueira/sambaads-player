@@ -316,8 +316,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	var self = this;
 	this.response =  data;
 
-	console.log(this.response.player_info);
-
 	self.updateLoadCount('', this.response.player_info.category_name);
 
 	this._options = {
@@ -525,8 +523,13 @@ SambaAdsPlayerControler.prototype.init = function(data){
 				var tags = self.getCurrentVideo().LR_TAGS;
 
 				var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.getCurrentVideo().LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-				window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
+				
 
+				var loc = window.location.toString();
+			    params_ads_check = loc.split('?')[1];
+				if(params_ads_check.indexOf('ads=false')<0){
+					window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
+				}
 			}
 		},5);
 	});
