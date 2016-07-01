@@ -542,7 +542,8 @@ SambaAdsPlayerControler.prototype.getSkin = function(){
 	 	return location.protocol + this.response.player_info.skin_url;
 	} else{
 		var skin = this.response.player_info.skin_url.split('/');
-		return location.protocol + '///* @echo NGINX_PLAYER_DOMAIN *//skins/blue/'+ skin[skin.length-1];
+
+		return location.protocol + '///* @echo NGINX_PLAYER_DOMAIN *//skins/'+skin[skin.length-1].split(".")[0]+'/'+ skin[skin.length-1];
 	}
 };
 
