@@ -539,7 +539,6 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 SambaAdsPlayerControler.prototype.getSkin = function(){
 	if(this.discoveryFormat() === "flash"){
-		console.log(location.protocol + this.response.player_info.skin_url);
 	 	return location.protocol + this.response.player_info.skin_url;
 	} else{
 		var skin = this.response.player_info.skin_url.split('/');

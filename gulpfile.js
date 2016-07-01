@@ -98,7 +98,7 @@ gulp.task("build-css", function(){
 });
 
 gulp.task("default", ['development-context', 'build-skins', 'build-css', 'build-images', "build-javascripts-player", 'watch']);
-gulp.task("staging", ['staging-context', 'build-css', 'build-skins', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
+gulp.task("staging", ['staging-context', 'build-skins', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
 gulp.task("production", ['production-context', 'build-skins', 'build-css', 'build-images', "build-javascripts-player", "build-crossdomain", "build-error-pages"]);
 
 gulp.task('watch', function() {
