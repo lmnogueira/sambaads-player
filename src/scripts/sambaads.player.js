@@ -111,6 +111,7 @@ SambaAdsPlayerControler.prototype.updateViewsCount = function(mid, oid, cid){
 		    "satmmid": mid,
 		    "satmcid": cid,
 		    "satmref": "",
+		    "satm_playlist_id": this.response.player_info.playlist_id,
 		    "satmfullref": "",
 		    "satmorigin":this.response.player_info.origin,
 		    'satmenv': this.response.player_info.environment
@@ -126,6 +127,7 @@ SambaAdsPlayerControler.prototype.updateLoadCount = function(oid, cid){
 	"satmpid": this.response.publisher_info.hash_code,
 	"satmoid": oid,
 	"satmcid": cid,
+	"satm_playlist_id": this.response.player_info.playlist_id,
 	"satmorigin":this.response.player_info.origin,
 	'satmenv': this.response.player_info.environment
 	});
@@ -157,6 +159,7 @@ SambaAdsPlayerControler.prototype.watchedCount = function(position, duration){
 			this.sendGif_v2('watched',{
 				"satm_session": this.session(),
 				"satm_client_id": "",
+				"satm_playlist_id": this.response.player_info.playlist_id,
 				"satm_time_slot": time_slot,
 				"satm_tag": "video.watched." + percent,
 				"satm_site_id": this.response.publisher_info.hash_code || this.response.site_info.hash_code,
@@ -357,21 +360,22 @@ SambaAdsPlayerControler.prototype.init = function(data){
                 windowOpacity: 0
     };
 
+    var skin = this.response.player_info.skin_url.split("/");
+
     var player_config_options = {
         displaytitle: false,
         advertising:{
          client:'vast',
          admessage: 'Anúncio publicitário terminará em XX segundos.',
-         skipoffset: '30',
-         //decodeURIComponent(this.response.player_info.custom_tag)
+         skipoffset: '30'
         },
         playlist: this._options.playlist,
-        skin: location.protocol + this.response.player_info.skin_url,
+        skin: this.getSkin(),
         width: player_width,
         height: player_height,
         captions : captions,
         autostart : this.canAutoStart(),
-        primary: "flash",
+        primary: this.discoveryFormat(),
         abouttext: "SambaAds - no cats playing piano.",
         aboutlink: "http://www.sambaads.com.br/publishers"
     };
@@ -499,7 +503,10 @@ SambaAdsPlayerControler.prototype.init = function(data){
 	});
 
 	window.jwplayer(self.player).onBeforePlay(function(evt){
-		
+		if (!Date.now) {
+    		Date.now = function() { return new Date().getTime(); }
+		}
+
 		$("#display-overlay-title-share").hide();
 		self.view.hideDisplay();
 
@@ -513,14 +520,44 @@ SambaAdsPlayerControler.prototype.init = function(data){
 
 				self.lastPlaylistIndex = self.currentPlaylistIndex;
 				var url = encodeURIComponent(document.referrer || window.location.href);
-				window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID="+self.getCurrentVideo().LR_PUBLISHER_ID+"&LR_SCHEMA=vast2-vapid&LR_SKIP_POSITION=1,-5,1,-50&LR_TAGS="+(self.response.publisher_info.auto_start ? "autostart" : "normal")+"&LR_VERTICALS="+self.getCurrentVideo().LR_VERTICALS+"&LR_PARTNERS="+self.getCurrentVideo().LR_PARTNERS+"&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID="+self.getCurrentVideo().media_id+"&LR_AUTOPLAY="+self.getCurrentVideo().LR_AUTOPLAY+"&LR_URL="+url);
-				//window.jwplayer(self.player).playAd("https://ad4.liverail.com/?LR_PUBLISHER_ID=114135&LR_SCHEMA=vast2&LR_TAGS=acessorios&LR_VERTICALS=automoveis&LR_PARTNERS=774803&LR_ADMAP=in%3A%3A0&LR_FORMAT=video%2Fmp4&LR_VIDEO_AMID=123456&LR_URL=http://www.sambaads.com.br&LR_AUTOPLAY=1");
-				//window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/441394631/441394871&cust_params=duration%3D%26CNT_Position%3Dpreroll%26category%3Dbeleza%26CNT_PlayerType%3Dsingleplayer%26CNT_MetaTags%3Dteste&cmsid=[value]&vid=[value]&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]");
+				var tags = self.getCurrentVideo().LR_TAGS;
+
+				var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.getCurrentVideo().LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+				
+
+				var loc = window.location.toString();
+			    params_ads_check = loc.split('?')[1];
+				if(params_ads_check.indexOf('ads=false')<0){
+					window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
+				}
 			}
 		},5);
 	});
 
 };
+
+
+SambaAdsPlayerControler.prototype.getSkin = function(){
+	if(this.discoveryFormat() === "flash"){
+	 	return location.protocol + this.response.player_info.skin_url;
+	} else{
+		var skin = this.response.player_info.skin_url.split('/');
+		return location.protocol + '///* @echo NGINX_PLAYER_DOMAIN *//skins/blue/'+ skin[skin.length-1];
+	}
+};
+
+SambaAdsPlayerControler.prototype.discoveryFormat = function(){
+	var player_width = this.calculatePlayerWidth();
+	var player_height = this.calculatePlayerHeight();
+
+	if (player_width <= 400 && player_height <= 300) {
+		return "html";
+	} else {
+		return "flash";
+	}
+		
+};
+
 
 SambaAdsPlayerControler.prototype.canAutoStart = function(){
 	var can = false;
