@@ -528,7 +528,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
 				var loc = window.location.toString();
 			    params_ads_check = loc.split('?')[1];
 				if(params_ads_check.indexOf('ads=false')<0){
-					window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url="+url+"&correlator=" + Date.now());
+					window.jwplayer(self.player).playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=" + self.response.publisher_info.ad_unit_id + "&cust_params="+custom_params+"&cmsid="+self.getCurrentVideo().dfp_partner_id+"&vid="+self.getCurrentVideo().hashed_code+"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url="+url+"&description_url="+url+"&correlator=" + Date.now());
 				}
 			}
 		},5);
