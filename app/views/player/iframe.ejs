@@ -188,7 +188,6 @@
             </div>
         </div>
 </div>
-<script src="/javascripts/sambaads.player.base.js"></script>
 <script src="/javascripts/player/jwplayer.js"></script>
 <script src="/javascripts/sambaads.player.js"></script>
 
@@ -200,7 +199,7 @@
 	// START SAMBAADS
     var smb = new SambaAdsPlayerView()
     smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
-    var smbCtrl = new SambaAdsPlayerControler("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
+    var smbCtrl = new SambaAdsPlayerController("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
   // END SAMBAADS
 
 </script>

@@ -1,6 +1,6 @@
-var SambaAdsPlayerControlerCollector = {};
+var SambaAdsPlayerControllerCollector = {};
 
-SambaAdsPlayerControlerCollector = function (){
+SambaAdsPlayerControllerCollector = function (){
 	var self = this;
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TRACKER, function(e){
@@ -9,7 +9,7 @@ SambaAdsPlayerControlerCollector = function (){
 	});
 };
 
-SambaAdsPlayerControlerCollector.prototype.sendGif = function(options){
+SambaAdsPlayerControllerCollector.prototype.sendGif = function(options){
 	var url = document.referrer || window.location.href
 	var a = $('<a>', { href:url } )[0];
 
@@ -25,5 +25,5 @@ SambaAdsPlayerControlerCollector.prototype.sendGif = function(options){
 
 };
 
-new SambaAdsPlayerControlerCollector();
+new SambaAdsPlayerControllerCollector();
 

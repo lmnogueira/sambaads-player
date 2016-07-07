@@ -15,6 +15,7 @@ var SambaAdsPlayerMessageBroker = function(){
     		id: event_id,
     		data: data
     	}
+        console.log(event_id);
         this.dispatchEvent(new CustomEvent(event_id, {detail:evt}));
     };
 

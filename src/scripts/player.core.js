@@ -18,6 +18,7 @@ SambaAdsPlayerCore = function (options){
 	}
 };
 
+
 SambaAdsPlayerCore.prototype.setup = function(options){
 	var self = this;
 	
@@ -47,13 +48,14 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.PAUSE, evt);
 	});
 	
-	self.JWPlayer.on('buffer', function(evt){
+	self.JWPlayer.on(Event.BUFFER, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.BUFFER, evt);
 	});
 
 	//self.JWPlayer.on('idle', function(evt){});
 
-	self.JWPlayer.on('complete', function(evt){
+
+	self.JWPlayer.on(Event.COMPLETE, function(evt){
 		self.JWPlayer.stop();
 		SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
 	});
@@ -61,12 +63,14 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	//self.JWPlayer.on('error', function(evt){});
 	//self.JWPlayer.on('seek', function(evt){});
 	//self.JWPlayer.on('seeked', function(evt){});
-	//self.JWPlayer.on('time', function(evt){});
+	self.JWPlayer.on(Event.TIME, function(evt){
+		SambaAdsPlayerMessageBroker().send(Event.TIME, evt);
+	});
 	//self.JWPlayer.on('mute', function(evt){});
 	//self.JWPlayer.on('volume', function(evt){});
 	//self.JWPlayer.on('fullscreen', function(evt){});
 
-	self.JWPlayer.on('resize', function(evt){
+	self.JWPlayer.on(Event.RESIZE, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.RESIZE, evt);
 	});
 
@@ -104,24 +108,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 
 	self.JWPlayer.on('beforePlay', function(evt){
-		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, evt);
-		//self.JWPlayer.playAd("http://ad4.liverail.com/?LR_PUBLISHER_ID=14403&LR_SCHEMA=vast2&LR_TAGS=sbtgeral&LR_VIDEO_POSITION=0&LR_URL=__referrer__&LR_FORMAT=VIDEO/MP4");
-		// var adsRequest = new google.ima.AdsRequest();
-		// adsRequest.adTagUrl = 'https://d3655zppehxyvi.cloudfront.net/jwp_vpaid5.xml';
-
-		// // Specify the linear and nonlinear slot sizes. This helps the SDK to
-		// // select the correct creative if multiple are returned.
-		// adsRequest.linearAdSlotWidth = 640;
-		// adsRequest.linearAdSlotHeight = 400;
-		// adsRequest.nonLinearAdSlotWidth = 640;
-		// adsRequest.nonLinearAdSlotHeight = 150;
-		// google.ima.settings.setVpaidMode(google.ima.ImaSdkSettings.VpaidMode.ENABLED);
-		// var adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById("jw_sambaads_player"));
-		// var adsLoader = new google.ima.AdsLoader(adDisplayContainer);
-		// adsLoader.getSettings().setVpaidMode(google.ima.ImaSdkSettings.VpaidMode.INSECURE);
-		// adsLoader.requestAds(adsRequest);
-		//self.JWPlayer.playAd("https://d3655zppehxyvi.cloudfront.net/jwp_vpaid5.xml");
-		//self.JWPlayer.playAd("https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao&impl=s&gdfp_req=1&env=vp&output=xml_vast3&unviewed_position_start=1&nofb=1&url=__referrer__&description_url=[description_url]&correlator=__timestamp__");
+		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.JWPlayer);
 	});
 
 	self.JWPlayer.on('beforeComplete', function(evt){

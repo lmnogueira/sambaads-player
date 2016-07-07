@@ -9,7 +9,7 @@ var gulp = require('gulp'),
     minify_css = require('gulp-minify-css'),
     preprocess = require('gulp-preprocess');
 
-var jwplayer_version = "7.1.4";
+var jwplayer_version = "7.4.4";
 
 var paths = {
     scripts:  './src/scripts/',
@@ -41,6 +41,11 @@ gulp.task('clean', function(cb) {
 
 gulp.task("build-javascripts-player", function(){
   gulp.src([
+      paths.scripts + "vendor/jquery.1.11.0.min.js",
+      paths.scripts + "vendor/circle_progress.js",
+      paths.scripts + "vendor/jquery.nanoscroller.min.js",
+      paths.scripts + "vendor/jquery.lightSlider.min.js",
+
       paths.scripts + "player.event.js",
       paths.scripts + "player.view.state.js",
 
@@ -58,7 +63,9 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.configurator.js",
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
-      paths.scripts + "player.controller.collector.tracker.js"
+      paths.scripts + "player.controller.collector.tracker.js",
+      paths.scripts + "player.controller.timehandler.js",
+      paths.scripts + "player.advertising.js"
     ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
@@ -73,22 +80,6 @@ gulp.task("build-javascripts-player", function(){
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/javascripts/'));
-});
-
-gulp.task("build-javascripts-base", function(){
-    gulp.src(
-        [
-            paths.scripts + "vendor/jquery.1.11.0.min.js",
-            paths.scripts + "vendor/circle_progress.js",
-            paths.scripts + "vendor/jquery.nanoscroller.min.js",
-            paths.scripts + "vendor/jquery.lightSlider.min.js",
-        ]
-    )
-    .pipe(sourcemaps.init())
-    .pipe(concat("sambaads.player.base.js"))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('app/public/javascripts/'));
 });
 
 gulp.task("build-jwplayer", function(){
@@ -124,19 +115,7 @@ gulp.task('build-css-skin', function(){
 });
 
 gulp.task('watch', function() {
-  gulp.watch([paths.scripts + "player.core.js",
-              paths.scripts + "player.postmessage.js",
-              paths.scripts + "player.configurator.js",
-              paths.scripts + "player.controller.js",
-              paths.scripts + "player.controller.conllector.js",
-              paths.scripts + "player.controller.conllector.tracker.js",
-              paths.scripts + "player.view.play.js",
-              paths.scripts + "player.view.buffer.js",
-              paths.scripts + "player.view.descriptionbar.js",
-              paths.scripts + "player.view.share.js",
-              paths.scripts + "player.view.playlist.js",
-              paths.scripts + "player.view.next.js",
-              paths.scripts + "player.js"], ["build-javascripts-player"]);
+  gulp.watch([paths.scripts + "**.*"], ["build-javascripts-player"]);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
@@ -149,7 +128,6 @@ gulp.task("default",
         'build-css-skin',
         'build-images',
         "build-javascripts-player",
-        "build-javascripts-base",
         "build-jwplayer",
         'watch'
     ]
@@ -161,7 +139,6 @@ gulp.task("staging",
         'build-css-skin',
         'build-images',
         "build-javascripts-player",
-        "build-javascripts-base",
         "build-crossdomain",
         "build-jwplayer"
     ]
@@ -173,7 +150,6 @@ gulp.task("production",
         'build-css-skin',
         'build-images',
         "build-javascripts-player",
-        "build-javascripts-base",
         "build-crossdomain",
         "build-jwplayer"
     ]

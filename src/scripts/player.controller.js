@@ -1,6 +1,6 @@
-var SambaAdsPlayerControler = {};
+var SambaAdsPlayerController = {};
 
-SambaAdsPlayerControler = function (player, view, data){
+SambaAdsPlayerController = function (player, view, data){
 	var self = this;
 	self.data = data;
 
@@ -10,14 +10,14 @@ SambaAdsPlayerControler = function (player, view, data){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 
-		var evtObject = new SambaAdsPlayerControlerCollectorTracker(TypeTrackEvent.LOAD);
+		var evtObject = new SambaAdsPlayerControllerCollectorTracker(TypeTrackEvent.LOAD);
 
 		SambaAdsPlayerMessageBroker().send(Event.TRACKER,evtObject);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY, function(e){
 
-		var evtObject = new SambaAdsPlayerControlerCollectorTracker(TypeTrackEvent.PLAY);
+		var evtObject = new SambaAdsPlayerControllerCollectorTracker(TypeTrackEvent.PLAY);
 
 		SambaAdsPlayerMessageBroker().send(Event.TRACKER, evtObject);
 	});
@@ -25,7 +25,7 @@ SambaAdsPlayerControler = function (player, view, data){
 	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
 };
 
-SambaAdsPlayerControler.prototype.init = function(data){
+SambaAdsPlayerController.prototype.init = function(data){
 	var self = this;
 	this.configuration =  data;
 
@@ -62,46 +62,44 @@ SambaAdsPlayerControler.prototype.init = function(data){
         aboutlink: "http://www.sambaads.com.br/publishers",
         advertising: {
             client:'googima',
-            vpaidmode:'insecure',
+            vpaidmode:'enabled'
             //client: "vast",
-            admessage: "Anúncio publicitário terminará em XX segundos."
+            //admessage: "Anúncio publicitário terminará em XX segundos."
         }
     };
 
 	new SambaAdsPlayerCore(player_config_options);
 };
 
-SambaAdsPlayerControler.prototype.getPlaylist = function(){
+SambaAdsPlayerController.prototype.getPlaylist = function(){
     return this._options.playlist;
 };
 
 
 
-SambaAdsPlayerControler.prototype.setMute = function(mute){
+SambaAdsPlayerController.prototype.setMute = function(mute){
 	if( typeof Boolean(mute) === 'boolean'){
 		window.jwplayer(this.player).setMute(mute);			
 	}
 };
 
-SambaAdsPlayerControler.prototype.play = function(){
+SambaAdsPlayerController.prototype.play = function(){
     window.jwplayer(this.player).play();
-    //window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
 };
 
-SambaAdsPlayerControler.prototype.pause = function(){
+SambaAdsPlayerController.prototype.pause = function(){
     window.jwplayer(this.player).pause();
-    //window.jwplayer(this.player).callInternal("jwCallVPAID", "pauseAd");
 };
 
-SambaAdsPlayerControler.prototype.seekTo = function(seek_to){
+SambaAdsPlayerController.prototype.seekTo = function(seek_to){
     window.jwplayer(this.player).seek(seek_to);
 };
 
-SambaAdsPlayerControler.prototype.stop = function(){
+SambaAdsPlayerController.prototype.stop = function(){
     window.jwplayer(this.player).stop();
 };
 
-SambaAdsPlayerControler.prototype.playNext = function(){
+SambaAdsPlayerController.prototype.playNext = function(){
     this.loadPlaylist(this.currentPlaylistIndex + 1);
 	window.jwplayer(this.player).play();
 };

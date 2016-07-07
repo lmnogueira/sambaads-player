@@ -5,6 +5,7 @@ var Event = {
 	PAUSE: "pause",
 	READY: "ready",
 	BUFFER: "buffer",
+	TIME: "time",
 	RESIZE: "resize",
 	PLAYER_STATE_CHANGE: "stateChange",
 	VIEW_STATE_CHANGE: "viewStateChange",
