@@ -377,7 +377,7 @@ SambaAdsPlayerControler.prototype.init = function(data){
         autostart : this.canAutoStart(),
         primary: this.discoveryFormat(),
         abouttext: "SambaAds - no cats playing piano.",
-        aboutlink: "http://www.sambaads.com.br/publishers"
+        aboutlink: "http://www.ycontent.com.br/publishers"
     };
 
  //    if(!this.response.player_info.custom_tag){
