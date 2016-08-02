@@ -1,19 +1,20 @@
 set :stage, :production
-set :branch, 'master'
+set :branch, 'NEW_jwplayer_version_7'
 
 set :node_env, 'production'
 
 set :with_user, "sambaads"
 
-set :smartseed1, '52.7.210.178'
-set :smartseed2, '54.86.48.111'
-set :smartseed3, '54.175.17.141'
+set :server1, '52.201.230.77'
+set :server2, '54.172.141.91'
+set :server3, '52.90.63.130'
 
-set :hostname_list, {smartseed1: fetch(:smartseed1), smartseed2: fetch(:smartseed2)}
+set :hostname_list, {server1: fetch(:server1), server2: fetch(:server2), server3: fetch(:server3)}
+set :filter, hosts: fetch(:hostname_list).values
 
-server fetch(:smartseed1), user: fetch(:with_user), roles: %w{app db web}
-server fetch(:smartseed2), user: fetch(:with_user), roles: %w{app db web}
-# server fetch(:smartseed3), user: fetch(:with_user), roles: %w{app db web}
+server fetch(:server1), user: fetch(:with_user), roles: %w{app db web}
+server fetch(:server2), user: fetch(:with_user), roles: %w{app db web}
+server fetch(:server3), user: fetch(:with_user), roles: %w{app db web}
 
 set :nvm_type, :user
 set :nvm_node, 'v0.12.2'
