@@ -93,6 +93,8 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	});
 	self.JWPlayer.on('adError', function(evt){
+		$(".jw-icon-fullscreen").removeClass("jw-hidden");
+		$(".jw-icon-fullscreen").show();
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adImpression', function(evt){
@@ -103,6 +105,8 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
 	});
 	self.JWPlayer.on('adSkipped', function(evt){
+		$(".jw-icon-fullscreen").removeClass("jw-hidden");
+		$(".jw-icon-fullscreen").show();
 		//console.log(evt);
 	});
 
