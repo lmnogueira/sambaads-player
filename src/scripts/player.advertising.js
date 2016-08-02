@@ -9,9 +9,6 @@ SambaAdsPlayerAdvertising = function (){
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
 
- 		$(".jw-icon-fullscreen").addClass("jw-hidden");
-		$(".jw-icon-fullscreen").hide();
-
  		var tags = self.playingNow.LR_TAGS;
 		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.playingNow.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 				
@@ -25,6 +22,8 @@ SambaAdsPlayerAdvertising = function (){
  		"&correlator=__timestamp__";
 
  		if(self.currentBeforePlayId != self.playingNow.hashed_code){
+ 			$(".jw-icon-fullscreen").addClass("jw-hidden");
+			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
  			//tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/448587671/448587791&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=teste&correlator=__timestamp__";
  			e.detail.data.playAd(tagUrl);
