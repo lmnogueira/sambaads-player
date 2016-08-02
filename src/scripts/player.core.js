@@ -107,6 +107,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	self.JWPlayer.on('adSkipped', function(evt){
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
+		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 		//console.log(evt);
 	});
 
