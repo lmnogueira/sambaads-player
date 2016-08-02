@@ -88,6 +88,8 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adComplete', function(evt){
+		$(".jw-icon-fullscreen").removeClass("jw-hidden");
+		$(".jw-icon-fullscreen").show();
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	});
 	self.JWPlayer.on('adError', function(evt){

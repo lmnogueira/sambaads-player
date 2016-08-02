@@ -9,6 +9,9 @@ SambaAdsPlayerAdvertising = function (){
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
 
+ 		$(".jw-icon-fullscreen").addClass("jw-hidden");
+		$(".jw-icon-fullscreen").hide();
+
  		var tags = self.playingNow.LR_TAGS;
 		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.playingNow.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 				
