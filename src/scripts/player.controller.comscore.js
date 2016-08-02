@@ -13,7 +13,6 @@ SambaAdsPlayerControllerComscore = function (){
 			self.currentId = self.media.media_id;
 			self.computeComscore("04","sambaads_content");
 		}
-		
 	};
 
 	self.computeComscore = function(c5,c3) {

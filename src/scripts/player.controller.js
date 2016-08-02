@@ -45,8 +45,8 @@ SambaAdsPlayerController.prototype.init = function(data){
         height: data.player.height,
         captions : captions,
         primary: "html",
-        abouttext: "SambaAds - no cats playing piano.",
-        aboutlink: "http://www.sambaads.com.br/publishers",
+        abouttext: "YContent - Dê play para começar.",
+        aboutlink: "http://www.ycontent.com.br/publishers",
         advertising: {
             client:'googima',
             vpaidmode:'enabled',
