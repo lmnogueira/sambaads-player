@@ -14,12 +14,10 @@ SambaAdsPlayerViewPlaylist = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
 		self.player_width = e.detail.data.width;
 		self.player_height = e.detail.data.height;
-
-		$(".nano").css( "height", self.player_height);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
-		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position);
+		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position, e.detail.data.playlistWidth, e.detail.data.playlistHeight);
 		self.init(e.detail.data);
 	});
 
@@ -32,20 +30,26 @@ SambaAdsPlayerViewPlaylist = function (){
 	});
 };
 
-SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position){
+SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, width, height){
 	var self = this;
 
 	if(position == "right"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
 		$("#playlist-h-items").hide();
 		$("#sambaads-embed").addClass("pull-left");
+
+		$(".nano").css( "height", height );
 	}else if(position == "bottom-vertical"){
 		$($.find("div.sambaads-playlist.vertical")[0]).addClass(theme);
 		$("#playlist-h-items").hide();
 		$("#playlist-v-items").show();
+
+		$(".nano").css( "height", height);
 	}else if(position == "bottom-horizontal"){
 		$($.find("div.sambaads-playlist.horizontal")[0]).addClass(theme);
 		$("#playlist-h-items").show();
+
+		//$(".nano").css( "height", height);
 	}
 };
 

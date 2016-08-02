@@ -405,23 +405,30 @@
     background: #02c3df;
 }
 
-.jw-skin-sambaads.theme-red .jw-progress,
-.jw-skin-sambaads.theme-red .jw-slider-vertical .jw-progress,
-.jw-skin-sambaads.theme-red .jw-slider-horizontal .jw-knob,
-.jw-skin-sambaads.theme-red .jw-slider-vertical .jw-knob {
+.blue .jw-progress,
+.blue .jw-slider-vertical .jw-progress,
+.blue .jw-slider-horizontal .jw-knob,
+.blue .jw-slider-vertical .jw-knob {
+    background: #02c3df;
+}
+
+.red .jw-progress,
+.red .jw-slider-vertical .jw-progress,
+.red .jw-slider-horizontal .jw-knob,
+.red .jw-slider-vertical .jw-knob {
     background: #e74c3c;
 }
 
-.jw-skin-sambaads.theme-green .jw-progress,
-.jw-skin-sambaads.theme-green .jw-slider-vertical .jw-progress,
-.jw-skin-sambaads.theme-green .jw-slider-horizontal .jw-knob,
-.jw-skin-sambaads.theme-green .jw-slider-vertical .jw-knob {
+.green .jw-progress,
+.green .jw-slider-vertical .jw-progress,
+.green .jw-slider-horizontal .jw-knob,
+.green .jw-slider-vertical .jw-knob {
     background: #85c440;
 }
 
-.jw-skin-sambaads.theme-yellow .jw-progress,
-.jw-skin-sambaads.theme-yellow .jw-slider-vertical .jw-progress,
-.jw-skin-sambaads.theme-yellow .jw-slider-horizontal .jw-knob,
-.jw-skin-sambaads.theme-yellow .jw-slider-vertical .jw-knob {
+.yellow .jw-progress,
+.yellow .jw-slider-vertical .jw-progress,
+.yellow .jw-slider-horizontal .jw-knob,
+.yellow .jw-slider-vertical .jw-knob {
     background: #f1c40f;
 }

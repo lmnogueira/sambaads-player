@@ -5,12 +5,14 @@ SambaAdsPlayerViewPlay = function (){
 	self.displayOverlayPlay = $("#display-overlay-play");
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(evt){
-		self.show();
+		self.show();		
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
 		if((evt.detail.data.newState == PlayerState.PAUSED || evt.detail.data.newState == PlayerState.IDLE) && (evt.detail.data.newViewState == PlayerViewState.INITIALIZE)){
-			self.show();
+			setTimeout(function(){
+				self.show();
+			},100);
 		} else {
 			self.hide();
 		}

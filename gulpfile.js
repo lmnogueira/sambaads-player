@@ -48,6 +48,7 @@ gulp.task("build-javascripts-player", function(){
 
       paths.scripts + "player.event.js",
       paths.scripts + "player.view.state.js",
+      paths.scripts + "player.controller.collector.tracker.js",
 
       paths.scripts + "player.messagebroker.js",
       paths.scripts + "player.postmessage.js",
@@ -63,21 +64,21 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.configurator.js",
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
-      paths.scripts + "player.controller.collector.tracker.js",
+      paths.scripts + "player.controller.comscore.js",
       paths.scripts + "player.controller.timehandler.js",
       paths.scripts + "player.advertising.js"
     ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("sambaads.player.js"))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
     gulp.src(paths.scripts + "player.js")
         .pipe(sourcemaps.init())
         .pipe(preprocess({context: contextEnv}))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/javascripts/'));
 });

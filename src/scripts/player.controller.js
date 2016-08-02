@@ -6,20 +6,7 @@ SambaAdsPlayerController = function (player, view, data){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.init( e.detail.data );
-	})
-
-	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-
-		var evtObject = new SambaAdsPlayerControllerCollectorTracker(TypeTrackEvent.LOAD);
-
-		SambaAdsPlayerMessageBroker().send(Event.TRACKER,evtObject);
-	});
-
-	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY, function(e){
-
-		var evtObject = new SambaAdsPlayerControllerCollectorTracker(TypeTrackEvent.PLAY);
-
-		SambaAdsPlayerMessageBroker().send(Event.TRACKER, evtObject);
+        SambaAdsPlayerMessageBroker().send(Event.TRACK_LOAD,{});
 	});
 	
 	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
@@ -62,9 +49,9 @@ SambaAdsPlayerController.prototype.init = function(data){
         aboutlink: "http://www.sambaads.com.br/publishers",
         advertising: {
             client:'googima',
-            vpaidmode:'enabled'
+            vpaidmode:'enabled',
             //client: "vast",
-            //admessage: "Anúncio publicitário terminará em XX segundos."
+            admessage: "Anúncio publicitário terminará em xx segundos."
         }
     };
 

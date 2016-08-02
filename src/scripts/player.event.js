@@ -1,7 +1,7 @@
 var Event = {
 	IDLE: "idle",
 	PLAY: "play",
-	COMPLETE: "Complete",
+	COMPLETE: "complete",
 	PAUSE: "pause",
 	READY: "ready",
 	BUFFER: "buffer",
@@ -14,7 +14,9 @@ var Event = {
 	TOGGLE_SHARE: "toggleShare",
 	HIDE_DISPLAYS: "hideDisplays",
 	PLATFORM_METADATA_LOADED: "platformMetadataLoaded",
-	TRACKER: "tracker",
+	TRACK_LOAD: "track_load",
+	TRACK_PLAY: "track_play",
+	TRACK_WATCH: "track_watch",
 	PLAYLIST_CONFIGURED: "playlistConfigured",
 	CONFIGURATION_READY: "configurationReady",
 	MOUSE_MOVE: "mouseMove",
@@ -28,4 +30,11 @@ var DoEvent = {
 	STOP: "doStop",
 	PAUSE: "doPause",
 	LOAD_MEDIA: "loadMedia"
+};
+
+var TypeTrackEvent = {
+	EVENTS: "events",
+	LOAD: "media.load",
+	PLAY: "media.play",
+	WATCHED: "watched"
 };

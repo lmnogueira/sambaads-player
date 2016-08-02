@@ -161,13 +161,20 @@ var ExpandedCinema = function (cw, currentIframe){
 };
 
 (function(cw){
-
     var detectScript = function(){
+
         var currentScript = document.currentScript || (function() {
             var scripts = document.getElementsByTagName('script');
 
-            if(scripts[scripts.length - 1].src.indexOf("player.sambaads.com") != 0)
+            if(scripts[scripts.length - 1].src.indexOf("player.sambaads.com") >= 0) {
                 return scripts[scripts.length - 1];
+            } else {
+                for(var i = 0; i<=scripts.length-1; i++){
+                    if((scripts[i].src.indexOf("player.sambaads.com") >= 0) || (scripts[i].src.indexOf("/javascripts/player.js") >= 0)){
+                        return scripts[i];
+                    }
+                }
+            }
         })();
 
         return currentScript;
@@ -183,6 +190,10 @@ var ExpandedCinema = function (cw, currentIframe){
         cw.sambaads = {};
         cw.sambaads.players = []
 
+        cw.sambaads.onStateChange = function(onStateChangeFunction){
+            cw.sambaads._onStateChange = onStateChangeFunction;
+        };
+
         cw.sambaads.getPlayer = function(iframeId){
 
             iframeId = iframeId || "sambaads_0";
@@ -192,6 +203,35 @@ var ExpandedCinema = function (cw, currentIframe){
                     return cw.sambaads.players[i];
                 }
             };
+        };
+
+        cw.sambaads.play = function(mediaId){
+
+            mediaId = mediaId || "sambaads_0";
+
+            for (var i = 0; i < cw.sambaads.players.length; i++) {
+                if(parseInt(cw.sambaads.players[i].mid) === parseInt(mediaId)){
+                    cw.sambaads.players[i].doPlay(true);
+                }
+            };
+        };
+
+        cw.sambaads.pause = function(mediaId){
+
+            mediaId = mediaId || "sambaads_0";
+
+            for (var i = 0; i < cw.sambaads.players.length; i++) {
+                if(parseInt(cw.sambaads.players[i].mid) === parseInt(mediaId)){
+                    cw.sambaads.players[i].doPause(true);
+                }
+            };
+        };
+
+        cw.sambaads.appendPlayer = function(elementId, customParams){
+            customParams.w = customParams.w ? customParams.w : "100%";
+            customParams.h = customParams.h ? customParams.h : "100%";
+            customParams.request_domain = '/* @echo CDN_PLAYER_DOMAIN */';
+            appendIframe(customParams, document.getElementById(elementId));
         };
     };
 
@@ -235,11 +275,23 @@ var ExpandedCinema = function (cw, currentIframe){
         cw.sambaads.expandedCinema = new ExpandedCinema(cw, currentIframe);
     }
 
-    var insertAfter = function (referenceNode, newNode) {
-        videoContainer.insertBefore(newNode, referenceNode.nextSibling);
+    var insert = function (referenceNode, newNode) {
+        
+        if (referenceNode.tagName != "SCRIPT"){
+            referenceNode.appendChild(newNode);
+        } else {
+            videoContainer.insertBefore(newNode, referenceNode.nextSibling);
+        }
     };
 
-    var appendIframe = function(parameters){
+    var validateCategory = function(category){
+        var entretenimento = 'humor',
+        new_category = entretenimento === category ? 'entretenimento' : category;
+
+        return new_category;
+    };
+
+    var appendIframe = function(parameters, targetElement){
         //console.log(JSON.stringify(parameters));
         var div = document.createElement('div');
         var iframe_id = "sambaads_" + cw.sambaads.players.length;
@@ -247,8 +299,10 @@ var ExpandedCinema = function (cw, currentIframe){
         var width_height = "";
 
         parameters.m = parameters.m || parameters.mid || "";
+        parameters.plid = parameters.plid || "";
+        parameters.ads = parameters.ads || true;
         parameters.p = parameters.p || parameters.pid || "";
-        parameters.c = parameters.c || parameters.cid || "";
+        parameters.c = validateCategory(parameters.c) || validateCategory(parameters.cid) || "";
         parameters.t = parameters.t || parameters.tags || "";
         parameters.sk = parameters.sk || "";
         parameters.tm = parameters.tm || "";
@@ -271,8 +325,14 @@ var ExpandedCinema = function (cw, currentIframe){
         iframe_url = "//" + parameters.request_domain + "/iframe/" + parameters.p + "?";
 
         if (parameters.m){
-            iframe_url = iframe_url +
-                "m=" + parameters.m +
+            iframe_url = iframe_url + "m=" + parameters.m
+        } else if (parameters.plid){
+            iframe_url = iframe_url + "plid=" + parameters.plid
+        } else {
+            iframe_url = iframe_url + "c=" + parameters.c
+        }
+
+        iframe_url = iframe_url +
                 "&t=" + parameters.t +
                 "&sk=" + parameters.sk +
                 "&tm=" + parameters.tm +
@@ -284,22 +344,12 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&tbbg=" + parameters.tbbg +
                 "&tbfs=" + parameters.tbfs +
                 "&org=" + parameters.org +
+                "&w=" + parameters.w +
+                "&h=" + parameters.h +
                 "&rfr=" + parameters.rfr
-        } else {
-            iframe_url = iframe_url +
-            "c=" + parameters.c +
-            "&t=" + parameters.t +
-            "&sk=" + parameters.sk +
-            "&tm=" + parameters.tm +
-            "&plp=" + parameters.plp +
-            "&plw=" + parameters.plw +
-            "&plh=" + parameters.plh +
-            "&ct=" + parameters.ct +
-            "&tb=" + encodeURIComponent(parameters.tb) +
-            "&tbbg=" + parameters.tbbg +
-            "&tbfs=" + parameters.tbfs +
-            "&org=" + parameters.org +
-            "&rfr=" + parameters.rfr
+
+        if(parameters.ads=="false"){
+            iframe_url = iframe_url + "&ads=" + parameters.ads
         }
 
         if(parameters.w){
@@ -311,14 +361,17 @@ var ExpandedCinema = function (cw, currentIframe){
         }
 
         //generate iframe embed
-        if(parameters.m || parameters.c){
+        if(parameters.plid || parameters.m || parameters.c || parameters.t){
             div.innerHTML = "<iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe>";
         } else {
-            div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h3 id='sambaads-now-whatch' class='sambaads-now-whatch' style='margin: .5em 5px; text-align: left; display: inline-block;'>Assista Agora</h3><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='width: 640;height: 30px;'><p style='font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;'>powered by <a href='//www.sambaads.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador'><img src='//d366amxgkdfvcq.cloudfront.net/images/sambaads-logo.png' style='vertical-align:middle; width:100px !important; height: 24px !important'> </a></p></div></div>";
+            div.innerHTML = "<div id='sambaads_now_whatch_div' class='sambaads_now_whatch_div'><div style='margin-bottom: 10px;text-align: -webkit-left; text-align: left;'><h3 id='sambaads-now-whatch' class='sambaads-now-whatch' style='margin: .5em 5px; text-align: left; display: inline-block;'>Assista Agora</h3><span id='sambaads_now_whatch_title_" + iframe_id + "' class='sambaads_now_whatch_title' style='font-family: verdana, arial, sans-serif; color:#126cb0;font-size:1.1em; font-weight: bold;'></span></div><iframe id=\"" + iframe_id + "\" " + width_height + "src=\"" + iframe_url + "\" frameborder=\"0\" scrolling=\"no\"  webkitallowfullscreen mozallowfullscreen allowFullScreen></iframe><div style='width: 640;height: 30px;'><p style='font-size: 11px; margin: 0px; color: #B0B0B0; text-align: right; font-family: Helvetica, Arial, sans-serif;'>powered by <a href='//www.ycontent.com.br/?utm_campaign=Recomendador&amp;utm_medium=Powered&amp;utm_source=PlayerRecomendador'><img src='//d366amxgkdfvcq.cloudfront.net/images/ycontent-logo.png' style='vertical-align:middle; width:80px !important; height: 12px !important; margin-top: 2px;'> </a></p></div></div>";
         }
-
-        //Put iframe after de <script> tag
-        insertAfter(currentScript, div.firstChild);
+    
+        if (parameters.p == '29e21db92767b2e54997e8dfab1b5f28' && parameters.t != 'pets'){
+            insert((targetElement || currentScript), div.firstChild);
+        } else if (parameters.p != '29e21db92767b2e54997e8dfab1b5f28'){
+            insert((targetElement || currentScript), div.firstChild);
+        }
 
         var iframe_data = {
             id : iframe_id,
@@ -344,11 +397,12 @@ var ExpandedCinema = function (cw, currentIframe){
                     this.contentWindow().postMessage( this.id + "::" + smbevent + "::" + data, this.iframe_target_host )
                 }
             },
-            doPlay:function(){
+            doPlay:function(force){
+                force = force || false;
 
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
-                    this.contentWindow().postMessage( this.id + "::onPlay::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onPlay::" + force, this.iframe_target_host )
                 }
 
             },
@@ -368,10 +422,11 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
 
             },
-            doPause:function(){
+            doPause:function(force){
+                force = force || false;
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::pause::");
-                    this.contentWindow().postMessage( this.id + "::onPause::", this.iframe_target_host )
+                    this.contentWindow().postMessage( this.id + "::onPause::" + force, this.iframe_target_host )
                 }
             },
             seek:function(seek_position){
@@ -404,6 +459,8 @@ var ExpandedCinema = function (cw, currentIframe){
 
         //initialize parameters
         var parameters = parseQueryString(currentScript.src);
+
+        if (parameters.p === undefined) return;
 
         videoContainer = currentScript.parentNode;
 
@@ -460,6 +517,13 @@ var ExpandedCinema = function (cw, currentIframe){
 
             var params = event.data.split("::");
 
+            if (params[1] == "onSetupError" ){
+                if(document.getElementById("sambaads_now_whatch_div") ){
+                    document.getElementById("sambaads_0").remove();
+                    document.getElementById("sambaads_now_whatch_div").remove();
+                }
+            }
+
             if(params[0] == currentIframe.id){
                 //console.log("CORE RECEIVED:" + event.data)
 
@@ -473,6 +537,16 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if (params[1] == "onStateChange" ){
                     currentIframe.state = params[2];
+                
+                    if( typeof cw.sambaads._onStateChange === 'function'){
+
+                        var evt = {
+                            iframeId : currentIframe.id,
+                            mediaId : currentIframe.mid,
+                            state : currentIframe.state
+                        }
+                        cw.sambaads._onStateChange(evt);
+                    }
                 }
 
                 if (params[1] == "onLoadExpandedCinema" ){
@@ -504,8 +578,88 @@ var ExpandedCinema = function (cw, currentIframe){
 
         iframeData.isReady = setInterval(function(){
             iframeData.sendMessage("onReady","");
-        },2000)
+        },1000)
+    };
+    
+    function documentReady(funcName, baseObj) {
+        "use strict";
+        // The public function name defaults to window.docReady
+        // but you can modify the last line of this function to pass in a different object or method name
+        // if you want to put them in a different namespace and those will be used instead of 
+        // window.docReady(...)
+        funcName = funcName || "docReady";
+        baseObj = baseObj || window;
+        var readyList = [];
+        var readyFired = false;
+        var readyEventHandlersInstalled = false;
+        
+        // call this when the document is ready
+        // this function protects itself against being called more than once
+        function ready() {
+            if (!readyFired) {
+                // this must be set to true before we start calling callbacks
+                readyFired = true;
+                for (var i = 0; i < readyList.length; i++) {
+                    // if a callback here happens to add new ready handlers,
+                    // the docReady() function will see that it already fired
+                    // and will schedule the callback to run right after
+                    // this event loop finishes so all handlers will still execute
+                    // in order and no new ones will be added to the readyList
+                    // while we are processing the list
+                    readyList[i].fn.call(window, readyList[i].ctx);
+                }
+                // allow any closures held by these functions to free
+                readyList = [];
+            }
+        }
+        
+        function readyStateChange() {
+            if ( document.readyState === "complete" ) {
+                ready();
+            }
+        }
+        
+        // This is the one public interface
+        // docReady(fn, context);
+        // the context argument is optional - if present, it will be passed
+        // as an argument to the callback
+        baseObj[funcName] = function(callback, context) {
+            // if ready has already fired, then just schedule the callback
+            // to fire asynchronously, but right away
+            if (readyFired) {
+                setTimeout(function() {callback(context);}, 1);
+                return;
+            } else {
+                // add the function and context to the list
+                readyList.push({fn: callback, ctx: context});
+            }
+            // if document already ready to go, schedule the ready function to run
+            // IE only safe when readyState is "complete", others safe when readyState is "interactive"
+            if (document.readyState === "complete" || (!document.attachEvent && document.readyState === "interactive")) {
+                setTimeout(ready, 1);
+            } else if (!readyEventHandlersInstalled) {
+                // otherwise if we don't have event handlers installed, install them
+                if (document.addEventListener) {
+                    // first choice is DOMContentLoaded event
+                    document.addEventListener("DOMContentLoaded", ready, false);
+                    // backup is window load event
+                    window.addEventListener("load", ready, false);
+                } else {
+                    // must be IE
+                    document.attachEvent("onreadystatechange", readyStateChange);
+                    window.attachEvent("onload", ready);
+                }
+                readyEventHandlersInstalled = true;
+            }
+        }
     }
 
-    init();
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // if(!iOS){
+    //     documentReady("docReady", this);
+    //     docReady(init,this);
+    // } else {
+        init();
+    //}
 })(this);

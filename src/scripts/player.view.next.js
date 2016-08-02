@@ -15,6 +15,7 @@ SambaAdsPlayerViewNext = function (){
 
 	self.buttonReplay.click(function(){
 		SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 		self.hide();
 	});
 

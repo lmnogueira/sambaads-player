@@ -56,7 +56,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 
 
 	self.JWPlayer.on(Event.COMPLETE, function(evt){
-		self.JWPlayer.stop();
+		self.JWPlayer.stop();;
 		SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
 	});
 
@@ -80,31 +80,28 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	//self.JWPlayer.on('captionsChange', function(evt){});
 	//self.JWPlayer.on('controls', function(evt){});
 	//self.JWPlayer.on('meta', function(evt){});
-	
-	self.JWPlayer.on('displayClick', function(evt){
-		console.log(evt);
-	});
+	//self.JWPlayer.on('displayClick', function(evt){});
 	self.JWPlayer.on('adClick', function(evt){
-		console.log(evt);
+		//console.log(evt);
 	});
 	self.JWPlayer.on('adCompanions', function(evt){
-		console.log(evt);
+		//console.log(evt);
 	});
 	self.JWPlayer.on('adComplete', function(evt){
-		console.log(evt);
+		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	});
 	self.JWPlayer.on('adError', function(evt){
-		console.log(evt);
+		//console.log(evt);
 	});
 	self.JWPlayer.on('adImpression', function(evt){
-		console.log(evt);
+		//console.log(evt);
 	});
 	self.JWPlayer.on('adTime', function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
 		SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
 	});
 	self.JWPlayer.on('adSkipped', function(evt){
-		console.log(evt);
+		//console.log(evt);
 	});
 
 	self.JWPlayer.on('beforePlay', function(evt){
@@ -112,7 +109,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 
 	self.JWPlayer.on('beforeComplete', function(evt){
-		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_COMLETE, evt);
+		//SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_COMLETE, evt);
 	});
 
 	self.getStatePropagator = setInterval(function(){
@@ -136,7 +133,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 				SambaAdsPlayerMessageBroker().send(Event.PLAYER_STATE_CHANGE, { oldState: self.oldState, newState: self.newState, newViewState: self.newViewState });
 			}
 		} catch (e){
-			console.log("player Instance not available");
+			//console.log("player Instance not available");
 		}
 	},100);
 

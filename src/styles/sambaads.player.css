@@ -139,21 +139,6 @@ body {
 	width:100%;
 }
 
-/*
-.display-overlay.size-180 {
-	width:320px;
-	height:180px;
-}
-.display-overlay.size-240 {
-	width:427px;
-	height:240px;
-}
-.display-overlay.size-360 {
-	width:640px;
-	height:360px;
-}
-*/
-
 .cursor {
 	cursor: pointer;
 }
