@@ -11,7 +11,6 @@ SambaAdsPlayerView = function (){
 	this.playButtom = document.getElementById("display-buttom-play");
 	this.videoTitleBar = document.getElementById("video-title-bar");
 	this.videoTitle = document.getElementById("video-title");
-	
 };
 
 SambaAdsPlayerView.prototype.showDisplay = function(option){

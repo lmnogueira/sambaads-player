@@ -13,11 +13,14 @@ SambaAdsPlayerConfigurator = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
 		self.metadata = e.detail.data;
 		self.configurePlaylist();
+
 		self.configurePlayer();
 		self.configureClient();
 		self.configureUser();
-
 		SambaAdsPlayerMessageBroker().send(Event.CONFIGURATION_READY, self.configuration);
+		
+
+		
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
@@ -71,6 +74,7 @@ SambaAdsPlayerConfigurator.prototype.session = function() {
 SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 	var self = this;
 	var player_height = 0;
+
 	if($("#titlebar").is(':visible')){
 		player_height = ( $( document ).height() - $("#titlebar").outerHeight());
 
@@ -79,7 +83,7 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 	};
 
 	if(self.metadata.playlist.length > 1){
-		player_height = player_height - self.metadata.player_info.playlist_height;
+		player_height = player_height - self.configuration.playlist.playlistHeight;
 	};
 
 	return player_height;
@@ -92,8 +96,10 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerWidth = function(){
 	player_width = $( document ).width();
 
 	if(self.metadata.playlist.length > 1){
-		player_width = player_width - self.metadata.player_info.playlist_width;
+		player_width = player_width - self.configuration.playlist.playlistWidth;
 	};
+
+		console.log(player_width);
 
     return player_width;
 };
@@ -149,7 +155,7 @@ SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(){
 
 	if (options.position == "right") {
 		options.playlistHeight = self.calculatePlayerHeight();
-		options.playlistWidth = self.metadata.player_info.playlist_width   || 280;
+		options.playlistWidth = self.metadata.player_info.playlist_width || 280;
 
 	} else if (options.position == "bottom-vertical") {
 		options.playlistHeight = self.metadata.player_info.playlist_height || 150;
