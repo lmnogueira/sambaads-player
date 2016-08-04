@@ -113,7 +113,7 @@ SambaAdsPlayerConfigurator.prototype.configurePlayer = function(){
     var a = $('<a>', { href:url } )[0];
 
     self.configuration.player.hostname = a.hostname;
-    self.configuration.player.url = url;
+    self.configuration.player.url = encodeURIComponent(url);
 	self.configuration.player.width = self.calculatePlayerWidth();
 	self.configuration.player.height = self.calculatePlayerHeight();
 	self.configuration.player.pertmitWidthAutoStart = self.pertmitWidthAutoStart;
