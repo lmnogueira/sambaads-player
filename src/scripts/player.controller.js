@@ -18,6 +18,8 @@ SambaAdsPlayerController.prototype.init = function(data){
 
 	this._options = {};
 
+    console.log(data);
+
 	var captions = {
                 color: '#FFFFFF',
                 fontSize: 12,

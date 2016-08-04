@@ -75,6 +75,7 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 	var self = this;
 	var player_height = 0;
 
+
 	if($("#titlebar").is(':visible')){
 		player_height = ( $( document ).height() - $("#titlebar").outerHeight());
 
@@ -82,7 +83,8 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 		player_height = ( $( document ).height());
 	};
 
-	if(self.metadata.playlist.length > 1){
+
+	if(self.metadata.playlist.length > 1 && self.configuration.playlist.position != "right"){
 		player_height = player_height - self.configuration.playlist.playlistHeight;
 	};
 
@@ -98,8 +100,6 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerWidth = function(){
 	if(self.metadata.playlist.length > 1){
 		player_width = player_width - self.configuration.playlist.playlistWidth;
 	};
-
-		console.log(player_width);
 
     return player_width;
 };
@@ -167,8 +167,8 @@ SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(){
 		self.metadata.player_info.playlist_height = options.playlistHeight;
 	}
 
-	SambaAdsPlayerMessageBroker().send(Event.PLAYLIST_CONFIGURED, options);
 	self.configuration.playlist = options;
+	SambaAdsPlayerMessageBroker().send(Event.PLAYLIST_CONFIGURED, options);
 };
 
 new SambaAdsPlayerConfigurator();
