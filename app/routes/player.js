@@ -12,7 +12,7 @@ router.get('/:pid', function(req, res, next) {
 		request.get(
 		{
 			//url: "http://api2.sambaads.com/iframe//data?plid=lJJDuDUV&c=tecnologia&t=&sk=blue&tm=dark&plp=r&tb=Confiradeos&tbbg=#006600&w=940&h=360&plw=480&plh=&ads=false&cb=" + new Date(), 
-			//url: 'http://api2.sambaads.com/api/ab1f939133333fbc4ba49b1984248a47/playlists/lJJDuDUV/data.json?' + querystring.stringify(req.query), 
+			//url: 'http://api2.sambaads.com/api/ab1f939133333fbc4ba49b1984248a47/playlists/lJJDuDUV/data.json?' + querystring.stringify(req.query) + "&cb=" + new Date(), 
 			url: nconf.get("SMARTSEED_URL") + '/api/' + req.params.pid +  '/playlists/' + req.query.plid + '/data.json?' + querystring.stringify(req.query), 
 			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
 		}, function(error, response, body){
