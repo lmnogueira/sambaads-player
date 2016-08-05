@@ -71,14 +71,14 @@ gulp.task("build-javascripts-player", function(){
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("sambaads.player.js"))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
     gulp.src(paths.scripts + "player.js")
         .pipe(sourcemaps.init())
         .pipe(preprocess({context: contextEnv}))
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/javascripts/'));
 });
