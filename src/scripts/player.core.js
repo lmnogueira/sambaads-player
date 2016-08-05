@@ -98,6 +98,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adImpression', function(evt){
+		self.JWPlayer.setControls(true);
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adTime', function(evt){
