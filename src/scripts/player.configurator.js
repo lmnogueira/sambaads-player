@@ -83,9 +83,6 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 		player_height = ( $( document ).height());
 	};
 
-
-	 console.log(self.configuration.playlist.position);
-
 	if(self.metadata.playlist.length > 1 && self.configuration.playlist.position && self.configuration.playlist.position != "right"){
 		player_height = player_height - self.configuration.playlist.playlistHeight;
 	};

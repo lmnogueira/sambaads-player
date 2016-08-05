@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     concat_util = require('gulp-concat-util'),
     minify_css = require('gulp-minify-css'),
     preprocess = require('gulp-preprocess');
+    htmlmin = require('gulp-htmlmin');
 
 var jwplayer_version = "7.4.4";
 
@@ -15,7 +16,9 @@ var paths = {
     scripts:  './src/scripts/',
     images:   './src/images/',
     css:      './src/styles/',
-    skins:    './src/skins/'
+    skins:    './src/skins/',
+    templates:'./src/templates/'
+
 };
 
 var config = require("./app/config/env.json");
@@ -115,11 +118,18 @@ gulp.task('build-css-skin', function(){
         .pipe(gulp.dest('app/public/stylesheets/skin/'));
 });
 
+gulp.task('build-templates', function() {
+  return gulp.src(paths.templates + 'iframe.ejs')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('app/views/player/'));
+});
+
 gulp.task('watch', function() {
   gulp.watch([paths.scripts + "**.*"], ["build-javascripts-player"]);
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
+  gulp.watch(paths.templates, ['build-templates']);
 });
 
 gulp.task("default",
@@ -130,6 +140,7 @@ gulp.task("default",
         'build-images',
         "build-javascripts-player",
         "build-jwplayer",
+        "build-templates",
         'watch'
     ]
 );
@@ -141,7 +152,8 @@ gulp.task("staging",
         'build-images',
         "build-javascripts-player",
         "build-crossdomain",
-        "build-jwplayer"
+        "build-jwplayer",
+        "build-templates"
     ]
 );
 gulp.task("production",
@@ -152,6 +164,7 @@ gulp.task("production",
         'build-images',
         "build-javascripts-player",
         "build-crossdomain",
-        "build-jwplayer"
+        "build-jwplayer",
+        "build-templates"
     ]
 );
