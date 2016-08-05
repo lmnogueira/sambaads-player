@@ -4,7 +4,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
-        var percentage_of_exposition = 0.8;
+        var percentage_of_exposition = 0;
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
