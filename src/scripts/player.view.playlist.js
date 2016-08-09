@@ -66,6 +66,9 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 		new_v_item.attr("id", "v-" + $("#playlist-v-items").children().length);//item.mediaid || item.id);
 		new_h_item.find("div.playlist-item").attr("id", "h-" + $("#playlist-h-items").children().length);
 		
+		if (window.location.protocol != "https:")
+    		item.image = item.image.replace('https','http');
+
 		$(new_v_item).find("img").attr('src',item.image);
 		$(new_h_item).find("img").attr('src',item.image);
 		//$(new_v_item).find("img").attr('src',item.thumbnails["90"]);
