@@ -1058,3 +1058,9 @@ body {
 ul.lightSlider {
 	height:auto !important;
 }
+
+.logo-icon-bar {
+	background: url(../images/ycontent-icon-white.png) no-repeat;
+	width: 23px;
+    height: 22px;
+}

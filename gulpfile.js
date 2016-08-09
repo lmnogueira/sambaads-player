@@ -124,6 +124,7 @@ gulp.task('build-css-skin', function(){
 
 gulp.task('build-templates', function() {
   return gulp.src(paths.templates + 'iframe.ejs')
+    .pipe(base64())
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('app/views/player/'));
 });
