@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     preprocess = require('gulp-preprocess');
     htmlmin = require('gulp-htmlmin');
     base64 = require('gulp-base64');
+    inlinesource = require('gulp-inline-source');
 
 var jwplayer_version = "7.4.4";
 
@@ -124,6 +125,7 @@ gulp.task('build-css-skin', function(){
 
 gulp.task('build-templates', function() {
   return gulp.src(paths.templates + 'iframe.ejs')
+    .pipe(inlinesource())
     .pipe(base64())
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('app/views/player/'));
