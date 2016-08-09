@@ -359,14 +359,14 @@
     width: 22px;
     height: 16px;
     display: inline-block;
-    background-image: url('/images/icon-volume.png');
+    background-image: url('../images/icon-volume.png');
     background-repeat: no-repeat;
     background-position: 50% left;
 }
 
 .jw-skin-sambaads .jw-icon-volume.jw-off:before {
     content: '';
-    background-image: url('/images/icon-volume-mute.png');
+    background-image: url('../images/icon-volume-mute.png');
     background-position: 50%;
 }
 
@@ -385,7 +385,7 @@
     width: 16px;
     height: 22px;
     display: inline-block;
-    background: url('/images/icon-pause-bar.png') no-repeat;
+    background: url('../images/icon-pause-bar.png') no-repeat;
     vertical-align: sub;
 }
 
@@ -394,7 +394,7 @@
     width: 16px;
     height: 22px;
     display: inline-block;
-    background: url('/images/icon-play-bar.png') no-repeat;
+    background: url('../images/icon-play-bar.png') no-repeat;
     vertical-align: sub;
 }
 

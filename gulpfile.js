@@ -9,6 +9,7 @@ var gulp = require('gulp'),
     minify_css = require('gulp-minify-css'),
     preprocess = require('gulp-preprocess');
     htmlmin = require('gulp-htmlmin');
+    base64 = require('gulp-base64');
 
 var jwplayer_version = "7.4.4";
 
@@ -109,12 +110,15 @@ gulp.task("build-css", function(){
     gulp.src(paths.css + "sambaads.player.css")
         .pipe(sourcemaps.init())
         .pipe(minify_css())
+        .pipe(base64())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
 gulp.task('build-css-skin', function(){
     gulp.src(paths.skins + '**/*.css')
+        .pipe(minify_css())
+        .pipe(base64())
         .pipe(gulp.dest('app/public/stylesheets/skin/'));
 });
 
