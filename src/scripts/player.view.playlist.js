@@ -69,8 +69,8 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 		if (window.location.protocol != "https:")
     		item.image = item.image.replace('https','http');
 
-		$(new_v_item).find("img").attr('src',item.thumbnails["90"]);
-		$(new_h_item).find("img").attr('src',item.thumbnails["90"]);
+		$(new_v_item).find("img").attr('src',item.thumbnails["90"] || item.image);
+		$(new_h_item).find("img").attr('src',item.thumbnails["90"] || item.image);
 
 		$(new_v_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
 		$(new_h_item).find("div.video-description h4 a").text(item.title.replace(/^(.{30}[^\s]*).*/, "$1") + "\n");
