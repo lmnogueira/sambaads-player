@@ -71,6 +71,13 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 			item.thumbnails["90"] = item.thumbnails["90"].replace('https','http');
 		}
     		
+    	if(item.sponsored){
+			new_v_item.addClass("highlight");
+			new_h_item.addClass("highlight");
+
+			$(new_v_item).find('span.label-patrocinado').show();
+			$(new_h_item).find('span.label-patrocinado').show();
+		}
 
 		$(new_v_item).find("img").attr('src',item.thumbnails["90"] || item.image);
 		$(new_h_item).find("img").attr('src',item.thumbnails["90"] || item.image);

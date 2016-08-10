@@ -56,8 +56,9 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 
 
 	self.JWPlayer.on(Event.COMPLETE, function(evt){
-		self.JWPlayer.stop();;
+		self.JWPlayer.stop();
 		SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
+		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
 	});
 
 	//self.JWPlayer.on('error', function(evt){});

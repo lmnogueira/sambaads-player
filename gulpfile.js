@@ -70,6 +70,7 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
       paths.scripts + "player.controller.comscore.js",
+      paths.scripts + "player.controller.native.js",
       paths.scripts + "player.controller.timehandler.js",
       paths.scripts + "player.advertising.js"
     ])

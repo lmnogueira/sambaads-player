@@ -557,15 +557,32 @@ body {
 	padding-bottom:8px;
 	position:relative;
 }
-.horizontal .highlight {
-	padding:8px;
+
+.highlight:before {
+	content: "PATROCINADO";
+	background-color: rgba(255, 238, 157, 1);
+    font-size: 8px;
+    font-weight: 700;
+    display: inline-block;
+    padding: 3px 3px 1px;
+    position: absolute;
+    line-height: 1em;
+	left: 146px;
+    top: 8px;
+    z-index: 10;
+    color: #6f6f6f;
+    bottom: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase;
 }
-.light .highlight {
-	background-color:#ebebeb;
+
+.horizontal .highlight:before {
+	left: 5px;
+    top: 20px;
 }
-.dark .highlight {
-	background-color:#484848;
-}
+
 .video-thumb {
 	float:left;
 	width:130px;
