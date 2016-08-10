@@ -6,6 +6,12 @@ SambaAdsPlayerControllerNative = function (){
 	self.startNative = function(e){
 		console.log("show");
 		console.log(e);
+
+		//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
+
+		var hashCode = 'ycontent';
+
+		$('*[data-hashcode="' + hashCode + '"]').addClass('current-native');
 	};
 
 	self.stopNative = function(e){

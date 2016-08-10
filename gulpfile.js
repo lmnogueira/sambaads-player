@@ -19,8 +19,8 @@ var paths = {
     images:   './src/images/',
     css:      './src/styles/',
     skins:    './src/skins/',
-    templates:'./src/templates/'
-
+    templates:'./src/templates/',
+    native:'./src/native/'
 };
 
 var config = require("./app/config/env.json");
@@ -103,6 +103,11 @@ gulp.task("build-images", function(){
         .pipe(gulp.dest('app/public/images/'));
 });
 
+gulp.task("build-native", function(){
+	gulp.src(paths.native + "**/*")
+        .pipe(gulp.dest('app/public/native/'));
+});
+
 gulp.task("build-crossdomain", function(){
     gulp.src('./src/crossdomain/*.*')
         .pipe(gulp.dest('app/public/'));
@@ -137,6 +142,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
+  gulp.watch(paths.native, ['build-native']);
   gulp.watch(paths.templates, ['build-templates']);
 });
 
@@ -146,9 +152,10 @@ gulp.task("default",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-jwplayer",
-        "build-templates",
+        'build-native',
+        'build-javascripts-player',
+        'build-jwplayer',
+        'build-templates',
         'watch'
     ]
 );
@@ -158,10 +165,11 @@ gulp.task("staging",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-crossdomain",
-        "build-jwplayer",
-        "build-templates"
+        'build-native',
+        'build-javascripts-player',
+        'build-crossdomain',
+        'build-jwplayer',
+        'build-templates'
     ]
 );
 gulp.task("production",
@@ -170,9 +178,10 @@ gulp.task("production",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-crossdomain",
-        "build-jwplayer",
-        "build-templates"
+        'build-native',
+        'build-javascripts-player',
+        'build-crossdomain',
+        'build-jwplayer',
+        'build-templates'
     ]
 );
