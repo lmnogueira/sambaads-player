@@ -1174,7 +1174,21 @@ body {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
+
 .display-overlay.active-native.show-controls .current-native {
   opacity: 1;
   transform: translate3d(0, -100%, 0);
+}
+
+
+@media only screen and (max-width: 39em) {
+	.glambox .simple-text {
+		display: none;
+	}
+
+	.glambox .glambox-logo {
+		position: absolute;
+	    right: 12px;
+	    width: 60px;
+	}
 }
