@@ -16,7 +16,10 @@
 
 <body>
 
-    <% if(type_player == "singleplayer") { %>
+    <% if(type_player == "multiple-sizes") { %>
+    <p><script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=320&h=180&debug=true' defer></script></p>
+    <p><script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script></p>
+    <% } if(type_player == "singleplayer") { %>
     <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script>
     <% } if(type_player == "small_player") { %>
     <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=400&h=300&debug=true' defer></script>
@@ -68,7 +71,7 @@
                     w:840,
                     h:472.5
                 });
-                
+
             }, false);
 
         </script>
@@ -123,14 +126,14 @@
                 // jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/full_vast.xml');
                 jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/long_vpaid.xml');
 
-                
+
             });
         </script>
     <% } %>
 
     <script type="text/javascript">
              window.onload = function () {
-                var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart; 
+                var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
                 console.log('Page load time is '+ loadTime);
             }
     </script>
