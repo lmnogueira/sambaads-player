@@ -21,7 +21,7 @@ SambaAdsPlayerCore = function (options){
 
 SambaAdsPlayerCore.prototype.setup = function(options){
 	var self = this;
-	
+
 	self.JWPlayer.setup(options);
 
 
@@ -47,7 +47,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		self.JWPlayer.setControls(false);
 		SambaAdsPlayerMessageBroker().send(Event.PAUSE, evt);
 	});
-	
+
 	self.JWPlayer.on(Event.BUFFER, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.BUFFER, evt);
 	});
@@ -79,7 +79,10 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	//self.JWPlayer.on('levelsChanged', function(evt){});
 	//self.JWPlayer.on('captionsList', function(evt){});
 	//self.JWPlayer.on('captionsChange', function(evt){});
-	//self.JWPlayer.on('controls', function(evt){});
+	self.JWPlayer.on('controls', function(evt){
+		console.log('apareça!!!!');
+		console.log(evt);
+	});
 	//self.JWPlayer.on('meta', function(evt){});
 	//self.JWPlayer.on('displayClick', function(evt){});
 	self.JWPlayer.on('adClick', function(evt){
@@ -179,4 +182,3 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.MOUSE_LEAVE, evt);
 	});
 };
-

@@ -1113,7 +1113,7 @@ body {
 
 .glambox {
   color: #fff;
-  padding: 12px 23px;
+  padding: 12px 20px;
   height: 60px;
   font-family: 'Circular Std';
   position: absolute;
@@ -1131,17 +1131,32 @@ body {
 }
 
 .glambox .simple-text {
-  font-size: 12px;
-  width: 235px;
-  float: left;
-  text-align: left;
-  margin-right: 40px;
+	font-size: 16px;
+	width: 262px;
+	float: left;
+	text-align: left;
+	margin-right: 20px;
+	text-align: center;
+	height: 40px;
+	line-height: 38px;
+}
+
+.glambox .simple-text span {
+	line-height: 1.2em;
+	display: inline-block;
+}
+
+.glambox .simple-text.single-line {
+	font-size: 18px;
+	line-height: 32px;
+	vertical-align: middle;
+	text-align: center;
 }
 
 .glambox .highlight-box {
   background: #008000;
   border-radius: 20px;
-  width: 227px;
+  width: 240px;
   height: 40px;
   float: left;
 }
@@ -1151,13 +1166,32 @@ body {
   line-height: 41px;
   display: inline-block;
   vertical-align: middle;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 
-.glambox .highlight-box .large-text {
+.glambox .highlight-box .single-text,
+.glambox.type-2 .highlight-box .single-text {
+	font-size: 14px;
+}
+
+.glambox .highlight-box .large-text,
+.glambox.type-2 .highlight-box .large-text {
   font-size: 27px;
   margin: 0 8px;
+}
+
+.glambox.type-2 .highlight-box {
+	height: 35px;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	background: transparent;
+}
+
+.glambox.type-2 .highlight-box span {
+	height: 31px;
+    line-height: 31px;
+	font-size: 10px;
 }
 
 .glambox .glambox-logo {
@@ -1178,10 +1212,15 @@ body {
 .display-overlay.active-native.show-controls .current-native {
   opacity: 1;
   transform: translate3d(0, -100%, 0);
+  transition: all .15s;
 }
 
 
 @media only screen and (max-width: 39em) {
+	.glambox {
+		padding: 10px;
+	}
+
 	.glambox .simple-text {
 		display: none;
 	}
