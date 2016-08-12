@@ -53,10 +53,30 @@ SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, widt
 	}
 };
 
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
+
 SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	var self = this;
 	self.cleanPlaylist();
 	self.playlist = options.playlist;
+
+	for (var i=0; i<self.playlist.length; i++){
+		if(self.playlist[i].media_id == 60474){
+			self.playlist[i].sponsored = true;
+			break;
+		}
+	}
+	console.log(i);
+	self.playlist.move(i,1);
 
 	self.playlist.forEach(function(item){
 
@@ -70,7 +90,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 			item.image = item.image.replace('https','http');
 			item.thumbnails["90"] = item.thumbnails["90"].replace('https','http');
 		}
-    		
+
     	if(item.sponsored){
 			new_v_item.addClass("highlight");
 			new_h_item.addClass("highlight");
