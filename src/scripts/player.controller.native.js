@@ -66,15 +66,22 @@ SambaAdsPlayerControllerNative = function (){
 		}, 5000);
 
 		console.log(e.detail.data.media_id);
+		console.log(e.detail.data.owner_id);
 
-		var videoId = '60474';
+		var ownerId = e.detail.data.owner_id,
+			videoId = e.detail.data.media_id;
 
-		var glamboxNativeData = glamboxNative(videoId);
+		// Comentar linhas abaixo para ativar campanha glambox
+		ownerId = 38;
+		videoId = 60474;
 
-		var hashCode = 'glambox';
+		if(ownerId === 38) {
+			var glamboxNativeData = glamboxNative(videoId.toString());
+			var hashCode = 'glambox';
 
-		//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
-		$('*[data-hashcode="' + hashCode + '"]').addClass('current-native');
+			//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
+			$('*[data-hashcode="' + hashCode + '"]').addClass('current-native');
+		}
 	};
 
 	self.stopNative = function(e){
