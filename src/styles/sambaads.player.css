@@ -1109,6 +1109,7 @@ body {
   right: 0;
   left: 0;
   height: 50%;
+  pointer-events: none;
 }
 
 .glambox {
@@ -1128,6 +1129,7 @@ body {
   opacity: 0;
   transform: translate3d(0, 80%, 0);
   transition: all .5s;
+  pointer-events: all;
 }
 
 .glambox .simple-text {
