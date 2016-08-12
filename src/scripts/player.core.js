@@ -171,6 +171,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(evt){
+		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
 		self.JWPlayer.load([evt.detail.data]);
 	});
 
