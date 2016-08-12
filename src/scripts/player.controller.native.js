@@ -4,13 +4,19 @@ SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay');
 
-	var glamboxNative = function(type) {
+	var glamboxNative = function(videoId) {
 			var glamboxTrigger = $('#glambox-trigger');
+
+			var videoType = {
+					'60474': 'glam_box',
+					'60475': 'glam_mag',
+					'60476': 'glam_club'
+				};
 
 			var glamboxData = {
 					glam_box: {
 						text: '<div class="simple-text"><span>Quer experimentar novos produtos todo mês e recebê-los na sua casa?</span></div>',
-						action_url: 'https://www.glambox.com.br/Landing/show/quetalglambox?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
+						action_url: 'https://www.glambox.com.br/Landing/show/DescontoAssinaturaAgosto2016?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
 						highlight_text: '<span>Assine com</span><span class="large-text">R$60</span><span>de desconto</span>'
 					},
 					glam_mag: {
@@ -20,8 +26,8 @@ SambaAdsPlayerControllerNative = function (){
 					},
 					glam_club: {
 						text: '<div class="simple-text"><span>Fique por dentro das últimas novidades de beleza!</span></div>',
-						action_url: 'https://www.glambox.com.br/Landing/show/DescontoAssinaturaAgosto2016?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
-						highlight_text: '<span>Faça parte desse clube esclusivo</span>'
+						action_url: 'https://www.glambox.com.br/Landing/show/quetalglambox?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
+						highlight_text: '<span>Faça parte desse clube exclusivo</span>'
 					}
 				};
 
@@ -33,7 +39,7 @@ SambaAdsPlayerControllerNative = function (){
 				};
 
 			var currentData = {
-					typeData: glamboxData[type],
+					typeData: glamboxData[videoType[videoId]],
 					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)]
 				};
 
@@ -42,8 +48,6 @@ SambaAdsPlayerControllerNative = function (){
 			triggerContent = triggerContent.replace('{{highlightText}}', currentData.typeData.highlight_text);
 
 			glamboxTrigger[0].innerHTML = triggerContent;
-
-			console.log(triggerContent);
 
 			glamboxTrigger.addClass(currentData.style);
 
@@ -57,24 +61,19 @@ SambaAdsPlayerControllerNative = function (){
 		console.log("show");
 		console.log(e);
 
-		console.log(displayOverlay);
-
 		setTimeout(function(){
 			displayOverlay.addClass('active-native');
 		}, 5000);
 
+		console.log(e.detail.data.media_id);
+
+		var videoId = '60474';
+
+		var glamboxNativeData = glamboxNative(videoId);
+
+		var hashCode = 'glambox';
+
 		//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
-
-		var videoType = [
-				'glam_box',
-				'glam_mag',
-				'glam_club'
-			];
-
-		var glamboxNativeData = glamboxNative(videoType[Math.floor(Math.random() * videoType.length)]);
-
-		var hashCode = 'ycontent';
-
 		$('*[data-hashcode="' + hashCode + '"]').addClass('current-native');
 	};
 
