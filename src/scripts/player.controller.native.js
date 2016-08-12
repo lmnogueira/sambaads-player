@@ -16,17 +16,17 @@ SambaAdsPlayerControllerNative = function (){
 			var glamboxData = {
 					glam_box: {
 						text: '<div class="simple-text"><span>Quer experimentar novos produtos todo mês e recebê-los na sua casa?</span></div>',
-						action_url: 'https://www.glambox.com.br/Landing/show/DescontoAssinaturaAgosto2016?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
+						action_url: 'https://www.glambox.com.br/Landing/show/DescontoAssinaturaAgosto2016?utm_source=YContent&utm_medium=Native&utm_content=BatomLiquido',
 						highlight_text: '<span>Assine com</span><span class="large-text">R$60</span><span>de desconto</span>'
 					},
 					glam_mag: {
 						text: '<div class="simple-text single-line"><span>Quer mais dicas de beleza?</span></div>',
-						action_url: 'https://www.glambox.com.br/Revista/?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
+						action_url: 'https://www.glambox.com.br/Revista/?utm_source=YContent&utm_medium=Native&utm_content=Top5Sombra',
 						highlight_text: '<span class="single-text">Conheça o GLAM MAG</span>'
 					},
 					glam_club: {
 						text: '<div class="simple-text"><span>Fique por dentro das últimas novidades de beleza!</span></div>',
-						action_url: 'https://www.glambox.com.br/Landing/show/quetalglambox?utm_source=YContent&utm_medium=Native&utm_content=Top5Unhas',
+						action_url: 'https://www.glambox.com.br/Landing/show/quetalglambox?utm_source=YContent&utm_medium=Native&utm_content=TrancasBoxeador',
 						highlight_text: '<span>Faça parte desse clube exclusivo</span>'
 					}
 				};
