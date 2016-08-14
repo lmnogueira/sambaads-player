@@ -4,6 +4,7 @@ SambaAdsPlayerPostMessage = function (){
 	var self = this;
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
+		console.log(e.detail.data);
 		self.configuration = e.detail.data;
 	});
 

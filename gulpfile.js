@@ -56,7 +56,6 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.controller.collector.tracker.js",
 
       paths.scripts + "player.messagebroker.js",
-      paths.scripts + "player.postmessage.js",
       paths.scripts + "player.util.js",
       paths.scripts + "player.core.js",
       paths.scripts + "player.view.js",
@@ -71,7 +70,8 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.controller.collector.js",
       paths.scripts + "player.controller.comscore.js",
       paths.scripts + "player.controller.timehandler.js",
-      paths.scripts + "player.advertising.js"
+      paths.scripts + "player.advertising.js",
+      paths.scripts + "player.postmessage.js"
     ])
     .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
