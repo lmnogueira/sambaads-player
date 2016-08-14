@@ -74,7 +74,7 @@ SambaAdsPlayerControllerNative = function (){
 		setTimeout(function(){
 			displayOverlay.addClass('active-native');
 			self.trackImpression();
-		}, 5000);
+		}, 30000);
 
 		self.video = e.detail.data;
 		var ownerId = e.detail.data.owner_id,
