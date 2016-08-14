@@ -21,6 +21,8 @@ SambaAdsPlayerAdvertising = function (){
  		"&vid=" + self.playingNow.hashed_code +
  		"&correlator=__timestamp__";
 
+ 		console.log(tagUrl);
+
  		if(self.currentBeforePlayId != self.playingNow.hashed_code){
  			$(".jw-icon-fullscreen").addClass("jw-hidden");
 			$(".jw-icon-fullscreen").hide();
