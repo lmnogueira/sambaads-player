@@ -2,7 +2,8 @@ var SambaAdsPlayerControllerNative = {};
 
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
-		displayOverlay = $('#display-overlay');
+		displayOverlay = $('#display-overlay'),
+		showAdTimeout = null;
 
 	var videoType = {
 		'60474': 'glam_box',
@@ -70,11 +71,10 @@ SambaAdsPlayerControllerNative = function (){
 		};
 
 	self.startNative = function(e){
-
-		setTimeout(function(){
-			displayOverlay.addClass('active-native');
-			self.trackImpression();
-		}, 30000);
+		showAdTimeout = setTimeout(function(){
+							displayOverlay.addClass('active-native');
+							self.trackImpression();
+						}, 30000);
 
 		self.video = e.detail.data;
 		var ownerId = e.detail.data.owner_id,
@@ -136,6 +136,7 @@ SambaAdsPlayerControllerNative = function (){
 	}
 
 	self.stopNative = function(e){
+		clearTimeout(showAdTimeout);
 		displayOverlay.removeClass('active-native');
 	};
 
