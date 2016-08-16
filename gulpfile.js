@@ -40,6 +40,10 @@ gulp.task("development-context", function(){
     contextEnv = config.development;
 });
 
+gulp.task("local-staging-context", function(){
+    contextEnv = config.local_staging;
+});
+
 gulp.task('clean', function(cb) {
   del(['build'], cb);
 });
@@ -149,6 +153,19 @@ gulp.task('watch', function() {
 gulp.task("default",
     [
         'development-context',
+        'build-css',
+        'build-css-skin',
+        'build-images',
+        'build-native',
+        'build-javascripts-player',
+        'build-jwplayer',
+        'build-templates',
+        'watch'
+    ]
+);
+gulp.task("local-staging",
+    [
+        'local-staging-context',
         'build-css',
         'build-css-skin',
         'build-images',
