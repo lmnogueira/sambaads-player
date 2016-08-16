@@ -115,6 +115,11 @@ body {
 
 .sambaads-playlist {
 	display:none;
+	z-index: 150;
+}
+
+#playlist-h-item.highlight {
+	padding: 0;
 }
 
 .display-overlay {
