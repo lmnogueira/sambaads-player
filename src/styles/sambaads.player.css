@@ -1233,3 +1233,8 @@ body {
 	    width: 60px;
 	}
 }
+
+#jw_sambaads_player_googima {
+	top: 0 !important;
+	bottom: 0 !important;
+}
