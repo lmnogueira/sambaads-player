@@ -102,7 +102,7 @@
             });
         </script>
     <% } else if(type_player == "jwp7") { %>
-        <script src="/javascripts/player/jwplayer.js"></script>
+        <script src="//ssl.p.jwpcdn.com/player/v/7.5.1/jwplayer.js"></script>
         <div id="container">Loading video player...</div>
 
         <script type='text/javascript'>
@@ -113,7 +113,8 @@
             height: 360,
             file: "http://pvbps-sambavideos.akamaized.net/account/259/21/2016-05-14/video/5882e627be9196904780b3c477344bb5/vYY8iMFe-raw20160514-23932-3zz8ei_240p.mp4",
             advertising: {
-                client:'googima'
+                client:'googima',
+                vpaidmode: 'enabled'
             },
 
             });
@@ -124,7 +125,7 @@
                 //jwplayer("container").playAd('https://s3.amazonaws.com/sambaads-cdn/natura/full_vast.xml');
 
                 // jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/full_vast.xml');
-                jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/long_vpaid.xml');
+                jwplayer("container").playAd('https://d3655zppehxyvi.cloudfront.net/natura/full_vast.xml');//'https://local-vpaid.sambaads.com/vast/long_vpaid.xml');
 
 
             });

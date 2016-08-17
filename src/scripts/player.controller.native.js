@@ -108,15 +108,12 @@ SambaAdsPlayerControllerNative = function (){
 
  		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
  		"sz=640x360" +
- 		"&iu=" + self.client.ad_unit_id + //"/387067271/Homologacao/TesteNative" + 
+ 		"&iu=" + encodeURIComponent(self.client.ad_unit_id) + //"/387067271/Homologacao/TesteNative" + 
  		"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
  		"&cust_params=" + custom_params +
  		"&cmsid=" + self.video.dfp_partner_id +
  		"&vid=" + self.video.hashed_code +
  		"&correlator=" + new Date().getTime();
-
-
- 		console.log(tagUrl);
 
 		$.ajax({
         type: "get",
