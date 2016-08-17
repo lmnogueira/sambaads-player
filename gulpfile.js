@@ -19,8 +19,8 @@ var paths = {
     images:   './src/images/',
     css:      './src/styles/',
     skins:    './src/skins/',
-    templates:'./src/templates/'
-
+    templates:'./src/templates/',
+    native:'./src/native/'
 };
 
 var config = require("./app/config/env.json");
@@ -38,6 +38,10 @@ gulp.task("staging-context", function(){
 
 gulp.task("development-context", function(){
     contextEnv = config.development;
+});
+
+gulp.task("local-staging-context", function(){
+    contextEnv = config.local_staging;
 });
 
 gulp.task('clean', function(cb) {
@@ -70,6 +74,7 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.controller.js",
       paths.scripts + "player.controller.collector.js",
       paths.scripts + "player.controller.comscore.js",
+      paths.scripts + "player.controller.native.js",
       paths.scripts + "player.controller.timehandler.js",
       paths.scripts + "player.advertising.js"
     ])
@@ -100,6 +105,11 @@ gulp.task("build-jwplayer", function(){
 gulp.task("build-images", function(){
 	gulp.src(paths.images + "*.*")
         .pipe(gulp.dest('app/public/images/'));
+});
+
+gulp.task("build-native", function(){
+	gulp.src(paths.native + "**/*")
+        .pipe(gulp.dest('app/public/native/'));
 });
 
 gulp.task("build-crossdomain", function(){
@@ -136,6 +146,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.css + "**/*.css", ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
+  gulp.watch(paths.native, ['build-native']);
   gulp.watch(paths.templates, ['build-templates']);
 });
 
@@ -145,9 +156,23 @@ gulp.task("default",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-jwplayer",
-        "build-templates",
+        'build-native',
+        'build-javascripts-player',
+        'build-jwplayer',
+        'build-templates',
+        'watch'
+    ]
+);
+gulp.task("local-staging",
+    [
+        'local-staging-context',
+        'build-css',
+        'build-css-skin',
+        'build-images',
+        'build-native',
+        'build-javascripts-player',
+        'build-jwplayer',
+        'build-templates',
         'watch'
     ]
 );
@@ -157,10 +182,11 @@ gulp.task("staging",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-crossdomain",
-        "build-jwplayer",
-        "build-templates"
+        'build-native',
+        'build-javascripts-player',
+        'build-crossdomain',
+        'build-jwplayer',
+        'build-templates'
     ]
 );
 gulp.task("production",
@@ -169,9 +195,10 @@ gulp.task("production",
         'build-css',
         'build-css-skin',
         'build-images',
-        "build-javascripts-player",
-        "build-crossdomain",
-        "build-jwplayer",
-        "build-templates"
+        'build-native',
+        'build-javascripts-player',
+        'build-crossdomain',
+        'build-jwplayer',
+        'build-templates'
     ]
 );

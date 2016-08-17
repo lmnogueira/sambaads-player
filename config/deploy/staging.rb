@@ -1,5 +1,5 @@
 set :stage, :staging
-set :branch, 'NEW_jwplayer_version_7'
+set :branch, 'NEW_Native_support'
 
 set :node_env, 'staging'
 

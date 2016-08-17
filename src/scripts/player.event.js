@@ -21,7 +21,9 @@ var Event = {
 	CONFIGURATION_READY: "configurationReady",
 	MOUSE_MOVE: "mouseMove",
 	MOUSE_LEAVE: "mouseLeave",
-	AD_TIME: "adTime"
+	AD_TIME: "adTime",
+	NATIVE_START: "nativeStart",
+	NATIVE_STOP: "nativeStop"
 };
 
 var DoEvent = {
