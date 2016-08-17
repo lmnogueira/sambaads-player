@@ -116,6 +116,7 @@ body {
 .sambaads-playlist {
 	display:none;
 	z-index: 150;
+	position: relative;
 }
 
 #playlist-h-item.highlight {
