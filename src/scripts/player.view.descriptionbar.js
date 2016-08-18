@@ -16,14 +16,13 @@ SambaAdsPlayerViewDescriptionBar = function (){
 
 
 		if(
-			( (e.detail.data.newState == PlayerState.PAUSED && e.detail.data.newViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE && e.detail.data.newViewState == PlayerViewState.INITIALIZE) && !evt.detail.data.isAds){
+			( (e.detail.data.newState == PlayerState.PAUSED && e.detail.data.newViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE && e.detail.data.newViewState == PlayerViewState.INITIALIZE) && !e.detail.data.isAds){
 			self.show();
 		}
 		else if( 
 			e.detail.data.newState == PlayerState.PLAYING || 
 			e.detail.data.newState == PlayerState.BUFFERING || 
-			e.detail.data.newViewState != PlayerViewState.INITIALIZE || evt.detail.data.isAds){
-			console.log('console2');
+			e.detail.data.newViewState != PlayerViewState.INITIALIZE || e.detail.data.isAds){
 			self.hide();
 		}
 	});
