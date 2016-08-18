@@ -92,6 +92,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adComplete', function(evt){
+		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
@@ -103,13 +104,16 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	});
 	self.JWPlayer.on('adImpression', function(evt){
 		self.JWPlayer.setControls(true);
+		self._isAds = true;
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adTime', function(evt){
+		self._isAds = true;
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
 		SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
 	});
 	self.JWPlayer.on('adSkipped', function(evt){
+		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
@@ -127,6 +131,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	self.getStatePropagator = setInterval(function(){
 		try{
 			var currentState = self.JWPlayer.getState();
+			var isAds = self._isAds;
 			var currentViewState = window.sambaads.currentViewState || PlayerViewState.INITIALIZE;
 			var dispatch = false;
 
@@ -142,7 +147,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 			}
 
 			if(dispatch){
-				SambaAdsPlayerMessageBroker().send(Event.PLAYER_STATE_CHANGE, { oldState: self.oldState, newState: self.newState, newViewState: self.newViewState });
+				SambaAdsPlayerMessageBroker().send(Event.PLAYER_STATE_CHANGE, { isAds: isAds, oldState: self.oldState, newState: self.newState, newViewState: self.newViewState });
 			}
 		} catch (e){
 			//console.log("player Instance not available");

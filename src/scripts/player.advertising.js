@@ -21,13 +21,11 @@ SambaAdsPlayerAdvertising = function (){
  		"&vid=" + self.playingNow.hashed_code +
  		"&correlator=__timestamp__";
 
- 		console.log(tagUrl);
-
  		if(self.currentBeforePlayId != self.playingNow.hashed_code){
  			$(".jw-icon-fullscreen").addClass("jw-hidden");
 			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
- 			//tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/448587671/448587791&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=teste&correlator=__timestamp__";
+ 			//tagUrl = "http://platform.sambaads.com/api/vast_for_video/57b5ba15d02098d265000007.xml";
 
  			// if(self.playingNow.media_id == 60474){
  			//  	self.playingNow.sponsored = true;
