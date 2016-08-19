@@ -2,6 +2,7 @@ var SambaAdsPlayerAdvertising = {};
 
 SambaAdsPlayerAdvertising = function (){
  	var self = this;
+ 	self.abort_ad = false;
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.client = e.detail.data.client;
@@ -25,16 +26,11 @@ SambaAdsPlayerAdvertising = function (){
  			$(".jw-icon-fullscreen").addClass("jw-hidden");
 			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
- 			//tagUrl = "http://platform.sambaads.com/api/vast_for_video/57b5ba15d02098d265000007.xml";
-
- 			// if(self.playingNow.media_id == 60474){
- 			//  	self.playingNow.sponsored = true;
- 			//  }
 
  			var loc = window.location.toString();
 			params_ads_check = loc.split('?')[1];
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
- 				e.detail.data.playAd(tagUrl);
+				e.detail.data.playAd(tagUrl);
  			}
 
  			if(self.playingNow.sponsored){

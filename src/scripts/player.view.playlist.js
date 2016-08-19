@@ -28,6 +28,10 @@ SambaAdsPlayerViewPlaylist = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY, function(e){
 		self.updateItemCurrent();
 	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
+		self.currentState = evt.detail.data.newState;
+	});
 };
 
 SambaAdsPlayerViewPlaylist.prototype.applyStyle = function(theme, position, width, height){
@@ -136,22 +140,23 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 
 
 	$( "div.playlist-item" ).click(function(e) {
-		var index = this.id.split("-")[1];
+		if(self.currentState == "playing" || self.currentState == "idle" || self.currentState == "paused"){
+			var index = this.id.split("-")[1];
 
-		index = +index;
+			index = +index;
 
-		if(self.currentPlaylistIndex != index){
-			SambaAdsPlayerMessageBroker().send(DoEvent.STOP);
+			if(self.currentPlaylistIndex != index){
+					SambaAdsPlayerMessageBroker().send(DoEvent.STOP);
+					self.updateIndex(index);
 
-			self.updateIndex(index);
-
-			self.playlist[index].running_youtube = false;
-
-			SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
-
-			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
-		} else {
-			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+					self.playlist[index].running_youtube = false;
+				
+					SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
+					SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+			} else {
+				SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+			}
+			self.updateItemCurrent();
 		}
 	});
 };
