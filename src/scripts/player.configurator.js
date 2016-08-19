@@ -18,9 +18,6 @@ SambaAdsPlayerConfigurator = function (){
 		self.configureClient();
 		self.configureUser();
 		SambaAdsPlayerMessageBroker().send(Event.CONFIGURATION_READY, self.configuration);
-		
-
-		
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
