@@ -94,8 +94,8 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 		new_h_item.find("div.playlist-item").attr("id", "h-" + $("#playlist-h-items").children().length);
 		
 		if (window.location.protocol != "https:"){
-			item.image = item.image.replace('https','http');
-			item.thumbnails["90"] = item.thumbnails["90"].replace('https','http');
+			item.image = item.image.replace('https:', window.location.protocol);
+			item.thumbnails["90"] = item.thumbnails["90"].replace('https:', window.location.protocol);
 		}
 
     	if(item.sponsored){

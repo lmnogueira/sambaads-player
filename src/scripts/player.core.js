@@ -177,6 +177,9 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
+		
+		//change source protocol
+		evt.detail.data.sources[0].file = evt.detail.data.sources[0].file.replace('http:', window.location.protocol);
 		self.JWPlayer.load([evt.detail.data]);
 	});
 

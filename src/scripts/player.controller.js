@@ -16,6 +16,9 @@ SambaAdsPlayerController.prototype.init = function(data){
 	var self = this;
 	this.configuration =  data;
 
+    if(data.playlist.playlist.length >= 1)
+        data.playlist.playlist[0].sources[0].file = data.playlist.playlist[0].sources[0].file.replace('http:', window.location.protocol);
+
 	this._options = {};
 	var captions = {
                 color: '#FFFFFF',
