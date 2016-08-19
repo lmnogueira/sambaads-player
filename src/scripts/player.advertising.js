@@ -6,6 +6,7 @@ SambaAdsPlayerAdvertising = function (){
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.client = e.detail.data.client;
+		self.player = e.detail.data.player;
 	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
@@ -16,7 +17,9 @@ SambaAdsPlayerAdvertising = function (){
  		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
  		"sz=640x360" +
  		"&iu=" + self.client.ad_unit_id +
- 		"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=" +
+ 		"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1" +
+ 		"&url=" + encodeURIComponent(configuration.player.url) +
+ 		"&description_url=" +
  		"&cust_params=" + custom_params +
  		"&cmsid=" + self.playingNow.dfp_partner_id +
  		"&vid=" + self.playingNow.hashed_code +
