@@ -30,7 +30,7 @@ SambaAdsPlayerAdvertising = function (){
  			//tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/448587671/448587791&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=teste&correlator=__timestamp__";
 
  			// if(self.playingNow.media_id == 60474){
- 			//  	self.playingNow.sponsored = true;
+ 			  	self.playingNow.sponsored = true;
  			//  }
 
  			var loc = window.location.toString();
