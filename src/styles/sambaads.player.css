@@ -1109,15 +1109,6 @@ body {
   font-weight: 400;
 }
 
-.native-area {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 50%;
-  pointer-events: none;
-}
-
 .glambox {
   color: #fff;
   padding: 12px 20px;
