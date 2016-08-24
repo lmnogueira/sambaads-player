@@ -21,7 +21,7 @@ SambaAdsPlayerAdvertising = function (){
  		"&vid=" + self.playingNow.hashed_code +
  		"&correlator=__timestamp__";
 
- 		console.log(tagUrl);
+ 		//console.log(tagUrl);
 
  		if(self.currentBeforePlayId != self.playingNow.hashed_code){
  			$(".jw-icon-fullscreen").addClass("jw-hidden");
@@ -46,7 +46,7 @@ SambaAdsPlayerAdvertising = function (){
  	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
- 		self.playingNow=e.detail.data.item;
+ 		self.playingNow = e.detail.data.item;
  	});
 };
 
