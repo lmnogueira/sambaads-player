@@ -1,16 +1,3 @@
-@font-face {
-    font-family: 'Gotham Book';
-    src: url(../native/glambox/font/gotham-book.woff) format('woff');
-}
-
-.glambox-new {
-    font-size: 30px;
-    font-family: 'Gotham Book';
-    background: none;
-    border: none;
-    padding: 0;
-}
-
 .native-area {
     position: absolute;
     bottom: 0;
@@ -20,14 +7,115 @@
     pointer-events: none;
 }
 
-.main-title {
-    font-size: 14px;
-    letter-spacing: -0.9px;
-    color: #fff;
+.ir {
+    overflow: hidden;
+    text-indent: 150%;
+    white-space: nowrap;
+}
 
-    span {
-        color: #f03186;
-        font-weight: bold;
-        letter-spacing: -1.2px;
+.cf {
+    &:after {
+        display: table;
+        clear: both;
+        content: " ";
+    }
+}
+
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url(../native/glambox/font/gotham-book.woff) format('woff');
+}
+
+.glambox-new {
+    width: 498px;
+    height: 357px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url(../native/glambox/image/shadow.png) no-repeat;
+    background-position: bottom right;
+
+    button {
+        background: none;
+        text-transform: uppercase;
+        text-align: right;
+        font-family: 'Gotham Book';
+        padding: 0;
+        border: none;
+        right: 25px;
+    }
+
+    .ad-button {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .close-button {
+        width: 13px;
+        height: 11px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        bottom: 260px;
+        @extend .ir;
+    }
+
+    .main-title {
+        font-size: 30px;
+        width: 185px;
+        font-size: 14px;
+        letter-spacing: -0.9px;
+        color: #fff;
+        line-height: 1.2em;
+        float: right;
+        margin-bottom: 12px;
+
+        span {
+            font-size: 18px;
+            color: #f03186;
+            font-weight: bold;
+            letter-spacing: -1.2px;
+        }
+    }
+
+    .sign-now {
+        width: 125px;
+        font-size: 14px;
+    	font-weight: 900;
+    	letter-spacing: -0.2px;
+        line-height: 1.2em;
+        background: #f03186;
+        padding: 2px 7px;
+        margin-bottom: 10px;
+        color: #fff;
+        float: right;
+        clear: both;
+    }
+
+    .subtitle {
+        font-size: 11px;
+    	font-weight: 500;
+    	letter-spacing: -0.7px;
+        color: #fff;
+        clear: both;
+
+        .love {
+            width: 10px;
+            height: 10px;
+            background: url(../native/glambox/image/mini-hearth.png) no-repeat;
+            background-size: 100% auto;
+            display: inline-block;
+            @extend .ir;
+        }
+    }
+
+    .products {
+        width: 139px;
+        height: 153px;
+        background: url(../native/glambox/image/products.png) no-repeat;
+        background-size: 100% auto;
+        margin-top: 10px;
+        display: inline-block;
     }
 }
