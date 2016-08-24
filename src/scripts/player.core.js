@@ -175,6 +175,15 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		self.newState = PlayerState.IDLE;
 	});
 
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.MUTE, function(evt){
+
+		if(evt.detail.data){
+			jwplayer().setVolume(0);
+		} else {
+			jwplayer().setVolume(10);
+		}
+	});
+
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.LOAD_MEDIA, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
 		

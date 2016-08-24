@@ -31,7 +31,8 @@ var DoEvent = {
 	PLAY_NEXT: "doPlayNext",
 	STOP: "doStop",
 	PAUSE: "doPause",
-	LOAD_MEDIA: "loadMedia"
+	LOAD_MEDIA: "loadMedia",
+	MUTE: "mute"
 };
 
 var TypeTrackEvent = {

@@ -75,23 +75,24 @@ SambaAdsPlayerPostMessage.prototype.onVisible = function(data){
 				if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
 		  			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 		  		}
-		  		//this.setMute(false);
+
+		  		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 			} else {
-				//this.setMute(false);
+				SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 			}
 
 			if(this.firstPlay){
 				this.firstPlay = false;
 
 				if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
-					//this.setMute(true);
+					SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
 				}
 			}
 		} else {
-			//this.setMute(false);
+			SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 		}
 	} else {
-		//this.setMute(true);
+		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
 
 		if(this.newState == PlayerState.PLAYING){
 			if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
@@ -106,12 +107,12 @@ SambaAdsPlayerPostMessage.prototype.onSeek = function(data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onMute = function(data){
-	//this.setMute(params[2]);
+	SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, data);
 };
 
 SambaAdsPlayerPostMessage.prototype.onMouseOver = function(data){
 	if(this.newstate != PlayerState.IDLE){
-		this.setMute(false);
+		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 	}
 };
 
