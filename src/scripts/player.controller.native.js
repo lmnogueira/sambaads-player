@@ -3,7 +3,8 @@ var SambaAdsPlayerControllerNative = {};
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-		showAdTimeout = null;
+		showAdTimeout = null,
+		currentNative = null;
 
 	var glamboxNative = function(videoId, newAd) {
 			var videoType = {
@@ -56,7 +57,19 @@ SambaAdsPlayerControllerNative = function (){
 
 			glamboxTrigger.addClass(self.currentData.style);
 
-			self.loadVastTag(function(vastData, data){
+			var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				 		 "sz=640x360" +
+				 		 "&iu=" + "/387067271/Homologacao/TesteNative" + //self.client.ad_unit_id +
+				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+				 		 "&cust_params=" + custom_params +
+				 		 "&cmsid=" + self.video.dfp_partner_id +
+				 		 "&vid=" + self.video.hashed_code +
+				 		 "&correlator=" + new Date().getTime();
+
+			self.loadVastTag(tagUrl, function(vastData, data){
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -65,18 +78,53 @@ SambaAdsPlayerControllerNative = function (){
 		};
 
 	var glamboxNativeUpdate = function(videoId) {
-			glamboxTrigger = $('#glambox-new-trigger');
+			var glamboxTrigger = $('#glambox-new-trigger'),
+				videoType = {
+					'60474': 'glam_box_new',
+					'60475': 'glam_mag_new',
+					'60476': 'glam_club_new'
+				};
 
-			glamboxTrigger.on('click', function(event){
-				event.preventDefault();
-				window.open(self.currentData.typeData.click_url);
+			var tags = self.video.LR_TAGS + ",native," + videoType[videoId] + ",new_style",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				 		 "sz=640x360" +
+				 		 "&iu=" + "/387067271/Homologacao/TesteNative" + //self.client.ad_unit_id +
+				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+				 		 "&cust_params=" + custom_params +
+				 		 "&cmsid=" + self.video.dfp_partner_id +
+				 		 "&vid=" + self.video.hashed_code +
+				 		 "&correlator=" + new Date().getTime();
+
+			var glamboxNew = $('.glambox-new');
+
+			var nativeType = {
+					glam_box_new: 'type-1',
+					glam_mag_new: 'type-3',
+					glam_club_new: 'type-2'
+				};
+
+			glamboxNew.addClass(nativeType[videoType[videoId]]);
+
+			self.loadVastTag(tagUrl, function(vastData, data){
+				glamboxTrigger.on('click', function(event){
+					event.preventDefault();
+					window.open(self.currentData.typeData.click_url);
+				});
 			});
 		};
 
-	self.setAdTimeout = function(time) {
+	self.setAdTimeout = function(time, beforeAd, callback) {
+		if(typeof beforeAd === 'function') {
+			beforeAd();
+		}
+
 		showAdTimeout = setTimeout(function(){
 			displayOverlay.addClass('active-native');
-			self.trackImpression();
+			if(typeof callback === 'function') {
+				callback();
+			}
 		}, time);
 	};
 
@@ -87,25 +135,42 @@ SambaAdsPlayerControllerNative = function (){
 			videoId = e.detail.data.media_id,
 			hashCode = null;
 
+		// Comment this before deploy on production
 		ownerId = 38;
-		videoId = 60474;
+		videoId = 60474; 
 
 		if(ownerId === 38) {
-			self.setAdTimeout(7000);
-			//hashCode = 'glambox';
-			//glamboxNative(videoId.toString());
-			hashCode = 'glambox-new';
-			glamboxNativeUpdate(videoId.toString());
+			self.setAdTimeout(15000,
+				function(){
+					//hashCode = 'glambox';
+					//glamboxNative(videoId.toString());
+					hashCode = 'glambox-new';
+					glamboxNativeUpdate(videoId.toString());
+				},
+				function() {
+					glamboxClose = $('.current-native .ad-close');
+
+					glamboxClose.on('click', function(event){
+						event.preventDefault();
+						self.hideNative();
+					});
+				});
 		}
 
 		if(hashCode !== null) {
 			//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
-			$('*[data-hashcode="' + hashCode + '"]').addClass('current-native');
+			currentNative = $('*[data-hashcode="' + hashCode + '"]');
+			currentNative.addClass('current-native');
 		}
 	};
 
-	self.trackImpression = function(){
-		self.sendTrack(self.currentData.typeData.impression_url);
+	self.hideNative = function() {
+		displayOverlay.removeClass('active-native');
+		//currentNative.removeClass('current-native');
+	};
+
+	self.trackImpression = function(impressionUrl){
+		self.sendTrack(impressionUrl);
 	};
 
 	self.trackClick = function(){
@@ -116,21 +181,7 @@ SambaAdsPlayerControllerNative = function (){
 		$.get( url );
 	};
 
-	self.loadVastTag = function(callback){
-		var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
-			custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-
- 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-			 		 "sz=640x360" +
-			 		 "&iu=" + "/387067271/Homologacao/TesteNative" + //self.client.ad_unit_id +
-			 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-			 		 "&cust_params=" + custom_params +
-			 		 "&cmsid=" + self.video.dfp_partner_id +
-			 		 "&vid=" + self.video.hashed_code +
-			 		 "&correlator=" + new Date().getTime();
-
- 		console.log(tagUrl);
-
+	self.loadVastTag = function(tagUrl, callback){
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
@@ -141,11 +192,16 @@ SambaAdsPlayerControllerNative = function (){
 						click_url: ''
 					};
 
-	            var el = data.getElementsByTagName("Impression")[0].childNodes[0];
-	            vastData.impression_url = el.nodeValue;
+				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
+					vastData.impression_url = el.nodeValue;
+					self.trackImpression(vastData.impression_url);
+				}
 
-	            el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
-	            vastData.click_url = el.nodeValue;
+				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+					el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
+					vastData.click_url = el.nodeValue;
+				}
 
 				if(typeof callback === 'function') {
 					callback(vastData, data);
