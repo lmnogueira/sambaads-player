@@ -97,7 +97,6 @@ gulp.task("build-javascripts-player", function(){
         .pipe(gulp.dest('app/public/javascripts/'));
 });
 
-
 gulp.task("dev-javascripts-player", function(){
   gulp.src([
       paths.scripts + "vendor/jquery.1.11.0.min.js",
@@ -212,7 +211,7 @@ gulp.task('build-templates', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch([paths.scripts + "**.*"], ["build-javascripts-player"]);
+  gulp.watch([paths.scripts + "**.*"], ["dev-javascripts-player"]);
   gulp.watch([paths.css + '**/*.css', paths.scss + '**/*.scss'], ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
