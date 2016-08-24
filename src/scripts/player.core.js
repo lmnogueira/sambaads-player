@@ -80,7 +80,6 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	//self.JWPlayer.on('captionsList', function(evt){});
 	//self.JWPlayer.on('captionsChange', function(evt){});
 	self.JWPlayer.on('controls', function(evt){
-		console.log('apareça!!!!');
 		console.log(evt);
 	});
 	//self.JWPlayer.on('meta', function(evt){});
@@ -92,6 +91,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adComplete', function(evt){
+		self.JWPlayer.setVolume(50);
 		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
