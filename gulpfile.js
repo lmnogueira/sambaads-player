@@ -216,7 +216,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
   gulp.watch(paths.native, ['build-native']);
-  gulp.watch(paths.templates, ['build-templates']);
+  gulp.watch([paths.templates + '**/*.ejs', paths.templates + '**/*.html'], ['build-templates']);
 });
 
 gulp.task("default",
