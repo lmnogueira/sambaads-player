@@ -98,8 +98,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			var nativeType = {
 					glam_box_new: 'type-1',
-					glam_mag_new: 'type-3',
-					glam_club_new: 'type-2'
+					glam_club_new: 'type-2',
+					glam_mag_new: 'type-3'
 				};
 
 			var glamboxNew = $('.glambox-new');
@@ -108,9 +108,14 @@ SambaAdsPlayerControllerNative = function (){
 				glamboxNew.addClass(nativeType[videoType[videoId]]);
 				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
 
+				if(videoType[videoId] === 'glam_club_new') {
+					setTimeout(function(){
+						glamboxNew.addClass('flip');
+					}, 7000);
+				}
+
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
-					console.log(vastData.click_url);
 					window.open(vastData.click_url);
 				});
 			});
@@ -138,7 +143,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		// Comment this before deploy on production
 		//ownerId = 38;
-		//videoId = 60476;
+		//videoId = 60475;
 
 		if(ownerId === 38) {
 			self.setAdTimeout(15000,

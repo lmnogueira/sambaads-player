@@ -241,6 +241,10 @@
         .ad-close {
             right: 10px;
         }
+
+        .sign-now {
+            float: left;
+        }
     }
 
     .ad-area[type="3"] {
@@ -258,6 +262,8 @@
                 display: block;
                 margin: 4px 0;
                 width: 145px;
+                text-align: center;
+                margin-bottom: 10px;
             }
 
             .love {
@@ -272,4 +278,42 @@
             }
         }
     }
+
+    &.flip {
+        .glambox-new-trigger {
+            transform: rotateY(90deg);
+        }
+
+        .front {
+            opacity: 0;
+        }
+    }
+}
+
+.ad-area {
+    transform: translate3d(0,0,0);
+    transform-style: preserve-3d;
+}
+
+.glambox-new-trigger {
+    transition: transform .5s linear;
+    transform-style: preserve-3d;
+    position: absolute;
+    width: 100%;
+}
+
+.back,
+.front {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.back {
+    transform: rotateY(-90deg) translateZ(150px);
+}
+
+.front {
+    transform: translateZ(150px);
+    transition: opacity .3s linear;
 }
