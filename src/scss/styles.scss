@@ -36,6 +36,16 @@
             button {
                 pointer-events: all;
             }
+
+            &.flip {
+                .sides-wrapper {
+                    transform: rotateY(90deg);
+                }
+
+                .front {
+                    opacity: 0;
+                }
+            }
         }
     }
 }
@@ -181,6 +191,11 @@
         .ad-area[type="2"] {
             display: block;
 
+            .glambox-new-trigger {
+                height: 70px;
+                width: 100%;
+            }
+
             @media only screen and (max-width: 30em) {
                 height: 60px;
                 left: 10px;
@@ -278,27 +293,20 @@
             }
         }
     }
-
-    &.flip {
-        .glambox-new-trigger {
-            transform: rotateY(90deg);
-        }
-
-        .front {
-            opacity: 0;
-        }
-    }
 }
 
-.ad-area {
+.glambox-new-trigger {
     transform: translate3d(0,0,0);
     transform-style: preserve-3d;
 }
 
-.glambox-new-trigger {
+.sides-wrapper {
     transition: transform .5s linear;
     transform-style: preserve-3d;
+    width: 100%;
     position: absolute;
+    top: 0;
+    height: 50px;
     width: 100%;
 }
 
