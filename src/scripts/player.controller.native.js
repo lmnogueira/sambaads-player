@@ -43,6 +43,46 @@ SambaAdsPlayerControllerNative = function (){
 				},
 				glamboxTrigger = $('#glambox-trigger');
 
+	var videoType = {
+		'60474': 'glam_box',
+		'60475': 'glam_mag',
+		'60476': 'glam_club'
+	};
+
+	var glamboxData = {
+		glam_box: {
+			text: '<div class="simple-text"><span>Quer experimentar novos produtos todo mês e recebê-los na sua casa?</span></div>',
+			//action_url: 'https://www.glambox.com.br/Landing/show/DescontoAssinaturaAgosto2016?utm_source=YContent&utm_medium=Native&utm_content=BatomLiquido',
+			highlight_text: '<span>Assine com</span><span class="large-text">R$60</span><span>de desconto</span>',
+			impression_url: '',
+			click_url: ''
+		},
+		glam_mag: {
+			text: '<div class="simple-text single-line"><span>Quer mais dicas de beleza?</span></div>',
+			//action_url: 'https://www.glambox.com.br/Revista/?utm_source=YContent&utm_medium=Native&utm_content=Top5Sombra',
+			highlight_text: '<span class="single-text">Conheça o GLAM MAG</span>',
+			impression_url: '',
+			click_url: ''
+		},
+		glam_club: {
+			text: '<div class="simple-text"><span>Fique por dentro das últimas novidades de beleza!</span></div>',
+			//action_url: 'https://www.glambox.com.br/Landing/show/quetalglambox?utm_source=YContent&utm_medium=Native&utm_content=TrancasBoxeador',
+			highlight_text: '<span>Faça parte desse clube exclusivo</span>',
+			impression_url: '',
+			click_url: ''
+		}
+	};
+
+	var glamboxRandon = {
+			styles: [
+				'type-1',
+				'type-2'
+			]
+		};
+
+	var glamboxNative = function(videoId) {
+			var glamboxTrigger = $('#glambox-trigger');
+
 			self.currentData = {
 					id: videoType[videoId],
 					typeData: glamboxData[videoType[videoId]],

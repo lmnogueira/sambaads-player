@@ -202,6 +202,14 @@ gulp.task('build-css-skin', function(){
         .pipe(gulp.dest('app/public/stylesheets/skin/'));
 });
 
+gulp.task('build-errors-pages', function() {
+  return gulp.src(paths.templates + '/error_pages/*')
+    .pipe(inlinesource())
+    .pipe(base64())
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('app/public/'));
+});
+
 gulp.task('build-templates', function() {
   return gulp.src(paths.templates + 'iframe.ejs')
     .pipe(inlinesource())
@@ -229,6 +237,7 @@ gulp.task("default",
         'build-javascripts-player',
         'build-jwplayer',
         'build-templates',
+        'build-errors-pages',
         'watch'
     ]
 );
@@ -242,6 +251,7 @@ gulp.task("local-staging",
         'dev-javascripts-player',
         'build-jwplayer',
         'build-templates',
+        'build-errors-pages',
         'watch'
     ]
 );
@@ -255,7 +265,9 @@ gulp.task("staging",
         'build-javascripts-player',
         'build-crossdomain',
         'build-jwplayer',
-        'build-templates'
+        'build-templates',
+        'build-errors-pages'
+
     ]
 );
 gulp.task("production",
@@ -268,6 +280,7 @@ gulp.task("production",
         'build-javascripts-player',
         'build-crossdomain',
         'build-jwplayer',
-        'build-templates'
+        'build-templates',
+        'build-errors-pages'
     ]
 );

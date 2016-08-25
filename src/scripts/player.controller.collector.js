@@ -76,10 +76,10 @@ SambaAdsPlayerControllerCollector = function (){
 					"satm_site_id": self.configuration.client.hash_code,
 					"satm_media_id": parseInt(self.media.media_id),
 					"satm_channel_id": parseInt(self.media.channel_id || self.media.owner_id),
-					"satm_domain": "",
+					"satm_domain": self.configuration.player.hostname,
 					"satm_duration": duration,
-				//	"satm_origin": this.response.player_info.origin,
-				//	'satm_environment': this.response.player_info.environment
+					"satm_origin": self.configuration.player.player_info.origin,
+					'satm_environment': self.configuration.player.player_info.environment
 	        	});
 				
 				self.sendGif(evtObject);
