@@ -1109,15 +1109,6 @@ body {
   font-weight: 400;
 }
 
-.native-area {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 50%;
-  pointer-events: none;
-}
-
 .glambox {
   color: #fff;
   padding: 12px 20px;
@@ -1212,17 +1203,16 @@ body {
   margin-right: -7px;
 }
 
-.display-overlay.active-native .current-native {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+.active-native .glambox.current-native {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
 }
 
-.display-overlay.active-native.show-controls .current-native {
-  opacity: 1;
-  transform: translate3d(0, -100%, 0);
-  transition: all .15s;
+.active-native.show-controls .glambox.current-native {
+	opacity: 1;
+	transform: translate3d(0, -100%, 0);
+	transition: all .15s;
 }
-
 
 @media only screen and (max-width: 39em) {
 	.glambox {

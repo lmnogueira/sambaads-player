@@ -24,7 +24,7 @@ SambaAdsPlayerPostMessage = function (){
 
 SambaAdsPlayerPostMessage.prototype.onMessageReceive = function(evt){
 	var self = this;
-	var params = event.data.split("::");
+	var params = evt.data.split("::");
 
 	params[1] == "onPlay" ? self.onPlay(params[2]) : false;
 	params[1] == "onPause" ? self.onPause(params[2]) : false;
