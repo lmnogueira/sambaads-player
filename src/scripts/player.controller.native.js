@@ -110,7 +110,7 @@ SambaAdsPlayerControllerNative = function (){
 			self.loadVastTag(tagUrl, function(vastData, data){
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
-					window.open(self.currentData.typeData.click_url);
+					window.open(vastData.click_url);
 				});
 			});
 		};
@@ -137,7 +137,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		// Comment this before deploy on production
 		ownerId = 38;
-		videoId = 60474; 
+		videoId = 60474;
 
 		if(ownerId === 38) {
 			self.setAdTimeout(15000,
