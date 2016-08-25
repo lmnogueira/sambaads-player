@@ -30,6 +30,13 @@ SambaAdsPlayerAdvertising = function (){
 			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
 
+ 			//tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/448587671/448587791&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=teste&correlator=__timestamp__";
+
+ 			// if(self.playingNow.media_id == 60474){
+ 			  	//self.playingNow.sponsored = true;
+ 			//  }
+
+
  			var loc = window.location.toString();
 			params_ads_check = loc.split('?')[1];
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
@@ -43,7 +50,7 @@ SambaAdsPlayerAdvertising = function (){
  	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
- 		self.playingNow=e.detail.data.item;
+ 		self.playingNow = e.detail.data.item;
  	});
 };
 

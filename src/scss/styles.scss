@@ -1,0 +1,275 @@
+.native-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+}
+
+.ir {
+    overflow: hidden;
+    text-indent: 150%;
+    white-space: nowrap;
+}
+
+.cf {
+    &:after {
+        display: table;
+        clear: both;
+        content: " ";
+    }
+}
+
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url(../native/glambox/font/gotham-book.woff) format('woff');
+}
+
+.active-native {
+    .glambox-new {
+        &.current-native {
+            opacity: 1;
+            transform: scale(1);
+
+            button {
+                pointer-events: all;
+            }
+        }
+    }
+}
+
+.ad-area[type] {
+    display: none;
+}
+
+.glambox-new {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url(../native/glambox/image/shadow.png) no-repeat;
+    background-position: bottom right;
+    opacity: 0;
+    transform: scale(.9);
+    transform-origin: bottom right;
+    transition: all 300ms linear;
+    pointer-events: none;
+
+    button {
+        background: none;
+        text-transform: uppercase;
+        text-align: right;
+        font-family: 'Gotham Book';
+        padding: 0;
+        right: 0;
+        border: none;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .glambox-logo {
+        width: 89px;
+        height: 19px;
+        background: url(../native/glambox/image/glambox-logo.png) no-repeat;
+        float: right;
+        background-size: 100% auto;
+    }
+
+    .ad-button {
+        bottom: 0;
+    }
+
+    .ad-area {
+        position: absolute;
+        bottom: 0;
+        width: 155px;
+        height: 254px;
+        right: 25px;
+    }
+
+    .ad-close {
+        width: 13px;
+        height: 11px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        top: -20px;
+        @extend .ir;
+    }
+
+    .main-title {
+        font-size: 30px;
+        width: 100%;
+        font-size: 14px;
+        letter-spacing: -0.9px;
+        color: #fff;
+        line-height: 1.2em;
+        float: right;
+        margin-bottom: 12px;
+
+        span {
+            font-size: 18px;
+            color: #f03186;
+            font-weight: bold;
+            letter-spacing: -1.2px;
+        }
+    }
+
+    .sign-now {
+        width: 125px;
+        font-size: 14px;
+    	font-weight: 900;
+    	letter-spacing: -0.2px;
+        line-height: 1.2em;
+        background: #f03186;
+        padding: 2px 7px;
+        margin-bottom: 10px;
+        color: #fff;
+        float: right;
+        clear: both;
+    }
+
+    .subtitle {
+        font-size: 11px;
+    	font-weight: 500;
+    	letter-spacing: -0.7px;
+        color: #fff;
+        clear: both;
+
+        span.love {
+            width: 10px;
+            height: 10px;
+            background: url(../native/glambox/image/mini-hearth.png) no-repeat;
+            background-size: 100% auto;
+            display: inline-block;
+            @extend .ir;
+        }
+    }
+
+    .products {
+        width: 139px;
+        height: 153px;
+        background: url(../native/glambox/image/products.png) no-repeat;
+        background-size: 100% auto;
+        margin-top: 10px;
+        display: inline-block;
+
+        @media only screen and (max-width: 30em) {
+            display: none;
+        }
+    }
+
+    &.type-1 {
+        .ad-area[type="1"] {
+            display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 90px;
+                bottom: 30%;
+            }
+        }
+    }
+
+    &.type-2 {
+        background: url(../native/glambox/image/shadow-left.png) no-repeat;
+        background-position: bottom left;
+        transform-origin: bottom left;
+
+        .ad-area[type="2"] {
+            display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 60px;
+                left: 10px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
+        }
+    }
+
+    &.type-3 {
+        background: url(../native/glambox/image/shadow-left.png) no-repeat;
+        background-position: bottom left;
+        transform-origin: bottom left;
+
+        .ad-area[type="3"] {
+            display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 100px;
+                left: 20px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
+        }
+    }
+
+    .ad-area[type="2"],
+    .ad-area[type="3"] {
+        left: 40px;
+        right: auto;
+        text-align: left;
+        height: 200px;
+        padding-top: 8px;
+
+        button {
+            font-size: 14px;
+            font-weight: 500;
+            font-weight: 500;
+        	line-height: 1.2;
+        	letter-spacing: -0.9px;
+            color: #fff;
+            text-align: left;
+
+            span {
+                color: #f03186;
+                clear: both;
+                font-weight: 900;
+            }
+        }
+
+        .glambox-logo {
+            position: absolute;
+            top: -30px;
+        }
+
+        .ad-close {
+            right: 10px;
+        }
+    }
+
+    .ad-area[type="3"] {
+        width: 165px;
+        padding-top: 5px;
+
+        button {
+            .tips {
+                color: #fff;
+                background-color: #f03186;
+                font-weight: 900;
+            	letter-spacing: -0.2px;
+                line-height: 1.2em;
+                padding: 2px 7px;
+                display: block;
+                margin: 4px 0;
+                width: 145px;
+            }
+
+            .love {
+                display: inline-block;
+                background-color: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .subtitle {
+                margin-top: 5px;
+            }
+        }
+    }
+}
