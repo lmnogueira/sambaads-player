@@ -28,7 +28,8 @@
 }
 
 .active-native {
-    .glambox-new {
+    .glambox-new,
+    .wine-native {
         &.current-native {
             opacity: 1;
             transform: scale(1);
@@ -48,13 +49,21 @@
             }
         }
     }
+
+    .wine-native {
+        &.current-native {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 }
 
 .ad-area[type] {
     display: none;
 }
 
-.glambox-new {
+.glambox-new,
+.wine-native {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -324,4 +333,63 @@
 .front {
     transform: translateZ(150px);
     transition: opacity .3s linear;
+}
+
+
+.wine-native {
+    .ad-area {
+        width: 193px;
+        height: 290px;
+        text-align: left;
+    }
+
+    .ad-trigger {
+        div {
+            font-size: 13px;
+            color: #fff;
+            text-transform: none;
+            margin-bottom: 7px;
+            font-weight: 900;
+            text-align: left;
+
+            &.subtitle {
+                font-size: 11px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            &.buy-now {
+                font-size: 11px;
+                background: #5d003f;
+                text-transform: uppercase;
+                width: 125px;
+                padding: 4px;
+                margin: 0 auto 7px;
+                text-align: center;
+            }
+
+            &.upper {
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            span.love {
+                margin: 0 4px;
+            }
+        }
+    }
+
+    .highlight-text {
+        color: #5d003f;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .wine-bottle {
+        width: 73px;
+        height: 130px;
+        background: url(../native/wine/image/wine-bottle.png) no-repeat;
+        background-size: 100% auto;
+        margin: 0 auto;
+    }
 }
