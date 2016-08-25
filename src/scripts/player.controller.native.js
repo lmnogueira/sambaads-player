@@ -140,7 +140,7 @@ SambaAdsPlayerControllerNative = function (){
 		//videoId = 60476;
 
 		if(ownerId === 38) {
-			self.setAdTimeout(7000,
+			self.setAdTimeout(15000,
 				function(){
 					//hashCode = 'glambox';
 					//glamboxNative(videoId.toString());
