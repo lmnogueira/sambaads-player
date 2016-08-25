@@ -78,26 +78,22 @@ SambaAdsPlayerControllerNative = function (){
 		};
 
 	var glamboxNativeUpdate = function(videoId) {
-			var glamboxTrigger = $('#glambox-new-trigger'),
-				videoType = {
+			var videoType = {
 					'60474': 'glam_box_new',
 					'60475': 'glam_mag_new',
 					'60476': 'glam_club_new'
-				};
-
-			var tags = self.video.LR_TAGS + ",native," + videoType[videoId] + ",new_style",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-
-	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				},
+				tags = self.video.LR_TAGS + ",native," + videoType[videoId] + ",new_style",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+				tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
-				 		 "&iu=" + "/387067271/Homologacao/TesteNative" + //self.client.ad_unit_id +
+				 		 "&iu=" + self.client.ad_unit_id +
 				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
 				 		 "&cust_params=" + custom_params +
 				 		 "&cmsid=" + self.video.dfp_partner_id +
 				 		 "&vid=" + self.video.hashed_code +
 				 		 "&correlator=" + new Date().getTime();
 
-			var glamboxNew = $('.glambox-new');
 
 			var nativeType = {
 					glam_box_new: 'type-1',
@@ -105,11 +101,15 @@ SambaAdsPlayerControllerNative = function (){
 					glam_club_new: 'type-2'
 				};
 
-			glamboxNew.addClass(nativeType[videoType[videoId]]);
+			var glamboxNew = $('.glambox-new');
 
 			self.loadVastTag(tagUrl, function(vastData, data){
+				glamboxNew.addClass(nativeType[videoType[videoId]]);
+				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
+
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
+					console.log(vastData.click_url);
 					window.open(vastData.click_url);
 				});
 			});
@@ -136,11 +136,11 @@ SambaAdsPlayerControllerNative = function (){
 			hashCode = null;
 
 		// Comment this before deploy on production
-		ownerId = 38;
-		videoId = 60476;
+		//ownerId = 38;
+		//videoId = 60476;
 
 		if(ownerId === 38) {
-			self.setAdTimeout(15000,
+			self.setAdTimeout(7000,
 				function(){
 					//hashCode = 'glambox';
 					//glamboxNative(videoId.toString());
