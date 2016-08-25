@@ -68,6 +68,7 @@ body {
 	height:56px;
 	padding:15px 60px 0 15px;
 	margin-bottom: .2em;
+	pointer-events: none;
 }
 
 .video-title h3 {

@@ -32,7 +32,10 @@
         &.current-native {
             opacity: 1;
             transform: scale(1);
-            pointer-events: auto;
+
+            button {
+                pointer-events: all;
+            }
         }
     }
 }
@@ -153,11 +156,20 @@
         background-size: 100% auto;
         margin-top: 10px;
         display: inline-block;
+
+        @media only screen and (max-width: 30em) {
+            display: none;
+        }
     }
 
     &.type-1 {
         .ad-area[type="1"] {
             display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 90px;
+                bottom: 30%;
+            }
         }
     }
 
@@ -168,6 +180,14 @@
 
         .ad-area[type="2"] {
             display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 60px;
+                left: 10px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
         }
     }
 
@@ -178,6 +198,14 @@
 
         .ad-area[type="3"] {
             display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 100px;
+                left: 20px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
         }
     }
 
