@@ -30,7 +30,7 @@ SambaAdsPlayerViewPlaylist = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
-		self.updateItemCurrent();
+		//self.updateItemCurrent();
 		self.currentState = evt.detail.data.newState;
 	});
 };

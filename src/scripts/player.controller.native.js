@@ -63,7 +63,7 @@ SambaAdsPlayerControllerNative = function (){
 
 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
-				 		 "&iu=" + "/387067271/Homologacao/TesteNative" + //self.client.ad_unit_id +
+				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
 				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
 				 		 "&cust_params=" + custom_params +
 				 		 "&cmsid=" + self.video.dfp_partner_id +
@@ -80,9 +80,9 @@ SambaAdsPlayerControllerNative = function (){
 
 	var glamboxNativeUpdate = function(videoId) {
 			var videoType = {
-					'60474': 'glam_box_new',
-					'60475': 'glam_mag_new',
-					'60476': 'glam_club_new'
+					 '60474': 'glam_box_new',
+					 '60475': 'glam_mag_new',
+					 '60476': 'glam_club_new'
 				},
 				tags = self.video.LR_TAGS + ",native," + videoType[videoId] + ",new_style",
 				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
