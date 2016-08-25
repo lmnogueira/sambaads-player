@@ -107,12 +107,6 @@ SambaAdsPlayerControllerNative = function (){
 				glamboxNew.addClass(nativeType[videoType[videoId]]);
 				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
 
-				if(videoType[videoId] === 'glam_club_new') {
-					setTimeout(function(){
-						glamboxNew.addClass('flip');
-					}, 7000);
-				}
-
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -127,6 +121,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		showAdTimeout = setTimeout(function(){
 			displayOverlay.addClass('active-native');
+
 			if(typeof callback === 'function') {
 				callback();
 			}
@@ -137,36 +132,40 @@ SambaAdsPlayerControllerNative = function (){
 		self.video = e.detail.data;
 
 		var ownerId = e.detail.data.owner_id,
-			videoId = e.detail.data.media_id,
-			hashCode = null;
+			videoId = e.detail.data.media_id;
 
 		// Comment this before deploy on production
 		//ownerId = 38;
 		//videoId = 60475;
 
 		if(ownerId === 38) {
-			self.setAdTimeout(15000,
-				function(){
-					//hashCode = 'glambox';
-					//glamboxNative(videoId.toString());
-					hashCode = 'glambox-new';
+			var beforeAd = function() {
+					self.setCurrentNative($('*[data-hashcode="glambox-new"]'));
 					glamboxNativeUpdate(videoId.toString());
 				},
-				function() {
-					glamboxClose = $('.current-native .ad-close');
+				callbackAd = function() {
+					var glamboxClose = $('.current-native .ad-close'),
+						glamboxNew = $('.glambox-new');
 
 					glamboxClose.on('click', function(event){
 						event.preventDefault();
 						self.hideNative();
 					});
-				});
-		}
 
-		if(hashCode !== null) {
-			//add class current-native based on hashcode. Eq: $('*[data-hashcode="{{hashcode}}"]');
-			currentNative = $('*[data-hashcode="' + hashCode + '"]');
-			currentNative.addClass('current-native');
+					if(videoId === 60476) {
+						setTimeout(function(){
+							glamboxNew.addClass('flip');
+						}, 7000);
+					}
+				};
+
+			self.setAdTimeout(15000, beforeAd, callbackAd);
 		}
+	};
+
+	self.setCurrentNative = function(nativeEl) {
+		$('.current-native').removeClass('current-native');
+		nativeEl.addClass('current-native');
 	};
 
 	self.hideNative = function() {
