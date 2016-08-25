@@ -32,7 +32,6 @@
         &.current-native {
             opacity: 1;
             transform: scale(1);
-            pointer-events: auto;
         }
     }
 }
@@ -66,6 +65,7 @@
         border: none;
         position: absolute;
         cursor: pointer;
+        pointer-events: all;
     }
 
     .glambox-logo {
