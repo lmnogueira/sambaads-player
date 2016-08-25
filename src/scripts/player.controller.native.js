@@ -4,7 +4,8 @@ SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
 		showAdTimeout = null,
-		currentNative = null;
+		currentNative = null,
+		currentVastData = null;
 
 	var glamboxNative = function(videoId, newAd) {
 			var videoType = {
@@ -107,6 +108,8 @@ SambaAdsPlayerControllerNative = function (){
 				glamboxNew.addClass(nativeType[videoType[videoId]]);
 				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
 
+				currentVastData = vastData;
+
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -151,6 +154,8 @@ SambaAdsPlayerControllerNative = function (){
 						event.preventDefault();
 						self.hideNative();
 					});
+
+					self.trackImpression(currentVastData.impression_url);
 
 					if(videoId === 60476) {
 						setTimeout(function(){
@@ -199,7 +204,6 @@ SambaAdsPlayerControllerNative = function (){
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					vastData.impression_url = el.nodeValue;
-					self.trackImpression(vastData.impression_url);
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
