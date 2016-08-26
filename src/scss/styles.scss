@@ -72,11 +72,17 @@
     bottom: 0;
     background: url(../native/glambox/image/shadow.png) no-repeat;
     background-position: bottom right;
+    background-size: 100% auto;
     opacity: 0;
     transform: scale(.9);
     transform-origin: bottom right;
     transition: all 300ms linear;
     pointer-events: none;
+
+    .row {
+        display: block;
+        margin-bottom: 2px;
+    }
 
     button {
         background: none;
@@ -119,6 +125,11 @@
         @extend .ir;
     }
 
+    .color-text {
+        color: #f03186;
+        font-weight: bold;
+    }
+
     .main-title {
         font-size: 30px;
         width: 100%;
@@ -138,8 +149,7 @@
     }
 
     .sign-now {
-        width: 125px;
-        font-size: 14px;
+        font-size: 15px;
     	font-weight: 900;
     	letter-spacing: -0.2px;
         line-height: 1.2em;
@@ -149,6 +159,10 @@
         color: #fff;
         float: right;
         clear: both;
+        border-radius: 5px;
+        text-align: center;
+        display: inline-block;
+        margin-top: 5px;
     }
 
     .subtitle {
@@ -164,6 +178,7 @@
             background: url(../native/glambox/image/mini-hearth.png) no-repeat;
             background-size: 100% auto;
             display: inline-block;
+            margin: 0 4px;
             @extend .ir;
         }
     }
@@ -194,11 +209,14 @@
 
     &.type-2 {
         background: url(../native/glambox/image/shadow-left.png) no-repeat;
-        background-position: bottom left;
-        transform-origin: bottom left;
+        background-position: bottom right;
+        transform-origin: bottom right;
 
         .ad-area[type="2"] {
             display: block;
+            left: auto;
+            right: 25px;
+            width: 182px;
 
             .glambox-new-trigger {
                 height: 70px;
@@ -207,7 +225,6 @@
 
             @media only screen and (max-width: 30em) {
                 height: 60px;
-                left: 10px;
                 bottom: 5%;
                 top: 0;
                 margin: auto;
@@ -216,11 +233,13 @@
     }
 
     &.type-3 {
-        background: url(../native/glambox/image/shadow-left.png) no-repeat;
+        background: url(../native/glambox/image/shadow-strong.png) no-repeat;
         background-position: bottom left;
         transform-origin: bottom left;
 
         .ad-area[type="3"] {
+            width: 190px;
+            padding-top: 5px;
             display: block;
 
             @media only screen and (max-width: 30em) {
@@ -229,6 +248,33 @@
                 bottom: 5%;
                 top: 0;
                 margin: auto;
+            }
+
+            button {
+                .tips {
+                    color: #fff;
+                    background-color: #f03186;
+                    font-weight: 900;
+                	letter-spacing: -0.2px;
+                    line-height: 1.2em;
+                    padding: 2px 7px;
+                    display: block;
+                    margin: 4px 0;
+                    width: 145px;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+
+                .love {
+                    display: inline-block;
+                    background-color: none;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .subtitle {
+                    margin-top: 5px;
+                }
             }
         }
     }
@@ -268,38 +314,6 @@
 
         .sign-now {
             float: left;
-        }
-    }
-
-    .ad-area[type="3"] {
-        width: 165px;
-        padding-top: 5px;
-
-        button {
-            .tips {
-                color: #fff;
-                background-color: #f03186;
-                font-weight: 900;
-            	letter-spacing: -0.2px;
-                line-height: 1.2em;
-                padding: 2px 7px;
-                display: block;
-                margin: 4px 0;
-                width: 145px;
-                text-align: center;
-                margin-bottom: 10px;
-            }
-
-            .love {
-                display: inline-block;
-                background-color: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .subtitle {
-                margin-top: 5px;
-            }
         }
     }
 }
@@ -391,5 +405,9 @@
         background: url(../native/wine/image/wine-bottle.png) no-repeat;
         background-size: 100% auto;
         margin: 0 auto;
+
+        @media only screen and (max-width: 30em) {
+            display: none;
+        }
     }
 }

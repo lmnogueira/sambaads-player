@@ -71,6 +71,7 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&correlator=" + new Date().getTime();
 
 			self.loadVastTag(tagUrl, function(vastData, data){
+				glamboxTrigger.off();
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -109,6 +110,8 @@ SambaAdsPlayerControllerNative = function (){
 				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
 
 				currentVastData = vastData;
+
+				glamboxTrigger.off();
 
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
@@ -164,6 +167,8 @@ SambaAdsPlayerControllerNative = function (){
 
 					self.trackImpression(currentVastData.impression_url);
 
+					glamboxNew.removeClass('flip');
+
 					if(videoId === 60476) {
 						setTimeout(function(){
 							glamboxNew.addClass('flip');
@@ -210,6 +215,8 @@ SambaAdsPlayerControllerNative = function (){
 						event.preventDefault();
 						self.hideNative();
 					});
+
+					wineClick.off();
 
 					wineClick.on('click', function(event){
 						event.preventDefault();
