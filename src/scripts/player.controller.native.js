@@ -3,7 +3,6 @@ var SambaAdsPlayerControllerNative = {};
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-
 		showAdTimeout = null,
 		currentNative = null,
 		currentVastData = null;
@@ -118,6 +117,13 @@ SambaAdsPlayerControllerNative = function (){
 			});
 		};
 
+	//
+	// var wineNative = function(){
+	// 		self.loadVastTag(tagUrl, function(vastData, data)) {
+	//
+	// 		};
+	// 	};
+
 	self.setAdTimeout = function(time, beforeAd, callback) {
 		if(typeof beforeAd === 'function') {
 			beforeAd();
@@ -167,7 +173,79 @@ SambaAdsPlayerControllerNative = function (){
 
 			self.setAdTimeout(15000, beforeAd, callbackAd);
 		}
+
+		//videoId = 62639;
+
+		if(videoId === 62639) {
+			var selfVastData = null,
+				beforeAd = function() {
+					self.setCurrentNative($('#wine-native'));
+
+					var custom_params = encodeURIComponent(
+											"duration=&CNT_Position=preroll&category=" +
+											self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" +
+											self.video.LR_TAGS +
+											",native," +
+											videoId
+										);
+
+			 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+						 		 "sz=640x360" +
+						 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+						 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+						 		 "&cust_params=" + custom_params +
+						 		 "&cmsid=" + self.video.dfp_partner_id +
+						 		 "&vid=" + self.video.hashed_code +
+						 		 "&correlator=" + new Date().getTime();
+
+					self.loadVastTag(tagUrl, function(vastData){
+						selfVastData = vastData;
+					});
+				},
+				callbackAd = function() {
+					var wineClose = $('.current-native .ad-close'),
+						wineClick = $('.current-native .ad-trigger');
+
+					wineClose.on('click', function(event){
+						event.preventDefault();
+						self.hideNative();
+					});
+
+					wineClick.on('click', function(event){
+						event.preventDefault();
+						window.open(vastData.click_url);
+					});
+
+					self.trackImpression(selfVastData.impression_url);
+				};
+
+			self.setAdTimeout(2000, beforeAd, callbackAd);
+		}
 	};
+
+	// self.nativeImpressionStart = function(time, vastUrl, options) {
+	// 	var insideOptions = {
+	// 			beforeAd = options.beforeAd function(){},
+	// 			callbackAd = options.callbackAd || function(){},
+	// 			callbackVast = optiosn.callbackVast || function(){}
+	// 		};
+	//
+	// 	if(typeof beforeAd === 'function') {
+	// 		beforeAd();
+	// 	}
+	//
+	// 	self.loadVastTag(vastUrl, function(vastData){
+	// 		callbackVast(vastData);
+	//
+	// 		showAdTimeout = setTimeout(function(){
+	// 			displayOverlay.addClass('active-native');
+	//
+	// 			if(typeof callbackAd === 'function') {
+	// 				callbackAd();
+	// 			}
+	// 		}, time);
+	// 	});
+	// };
 
 	self.setCurrentNative = function(nativeEl) {
 		$('.current-native').removeClass('current-native');
