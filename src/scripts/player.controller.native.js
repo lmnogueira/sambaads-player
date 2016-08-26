@@ -71,7 +71,9 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&correlator=" + new Date().getTime();
 
 			self.loadVastTag(tagUrl, function(vastData, data){
+				glamboxTrigger.off();
 				glamboxTrigger.on('click', function(event){
+					event.stopImmediatePropagation();
 					event.preventDefault();
 					window.open(vastData.click_url);
 				});
@@ -109,7 +111,7 @@ SambaAdsPlayerControllerNative = function (){
 				var glamboxTrigger = $('.current-native  .glambox-new-trigger');
 
 				currentVastData = vastData;
-
+				glamboxTrigger.off();
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
