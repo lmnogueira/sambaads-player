@@ -161,7 +161,7 @@ SambaAdsPlayerControllerNative = function (){
 					if(videoId === 60476) {
 						setTimeout(function(){
 							glamboxNew.addClass('flip');
-						}, 7000);
+						}, 4000);
 					}
 				};
 
