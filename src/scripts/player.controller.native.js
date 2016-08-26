@@ -73,6 +73,7 @@ SambaAdsPlayerControllerNative = function (){
 			self.loadVastTag(tagUrl, function(vastData, data){
 				glamboxTrigger.off();
 				glamboxTrigger.on('click', function(event){
+					event.stopImmediatePropagation();
 					event.preventDefault();
 					window.open(vastData.click_url);
 				});
@@ -112,7 +113,6 @@ SambaAdsPlayerControllerNative = function (){
 				currentVastData = vastData;
 
 				glamboxTrigger.off();
-
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -172,7 +172,7 @@ SambaAdsPlayerControllerNative = function (){
 					if(videoId === 60476) {
 						setTimeout(function(){
 							glamboxNew.addClass('flip');
-						}, 7000);
+						}, 4000);
 					}
 				};
 
