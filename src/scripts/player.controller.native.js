@@ -73,7 +73,6 @@ SambaAdsPlayerControllerNative = function (){
 			self.loadVastTag(tagUrl, function(vastData, data){
 				glamboxTrigger.off();
 				glamboxTrigger.on('click', function(event){
-					event.stopImmediatePropagation();
 					event.preventDefault();
 					window.open(vastData.click_url);
 				});
@@ -113,7 +112,9 @@ SambaAdsPlayerControllerNative = function (){
 				currentVastData = vastData;
 
 				glamboxTrigger.off();
+
 				glamboxTrigger.on('click', function(event){
+					event.stopPropagation();
 					event.preventDefault();
 					window.open(vastData.click_url);
 				});
@@ -161,6 +162,7 @@ SambaAdsPlayerControllerNative = function (){
 						glamboxNew = $('.glambox-new');
 
 					glamboxClose.on('click', function(event){
+						event.stopPropagation();
 						event.preventDefault();
 						self.hideNative();
 					});
@@ -219,6 +221,7 @@ SambaAdsPlayerControllerNative = function (){
 					wineClick.off();
 
 					wineClick.on('click', function(event){
+						event.stopPropagation();
 						event.preventDefault();
 						window.open(vastData.click_url);
 					});

@@ -199,9 +199,11 @@
     &.type-1 {
         .ad-area[type="1"] {
             display: block;
+            width: 186px;
+            height: 265px;
 
             @media only screen and (max-width: 30em) {
-                height: 90px;
+                height: 100px;
                 bottom: 30%;
             }
         }
@@ -211,6 +213,7 @@
         background: url(../native/glambox/image/shadow-left.png) no-repeat;
         background-position: bottom right;
         transform-origin: bottom right;
+        background-size: 100% auto;
 
         .ad-area[type="2"] {
             display: block;
