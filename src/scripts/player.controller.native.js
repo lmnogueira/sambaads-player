@@ -7,7 +7,7 @@ SambaAdsPlayerControllerNative = function (){
 		currentNative = null,
 		currentVastData = null;
 
-	var glamboxNative = function(videoId, newAd) {
+	var glamboxNative = function(videoId) {
 			var videoType = {
 					'60474': 'glam_box',
 					'60475': 'glam_mag',
@@ -154,8 +154,8 @@ SambaAdsPlayerControllerNative = function (){
 
 		if(ownerId === 38) {
 			var beforeAd = function() {
-					self.setCurrentNative($('*[data-hashcode="glambox-new"]'));
-					glamboxNativeUpdate(videoId.toString());
+					self.setCurrentNative($('*[data-hashcode="glambox"]'));
+					glamboxNative(videoId.toString());
 				},
 				callbackAd = function() {
 					var glamboxClose = $('.current-native .ad-close'),
