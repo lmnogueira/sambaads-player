@@ -72,6 +72,9 @@ SambaAdsPlayerControllerNative = function (){
 
 			self.loadVastTag(tagUrl, function(vastData, data){
 				glamboxTrigger.off();
+
+				currentVastData = vastData;
+
 				glamboxTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
