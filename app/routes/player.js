@@ -16,6 +16,7 @@ router.get('/:pid', function(req, res, next) {
 			url: nconf.get("SMARTSEED_URL") + '/api/' + req.params.pid +  '/playlists/' + req.query.plid + '/data.json?' + querystring.stringify(req.query), 
 			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
 		}, function(error, response, body){
+
 			res.header('Content-Type', 'text/html');
 			if(response && response.statusCode == 200){
 				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
