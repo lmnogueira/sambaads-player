@@ -91,7 +91,6 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adComplete', function(evt){
-		self.JWPlayer.setVolume(50);
 		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();

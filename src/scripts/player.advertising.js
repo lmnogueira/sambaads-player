@@ -30,7 +30,7 @@ SambaAdsPlayerAdvertising = function (){
 			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
 
- 			//tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/RedePropria/452219471/461266871&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=http%253A%252F%252Fwww.clicrbs.com.br%252Frs%252F&description_url=&cust_params=duration%3D%26CNT_Position%3Dpreroll%26category%3DESPORTES%26CNT_PlayerType%3Dsingleplayer%26CNT_MetaTags%3Dautostart%2Csmartplayer%2Cggladxoff&cmsid=16471&vid=PVVRUoCR&correlator=__timestamp__";
+ 			tagUrl = "https://local-vpaid.sambaads.com/vast/adselector.xml";
 
  			// if(self.playingNow.media_id == 60474){
  			  	//self.playingNow.sponsored = true;

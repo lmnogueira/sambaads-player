@@ -112,7 +112,7 @@
 
             width: 640,
             height: 360,
-            file: "http://pvbps-sambavideos.akamaized.net/account/259/21/2016-05-14/video/5882e627be9196904780b3c477344bb5/vYY8iMFe-raw20160514-23932-3zz8ei_240p.mp4",
+            file: "https://pvbps-sambavideos.akamaized.net/account/259/21/2016-05-14/video/5882e627be9196904780b3c477344bb5/vYY8iMFe-raw20160514-23932-3zz8ei_240p.mp4",
             advertising: {
                 client:'googima',
                 vpaidmode: 'enabled'
@@ -121,13 +121,8 @@
             });
 
             jwplayer("container").on("beforePlay",function(evt){
-                // jwplayer("container").playAd('https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/387067271/Homologacao/448587671/448587791&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=__referrer__&description_url=teste&correlator=__timestamp__');
 
-                //jwplayer("container").playAd('https://s3.amazonaws.com/sambaads-cdn/natura/full_vast.xml');
-
-                // jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/full_vast.xml');
-                jwplayer("container").playAd('https://d3655zppehxyvi.cloudfront.net/natura/full_vast.xml');//'https://local-vpaid.sambaads.com/vast/long_vpaid.xml');
-
+                jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/adselector.xml');
 
             });
         </script>
