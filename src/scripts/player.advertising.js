@@ -30,7 +30,7 @@ SambaAdsPlayerAdvertising = function (){
 			$(".jw-icon-fullscreen").hide();
  			self.currentBeforePlayId = self.playingNow.hashed_code;
 
- 			tagUrl = "https://local-vpaid.sambaads.com/vast/adselector.xml";
+ 			//tagUrl = "https://local-vpaid.sambaads.com/vast/adselector.xml";
 
  			// if(self.playingNow.media_id == 60474){
  			  	//self.playingNow.sponsored = true;
