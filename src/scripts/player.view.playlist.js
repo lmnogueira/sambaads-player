@@ -79,9 +79,9 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 			break;
 		}
 	}
-	
-	if(self.playlist[i].sponsored){
-	 	self.playlist.move(i,0);
+
+	if(self.playlist[i] && self.playlist[i].sponsored){
+	  	self.playlist.move(i,0);
 	}
 
 	self.playlist.forEach(function(item){
