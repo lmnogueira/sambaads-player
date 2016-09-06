@@ -9,7 +9,7 @@ SambaAdsPlayerViewBuffer = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
-		if(e.detail.data.newState == PlayerState.PLAYING || e.detail.data.newState == PlayerState.PAUSED){
+		if(e.detail.data.newState == PlayerState.PLAYING || e.detail.data.newState == PlayerState.PAUSED || e.detail.data.newViewState == "displayingAds"){
 			self.hide();
 		}
 	});
