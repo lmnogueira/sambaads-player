@@ -50,9 +50,9 @@ SambaAdsPlayerController.prototype.init = function(data){
         abouttext: "YContent - Dê play para começar.",
         aboutlink: "http://www.ycontent.com.br/publishers",
         advertising: {
-            //client:'googima',
-            //vpaidmode:'enabled',
-            client: "vast",
+            client:'googima',
+            vpaidmode:'enabled',
+            //client: "vast",
             admessage: "Anúncio publicitário terminará em xx segundos."
         }
     };
