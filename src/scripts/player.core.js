@@ -102,6 +102,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		//console.log(evt);
 	});
 	self.JWPlayer.on('adImpression', function(evt){
+		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
 		self.JWPlayer.setControls(true);
 		self._isAds = true;
 		//console.log(evt);
