@@ -516,7 +516,7 @@ var ExpandedCinema = function (cw, currentIframe){
     };
 
     var onMessageReceive = function(event){
-        if(event.origin.indexOf("cloudfront") >= 0 || event.origin.indexOf('/* @echo CDN_PLAYER_DOMAIN */') >= 0){
+        if(event.origin.indexOf("azureedge") >= 0 || event.origin.indexOf('/* @echo CDN_PLAYER_DOMAIN */') >= 0){
 
             var params = event.data.split("::");
 
