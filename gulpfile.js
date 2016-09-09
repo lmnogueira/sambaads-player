@@ -259,7 +259,7 @@ gulp.task("local-staging",
         'watch'
     ]
 );
-gulp.task("local_production",
+gulp.task("local-production",
     [
         'local-production-context',
         'build-css',
