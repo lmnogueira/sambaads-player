@@ -48,6 +48,10 @@ gulp.task("local-staging-context", function(){
     contextEnv = config.local_staging;
 });
 
+gulp.task("local-production-context", function(){
+    contextEnv = config.local_production;
+});
+
 gulp.task('clean', function(cb) {
   del(['build'], cb);
 });
@@ -244,6 +248,20 @@ gulp.task("default",
 gulp.task("local-staging",
     [
         'local-staging-context',
+        'build-css',
+        'build-css-skin',
+        'build-images',
+        'build-native',
+        'dev-javascripts-player',
+        'build-jwplayer',
+        'build-templates',
+        'build-errors-pages',
+        'watch'
+    ]
+);
+gulp.task("local_production",
+    [
+        'local-production-context',
         'build-css',
         'build-css-skin',
         'build-images',
