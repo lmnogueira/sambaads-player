@@ -124,6 +124,111 @@ SambaAdsPlayerControllerNative = function (){
 			});
 		};
 
+	var glamboxFrame = function(videoId) {
+			self.setCurrentNative($('#glambox-frame'));
+
+			var JWplayerArea = $('#jw_sambaads_player'),
+				glamboxFrame = $('#glambox-frame'),
+				frameClose = $('.frame-close'),
+				videoTitleBar = $('#video-title-bar'),
+				closeActive = true;
+
+			self.nativeTimerTrigger = function(event) {
+				if(closeActive) {
+					var currentTime = parseInt(event.detail.data.position);
+
+					if(currentTime >= 1) {
+						JWplayerArea.addClass('native-frame');
+					}
+					if(currentTime >= 5) {
+						JWplayerArea.addClass('active-native-frame');
+						glamboxFrame.addClass('active-native-frame');
+						videoTitleBar.addClass('inactive');
+					}
+					if(currentTime >= 8) {
+						frameClose.addClass('active');
+					}
+				}
+			};
+
+			self.stopNativeFunction = function() {
+				JWplayerArea.removeClass('active-native-frame');
+				glamboxFrame.removeClass('active-native-frame');
+				JWplayerArea.removeClass('native-frame');
+				frameClose.removeClass('active');
+				videoTitleBar.removeClass('inactive');
+			};
+
+			var videoType = {
+					'60474': 'glam_box',
+					'60475': 'glam_mag',
+					'60476': 'glam_club'
+				},
+				glamboxData = {
+					glam_box: {
+						frameClass: 'glambox',
+					},
+					glam_mag: {
+						frameClass: 'glamag',
+					},
+					glam_club: {
+						frameClass: 'glamclub',
+					}
+				},
+				glamboxRandon = {
+					styles: [
+						'type-1',
+						'type-2',
+						'type-3'
+					]
+				},
+				frameTrigger = $('.frame-trigger');
+
+				self.currentData = {
+					id: videoType[videoId],
+					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)]
+				};
+
+			JWplayerArea.addClass(self.currentData.style);
+
+			var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				 		 "sz=640x360" +
+				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+				 		 "&cust_params=" + custom_params +
+				 		 "&cmsid=" + self.video.dfp_partner_id +
+				 		 "&vid=" + self.video.hashed_code +
+				 		 "&correlator=" + new Date().getTime();
+
+			self.loadVastTag(tagUrl, function(vastData, data){
+				frameTrigger.off();
+
+				currentVastData = vastData;
+
+				console.log('VAST LOADED');
+
+				frameTrigger.on('click', function(event){
+					event.preventDefault();
+					window.open(vastData.click_url);
+				});
+
+				frameClose.on('click', function(event){
+					event.preventDefault();
+					closeActive = false;
+					JWplayerArea.removeClass('active-native-frame');
+					glamboxFrame.removeClass('active-native-frame');
+					frameClose.removeClass('active');
+
+					window.setTimeout(function(){
+						videoTitleBar.removeClass('inactive');
+					},2500);
+				});
+			});
+		};
+
 	//
 	// var wineNative = function(){
 	// 		self.loadVastTag(tagUrl, function(vastData, data)) {
@@ -151,11 +256,15 @@ SambaAdsPlayerControllerNative = function (){
 		var ownerId = e.detail.data.owner_id,
 			videoId = e.detail.data.media_id;
 
+
+		self.nativeTimerTrigger = function(event){};
+		self.stopNativeFunction = function(event){};
+
 		// Comment this before deploy on production
 		//ownerId = 38;
 		//videoId = 60475;
 
-		if(ownerId === 38) {
+		if(false) {
 			var beforeAd = function() {
 					self.setCurrentNative($('*[data-hashcode="glambox"]'));
 					glamboxNative(videoId.toString());
@@ -234,6 +343,11 @@ SambaAdsPlayerControllerNative = function (){
 
 			self.setAdTimeout(2000, beforeAd, callbackAd);
 		}
+
+		if(ownerId === 38) {
+		//if(ownerId === 38) {
+			glamboxFrame(videoId);
+		}
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
@@ -267,7 +381,6 @@ SambaAdsPlayerControllerNative = function (){
 
 	self.hideNative = function() {
 		displayOverlay.removeClass('active-native');
-		//currentNative.removeClass('current-native');
 	};
 
 	self.trackImpression = function(impressionUrl){
@@ -316,6 +429,7 @@ SambaAdsPlayerControllerNative = function (){
 	self.stopNative = function(e){
 		clearTimeout(showAdTimeout);
 		displayOverlay.removeClass('active-native');
+		self.stopNativeFunction(e);
 	};
 
 	self.hoverNative = function(e){
@@ -332,10 +446,15 @@ SambaAdsPlayerControllerNative = function (){
 		self.client = e.detail.data.client;
 	});
 
+	self.nativeTimer = function(event){
+		self.nativeTimerTrigger(event);
+	};
+
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, self.hoverNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_LEAVE, self.leaveNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_START, self.startNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, self.stopNative);
+	SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, self.nativeTimer);
 };
 
 new SambaAdsPlayerControllerNative();
