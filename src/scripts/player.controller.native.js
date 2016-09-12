@@ -160,20 +160,9 @@ SambaAdsPlayerControllerNative = function (){
 			};
 
 			var videoType = {
-					'60474': 'glam_box',
-					'60475': 'glam_mag',
-					'60476': 'glam_club'
-				},
-				glamboxData = {
-					glam_box: {
-						frameClass: 'glambox',
-					},
-					glam_mag: {
-						frameClass: 'glamag',
-					},
-					glam_club: {
-						frameClass: 'glamclub',
-					}
+					'60474': 'glam_box_frame',
+					'60475': 'glam_mag_frame',
+					'60476': 'glam_club_frame'
 				},
 				glamboxRandon = {
 					styles: [
