@@ -434,12 +434,36 @@
         }
 
         &.active-native-frame {
-            background: #fff url(../native/glambox/image/frame-1.jpg) no-repeat;
-            background-size: 100%;
-
             .jw-video {
                 width: 68%;
                 max-height: 75%;
+            }
+        }
+    }
+
+    &.type-1 {
+        &.native-frame {
+            &.active-native-frame {
+                background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
+                background-size: 100%;
+            }
+        }
+    }
+
+    &.type-2 {
+        &.native-frame {
+            &.active-native-frame {
+                background: #fff url(../native/glambox/image/frame-bg-2.jpg) no-repeat;
+                background-size: 100%;
+            }
+        }
+    }
+
+    &.type-3 {
+        &.native-frame {
+            &.active-native-frame {
+                background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
+                background-size: 100%;
             }
         }
     }
