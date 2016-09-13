@@ -140,7 +140,8 @@ SambaAdsPlayerControllerNative = function (){
 					if(currentTime >= 1) {
 						JWplayerArea.addClass('native-frame');
 					}
-					if(currentTime >= 5) {
+					if(currentTime == 5) {
+						self.trackImpression(currentVastData.impression_url);
 						JWplayerArea.addClass('active-native-frame');
 						glamboxFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
@@ -381,8 +382,12 @@ SambaAdsPlayerControllerNative = function (){
 		self.sendTrack();
 	};
 
+	self.onceTrigger = "";
 	self.sendTrack = function(url){
-		$.get( url );
+		if(self.onceTrigger != url){
+			self.onceTrigger = url;
+			$.get( url );	
+		}
 	};
 
 	self.loadVastTag = function(tagUrl, callback){
