@@ -445,7 +445,7 @@
         &.native-frame {
             &.active-native-frame {
                 background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
-                background-size: 100%;
+                background-size: 100% 100%;
             }
         }
     }
@@ -454,7 +454,7 @@
         &.native-frame {
             &.active-native-frame {
                 background: #fff url(../native/glambox/image/frame-bg-2.jpg) no-repeat;
-                background-size: 100%;
+                background-size: 100% 100%;
             }
         }
     }
@@ -463,7 +463,7 @@
         &.native-frame {
             &.active-native-frame {
                 background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
-                background-size: 100%;
+                background-size: 100% 100%;
             }
         }
     }
@@ -503,7 +503,8 @@
 
         &:before {
             content: '';
-            background: url(../native/glambox/image/frame-glambox.png) no-repeat;
+            height: 100%;
+            background-repeat: no-repeat;
             background-size: 100% auto;
             background-position: 50%;
             top: 0;
@@ -521,28 +522,25 @@
 
         &.glam_box_frame {
             &:before {
-                width: 179px;
-                height: 195px;
-                background: url(../native/glambox/image/frame-subscribe.png) no-repeat;
-                background-size: 100% auto;
+                max-width: 179px;
+                max-height: 195px;
+                background-image: url(../native/glambox/image/frame-subscribe.png);
             }
         }
 
         &.glam_mag_frame {
             &:before {
-                width: 171px;
-                height: 130px;
-                background: url(../native/glambox/image/frame-receive.png) no-repeat;
-                background-size: 100% auto;
+                max-width: 171px;
+                max-height: 130px;
+                background-image: url(../native/glambox/image/frame-receive.png);
             }
         }
 
         &.glam_club_frame {
             &:before {
-                width: 184px;
-                height: 163px;
-                background: url(../native/glambox/image/frame-read-now.png) no-repeat;
-                background-size: 100% auto;
+                max-width: 184px;
+                max-height: 163px;
+                background-image: url(../native/glambox/image/frame-read-now.png);
             }
         }
     }
