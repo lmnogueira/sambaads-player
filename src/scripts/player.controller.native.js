@@ -175,10 +175,11 @@ SambaAdsPlayerControllerNative = function (){
 
 				self.currentData = {
 					id: videoType[videoId],
-					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)]
+					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)],
 				};
 
 			JWplayerArea.addClass(self.currentData.style);
+			frameTrigger.addClass(self.currentData.id);
 
 			var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
 				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
@@ -203,18 +204,18 @@ SambaAdsPlayerControllerNative = function (){
 					event.preventDefault();
 					window.open(vastData.click_url);
 				});
+			});
 
-				frameClose.on('click', function(event){
-					event.preventDefault();
-					closeActive = false;
-					JWplayerArea.removeClass('active-native-frame');
-					glamboxFrame.removeClass('active-native-frame');
-					frameClose.removeClass('active');
+			frameClose.on('click', function(event){
+				event.preventDefault();
+				closeActive = false;
+				JWplayerArea.removeClass('active-native-frame');
+				glamboxFrame.removeClass('active-native-frame');
+				frameClose.removeClass('active');
 
-					window.setTimeout(function(){
-						videoTitleBar.removeClass('inactive');
-					},2500);
-				});
+				window.setTimeout(function(){
+					videoTitleBar.removeClass('inactive');
+				},2500);
 			});
 		};
 

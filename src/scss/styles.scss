@@ -488,7 +488,6 @@
 
     .frame-trigger {
         width: 32%;
-        max-width: 175px;
         max-height: 90%;
         margin: auto;
         position: absolute;
@@ -511,6 +510,7 @@
             right: 16px;
             bottom: 0;
             left: 16px;
+            margin: auto;
             position: absolute;
 
             @media only screen and (max-width: 321px) {
@@ -519,6 +519,32 @@
             }
         }
 
+        &.glam_box_frame {
+            &:before {
+                width: 179px;
+                height: 195px;
+                background: url(../native/glambox/image/frame-subscribe.png) no-repeat;
+                background-size: 100% auto;
+            }
+        }
+
+        &.glam_mag_frame {
+            &:before {
+                width: 171px;
+                height: 130px;
+                background: url(../native/glambox/image/frame-receive.png) no-repeat;
+                background-size: 100% auto;
+            }
+        }
+
+        &.glam_club_frame {
+            &:before {
+                width: 184px;
+                height: 163px;
+                background: url(../native/glambox/image/frame-read-now.png) no-repeat;
+                background-size: 100% auto;
+            }
+        }
     }
 
 
