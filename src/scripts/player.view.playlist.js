@@ -74,15 +74,15 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	self.cleanPlaylist();
 	self.playlist = options.playlist;
 
-	for (var i=0; i<self.playlist.length; i++){
-		if(self.playlist[i].sponsored){
-			break;
-		}
-	}
+	// for (var i=0; i<self.playlist.length; i++){
+	// 	if(self.playlist[i].sponsored){
+	// 		break;
+	// 	}
+	// }
 
-	if(self.playlist[i] && self.playlist[i].sponsored){
-	  	self.playlist.move(i,0);
-	}
+	// if(self.playlist[i] && self.playlist[i].sponsored){
+	//   	self.playlist.move(i,0);
+	// }
 
 	self.playlist.forEach(function(item){
 
