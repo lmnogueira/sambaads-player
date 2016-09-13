@@ -161,8 +161,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			var videoType = {
 					'60474': 'glam_box_frame',
-					'60475': 'glam_mag_frame',
-					'60476': 'glam_club_frame'
+					'60475': 'glam_club_frame',
+					'60476': 'glam_mag_frame'
 				},
 				glamboxRandon = {
 					styles: [
