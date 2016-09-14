@@ -169,8 +169,7 @@ SambaAdsPlayerControllerNative = function (){
 				glamboxRandon = {
 					styles: [
 						'type-1',
-						'type-2',
-						'type-3'
+						'type-2'
 					]
 				},
 				frameTrigger = $('.frame-trigger');
