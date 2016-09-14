@@ -158,6 +158,7 @@ SambaAdsPlayerControllerNative = function (){
 				JWplayerArea.removeClass('native-frame');
 				frameClose.removeClass('active');
 				videoTitleBar.removeClass('inactive');
+				self.nativeTimerTrigger = function(){};
 			};
 
 			var videoType = {
@@ -247,7 +248,6 @@ SambaAdsPlayerControllerNative = function (){
 		var ownerId = e.detail.data.owner_id,
 			videoId = e.detail.data.media_id;
 
-
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 
@@ -335,7 +335,7 @@ SambaAdsPlayerControllerNative = function (){
 			self.setAdTimeout(2000, beforeAd, callbackAd);
 		}
 
-		//if(ownerId === 207) {
+		//if(ownerId === 150) {
 		if(ownerId === 38) {
 			glamboxFrame(videoId);
 		}
@@ -386,7 +386,7 @@ SambaAdsPlayerControllerNative = function (){
 	self.sendTrack = function(url){
 		if(self.onceTrigger != url){
 			self.onceTrigger = url;
-			$.get( url );	
+			$.get( url );
 		}
 	};
 
@@ -425,6 +425,8 @@ SambaAdsPlayerControllerNative = function (){
 		clearTimeout(showAdTimeout);
 		displayOverlay.removeClass('active-native');
 		self.stopNativeFunction(e);
+		self.nativeTimerTrigger = function(event){};
+		self.stopNativeFunction = function(event){};
 	};
 
 	self.hoverNative = function(e){
