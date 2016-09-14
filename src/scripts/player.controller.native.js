@@ -442,7 +442,9 @@ SambaAdsPlayerControllerNative = function (){
 	});
 
 	self.nativeTimer = function(event){
-		self.nativeTimerTrigger(event);
+		if(self.nativeTimerTrigger) {
+			self.nativeTimerTrigger(event);
+		}
 	};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, self.hoverNative);
