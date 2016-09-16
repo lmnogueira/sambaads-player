@@ -423,7 +423,11 @@ SambaAdsPlayerControllerNative = function (){
 	self.stopNative = function(e){
 		clearTimeout(showAdTimeout);
 		displayOverlay.removeClass('active-native');
-		self.stopNativeFunction(e);
+
+		if(self.stopNativeFunction){
+			self.stopNativeFunction(e);
+		}
+		
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 	};
