@@ -152,7 +152,7 @@ SambaAdsPlayerControllerNative = function (){
 				}
 			};
 
-			self.stopNativeFunction = function() {
+			self.stopNativeFunction = function(event) {
 				JWplayerArea.removeClass('active-native-frame');
 				glamboxFrame.removeClass('active-native-frame');
 				JWplayerArea.removeClass('native-frame');
@@ -424,10 +424,8 @@ SambaAdsPlayerControllerNative = function (){
 		clearTimeout(showAdTimeout);
 		displayOverlay.removeClass('active-native');
 
-		if(self.stopNativeFunction){
-			self.stopNativeFunction(e);
-		}
-		
+		self.stopNativeFunction(e);
+
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 	};
