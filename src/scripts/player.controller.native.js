@@ -341,7 +341,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		//if(ownerId === 150) {
 		//if(ownerId === 38) {
-		if(self.video.LR_VERTICALS === 'FEMININO'){
+		if("FEMININO,FASHION".indexOf(self.video.LR_VERTICALS) >= 0){
 			glamboxFrame(videoId);
 		}
 	};
