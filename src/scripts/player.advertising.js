@@ -43,9 +43,9 @@ SambaAdsPlayerAdvertising = function (){
 				e.detail.data.playAd(tagUrl);
  			}
 
- 			if(self.playingNow.sponsored){
+ 			//if(self.playingNow.sponsored){
  				SambaAdsPlayerMessageBroker().send(Event.NATIVE_START, self.playingNow);
- 			}
+ 			//}
  		}
  	});
 

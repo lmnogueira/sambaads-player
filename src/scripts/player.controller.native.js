@@ -161,11 +161,15 @@ SambaAdsPlayerControllerNative = function (){
 				self.nativeTimerTrigger = function(){};
 			};
 
-			var videoType = {
-					'60474': 'glam_box_frame',
-					'60475': 'glam_club_frame',
-					'60476': 'glam_mag_frame'
-				},
+			// var videoType = {
+			// 		'60474': 'glam_box_frame',
+			// 		'60475': 'glam_club_frame',
+			// 		'60476': 'glam_mag_frame'
+			// 	},
+			var videoType = [
+					'glam_box_frame',
+					'glam_club_frame'
+				],
 				glamboxRandon = {
 					styles: [
 						'type-1',
@@ -175,7 +179,7 @@ SambaAdsPlayerControllerNative = function (){
 				frameTrigger = $('.frame-trigger');
 
 				self.currentData = {
-					id: videoType[videoId],
+					id: videoType[Math.floor(Math.random() * videoType.length)],//[videoId],
 					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)],
 				};
 
@@ -243,6 +247,7 @@ SambaAdsPlayerControllerNative = function (){
 
 	self.startNative = function(e){
 		self.video = e.detail.data;
+
 
 		var ownerId = e.detail.data.owner_id,
 			videoId = e.detail.data.media_id;
@@ -335,7 +340,8 @@ SambaAdsPlayerControllerNative = function (){
 		}
 
 		//if(ownerId === 150) {
-		if(ownerId === 38) {
+		//if(ownerId === 38) {
+		if(self.video.LR_VERTICALS === 'FEMININO'){
 			glamboxFrame(videoId);
 		}
 	};
