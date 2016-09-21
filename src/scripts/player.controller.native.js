@@ -140,13 +140,13 @@ SambaAdsPlayerControllerNative = function (){
 					if(currentTime >= 1) {
 						JWplayerArea.addClass('native-frame');
 					}
-					if(currentTime == 5) {
+					if(currentTime == 10) {
 						self.trackImpression(currentVastData.impression_url);
 						JWplayerArea.addClass('active-native-frame');
 						glamboxFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
 					}
-					if(currentTime >= 8) {
+					if(currentTime >= 14) {
 						frameClose.addClass('active');
 					}
 				}
