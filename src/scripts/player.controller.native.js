@@ -341,9 +341,15 @@ SambaAdsPlayerControllerNative = function (){
 
 		//if(ownerId === 150) {
 		//if(ownerId === 38) {
-		if("FEMININO,FASHION".indexOf(self.video.LR_VERTICALS) >= 0){
-			glamboxFrame(videoId);
-		}
+
+			can_publisher_play = "e7a0e7ece4bf9e68a0656c09ce1479a0,97faba17c7747183dc86c29e40f1adad,949fe90cced05c43bd73410701dc198d,092ac38067a00fa2a5c3335c61565cc1,15663c838a3846e8c06e25a69b89f276".indexOf(self.client.hash_code) >= 0;
+			can_vertical_play = "FEMININO,FASHION,LIFESTYLE,GASTRONOMIA,SAUDE_E_FITNESS".indexOf(self.video.LR_VERTICALS) >= 0;
+
+			if(can_publisher_play || can_vertical_play){
+				glamboxFrame(videoId);
+			}
+		
+
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
