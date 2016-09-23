@@ -278,6 +278,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
 
+			console.log(currentFrameType);
+
 			frameTrigger.addClass(currentFrameType);
 
 			var tags = self.video.LR_TAGS + ",native," + currentFrameType + ",",
@@ -431,7 +433,7 @@ SambaAdsPlayerControllerNative = function (){
 
 
 		// Check is InfoMoney hash_code ca04f15a06527c725b9915e91c860e8d
-		self.client.hash_code = 'ca04f15a06527c725b9915e91c860e8d';
+		//self.client.hash_code = 'ca04f15a06527c725b9915e91c860e8d';
 		if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
 			toroRadarFrame(videoId);
 		} else if(can_publisher_play || can_vertical_play) {

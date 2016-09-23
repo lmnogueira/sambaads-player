@@ -633,8 +633,8 @@
 
         &.ebook {
             &:before {
-                max-width: 190px;
-                max-height: 271px;
+                max-width: 175px;
+                max-height: 238px;
                 background-image: url(../native/toro-radar/image/text-3.png);
             }
         }
@@ -650,7 +650,25 @@
     .frame-bottom-text {
     	height: 27px;
         width: 287px;
+        max-width: 70%;
+        bottom: 4%;
+        left: 20px;
         background: url(../native/toro-radar/image/frame-bottom-text.png) no-repeat;
-        background-size: auto 100%;
+        background-size: 100% auto;
+    }
+
+    @media screen and (max-width: 320px) {
+        .frame-bottom-text {
+            bottom: 0;
+            max-width: 65%;
+            left: 10px;
+        }
+
+        .frame-close {
+            top: 6px;
+            right: 6px;
+            width: 10px;
+            height: 10px;
+        }
     }
 }
