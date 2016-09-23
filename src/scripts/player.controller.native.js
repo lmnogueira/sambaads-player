@@ -129,7 +129,7 @@ SambaAdsPlayerControllerNative = function (){
 
 			var JWplayerArea = $('#jw_sambaads_player'),
 				glamboxFrame = $('#glambox-frame'),
-				frameClose = $('.frame-close'),
+				frameClose = glamboxFrame.find('.frame-close'),
 				videoTitleBar = $('#video-title-bar'),
 				closeActive = true;
 
@@ -139,6 +139,7 @@ SambaAdsPlayerControllerNative = function (){
 
 					if(currentTime >= 1) {
 						JWplayerArea.addClass('native-frame');
+						JWplayerArea.addClass('glambox-player-frame');
 					}
 					if(currentTime == 10) {
 						self.trackImpression(currentVastData.impression_url);
@@ -156,6 +157,7 @@ SambaAdsPlayerControllerNative = function (){
 				JWplayerArea.removeClass('active-native-frame');
 				glamboxFrame.removeClass('active-native-frame');
 				JWplayerArea.removeClass('native-frame');
+				JWplayerArea.removeClass('glambox-player-frame');
 				frameClose.removeClass('active');
 				videoTitleBar.removeClass('inactive');
 				self.nativeTimerTrigger = function(){};
@@ -224,12 +226,97 @@ SambaAdsPlayerControllerNative = function (){
 			});
 		};
 
-	//
-	// var wineNative = function(){
-	// 		self.loadVastTag(tagUrl, function(vastData, data)) {
-	//
-	// 		};
-	// 	};
+	var toroRadarFrame = function(videoId) {
+			self.setCurrentNative($('#toro-frame'));
+
+			var JWplayerArea = $('#jw_sambaads_player'),
+				toroRadarAdFrame = $('#toro-frame'),
+				frameClose = toroRadarAdFrame.find('.frame-close'),
+				videoTitleBar = $('#video-title-bar'),
+				closeActive = true;
+
+			self.nativeTimerTrigger = function(event) {
+				if(closeActive) {
+					var currentTime = parseInt(event.detail.data.position);
+
+					if(currentTime >= 1) {
+						JWplayerArea.addClass('native-frame');
+						JWplayerArea.addClass('toro-player-frame');
+					}
+					if(currentTime == 10) {
+						self.trackImpression(currentVastData.impression_url);
+						JWplayerArea.addClass('active-native-frame');
+						toroRadarAdFrame.addClass('active-native-frame');
+						videoTitleBar.addClass('inactive');
+					}
+					if(currentTime >= 14) {
+						frameClose.addClass('active');
+					}
+				}
+			};
+
+			self.stopNativeFunction = function(event) {
+				JWplayerArea.removeClass('active-native-frame');
+				toroRadarAdFrame.removeClass('active-native-frame');
+				JWplayerArea.removeClass('native-frame');
+				JWplayerArea.removeClass('toro-player-frame');
+				frameClose.removeClass('active');
+				videoTitleBar.removeClass('inactive');
+				self.nativeTimerTrigger = function(){};
+			};
+
+			var frameType = [
+					'start-investing',
+					'today-scenario',
+					'ebook'
+				],
+				frameTrigger = $('.frame-trigger');
+
+				self.currentData = {
+					id: videoId
+				};
+
+			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
+
+			frameTrigger.addClass(currentFrameType);
+
+			var tags = self.video.LR_TAGS + ",native," + currentFrameType + ",",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				 		 "sz=640x360" +
+				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+				 		 "&cust_params=" + custom_params +
+				 		 "&cmsid=" + self.video.dfp_partner_id +
+				 		 "&vid=" + self.video.hashed_code +
+				 		 "&correlator=" + new Date().getTime();
+
+			self.loadVastTag(tagUrl, function(vastData, data){
+				frameTrigger.off();
+
+				currentVastData = vastData;
+
+				console.log('VAST LOADED');
+
+				frameTrigger.on('click', function(event){
+					event.preventDefault();
+					window.open(vastData.click_url);
+				});
+			});
+
+			frameClose.on('click', function(event){
+				event.preventDefault();
+				closeActive = false;
+				JWplayerArea.removeClass('active-native-frame');
+				toroRadarAdFrame.removeClass('active-native-frame');
+				frameClose.removeClass('active');
+
+				window.setTimeout(function(){
+					videoTitleBar.removeClass('inactive');
+				},2500);
+			});
+		};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
 		if(typeof beforeAd === 'function') {
@@ -339,17 +426,17 @@ SambaAdsPlayerControllerNative = function (){
 			self.setAdTimeout(2000, beforeAd, callbackAd);
 		}
 
-		//if(ownerId === 150) {
-		//if(ownerId === 38) {
+		can_publisher_play = "e7a0e7ece4bf9e68a0656c09ce1479a0,97faba17c7747183dc86c29e40f1adad,949fe90cced05c43bd73410701dc198d,092ac38067a00fa2a5c3335c61565cc1,15663c838a3846e8c06e25a69b89f276".indexOf(self.client.hash_code) >= 0;
+		can_vertical_play = "FEMININO,FASHION,LIFESTYLE,GASTRONOMIA,SAUDE_E_FITNESS".indexOf(self.video.LR_VERTICALS) >= 0;
 
-			can_publisher_play = "e7a0e7ece4bf9e68a0656c09ce1479a0,97faba17c7747183dc86c29e40f1adad,949fe90cced05c43bd73410701dc198d,092ac38067a00fa2a5c3335c61565cc1,15663c838a3846e8c06e25a69b89f276".indexOf(self.client.hash_code) >= 0;
-			can_vertical_play = "FEMININO,FASHION,LIFESTYLE,GASTRONOMIA,SAUDE_E_FITNESS".indexOf(self.video.LR_VERTICALS) >= 0;
 
-			if(can_publisher_play || can_vertical_play){
-				glamboxFrame(videoId);
-			}
-		
-
+		// Check is InfoMoney hash_code ca04f15a06527c725b9915e91c860e8d
+		self.client.hash_code = 'ca04f15a06527c725b9915e91c860e8d';
+		if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
+			toroRadarFrame(videoId);
+		} else if(can_publisher_play || can_vertical_play) {
+			glamboxFrame(videoId);
+		}
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
@@ -418,8 +505,12 @@ SambaAdsPlayerControllerNative = function (){
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-					el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
-					vastData.click_url = el.nodeValue;
+					vastData.click_url = 'http://www.ycontent.com.br';
+
+					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
+						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
+						vastData.click_url = el.nodeValue;
+					}
 				}
 
 				if(typeof callback === 'function') {
