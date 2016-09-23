@@ -282,7 +282,7 @@ SambaAdsPlayerControllerNative = function (){
 
 			frameTrigger.addClass(currentFrameType);
 
-			var tags = self.video.LR_TAGS + ",native," + currentFrameType + ",",
+			var tags = self.video.LR_TAGS + ",native,toro_frame_" + currentFrameType + ",",
 				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
