@@ -12,8 +12,11 @@ SambaAdsPlayerConfigurator = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
 		self.metadata = e.detail.data;
-		self.configurePlaylist();
+		self.resolveParams();
 
+		self.configureDimensions();
+
+		self.configurePlaylist();
 		self.configurePlayer();
 		self.configureClient();
 		self.configureUser();
@@ -29,6 +32,53 @@ SambaAdsPlayerConfigurator = function (){
 		}
 	});
 };
+
+SambaAdsPlayerConfigurator.prototype.resolveParams = function(){
+	this.configuration.player.params = this.parseQueryString(window.location.href);
+};
+
+SambaAdsPlayerConfigurator.prototype.configureDimensionsPlayer = function(){
+	this.configuration.player.width = this.calculatePlayerWidth();
+	this.configuration.player.height = this.calculatePlayerHeight();
+	this.configuration.player.pertmitWidthAutoStart = this.pertmitWidthAutoStart;
+}
+
+SambaAdsPlayerConfigurator.prototype.configureDimensionsPlaylist = function(){
+
+	this.configuration.playlist.position = "right";
+	this.configuration.playlist.position = this.configuration.player.params.plp || this.metadata.player_info.playlist_position;
+
+	if(this.configuration.playlist.position === "r" || this.configuration.playlist.position === "right"){
+		this.configuration.playlist.position = "right";
+		this.configuration.playlist.playlistHeight = this.calculatePlayerHeight();
+		this.configuration.playlist.playlistWidth = this.configuration.player.params.plw || 300;
+	}
+	else if(this.configuration.playlist.position === "bv" || this.configuration.playlist.position === "bottom-vertical"){
+		this.configuration.playlist.position = "bottom-vertical";
+		this.configuration.playlist.playlistHeight = 150;
+		this.configuration.playlist.playlistWidth = 0;
+	}
+	else if(this.configuration.playlist.position === "bh" || this.configuration.playlist.position === "bottom-horizontal"){
+		this.configuration.playlist.position = "bottom-horizontal";
+		this.configuration.playlist.playlistWidth = 0;
+		this.configuration.playlist.playlistHeight = 143;
+	}
+
+	if ($(document).height() >= $(document).width()) {
+		this.configuration.playlist.position = "bottom-vertical";
+		this.configuration.playlist.playlistStyle = "dark";
+	}
+}
+
+
+SambaAdsPlayerConfigurator.prototype.configureDimensions = function(){
+	var self = this;
+
+	this.configureDimensionsPlaylist();
+	this.configureDimensionsPlayer();
+
+	console.log(self.configuration);
+}
 
 SambaAdsPlayerConfigurator.prototype.generateGuid = function() {
 	function s4() {
@@ -94,23 +144,42 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerWidth = function(){
 	player_width = $( document ).width();
 
 	if(self.metadata.playlist.length > 1){
+		console.log(self.configuration.playlist.playlistWidth);
 		player_width = player_width - self.configuration.playlist.playlistWidth;
 	};
 
     return player_width;
 };
 
+SambaAdsPlayerConfigurator.prototype.parseQueryString = function( url ) {
+
+        var queryString = url.split("?")[1],
+            params = {}, queries, temp, i, l;
+
+        // Split into key/value pairs
+        try{
+            queries = queryString.split("&");
+
+            // Convert the array of strings into an object
+            for ( i = 0, l = queries.length; i < l; i++ ) {
+                temp = queries[i].split('=');
+                params[temp[0]] = temp[1];
+            }
+        } catch (e){
+            //console.log(e);
+        }
+
+        return params;
+};
+
 SambaAdsPlayerConfigurator.prototype.configurePlayer = function(){
-	var self = this; 
+	var self = this;
 
 	var url = document.referrer || window.location.href
     var a = $('<a>', { href:url } )[0];
 
     self.configuration.player.hostname = a.hostname;
     self.configuration.player.url = encodeURIComponent(url);
-	self.configuration.player.width = self.calculatePlayerWidth();
-	self.configuration.player.height = self.calculatePlayerHeight();
-	self.configuration.player.pertmitWidthAutoStart = self.pertmitWidthAutoStart;
 	self.configuration.player.player_info = self.metadata.player_info;
 };
 
@@ -128,43 +197,10 @@ SambaAdsPlayerConfigurator.prototype.configureUser = function(){
 SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(){
 	var self = this;
 
-	//legacy support
-	var discoveryPlaylistInfo = function(){
-		var playlistInfo = {};
+	self.configuration.playlist.playlistStyle = self.configuration.player.params.tm || self.metadata.player_info.theme;
+	self.configuration.playlist.playlist = self.metadata.playlist;
 
-		if ($(document).height() >= $(document).width()) {
-			playlistInfo.plp = "bottom-vertical";
-			playlistInfo.tm = "dark";
-		} else {
-			playlistInfo.plp = "right";
-			playlistInfo.tm = "dark";
-		}
-		return playlistInfo;
-	};
-
-	options = {
-
-			position: self.metadata.player_info.playlist_position || discoveryPlaylistInfo().plp,
-			playlistStyle: self.metadata.player_info.theme || discoveryPlaylistInfo().tm,
-			playlist: self.metadata.playlist
-	};
-
-	if (options.position == "right") {
-		options.playlistHeight = self.calculatePlayerHeight();
-		options.playlistWidth = self.metadata.player_info.playlist_width || 280;
-
-	} else if (options.position == "bottom-vertical") {
-		options.playlistHeight = self.metadata.player_info.playlist_height || 150;
-		options.playlistWidth = 0;
-
-	} else if (options.position == "bottom-horizontal") {
-		options.playlistWidth = 0;
-		options.playlistHeight = 143;
-		self.metadata.player_info.playlist_height = options.playlistHeight;
-	}
-
-	self.configuration.playlist = options;
-	SambaAdsPlayerMessageBroker().send(Event.PLAYLIST_CONFIGURED, options);
+	SambaAdsPlayerMessageBroker().send(Event.PLAYLIST_CONFIGURED, self.configuration.playlist);
 };
 
 new SambaAdsPlayerConfigurator();

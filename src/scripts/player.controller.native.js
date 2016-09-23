@@ -186,8 +186,8 @@ SambaAdsPlayerControllerNative = function (){
 			JWplayerArea.addClass(self.currentData.style);
 			frameTrigger.addClass(self.currentData.id);
 
-			var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+			var tags = self.video.dfp_tags + ",native," + self.currentData.id + "," + self.currentData.style,
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +

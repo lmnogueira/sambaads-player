@@ -154,8 +154,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 					if(index == 0){
 						self.playlist[index].LR_TAGS = self.playlist[index].LR_TAGS.replace("autostart,smartplayer,ggladxoff","smartplayer");
 					}
-					
-				
+
 					SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
 					SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 			} else {
