@@ -434,9 +434,10 @@ SambaAdsPlayerControllerNative = function (){
 
 		// Check is InfoMoney hash_code ca04f15a06527c725b9915e91c860e8d
 		//self.client.hash_code = 'ca04f15a06527c725b9915e91c860e8d';
-		if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
-			toroRadarFrame(videoId);
-		} else if(can_publisher_play || can_vertical_play) {
+		//if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
+			//toroRadarFrame(videoId);
+		//} else
+		if(can_publisher_play || can_vertical_play) {
 			glamboxFrame(videoId);
 		}
 	};
