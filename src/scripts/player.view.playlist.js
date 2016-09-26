@@ -12,8 +12,10 @@ SambaAdsPlayerViewPlaylist = function (){
 
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
-		self.player_width = e.detail.data.width;
-		self.player_height = e.detail.data.height;
+		if (e.detail){
+			self.player_width = e.detail.data.width;
+			self.player_height = e.detail.data.height;			
+		}
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
