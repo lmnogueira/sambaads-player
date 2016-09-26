@@ -58,8 +58,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			glamboxTrigger.addClass(self.currentData.style);
 
-			var tags = self.video.LR_TAGS + ",native," + self.currentData.id + "," + self.currentData.style,
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+			var tags = self.video.dfp_tags + ",native," + self.currentData.id + "," + self.currentData.style,
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
@@ -88,8 +88,8 @@ SambaAdsPlayerControllerNative = function (){
 					 '60475': 'glam_mag_new',
 					 '60476': 'glam_club_new'
 				},
-				tags = self.video.LR_TAGS + ",native," + videoType[videoId] + ",new_style",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+				tags = self.video.dfp_tags + ",native," + videoType[videoId] + ",new_style",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
 				tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
 				 		 "&iu=" + self.client.ad_unit_id +
@@ -282,8 +282,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			frameTrigger.addClass(currentFrameType);
 
-			var tags = self.video.LR_TAGS + ",native,toro_frame_" + currentFrameType + ",",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+			var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + ",",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
@@ -386,8 +386,8 @@ SambaAdsPlayerControllerNative = function (){
 
 					var custom_params = encodeURIComponent(
 											"duration=&CNT_Position=preroll&category=" +
-											self.video.LR_VERTICALS + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" +
-											self.video.LR_TAGS +
+											self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" +
+											self.video.dfp_tags +
 											",native," +
 											videoId
 										);
@@ -429,7 +429,7 @@ SambaAdsPlayerControllerNative = function (){
 		}
 
 		can_publisher_play = "e7a0e7ece4bf9e68a0656c09ce1479a0,97faba17c7747183dc86c29e40f1adad,949fe90cced05c43bd73410701dc198d,092ac38067a00fa2a5c3335c61565cc1,15663c838a3846e8c06e25a69b89f276".indexOf(self.client.hash_code) >= 0;
-		can_vertical_play = "FEMININO,FASHION,LIFESTYLE,GASTRONOMIA,SAUDE_E_FITNESS".indexOf(self.video.LR_VERTICALS) >= 0;
+		can_vertical_play = "FEMININO,FASHION,LIFESTYLE,GASTRONOMIA,SAUDE_E_FITNESS".indexOf(self.video.category_name) >= 0;
 
 
 		// Check is InfoMoney hash_code ca04f15a06527c725b9915e91c860e8d

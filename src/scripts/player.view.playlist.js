@@ -151,8 +151,9 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 
 					self.playlist[index].running_youtube = false;
 
+					//REVER FIX PLAY FIRST PLAYLIST ITEM WHEN USER CLICK
 					if(index == 0){
-						self.playlist[index].LR_TAGS = self.playlist[index].LR_TAGS.replace("autostart,smartplayer,ggladxoff","smartplayer");
+						self.playlist[index].dfp_tags = self.playlist[index].dfp_tags.replace("autostart,smartplayer,ggladxoff","smartplayer");
 					}
 
 					SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
