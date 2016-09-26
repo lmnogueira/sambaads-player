@@ -200,7 +200,7 @@ SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(){
 
 	self.configuration.playlist.playlistStyle = self.configuration.player.params.tm || self.metadata.player_info.theme;
 	self.configuration.playlist.playlist = self.metadata.playlist;
-	self.configuration.playlist.playlist = [];
+	//self.configuration.playlist.playlist = [];
 
 	SambaAdsPlayerMessageBroker().send(Event.PLAYLIST_CONFIGURED, self.configuration.playlist);
 };
