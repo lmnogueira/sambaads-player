@@ -64,9 +64,11 @@ SambaAdsPlayerConfigurator.prototype.configureDimensionsPlaylist = function(){
 		this.configuration.playlist.playlistHeight = 143;
 	}
 
-	if ($(document).height() >= $(document).width()) {
+	if( ($(document).height() >= $(document).width()) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		this.configuration.playlist.position = "bottom-vertical";
 		this.configuration.playlist.playlistStyle = "dark";
+		this.configuration.playlist.playlistHeight = 150;
+		this.configuration.playlist.playlistWidth = 0;
 	}
 }
 
