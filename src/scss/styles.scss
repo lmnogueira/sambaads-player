@@ -441,35 +441,47 @@
         }
     }
 
-    &.type-1 {
-        &.native-frame {
-            &.active-native-frame {
-                background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
-                background-size: 100% 100%;
+    &.glambox-player-frame {
+        &.type-1 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
+                    background-size: 100% 100%;
+                }
+            }
+        }
+
+        &.type-2 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: #fff url(../native/glambox/image/frame-bg-2.jpg) no-repeat;
+                    background-size: 100% 100%;
+                }
+            }
+        }
+
+        &.type-3 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
+                    background-size: 100% 100%;
+                }
             }
         }
     }
 
-    &.type-2 {
-        &.native-frame {
-            &.active-native-frame {
-                background: #fff url(../native/glambox/image/frame-bg-2.jpg) no-repeat;
-                background-size: 100% 100%;
-            }
-        }
-    }
 
-    &.type-3 {
+    &.toro-player-frame {
         &.native-frame {
             &.active-native-frame {
-                background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
+                background: #fff url(../native/toro-radar/image/background.png) no-repeat;
                 background-size: 100% 100%;
             }
         }
     }
 }
 
-.glambox-frame {
+.frame-ad {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -522,32 +534,7 @@
                 left: 4px;
             }
         }
-
-        &.glam_box_frame {
-            &:before {
-                max-width: 179px;
-                max-height: 195px;
-                background-image: url(../native/glambox/image/frame-subscribe.png);
-            }
-        }
-
-        &.glam_club_frame {
-            &:before {
-                max-width: 171px;
-                max-height: 130px;
-                background-image: url(../native/glambox/image/frame-receive.png);
-            }
-        }
-
-        &.glam_mag_frame {
-            &:before {
-                max-width: 184px;
-                max-height: 163px;
-                background-image: url(../native/glambox/image/frame-read-now.png);
-            }
-        }
     }
-
 
     .frame-close {
         width: 18px;
@@ -586,4 +573,102 @@
     display: block;
     margin: 0;
     @extend .ir;
+}
+
+.glambox-frame {
+    .frame-trigger {
+        &.glam_box_frame {
+            &:before {
+                max-width: 179px;
+                max-height: 195px;
+                background-image: url(../native/glambox/image/frame-subscribe.png);
+            }
+        }
+
+        &.glam_club_frame {
+            &:before {
+                max-width: 171px;
+                max-height: 130px;
+                background-image: url(../native/glambox/image/frame-receive.png);
+            }
+        }
+
+        &.glam_mag_frame {
+            &:before {
+                max-width: 184px;
+                max-height: 163px;
+                background-image: url(../native/glambox/image/frame-read-now.png);
+            }
+        }
+    }
+
+    .frame-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .frame-bottom-text {
+        background: url(../native/glambox/image/frame-bottom-text.png) no-repeat;
+        background-size: 100% auto;
+    }
+}
+
+.toro-frame {
+    .frame-trigger {
+        &.start-investing {
+            &:before {
+                max-width: 181px;
+            	max-height: 146px;
+                background-image: url(../native/toro-radar/image/text-1.png);
+            }
+        }
+
+        &.today-scenario {
+            &:before {
+                max-width: 182px;
+                max-height: 162px;
+                background-image: url(../native/toro-radar/image/text-2.png);
+            }
+        }
+
+        &.ebook {
+            &:before {
+                max-width: 175px;
+                max-height: 238px;
+                background-image: url(../native/toro-radar/image/text-3.png);
+            }
+        }
+    }
+
+    .frame-close {
+        width: 16px;
+        height: 16px;
+        background: url(../native/toro-radar/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .frame-bottom-text {
+    	height: 27px;
+        width: 287px;
+        max-width: 70%;
+        bottom: 4%;
+        left: 20px;
+        background: url(../native/toro-radar/image/frame-bottom-text.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    @media screen and (max-width: 320px) {
+        .frame-bottom-text {
+            bottom: 0;
+            max-width: 65%;
+            left: 10px;
+        }
+
+        .frame-close {
+            top: 6px;
+            right: 6px;
+            width: 10px;
+            height: 10px;
+        }
+    }
 }
