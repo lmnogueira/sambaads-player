@@ -78,8 +78,6 @@ SambaAdsPlayerConfigurator.prototype.configureDimensions = function(){
 
 	this.configureDimensionsPlaylist();
 	this.configureDimensionsPlayer();
-
-	console.log(self.configuration);
 }
 
 SambaAdsPlayerConfigurator.prototype.generateGuid = function() {

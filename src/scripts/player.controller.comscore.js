@@ -4,14 +4,16 @@ SambaAdsPlayerControllerComscore = function (){
 	var self = this;
 
 	self.trackLoad = function(e){
-		self.computeComscore("04","sambaads_content");
-		self.computeComscore("01","sambaads_video_advertising");
+		setTimeout(function(){
+			self.computeComscore("04",self.media.category_name);
+			self.computeComscore("01","sambaads_video_advertising");
+		}, 500);
 	};
 
 	self.trackPlay = function(e){
 		if(self.currentId != self.media.media_id){
 			self.currentId = self.media.media_id;
-			self.computeComscore("04","sambaads_content");
+			self.computeComscore("04", self.media.category_name);
 		}
 	};
 
