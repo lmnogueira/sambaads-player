@@ -20,9 +20,9 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN npm install && \
     npm install ./app && \
-    npm install -g forever && \    
-    npm install -g imagemin-jpegtran && \
-    npm install -g gulp --save-dev
+    npm install forever && \
+    npm install imagemin-jpegtran && \
+    npm install gulp --save-dev
 
 RUN gulp $NODE_ENV
 
