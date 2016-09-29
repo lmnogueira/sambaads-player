@@ -21,9 +21,8 @@ RUN apt-get update && \
     npm install app/ && \
     npm install -g gulp && \
     npm install -g forever && \
-    npm install -g imagemin-jpegtran && \
-    gulp $NODE_ENV
+    npm install -g imagemin-jpegtran
 
-CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
+CMD /usr/bin/gulp $NODE_ENV && NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT /usr/bin/forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
 
 EXPOSE $PORT
