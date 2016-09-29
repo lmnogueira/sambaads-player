@@ -20,8 +20,6 @@ RUN apt-get update && \
     npm install -g gulp && \
     npm install -g forever && \
     npm install -g imagemin-jpegtran && \
-    apt-get purge -y --auto-remove $buildDeps && \
-    rm -rf /var/lib/apt/lists/*
 
 RUN gulp $NODE_ENV 
 
