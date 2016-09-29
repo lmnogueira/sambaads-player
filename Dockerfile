@@ -19,7 +19,7 @@ RUN apt-get update && \
     apt-get install -y build-essential && \
     npm install -g gulp && \
     npm install -g forever && \
-    npm install -g imagemin-jpegtran && \
+    npm install -g imagemin-jpegtran
 
 RUN gulp $NODE_ENV 
 
