@@ -278,8 +278,6 @@ SambaAdsPlayerControllerNative = function (){
 
 			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
 
-			console.log(currentFrameType);
-
 			frameTrigger.addClass(currentFrameType);
 
 			var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + ",",
@@ -318,6 +316,110 @@ SambaAdsPlayerControllerNative = function (){
 					videoTitleBar.removeClass('inactive');
 				},2500);
 			});
+		};
+
+	var empiricusAd = function(videoId) {
+			var adsType = {
+					empiricusFrame: function(videoId) {
+						self.setCurrentNative($('#toro-frame'));
+
+						var JWplayerArea = $('#jw_sambaads_player'),
+							toroRadarAdFrame = $('#toro-frame'),
+							frameClose = toroRadarAdFrame.find('.frame-close'),
+							videoTitleBar = $('#video-title-bar'),
+							closeActive = true;
+
+						self.nativeTimerTrigger = function(event) {
+							if(closeActive) {
+								var currentTime = parseInt(event.detail.data.position);
+
+								if(currentTime >= 1) {
+									JWplayerArea.addClass('native-frame');
+									JWplayerArea.addClass('toro-player-frame');
+								}
+								if(currentTime == 10) {
+									self.trackImpression(currentVastData.impression_url);
+									JWplayerArea.addClass('active-native-frame');
+									toroRadarAdFrame.addClass('active-native-frame');
+									videoTitleBar.addClass('inactive');
+								}
+								if(currentTime >= 14) {
+									frameClose.addClass('active');
+								}
+							}
+						};
+
+						self.stopNativeFunction = function(event) {
+							JWplayerArea.removeClass('active-native-frame');
+							toroRadarAdFrame.removeClass('active-native-frame');
+							JWplayerArea.removeClass('native-frame');
+							JWplayerArea.removeClass('toro-player-frame');
+							frameClose.removeClass('active');
+							videoTitleBar.removeClass('inactive');
+							self.nativeTimerTrigger = function(){};
+						};
+
+						var frameType = [
+								'start-investing',
+								'today-scenario',
+								'ebook'
+							],
+							frameTrigger = $('.frame-trigger');
+
+							self.currentData = {
+								id: videoId
+							};
+
+						var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
+
+						frameTrigger.addClass(currentFrameType);
+
+						var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + ",",
+							custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+				 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+							 		 "sz=640x360" +
+							 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+							 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+							 		 "&cust_params=" + custom_params +
+							 		 "&cmsid=" + self.video.dfp_partner_id +
+							 		 "&vid=" + self.video.hashed_code +
+							 		 "&correlator=" + new Date().getTime();
+
+						self.loadVastTag(tagUrl, function(vastData, data){
+							frameTrigger.off();
+
+							currentVastData = vastData;
+
+							console.log('VAST LOADED');
+
+							frameTrigger.on('click', function(event){
+								event.preventDefault();
+								window.open(vastData.click_url);
+							});
+						});
+
+						frameClose.on('click', function(event){
+							event.preventDefault();
+							closeActive = false;
+							JWplayerArea.removeClass('active-native-frame');
+							toroRadarAdFrame.removeClass('active-native-frame');
+							frameClose.removeClass('active');
+
+							window.setTimeout(function(){
+								videoTitleBar.removeClass('inactive');
+							}, 2500);
+						});
+					},
+					empiricusLead: function(videoId) {
+
+					}
+				};
+
+			var adTypeKeys = Object.keys(adsType),
+				currentType = adTypeKeys[Math.floor(Math.random() * adTypeKeys.length)];
+
+			adsType[currentType](videoId);
 		};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
@@ -440,6 +542,8 @@ SambaAdsPlayerControllerNative = function (){
 		if(can_publisher_play || can_vertical_play) {
 			glamboxFrame(videoId);
 		}
+
+		empiricusAd(videoId);
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
