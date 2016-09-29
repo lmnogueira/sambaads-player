@@ -13,14 +13,16 @@ WORKDIR /app
 COPY . /app
 
 RUN npm set progress=false && \
-    npm install --global --progress=false gulp bower npm-cache && \
+    npm install --global --progress=false npm-cache && \
     echo '{ "allow_root": true }' > /root/.bowerrc
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN npm install && \
-    npm install -g forever && \
-    npm install -g imagemin-jpegtran
+    npm install ./app && \
+    npm install -g forever && \    
+    npm install -g imagemin-jpegtran && \
+    npm install -g gulp --save-dev
 
 RUN gulp $NODE_ENV
 
