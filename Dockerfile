@@ -23,14 +23,7 @@ RUN apt-get update && \
     apt-get purge -y --auto-remove $buildDeps && \
     rm -rf /var/lib/apt/lists/*
 
-RUN gulp $NODE_ENV && \
-    rm -rf /app/src && \
-    rm -rf /app/config && \
-    rm -rf /app/lib && \
-    rm -rf /app/circle.yml && \
-    rm -rf /app/docker-build.sh && \
-    rm -rf /app/docker-run.sh && \
-    rm -rf /app/Gemfile* 
+RUN gulp $NODE_ENV 
 
 CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
 
