@@ -17,10 +17,13 @@ RUN apt-get update && \
     curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
     apt-get install -y nodejs && \
     apt-get install -y build-essential && \
-    npm install -g gulp && \
-    npm install -g forever && \
-    npm install -g imagemin-jpegtran
+    npm install && \
+    npm install app/ && \
+    npm install gulp && \
+    npm install forever && \
+    npm install imagemin-jpegtran && \
+    gulp $NODE_ENV
 
-CMD gulp $NODE_ENV && NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
+CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
 
 EXPOSE $PORT
