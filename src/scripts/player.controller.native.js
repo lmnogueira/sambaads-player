@@ -341,15 +341,19 @@ SambaAdsPlayerControllerNative = function (){
 					empiricusLead: function(videoId) {
 						var $currentTrigger = $('#empiricus-trigger'),
 							$closeButton = $('#empiricus-lead-close'),
-							$insideClose = $('#empiricus-inside-close');
-							$leadArea = $('#empriricus-lead-area');
+							$insideClose = $('.inside-close');
+							$leadArea = $('#empriricus-lead-area'),
+							$sendLead = $('#send-lead'),
+							$leadSuccess = $('#lead-success'),
+							leadAreaContent = $('.lead-area-content');
 
 						var startLeadAd = function() {
 								self.nativeTimerTrigger = function(event) {
 									if(showClose) {
 										var currentTime = parseInt(event.detail.data.position);
 
-										if(currentTime === 10) {
+										//if(currentTime === 10) {
+										if(currentTime >= 4) {
 											self.trackImpression(currentVastData.impression_url);
 											$currentTrigger.addClass('active');
 										}
@@ -361,6 +365,7 @@ SambaAdsPlayerControllerNative = function (){
 
 								$currentTrigger.on('click', function(event){
 									event.preventDefault();
+									event.stopPropagation();
 									JWPlayer.pause();
 									//console.log(self);
 									console.log('clicked!');
@@ -372,18 +377,33 @@ SambaAdsPlayerControllerNative = function (){
 
 								$insideClose.on('click', function(event){
 									event.preventDefault();
+									event.stopPropagation();
 									$leadArea.removeClass('active');
-									JWPlayer.play();
+
+									setTimeout(function(){
+										JWPlayer.play();
+									}, 200);
 									console.log('inside-close')
 								});
 
 								$closeButton.on('click', function(event){
 									event.preventDefault();
+									event.stopPropagation();
 									showClose = false;
 
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
 									console.log('closed!');
+								});
+
+								$sendLead.on('click', function(event){
+									event.preventDefault();
+									event.stopPropagation();
+									leadAreaContent.removeClass('active');
+
+									setTimeout(function () {
+										$leadSuccess.addClass('active');
+									}, 300);
 								});
 							};
 
