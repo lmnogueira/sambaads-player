@@ -13,7 +13,7 @@ WORKDIR /app
 COPY . /app
 
 RUN apt-get update && \
-    apt-get install nodejs
+    apt-get install -y nodejs
     
 RUN npm install && \
     npm install ./app && \
