@@ -35,7 +35,8 @@
 
 .active-native {
     .glambox-new,
-    .wine-native {
+    .wine-native,
+    .native-item {
         &.current-native {
             opacity: 1;
             transform: scale(1);
@@ -670,5 +671,87 @@
             width: 10px;
             height: 10px;
         }
+    }
+}
+
+/* Empiricus Lead */
+
+.native-area {
+    .empiricus-lead {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 150;
+    }
+
+    .empiricus-trigger {
+        width: 268px;
+        height: 92px;
+        bottom: 57px;
+        right: 16px;
+        position: absolute;
+        background: url(../native/empiricus/image/empiricus-trigger.png) no-repeat;
+        background-size: 100% auto;
+        opacity: 0;
+        transform: scale(.8);
+        cursor: pointer;
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+    }
+
+    .empiricus-lead-close {
+        width: 16px;
+    	height: 16px;
+    	opacity: 0.74;
+        bottom: 140px;
+        right: 20px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        background-position: 50%;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 200ms linear;
+
+        &.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    .empriricus-lead-area {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #f7f7f7;
+        opacity: 0;
+        transform: scale(.8);
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+    }
+
+    .empiricus-inside-close {
+        width: 20px;
+        height: 20px;
+        background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+        background-size: 100% auto;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        pointer-events: all;
+        cursor: pointer;
     }
 }
