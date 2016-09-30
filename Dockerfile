@@ -1,4 +1,4 @@
-FROM node:slim
+FROM ubuntu
 
 ENV NODE_ENV production
 ENV NEW_RELIC_LOG /logs/newrelic.log
@@ -12,11 +12,14 @@ WORKDIR /app
 
 COPY . /app
 
+RUN apt-get update && \
+    apt-get install nodejs
+    
 RUN npm install && \
     npm install ./app && \
-    npm install forever && \
-    npm install imagemin-jpegtran && \
-    npm install gulp
+    npm install forever -g && \
+    npm install imagemin-jpegtran -g && \
+    npm install gulp -g
 
 CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
 
