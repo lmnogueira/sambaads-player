@@ -13,7 +13,11 @@ WORKDIR /app
 COPY . /app
 
 RUN apt-get update && \
-    apt-get install -y nodejs npm
+    apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get install -y build-essential && \
+    apt-get install -y npm
     
 RUN npm install && \
     npm install ./app && \
