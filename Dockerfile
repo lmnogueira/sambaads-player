@@ -7,9 +7,9 @@ RUN mkdir -p /app && \
     mkdir -p /pids && \
     mkdir -p /logs
 
-WORKDIR /app
+WORKDIR /base
 
-COPY . /app
+COPY . /base
 
 RUN apt-get update && \
     apt-get install -y build-essential && \
