@@ -25,6 +25,8 @@ RUN npm install && \
     npm install gulp-cli -g && \
     npm install gulp --save-dev
 
+RUN gulp $NODE_ENV
+
 CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
 
 EXPOSE $PORT
