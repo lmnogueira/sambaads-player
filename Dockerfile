@@ -1,6 +1,5 @@
-FROM node:slim
+FROM ubuntu
 
-ENV NODE_ENV production
 ENV NEW_RELIC_LOG /logs/newrelic.log
 ENV PORT 3002
 
@@ -12,20 +11,18 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm set progress=false && \
-    npm install --global --progress=false npm-cache && \
-    echo '{ "allow_root": true }' > /root/.bowerrc
-
-RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
+    apt-get install -y nodejs
 
 RUN npm install && \
-    npm install ./app && \
-    npm install forever && \
-    npm install imagemin-jpegtran && \
-    npm install gulp --save-dev
+    cd app && npm install && cd .. && \
+    npm install -g gulp-cli && \
+    npm install -g imagemin-jpegtran && \
+    npm install -g forever
 
-RUN /usr/local/bin/gulp $NODE_ENV
-
-CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
+CMD gulp $NODE_ENV && NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid ${NODE_ENV}_player
 
 EXPOSE $PORT
