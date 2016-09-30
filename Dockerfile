@@ -22,7 +22,7 @@ RUN npm install && \
     npm install ./app && \
     npm install forever -g && \
     npm install imagemin-jpegtran -g && \
-    npm install gulp -g && \
+    npm install gulp-cli -g && \
     npm install gulp --save-dev
 
 CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
