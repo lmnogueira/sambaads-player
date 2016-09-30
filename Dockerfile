@@ -13,4 +13,4 @@ WORKDIR /base
 COPY . /base
 
 RUN apt-get update && \
-    apt-get install -y build-essencial nodejs npm
+    apt-get install -y build-essential nodejs npm
