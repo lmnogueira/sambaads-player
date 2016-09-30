@@ -3,7 +3,7 @@ FROM ubuntu
 ENV NEW_RELIC_LOG /logs/newrelic.log
 ENV PORT 3002
 
-RUN mkdir -p /app && \
+RUN mkdir -p /base && \
     mkdir -p /pids && \
     mkdir -p /logs
 
