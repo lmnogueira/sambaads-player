@@ -28,6 +28,10 @@
     }
 }
 
+.align-right {
+    text-align: right;
+}
+
 @font-face {
     font-family: 'Gotham Book';
     src: url(../native/glambox/font/gotham-book.woff) format('woff');
@@ -35,7 +39,8 @@
 
 .active-native {
     .glambox-new,
-    .wine-native {
+    .wine-native,
+    .native-item {
         &.current-native {
             opacity: 1;
             transform: scale(1);
@@ -669,6 +674,307 @@
             right: 6px;
             width: 10px;
             height: 10px;
+        }
+    }
+}
+
+/* Empiricus Lead */
+
+.native-area {
+    .empiricus-lead {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 150;
+    }
+
+    .empiricus-trigger {
+        width: 268px;
+        height: 92px;
+        bottom: 57px;
+        right: 16px;
+        position: absolute;
+        background: url(../native/empiricus/image/empiricus-trigger.png) no-repeat;
+        background-size: 100% auto;
+        z-index: 150;
+        opacity: 0;
+        transform: scale(.8);
+        cursor: pointer;
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+    }
+
+    .empiricus-lead-close {
+        width: 16px;
+    	height: 16px;
+    	opacity: 0.74;
+        bottom: 140px;
+        right: 20px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        background-position: 50%;
+        position: absolute;
+        z-index: 200;
+        opacity: 0;
+        transition: opacity 200ms linear;
+
+        &.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    .empriricus-lead-area {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 24px;
+        background-color: #f7f7f7;
+        text-align: center;
+        pointer-events: none;
+        opacity: 0;
+        transform: scale(.8);
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+
+            .lead-area-content {
+                &.active {
+                    pointer-events: auto;
+                }
+            }
+
+            .lead-area-holder {
+                pointer-events: auto;
+            }
+        }
+    }
+
+    .empiricus-inside-close {
+        width: 20px;
+        height: 20px;
+        background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+        background-size: 100% auto;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        pointer-events: all;
+        cursor: pointer;
+    }
+
+    .empiricus-logo {
+        width: 242px;
+        height: 83px;
+        background: url(../native/empiricus/image/logo-empiricus.png) no-repeat;
+        background-size: 100% auto;
+        display: inline-block;
+        margin-bottom: 25px;
+    }
+
+    .lead-area-holder {
+        width: 100%;
+        height: 100%;
+        max-width: 80%;
+        margin: 0 auto;
+        pointer-events: none;
+        position: relative;
+    }
+
+    .lead-area-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        opacity: 0;
+        max-height: 360px;
+        margin: auto;
+        pointer-events: none;
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+    .lead-text {
+        opacity: 0.94;
+    	font-family: sans-serif;
+    	font-size: 22px;
+    	line-height: 1.1em;
+        max-width: 360px;
+    	color: #6d6d6d;
+        display: inline-block;
+        margin-bottom: 14px;
+    }
+
+    .input-holder {
+        width: 100%;
+    	height: 54px;
+    	border-radius: 17px;
+	    border: solid 2px #979797;
+        padding: 5px 10px 5px 62px;
+        margin-bottom: 14px;
+        display: inline-block;
+
+        input {
+            width: 100%;
+            height: 100%;
+            float: left;
+            background: none;
+            border: none;
+            box-shadow: none;
+            font-size: 26px;
+        }
+
+        &.input-email {
+            background: url(../native/empiricus/image/icon-message.png) no-repeat;
+            background-size: 26px 20px;
+            background-position: 21px 50%;
+        }
+    }
+
+    .send-lead {
+        max-width: 197px;
+    	height: 49px;
+        border-radius: 17px;
+    	background-color: rgba(191, 19, 26, .94);
+    	font-size: 24px;
+    	line-height: 1.1em;
+        padding: 0 54px;
+    	color: #fff;
+        display: inline-block;
+        text-transform: uppercase;
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+    .back-to-video {
+        opacity: .94;
+    	font-size: 22px;
+    	line-height: 1em;
+    	color: rgba(191, 19, 26, .94);
+        text-decoration: underline;
+        display: inline-block;
+        padding: 0 7px;
+        margin-top: 28px;
+    }
+
+    /* Webkit */
+    ::-webkit-input-placeholder { color: #6d6d6d; }
+    /* Firefox 4-18 */
+    :-moz-placeholder { color: #6d6d6d; }
+    /* Firefox 19+ */
+    ::-moz-placeholder { color: #6d6d6d; }
+    /* IE10+ */
+    :-ms-input-placeholder { color: #6d6d6d; }
+
+
+    @media only screen and (max-width: 480px) {
+        .empiricus-trigger {
+            width: 220px;
+            height: 75px;
+        }
+
+        .empiricus-lead-close {
+            bottom: 125px;
+        }
+
+        .empiricus-logo {
+            width: 160px;
+            height: 55px;
+            margin-bottom: 12px;
+        }
+
+        .lead-text {
+            font-size: 18px;
+        }
+
+        .input-holder {
+            height: 38px;
+            padding-left: 50px;
+
+            input {
+                font-size: 18px
+            }
+
+            &.input-email {
+                background-size: 16px auto;
+            }
+        }
+
+        .send-lead {
+            height: 38px;
+            padding: 0 32px;
+            font-size: 18px;
+        }
+
+        .back-to-video {
+            font-size: 18px;
+        }
+    }
+
+
+    @media only screen and (max-width: 320px) {
+        .empiricus-trigger {
+            width: 150px;
+            height: 52px;
+        }
+
+        .empiricus-lead-close {
+            bottom: 105px;
+        }
+
+        .empiricus-logo {
+            width: 120px;
+            height: 41px;
+            margin-bottom: 8px;
+        }
+
+        .empriricus-lead-area {
+            padding: 12px;
+        }
+
+        .lead-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-holder {
+            height: 28px;
+            padding-left: 30px;
+            margin-bottom: 6px;
+
+            input {
+                font-size: 14px;
+            }
+
+            &.input-email {
+                background-size: 11px auto;
+                background-position: 10px 50%;
+            }
+        }
+
+        .send-lead {
+            height: 28px;
+            padding: 0 22px;
+            font-size: 14px;
+        }
+
+        .back-to-video {
+            font-size: 14px;
         }
     }
 }
