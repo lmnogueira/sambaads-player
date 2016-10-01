@@ -205,8 +205,6 @@ SambaAdsPlayerControllerNative = function (){
 
 				currentVastData = vastData;
 
-				console.log('VAST LOADED');
-
 				frameTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -278,7 +276,6 @@ SambaAdsPlayerControllerNative = function (){
 
 			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
 
-			console.log(currentFrameType);
 
 			frameTrigger.addClass(currentFrameType);
 
@@ -438,7 +435,7 @@ SambaAdsPlayerControllerNative = function (){
 			//toroRadarFrame(videoId);
 		//} else
 		if(can_publisher_play || can_vertical_play) {
-			glamboxFrame(videoId);
+			//glamboxFrame(videoId);
 		}
 	};
 
@@ -502,13 +499,14 @@ SambaAdsPlayerControllerNative = function (){
 						click_url: ''
 					};
 
+					console.log(data);
+
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					vastData.impression_url = el.nodeValue;
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-					vastData.click_url = 'http://www.ycontent.com.br';
 
 					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
 						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
