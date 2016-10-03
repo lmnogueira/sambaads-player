@@ -762,18 +762,6 @@
         }
     }
 
-    .empiricus-inside-close {
-        width: 20px;
-        height: 20px;
-        background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
-        background-size: 100% auto;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        pointer-events: all;
-        cursor: pointer;
-    }
-
     .empiricus-logo {
         width: 242px;
         height: 83px;
@@ -976,5 +964,76 @@
         .back-to-video {
             font-size: 14px;
         }
+    }
+}
+
+.empiricus-inside-close {
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.empiricus-playlist {
+    background-color: #f7f7f7;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+.playlist-ad-area {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.empiricus-playlist-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 0 8px 0;
+    border-bottom: solid 1px rgba(151, 151, 151, .17);
+    color: rgba(30, 37, 53, .94);
+}
+
+.empiricus-playlist-close {
+    @extend .empiricus-inside-close;
+    width: 12px;
+    height: 12px;
+    top: 15px;
+}
+
+.playlist-product {
+    width: 100%;
+    margin: 10px 0;
+    float: left;
+
+    img {
+        width: 100%;
+    }
+}
+
+.playlist-footer {
+    border-top: solid 1px rgba(151, 151, 151, .17);
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    height: 78px;
+    padding: 15px;
+    text-align: center;
+
+    img {
+        height: 100%;
     }
 }

@@ -320,22 +320,40 @@ SambaAdsPlayerControllerNative = function (){
 		};
 
 	var empiricusAd = function(videoId) {
-			var vastSuccessAction = function(vastData, data){};
+			var vastSuccessAction = function(vastData, data){}
+				tagUrl = '';
 
-			var tags = self.video.dfp_tags + ",native,empiricus_{{type}},",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
-				tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-						 "sz=640x360" +
-						 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-						 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-						 "&cust_params=" + custom_params +
-						 "&cmsid=" + self.video.dfp_partner_id +
-						 "&vid=" + self.video.hashed_code +
-						 "&correlator=" + new Date().getTime();
+			var setVastUrl = function(adType) {
+				var tags = self.video.dfp_tags + ",native,empiricus_" + adType + ",",
+					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+							 "sz=640x360" +
+							 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+							 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+							 "&cust_params=" + custom_params +
+							 "&cmsid=" + self.video.dfp_partner_id +
+							 "&vid=" + self.video.hashed_code +
+							 "&correlator=" + new Date().getTime();
+
+					return tagUrl;
+				};
 
 			var adsType = {
 					empiricusPlaylistFrame: function(videoId) {
-						tagUrl.replace('{{type}}', 'playlist_frame');
+						tagUrl = setVastUrl('playlist_frame');
+
+						var startPlaylistFrameAd = function() {
+								console.log('frameAd');
+							};
+
+						vastSuccessAction = function(vastData, data) {
+							console.log('VAST LOADED');
+							$currentTrigger.off();
+							currentVastData = vastData;
+
+							startPlaylistFrameAd();
+						};
+
 						self.loadVastTag(tagUrl, vastSuccessAction);
 					},
 					empiricusLead: function(videoId) {
@@ -409,12 +427,11 @@ SambaAdsPlayerControllerNative = function (){
 
 						vastSuccessAction = function(vastData, data) {
 							console.log('VAST LOADED');
-							$currentTrigger.off();
 							currentVastData = vastData;
 							startLeadAd();
 						};
 
-						tagUrl.replace('{{type}}', 'lead');
+						tagUrl = setVastUrl('lead');
 
 						self.setCurrentNative($currentTrigger);
 						self.loadVastTag(tagUrl, vastSuccessAction);
@@ -428,7 +445,8 @@ SambaAdsPlayerControllerNative = function (){
 			console.log(currentType);
 
 			//adsType[currentType](videoId);
-			adsType.empiricusLead(videoId);
+			//adsType.empiricusLead(videoId);
+			adsType.empiricusPlaylistFrame(videoId);
 		};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
