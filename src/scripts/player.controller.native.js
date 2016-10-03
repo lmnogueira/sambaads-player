@@ -206,8 +206,6 @@ SambaAdsPlayerControllerNative = function (){
 
 				currentVastData = vastData;
 
-				console.log('VAST LOADED');
-
 				frameTrigger.on('click', function(event){
 					event.preventDefault();
 					window.open(vastData.click_url);
@@ -442,8 +440,6 @@ SambaAdsPlayerControllerNative = function (){
 				currentType = adTypeKeys[Math.floor(Math.random() * adTypeKeys.length)],
 				showClose = true;
 
-			console.log(currentType);
-
 			//adsType[currentType](videoId);
 			//adsType.empiricusLead(videoId);
 			adsType.empiricusPlaylistFrame(videoId);
@@ -570,7 +566,7 @@ SambaAdsPlayerControllerNative = function (){
 			//glamboxFrame(videoId);
 		}
 
-		empiricusAd(videoId);
+		//empiricusAd(videoId);
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
@@ -633,13 +629,14 @@ SambaAdsPlayerControllerNative = function (){
 						click_url: ''
 					};
 
+					console.log(data);
+
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					vastData.impression_url = el.nodeValue;
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-					vastData.click_url = 'http://www.ycontent.com.br';
 
 					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
 						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
