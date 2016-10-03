@@ -338,17 +338,44 @@ SambaAdsPlayerControllerNative = function (){
 
 			var adsType = {
 					empiricusPlaylistFrame: function(videoId) {
+						var $currentPlaylistAd = $('#empiricus-playlist'),
+							$playlistAdArea = $('#playlist-ad-area'),
+							$closeButton = $('#empiricus-playlist-close'),
+							$productsTrigger = $('.playlist-product');
+
 						tagUrl = setVastUrl('playlist_frame');
 
 						var startPlaylistFrameAd = function() {
 								console.log('frameAd');
+
+								self.nativeTimerTrigger = function(event) {
+									if(showClose) {
+										var currentTime = parseInt(event.detail.data.position);
+
+										if(currentTime >= 4) {
+											self.trackImpression(currentVastData.impression_url);
+											$playlistAdArea.addClass('active');
+											$currentPlaylistAd.addClass('active');
+										}
+										if(currentTime >= 14) {
+											$closeButton.addClass('active');
+										}
+									}
+								};
+
+								$closeButton.on('click', function(event){
+									event.preventDefault();
+									event.stopPropagation();
+									showClose = false;
+									$playlistAdArea.removeClass('active');
+									$currentPlaylistAd.removeClass('active');
+									$closeButton.removeClass('active');
+								});
 							};
 
 						vastSuccessAction = function(vastData, data) {
-							console.log('VAST LOADED');
-							$currentTrigger.off();
 							currentVastData = vastData;
-
+							$productsTrigger.off();
 							startPlaylistFrameAd();
 						};
 
@@ -383,8 +410,6 @@ SambaAdsPlayerControllerNative = function (){
 									event.preventDefault();
 									event.stopPropagation();
 									JWPlayer.pause();
-									//console.log(self);
-									console.log('clicked!');
 									showClose = false;
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
@@ -399,7 +424,6 @@ SambaAdsPlayerControllerNative = function (){
 									setTimeout(function(){
 										JWPlayer.play();
 									}, 200);
-									console.log('inside-close')
 								});
 
 								$closeButton.on('click', function(event){
@@ -409,7 +433,6 @@ SambaAdsPlayerControllerNative = function (){
 
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
-									console.log('closed!');
 								});
 
 								$sendLead.on('click', function(event){
@@ -424,7 +447,7 @@ SambaAdsPlayerControllerNative = function (){
 							};
 
 						vastSuccessAction = function(vastData, data) {
-							console.log('VAST LOADED');
+							$currentTrigger.off();
 							currentVastData = vastData;
 							startLeadAd();
 						};
@@ -566,7 +589,7 @@ SambaAdsPlayerControllerNative = function (){
 			//glamboxFrame(videoId);
 		}
 
-		//empiricusAd(videoId);
+		empiricusAd(videoId);
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {

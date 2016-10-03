@@ -987,6 +987,13 @@
     height: 100%;
     position: absolute;
     padding: 15px;
+    opacity: 0;
+    transition: opacity 200ms linear;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
 
 .playlist-ad-area {
@@ -995,6 +1002,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    pointer-events: none;
 }
 
 .empiricus-playlist-title {
@@ -1011,6 +1019,14 @@
     width: 12px;
     height: 12px;
     top: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 200ms linear;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
 
 .playlist-product {
