@@ -611,7 +611,7 @@ SambaAdsPlayerControllerNative = function (){
 			//toroRadarFrame(videoId);
 		//} else
 		if(can_publisher_play || can_vertical_play) {
-			//glamboxFrame(videoId);
+			glamboxFrame(videoId);
 		}
 
 		var empiricusHash = false;
