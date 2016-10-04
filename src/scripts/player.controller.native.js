@@ -3,7 +3,8 @@ var SambaAdsPlayerControllerNative = {};
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-		JWPlayer = window.jwplayer('jw_sambaads_player');
+		JWPlayer = window.jwplayer('jw_sambaads_player'),
+		playerConfiguration = null,
 		showAdTimeout = null,
 		currentNative = null,
 		currentVastData = null;
@@ -318,22 +319,93 @@ SambaAdsPlayerControllerNative = function (){
 		};
 
 	var empiricusAd = function(videoId) {
-			var vastSuccessAction = function(vastData, data){};
+			var vastSuccessAction = function(vastData, data){}
+				showClose = true,
+				tagUrl = '';
 
-			var tags = self.video.dfp_tags + ",native,empiricus_{{type}},",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
-				tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-						 "sz=640x360" +
-						 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-						 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-						 "&cust_params=" + custom_params +
-						 "&cmsid=" + self.video.dfp_partner_id +
-						 "&vid=" + self.video.hashed_code +
-						 "&correlator=" + new Date().getTime();
+			var setVastUrl = function(adType) {
+				var tags = self.video.dfp_tags + ",native,empiricus_" + adType + ",",
+					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+							 "sz=640x360" +
+							 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+							 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+							 "&cust_params=" + custom_params +
+							 "&cmsid=" + self.video.dfp_partner_id +
+							 "&vid=" + self.video.hashed_code +
+							 "&correlator=" + new Date().getTime();
+
+					return tagUrl;
+				};
 
 			var adsType = {
 					empiricusPlaylistFrame: function(videoId) {
-						tagUrl.replace('{{type}}', 'playlist_frame');
+						var $currentPlaylistAd = $('#empiricus-playlist'),
+							$playlistAdArea = $('#playlist-ad-area'),
+							$closeButton = $('#empiricus-playlist-close'),
+							$productsTrigger = $('.playlist-product');
+
+						tagUrl = setVastUrl('playlist_frame');
+
+						var startPlaylistFrameAd = function(vastData) {
+								productsHtml = '';
+
+								var jsonPlaylistMockup = {
+										products: [
+											{
+												title: 'A febre do Ouro',
+												clickThrough: 'http://www.ycontent.com.br',
+												image: 'http://local-player.sambaads.com/native/empiricus/image/book-a-febre-do-ouro.png'
+											},
+											{
+												title: 'Relatório: A megaprivatização da Petrobras?',
+												clickThrough: 'http://www.ycontent.com.br',
+												image: 'http://local-player.sambaads.com/native/empiricus/image/relatorio-petrobras.png'
+											}
+										],
+										footerContent: '<img src="http://local-player.sambaads.com/native/empiricus/image/logo-empiricus.png" alt="Empiricus Logo">'
+									};
+
+								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
+									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
+													'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
+													'" alt="' + jsonPlaylistMockup.products[x].title +
+													'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
+								}
+
+								$('#playlist-products-area').html(productsHtml);
+								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
+
+								self.nativeTimerTrigger = function(event) {
+									if(showClose) {
+										var currentTime = parseInt(event.detail.data.position);
+
+										if(currentTime >= 4) {
+											self.trackImpression(vastData.impression_url);
+											$playlistAdArea.addClass('active');
+											$currentPlaylistAd.addClass('active');
+										}
+										if(currentTime >= 14) {
+											$closeButton.addClass('active');
+										}
+									}
+								};
+
+								$closeButton.on('click', function(event){
+									event.preventDefault();
+									event.stopPropagation();
+									showClose = false;
+									$playlistAdArea.removeClass('active');
+									$currentPlaylistAd.removeClass('active');
+									$closeButton.removeClass('active');
+								});
+							};
+
+						vastSuccessAction = function(vastData, data) {
+							$productsTrigger.off();
+							startPlaylistFrameAd(vastData);
+						};
+
 						self.loadVastTag(tagUrl, vastSuccessAction);
 					},
 					empiricusLead: function(videoId) {
@@ -365,8 +437,6 @@ SambaAdsPlayerControllerNative = function (){
 									event.preventDefault();
 									event.stopPropagation();
 									JWPlayer.pause();
-									//console.log(self);
-									console.log('clicked!');
 									showClose = false;
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
@@ -381,7 +451,6 @@ SambaAdsPlayerControllerNative = function (){
 									setTimeout(function(){
 										JWPlayer.play();
 									}, 200);
-									console.log('inside-close')
 								});
 
 								$closeButton.on('click', function(event){
@@ -391,7 +460,6 @@ SambaAdsPlayerControllerNative = function (){
 
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
-									console.log('closed!');
 								});
 
 								$sendLead.on('click', function(event){
@@ -406,25 +474,23 @@ SambaAdsPlayerControllerNative = function (){
 							};
 
 						vastSuccessAction = function(vastData, data) {
-							console.log('VAST LOADED');
 							$currentTrigger.off();
 							currentVastData = vastData;
 							startLeadAd();
 						};
 
-						tagUrl.replace('{{type}}', 'lead');
+						tagUrl = setVastUrl('lead');
 
 						self.setCurrentNative($currentTrigger);
 						self.loadVastTag(tagUrl, vastSuccessAction);
 					}
 				};
 
-			var adTypeKeys = Object.keys(adsType),
-				currentType = adTypeKeys[Math.floor(Math.random() * adTypeKeys.length)],
-				showClose = true;
-
-			//adsType[currentType](videoId);
-			adsType.empiricusLead(videoId);
+			if(playerConfiguration.detail.data.playlist.position === 'right') {
+				adsType.empiricusPlaylistFrame(videoId);
+			} else {
+				adsType.empiricusLead(videoId);
+			}
 		};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
@@ -548,7 +614,11 @@ SambaAdsPlayerControllerNative = function (){
 			//glamboxFrame(videoId);
 		}
 
-		//empiricusAd(videoId);
+		var empiricusHash = false;
+
+		if(empiricusHash) {
+			empiricusAd(videoId);
+		}
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
@@ -611,15 +681,12 @@ SambaAdsPlayerControllerNative = function (){
 						click_url: ''
 					};
 
-					console.log(data);
-
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					vastData.impression_url = el.nodeValue;
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-
 					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
 						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
 						vastData.click_url = el.nodeValue;
@@ -675,6 +742,10 @@ SambaAdsPlayerControllerNative = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_START, self.startNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, self.stopNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, self.nativeTimer);
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(event){
+		playerConfiguration = event;
+	});
 };
 
 new SambaAdsPlayerControllerNative();
