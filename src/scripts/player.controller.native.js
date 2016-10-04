@@ -3,7 +3,8 @@ var SambaAdsPlayerControllerNative = {};
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-		JWPlayer = window.jwplayer('jw_sambaads_player');
+		JWPlayer = window.jwplayer('jw_sambaads_player'),
+		playerConfiguration = null,
 		showAdTimeout = null,
 		currentNative = null,
 		currentVastData = null;
@@ -319,6 +320,7 @@ SambaAdsPlayerControllerNative = function (){
 
 	var empiricusAd = function(videoId) {
 			var vastSuccessAction = function(vastData, data){}
+				showClose = true,
 				tagUrl = '';
 
 			var setVastUrl = function(adType) {
@@ -345,15 +347,41 @@ SambaAdsPlayerControllerNative = function (){
 
 						tagUrl = setVastUrl('playlist_frame');
 
-						var startPlaylistFrameAd = function() {
-								console.log('frameAd');
+						var startPlaylistFrameAd = function(vastData) {
+								productsHtml = '';
+
+								var jsonPlaylistMockup = {
+										products: [
+											{
+												title: 'A febre do Ouro',
+												clickThrough: 'http://www.ycontent.com.br',
+												image: 'http://local-player.sambaads.com/native/empiricus/image/book-a-febre-do-ouro.png'
+											},
+											{
+												title: 'Relatório: A megaprivatização da Petrobras?',
+												clickThrough: 'http://www.ycontent.com.br',
+												image: 'http://local-player.sambaads.com/native/empiricus/image/relatorio-petrobras.png'
+											}
+										],
+										footerContent: '<img src="http://local-player.sambaads.com/native/empiricus/image/logo-empiricus.png" alt="Empiricus Logo">'
+									};
+
+								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
+									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
+													'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
+													'" alt="' + jsonPlaylistMockup.products[x].title +
+													'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
+								}
+
+								$('#playlist-products-area').html(productsHtml);
+								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
 
 								self.nativeTimerTrigger = function(event) {
 									if(showClose) {
 										var currentTime = parseInt(event.detail.data.position);
 
 										if(currentTime >= 4) {
-											self.trackImpression(currentVastData.impression_url);
+											self.trackImpression(vastData.impression_url);
 											$playlistAdArea.addClass('active');
 											$currentPlaylistAd.addClass('active');
 										}
@@ -374,9 +402,8 @@ SambaAdsPlayerControllerNative = function (){
 							};
 
 						vastSuccessAction = function(vastData, data) {
-							currentVastData = vastData;
 							$productsTrigger.off();
-							startPlaylistFrameAd();
+							startPlaylistFrameAd(vastData);
 						};
 
 						self.loadVastTag(tagUrl, vastSuccessAction);
@@ -459,13 +486,11 @@ SambaAdsPlayerControllerNative = function (){
 					}
 				};
 
-			var adTypeKeys = Object.keys(adsType),
-				currentType = adTypeKeys[Math.floor(Math.random() * adTypeKeys.length)],
-				showClose = true;
-
-			//adsType[currentType](videoId);
-			//adsType.empiricusLead(videoId);
-			adsType.empiricusPlaylistFrame(videoId);
+			if(playerConfiguration.detail.data.playlist.position === 'right') {
+				adsType.empiricusPlaylistFrame(videoId);
+			} else {
+				adsType.empiricusLead(videoId);
+			}
 		};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
@@ -589,7 +614,11 @@ SambaAdsPlayerControllerNative = function (){
 			//glamboxFrame(videoId);
 		}
 
-		empiricusAd(videoId);
+		var empiricusHash = false;
+
+		if(empiricusHash) {
+			empiricusAd(videoId);
+		}
 	};
 
 	// self.nativeImpressionStart = function(time, vastUrl, options) {
@@ -652,15 +681,12 @@ SambaAdsPlayerControllerNative = function (){
 						click_url: ''
 					};
 
-					console.log(data);
-
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					vastData.impression_url = el.nodeValue;
 				}
 
 				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-
 					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
 						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
 						vastData.click_url = el.nodeValue;
@@ -716,6 +742,10 @@ SambaAdsPlayerControllerNative = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_START, self.startNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, self.stopNative);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, self.nativeTimer);
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(event){
+		playerConfiguration = event;
+	});
 };
 
 new SambaAdsPlayerControllerNative();
