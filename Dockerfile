@@ -1,37 +1,28 @@
 FROM ubuntu
 
-ENV NODE_ENV production
 ENV NEW_RELIC_LOG /logs/newrelic.log
 ENV PORT 3002
 
-RUN mkdir -p /app && \
+RUN mkdir -p /base && \
     mkdir -p /pids && \
     mkdir -p /logs
 
-WORKDIR /app
+WORKDIR /base
 
-COPY . /app
+COPY . /base
 
 RUN apt-get update && \
+    apt-get install -y build-essential && \
     apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get install -y build-essential && \
-    npm install -g gulp && \
-    npm install -g forever && \
+    apt-get install -y nodejs
+
+RUN npm install && \
+    cd app && npm install && cd .. && \
+    npm install -g gulp-cli && \
     npm install -g imagemin-jpegtran && \
-    apt-get purge -y --auto-remove $buildDeps && \
-    rm -rf /var/lib/apt/lists/*
+    npm install -g forever
 
-RUN gulp $NODE_ENV && \
-    rm -rf /app/src && \
-    rm -rf /app/config && \
-    rm -rf /app/lib && \
-    rm -rf /app/circle.yml && \
-    rm -rf /app/docker-build.sh && \
-    rm -rf /app/docker-run.sh && \
-    rm -rf /app/Gemfile* 
-
-CMD NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid NODE_ENV_player
+CMD gulp $NODE_ENV && NEW_RELIC_LOG=$NEW_RELIC_LOG NODE_ENV=$NODE_ENV PORT=$PORT forever app/bin/www --pidFile /pids/forever.pid --uid ${NODE_ENV}_player
 
 EXPOSE $PORT
