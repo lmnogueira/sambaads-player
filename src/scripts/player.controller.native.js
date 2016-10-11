@@ -493,6 +493,140 @@ SambaAdsPlayerControllerNative = function (){
 			}
 		};
 
+	var relatedOffersAd = function(videoId) {
+			var vastSuccessAction = function(vastData, data){}
+				showClose = true,
+				tagUrl = '';
+
+			var setVastUrl = function(adType) {
+				var tags = self.video.dfp_tags + ",native,related_offers_" + adType + ",",
+					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+							 "sz=640x360" +
+							 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+							 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+							 "&cust_params=" + custom_params +
+							 "&cmsid=" + self.video.dfp_partner_id +
+							 "&vid=" + self.video.hashed_code +
+							 "&correlator=" + new Date().getTime();
+
+					return tagUrl;
+				};
+
+			var adsType = {
+					playlistFrame: function(videoId) {
+						var $currentPlaylistAd = $('#related-offers-playlist'),
+							$playlistAdArea = $('#playlist-ad-area'),
+							$closeButton = $('.playlist-ad-close');
+
+						tagUrl = setVastUrl('playlist_frame');
+
+						var startPlaylistFrameAd = function(vastData) {
+								var productsHtml = '',
+									currentVideoDuration = 0;
+
+								var jsonPlaylistMockup = {
+										products: [
+											{
+												title: 'Curso Online de Maquiagem Profissional',
+												clickThrough: 'https://go.hotmart.com/W4802199C',
+												image: 'http://local-player.sambaads.com/native/offers/image/offer-1.png'
+											},
+											{
+												title: 'Dieta de 21 dias - 100% garantido',
+												clickThrough: 'https://go.hotmart.com/S4945421D?ap=1323',
+												image: 'http://local-player.sambaads.com/native/offers/image/offer-2.png'
+											}
+										],
+										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
+									};
+
+								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
+									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
+													'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
+													'" alt="' + jsonPlaylistMockup.products[x].title +
+													'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
+								}
+
+								$('#playlist-products-area').html(productsHtml);
+								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
+
+								var secondsToTime = function(currentSeconds) {
+										var minutes = Math.floor(currentSeconds % 3600 / 60),
+											seconds = Math.floor(currentSeconds % 3600 % 60);
+
+										return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+									};
+
+								self.nativeTimerTrigger = function(event) {
+									if(showClose) {
+										var currentTime = parseInt(event.detail.data.position);
+
+										if(currentTime === 0) {
+											$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+										}
+										if(currentTime >= 4) {
+											self.trackImpression(vastData.impression_url);
+											$playlistAdArea.addClass('active');
+											$currentPlaylistAd.addClass('active');
+										}
+										if(currentTime >= 14) {
+											$closeButton.addClass('active');
+										}
+
+										if(currentTime >= 4 && currentVideoDuration === 0) {
+											currentVideoDuration = parseInt(event.detail.data.duration) - 4;
+
+											var timerCount = 0,
+									            adCurrentTimer;
+
+									        var timerControl = function() {
+									                adCurrentTimer = setTimeout(function(){
+
+														var currentLeftTime = currentVideoDuration - timerCount,
+															timeLeft = secondsToTime(currentLeftTime);
+
+														$('#time-left').html(timeLeft);
+
+									                    if(timerCount === currentVideoDuration) {
+									                        clearTimeout(adCurrentTimer);
+															$playlistAdArea.removeClass('active');
+															$currentPlaylistAd.removeClass('active');
+									                    } else {
+									                        timerCount++;
+									                        timerControl();
+									                    }
+									                }, 1000);
+									            };
+
+									        timerControl();
+										}
+									}
+								};
+
+								$closeButton.on('click', function(event){
+									event.preventDefault();
+									event.stopPropagation();
+									showClose = false;
+									$playlistAdArea.removeClass('active');
+									$currentPlaylistAd.removeClass('active');
+									$closeButton.removeClass('active');
+								});
+							};
+
+						vastSuccessAction = function(vastData, data) {
+							startPlaylistFrameAd(vastData);
+						};
+
+						self.loadVastTag(tagUrl, vastSuccessAction);
+					}
+				};
+
+			if(playerConfiguration.detail.data.playlist.position === 'right') {
+				adsType.playlistFrame(videoId);
+			}
+		};
+
 	self.setAdTimeout = function(time, beforeAd, callback) {
 		if(typeof beforeAd === 'function') {
 			beforeAd();
@@ -611,13 +745,19 @@ SambaAdsPlayerControllerNative = function (){
 			//toroRadarFrame(videoId);
 		//} else
 		if(can_publisher_play || can_vertical_play) {
-			glamboxFrame(videoId);
+			//glamboxFrame(videoId);
 		}
 
 		var empiricusHash = false;
 
 		if(empiricusHash) {
 			empiricusAd(videoId);
+		}
+
+		var relatedOffers = true;
+
+		if(relatedOffers) {
+			relatedOffersAd(videoId);
 		}
 	};
 
