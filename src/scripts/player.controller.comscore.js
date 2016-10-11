@@ -7,7 +7,7 @@ SambaAdsPlayerControllerComscore = function (){
 		setTimeout(function(){
 			self.computeComscore("04",self.media.category_name);
 			self.computeComscore("01","sambaads_video_advertising");
-		}, 500);
+		}, 1000);
 	};
 
 	self.trackPlay = function(e){

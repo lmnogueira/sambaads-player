@@ -112,7 +112,7 @@
             });
         </script>
     <% } else if(type_player == "jwp7") { %>
-        <script src="//ssl.p.jwpcdn.com/player/v/7.5.1/jwplayer.js"></script>
+        <script src="//ssl.p.jwpcdn.com/player/v/7.7.0/jwplayer.js"></script>
         <div id="container">Loading video player...</div>
 
         <script type='text/javascript'>
@@ -131,7 +131,7 @@
 
             jwplayer("container").on("beforePlay",function(evt){
 
-                jwplayer("container").playAd('https://local-vpaid.sambaads.com/vast/adselector.xml');
+                jwplayer("container").playAd('https://jwplayer.sambaads.com/natura/full_vast.xml');
 
             });
         </script>
