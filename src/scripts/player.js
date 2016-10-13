@@ -466,7 +466,7 @@ var ExpandedCinema = function (cw, currentIframe){
         if (parameters.p === undefined) return;
 
         //fix # whene user use by incorrect form.
-        if (parameters.sk != undefined) {
+        if (parameters.sk !== undefined) {
 
             if(parameters.sk.indexOf('#') >= 0){
                parameters.sk = "blue";
@@ -475,7 +475,7 @@ var ExpandedCinema = function (cw, currentIframe){
             if(!isNaN(parameters.sk)){
                 parameters.sk = "blue";
             }
-        };
+        }
 
 
         videoContainer = currentScript.parentNode;
