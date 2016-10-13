@@ -498,6 +498,15 @@ SambaAdsPlayerControllerNative = function (){
 				showClose = true,
 				tagUrl = '';
 
+			var defaultHtmlContent = '<div id="related-offers-playlist" class="related-offers-playlist ad-playlist">' +
+										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
+										'<div class="related-offers-playlist-title ad-playlist-title">Ofertas Incríveis para Você</div>' +
+										'<div id="playlist-products-area" class="playlist-products-area"></div>' +
+										'<div id="playlist-footer" class="playlist-footer"></div>' +
+									'</div>';
+
+			console.log(defaultHtmlContent);
+
 			var setVastUrl = function(adType) {
 				var tags = self.video.dfp_tags + ",native,related_offers_" + adType + ",",
 					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
@@ -515,9 +524,8 @@ SambaAdsPlayerControllerNative = function (){
 
 			var adsType = {
 					playlistFrame: function(videoId) {
-						var $currentPlaylistAd = $('#related-offers-playlist'),
-							$playlistAdArea = $('#playlist-ad-area'),
-							$closeButton = $('.ad-playlist-close');
+						var $closeButton = null,
+							$currentPlaylistAd = null;
 
 						tagUrl = setVastUrl('playlist_frame');
 
@@ -615,14 +623,27 @@ SambaAdsPlayerControllerNative = function (){
 							};
 
 						vastSuccessAction = function(vastData, data) {
-							startPlaylistFrameAd(vastData);
+							$playlistAdArea.html(defaultHtmlContent).promise().done(function(){
+								$closeButton = $('.ad-playlist-close');
+								$currentPlaylistAd = $('#related-offers-playlist');
+
+								startPlaylistFrameAd(vastData);
+							});
 						};
 
 						self.loadVastTag(tagUrl, vastSuccessAction);
 					}
 				};
 
+			var $playlistAdArea = null;
+
+			console.log(playerConfiguration.detail.data.playlist.position);
+
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
+				$playlistAdArea = $('.playlist-ad-right');
+				adsType.playlistFrame(videoId);
+			} else if (playerConfiguration.detail.data.playlist.position === 'bottom-horizontal') {
+				$playlistAdArea = $('.playlist-ad-horizontal');
 				adsType.playlistFrame(videoId);
 			}
 		};
