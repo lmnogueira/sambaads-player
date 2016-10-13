@@ -766,7 +766,7 @@ SambaAdsPlayerControllerNative = function (){
 			//toroRadarFrame(videoId);
 		//} else
 		if(can_publisher_play || can_vertical_play) {
-			//glamboxFrame(videoId);
+			glamboxFrame(videoId);
 		}
 
 		var empiricusHash = false;
@@ -775,7 +775,7 @@ SambaAdsPlayerControllerNative = function (){
 			empiricusAd(videoId);
 		}
 
-		var relatedOffers = true;
+		var relatedOffers = false;
 
 		if(relatedOffers) {
 			relatedOffersAd(videoId);
