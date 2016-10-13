@@ -767,18 +767,13 @@ SambaAdsPlayerControllerNative = function (){
 		//} else
 		if(can_publisher_play || can_vertical_play) {
 			glamboxFrame(videoId);
+			relatedOffersAd(videoId);
 		}
 
 		var empiricusHash = false;
 
 		if(empiricusHash) {
 			empiricusAd(videoId);
-		}
-
-		var relatedOffers = false;
-
-		if(relatedOffers) {
-			relatedOffersAd(videoId);
 		}
 	};
 
