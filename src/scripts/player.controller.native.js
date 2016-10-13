@@ -517,7 +517,7 @@ SambaAdsPlayerControllerNative = function (){
 					playlistFrame: function(videoId) {
 						var $currentPlaylistAd = $('#related-offers-playlist'),
 							$playlistAdArea = $('#playlist-ad-area'),
-							$closeButton = $('.playlist-ad-close');
+							$closeButton = $('.ad-playlist-close');
 
 						tagUrl = setVastUrl('playlist_frame');
 
