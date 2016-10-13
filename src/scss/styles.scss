@@ -988,6 +988,7 @@
     position: absolute;
     padding: 15px;
     opacity: 0;
+    z-index: 300;
     transition: opacity 200ms linear;
 
     &.active {

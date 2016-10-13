@@ -9,3 +9,37 @@
     	color: rgba(94, 94, 94, .94);
     }
 }
+
+.playlist-ad-horizontal {
+    .playlist-products-area {
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .playlist-product {
+        width: auto;
+        height: 100%;
+        display: inline-block;
+        margin: 0 35px 0 0;
+        float: none;
+        vertical-align: top;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .playlist-footer {
+        height: 35px;
+        border: none;
+        top: 0;
+        right: 50px;
+        left: auto;
+        bottom: auto;
+        padding: 0;
+    }
+
+    .footer-time {
+        line-height: 35px;
+    }
+}
