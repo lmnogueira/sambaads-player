@@ -200,6 +200,7 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&cust_params=" + custom_params +
 				 		 "&cmsid=" + self.video.dfp_partner_id +
 				 		 "&vid=" + self.video.hashed_code +
+				
 				 		 "&correlator=" + new Date().getTime();
 
 			self.loadVastTag(tagUrl, function(vastData, data){
@@ -401,7 +402,7 @@ SambaAdsPlayerControllerNative = function (){
 								});
 							};
 
-						vastSuccessAction = function(vastData, data) {
+						var vastSuccessAction = function(vastData, data) {
 							$productsTrigger.off();
 							startPlaylistFrameAd(vastData);
 						};
@@ -473,7 +474,7 @@ SambaAdsPlayerControllerNative = function (){
 								});
 							};
 
-						vastSuccessAction = function(vastData, data) {
+						var vastSuccessAction = function(vastData, data) {
 							$currentTrigger.off();
 							currentVastData = vastData;
 							startLeadAd();
@@ -496,7 +497,10 @@ SambaAdsPlayerControllerNative = function (){
 	var relatedOffersAd = function(videoId) {
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
+				adCurrentTimer = 0,
 				tagUrl = '';
+
+			clearTimeout(adCurrentTimer);
 
 			var defaultHtmlContent = '<div id="related-offers-playlist" class="related-offers-playlist ad-playlist">' +
 										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
@@ -504,8 +508,6 @@ SambaAdsPlayerControllerNative = function (){
 										'<div id="playlist-products-area" class="playlist-products-area"></div>' +
 										'<div id="playlist-footer" class="playlist-footer"></div>' +
 									'</div>';
-
-			console.log(defaultHtmlContent);
 
 			var setVastUrl = function(adType) {
 				var tags = self.video.dfp_tags + ",native,related_offers_" + adType + ",",
@@ -551,13 +553,18 @@ SambaAdsPlayerControllerNative = function (){
 
 								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
 									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
-													'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
+													'" id="' + x + '" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
 													'" alt="' + jsonPlaylistMockup.products[x].title +
-													'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
+													'" title="' + jsonPlaylistMockup.products[x].title + '" ></a>';
 								}
 
 								$('#playlist-products-area').html(productsHtml);
 								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
+
+								$('.playlist-product').on('click', function(e){
+									JWPlayer.pause();
+									ga('send', 'event', 'Performance', 'click', 'hotmart', this.id);
+								});
 
 								var secondsToTime = function(currentSeconds) {
 										var minutes = Math.floor(currentSeconds % 3600 / 60),
@@ -566,17 +573,21 @@ SambaAdsPlayerControllerNative = function (){
 										return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 									};
 
-								self.nativeTimerTrigger = function(event) {
+
+								var nativeTimerTrigger = function(event) {
 									if(showClose) {
 										var currentTime = parseInt(event.detail.data.position);
 
 										if(currentTime === 0) {
+											ga('send', 'event', 'Performance', 'impression', 'hotmart');
 											$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
 										}
 										if(currentTime >= 4) {
 											self.trackImpression(vastData.impression_url);
+
 											$playlistAdArea.addClass('active');
 											$currentPlaylistAd.addClass('active');
+											
 										}
 										if(currentTime >= 14) {
 											$closeButton.addClass('active');
@@ -585,8 +596,7 @@ SambaAdsPlayerControllerNative = function (){
 										if(currentTime >= 4 && currentVideoDuration === 0) {
 											currentVideoDuration = parseInt(event.detail.data.duration) - 4;
 
-											var timerCount = 0,
-									            adCurrentTimer;
+											var timerCount = 0;
 
 									        var timerControl = function() {
 									                adCurrentTimer = setTimeout(function(){
@@ -596,7 +606,7 @@ SambaAdsPlayerControllerNative = function (){
 
 														$('#time-left').html(timeLeft);
 
-									                    if(timerCount === currentVideoDuration) {
+									                    if(currentLeftTime === 0) {
 									                        clearTimeout(adCurrentTimer);
 															$playlistAdArea.removeClass('active');
 															$currentPlaylistAd.removeClass('active');
@@ -612,6 +622,8 @@ SambaAdsPlayerControllerNative = function (){
 									}
 								};
 
+								SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, nativeTimerTrigger);
+
 								$closeButton.on('click', function(event){
 									event.preventDefault();
 									event.stopPropagation();
@@ -619,6 +631,7 @@ SambaAdsPlayerControllerNative = function (){
 									$playlistAdArea.removeClass('active');
 									$currentPlaylistAd.removeClass('active');
 									$closeButton.removeClass('active');
+									clearTimeout(adCurrentTimer);
 								});
 							};
 
@@ -636,8 +649,6 @@ SambaAdsPlayerControllerNative = function (){
 				};
 
 			var $playlistAdArea = null;
-
-			console.log(playerConfiguration.detail.data.playlist.position);
 
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
 				$playlistAdArea = $('.playlist-ad-right');
@@ -827,11 +838,13 @@ SambaAdsPlayerControllerNative = function (){
 	};
 
 	self.loadVastTag = function(tagUrl, callback){
+		
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
 	        dataType: "xml",
 	        success: function(data) {
+
 				var vastData = {
 						impression_url: '',
 						click_url: ''
