@@ -200,7 +200,7 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&cust_params=" + custom_params +
 				 		 "&cmsid=" + self.video.dfp_partner_id +
 				 		 "&vid=" + self.video.hashed_code +
-				
+
 				 		 "&correlator=" + new Date().getTime();
 
 			self.loadVastTag(tagUrl, function(vastData, data){
@@ -540,12 +540,12 @@ SambaAdsPlayerControllerNative = function (){
 											{
 												title: 'Curso Online de Maquiagem Profissional',
 												clickThrough: 'https://go.hotmart.com/W4802199C',
-												image: 'http://local-player.sambaads.com/native/offers/image/offer-1.png'
+												image: '/native/offers/image/offer-1.png'
 											},
 											{
 												title: 'Dieta de 21 dias - 100% garantido',
 												clickThrough: 'https://go.hotmart.com/S4945421D?ap=1323',
-												image: 'http://local-player.sambaads.com/native/offers/image/offer-2.png'
+												image: '/native/offers/image/offer-2.png'
 											}
 										],
 										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
@@ -587,7 +587,7 @@ SambaAdsPlayerControllerNative = function (){
 
 											$playlistAdArea.addClass('active');
 											$currentPlaylistAd.addClass('active');
-											
+
 										}
 										if(currentTime >= 14) {
 											$closeButton.addClass('active');
@@ -838,7 +838,7 @@ SambaAdsPlayerControllerNative = function (){
 	};
 
 	self.loadVastTag = function(tagUrl, callback){
-		
+
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
