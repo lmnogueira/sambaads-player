@@ -133,7 +133,8 @@ SambaAdsPlayerControllerNative = function (){
 				glamboxFrame = $('#glambox-frame'),
 				frameClose = glamboxFrame.find('.frame-close'),
 				videoTitleBar = $('#video-title-bar'),
-				closeActive = true;
+				closeActive = true,
+				impression_trigger = false;
 
 			self.nativeTimerTrigger = function(event) {
 				if(closeActive) {
@@ -144,7 +145,11 @@ SambaAdsPlayerControllerNative = function (){
 						JWplayerArea.addClass('glambox-player-frame');
 					}
 					if(currentTime == 10) {
-						self.trackImpression(currentVastData.impression_url);
+						if(!impression_trigger){
+							console.log(impression_trigger);
+							impression_trigger = true;
+							self.trackImpression(currentVastData.impression_url);
+						}
 						JWplayerArea.addClass('active-native-frame');
 						glamboxFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
@@ -498,7 +503,8 @@ SambaAdsPlayerControllerNative = function (){
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
 				adCurrentTimer = 0,
-				tagUrl = '';
+				tagUrl = '',
+				impression_trigger = false;
 
 			clearTimeout(adCurrentTimer);
 
@@ -579,11 +585,16 @@ SambaAdsPlayerControllerNative = function (){
 										var currentTime = parseInt(event.detail.data.position);
 
 										if(currentTime === 0) {
-											ga('send', 'event', 'Performance', 'impression', 'hotmart');
+
+											if(!impression_trigger){
+												impression_trigger = true;
+												ga('send', 'event', 'Performance', 'impression', 'hotmart');
+											}
+
 											$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
 										}
 										if(currentTime >= 4) {
-											self.trackImpression(vastData.impression_url);
+											//self.trackImpression(vastData.impression_url);
 
 											$playlistAdArea.addClass('active');
 											$currentPlaylistAd.addClass('active');
