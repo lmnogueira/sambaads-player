@@ -262,7 +262,11 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var getContentByMetaTagName = function(metaname) {
       for (var b = document.getElementsByTagName("meta"), a = 0; a < b.length; a++) {
-        if ( b[a].name.indexOf(metaname) >= 0 || b[a].getAttribute("property").indexOf(metaname)>=0) { return b[a].content; }
+        
+        teste1 = b[a].name ? (b[a].name.indexOf(metaname) >= 0) : false;
+        teste2 = b[a].getAttribute("property") ? (b[a].getAttribute("property").indexOf(metaname)>=0) : false;
+
+        if ( teste1  || teste2) { return b[a].content; }
       } return false;
     }
 
