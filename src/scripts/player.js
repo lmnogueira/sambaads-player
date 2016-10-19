@@ -260,6 +260,12 @@ var ExpandedCinema = function (cw, currentIframe){
         return params;
     };
 
+    var getContentByMetaTagName = function(metaname) {
+      for (var b = document.getElementsByTagName("meta"), a = 0; a < b.length; a++) {
+        if ( b[a].name.indexOf(metaname) >= 0 || b[a].getAttribute("property").indexOf(metaname)>=0) { return b[a].content; }
+      } return false;
+    }
+
     var serialize = function(obj) {
         var str = [];
         for(var p in obj){
@@ -409,6 +415,7 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
 
             },
+
             setVisible:function(data){
 
                 if(this.contentWindow().postMessage){
@@ -593,7 +600,7 @@ var ExpandedCinema = function (cw, currentIframe){
         };
 
         iframeData.isReady = setInterval(function(){
-            iframeData.sendMessage("onReady","");
+            iframeData.sendMessage("onReady", btoa(getContentByMetaTagName("description")));
         },1000)
     };
 

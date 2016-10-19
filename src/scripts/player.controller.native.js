@@ -146,7 +146,6 @@ SambaAdsPlayerControllerNative = function (){
 					}
 					if(currentTime == 10) {
 						if(!impression_trigger){
-							console.log(impression_trigger);
 							impression_trigger = true;
 							self.trackImpression(currentVastData.impression_url);
 						}
