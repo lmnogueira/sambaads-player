@@ -538,22 +538,27 @@ SambaAdsPlayerControllerNative = function (){
 						tagUrl = setVastUrl('playlist_frame');
 
 						var startPlaylistFrameAd = function(vastData) {
-								console.log('offer');
-
 								var productsHtml = '',
 									currentVideoDuration = 0;
+
+								var offerButtonTypes = [
+										'color',
+										'line'
+									];
+
+								var currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
 								var jsonPlaylistMockup = {
 										products: [
 											{
 												title: 'Curso Online de Maquiagem Profissional',
 												clickThrough: 'https://go.hotmart.com/W4802199C',
-												image: '/native/offers/image/offer-1.png'
+												image: '/native/offers/image/offer-1-' + currentButtonType + '.png'
 											},
 											{
 												title: 'Dieta de 21 dias - 100% garantido',
 												clickThrough: 'https://go.hotmart.com/S4945421D?ap=1323',
-												image: '/native/offers/image/offer-2.png'
+												image: '/native/offers/image/offer-2-' + currentButtonType + '.png'
 											}
 										],
 										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
@@ -598,22 +603,19 @@ SambaAdsPlayerControllerNative = function (){
 											var currentTime = parseInt(event.detail.data.position);
 
 											if(currentTime === 0) {
-
 												if(!impression_trigger){
 													impression_trigger = true;
 													ga('send', 'event', 'Performance', 'impression', 'hotmart');
 												}
 
 												$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
-											}
-											if(currentTime >= 4) {
+											} if(currentTime >= 4) {
 												//self.trackImpression(vastData.impression_url);
 
 												$playlistAdArea.addClass('active');
 												$currentPlaylistAd.addClass('active');
 
-											}
-											if(currentTime >= 14) {
+											} if(currentTime >= 14) {
 												$closeButton.addClass('active');
 											}
 
