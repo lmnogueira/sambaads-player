@@ -506,7 +506,12 @@ SambaAdsPlayerControllerNative = function (){
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
 				tagUrl = '',
-				impression_trigger = false;
+				impression_trigger = false,
+				offerButtonTypes = [
+					'color',
+					'line'
+				],
+				currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
 			var defaultHtmlContent = '<div id="related-offers-playlist" class="related-offers-playlist ad-playlist">' +
 										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
@@ -516,7 +521,7 @@ SambaAdsPlayerControllerNative = function (){
 									'</div>';
 
 			var setVastUrl = function(adType) {
-				var tags = self.video.dfp_tags + ",native,related_offers_" + adType + ",",
+				var tags = self.video.dfp_tags + ",native,related_offers_" + adType + "_" + currentButtonType + ",",
 					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
 					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 							 "sz=640x360" +
@@ -540,13 +545,6 @@ SambaAdsPlayerControllerNative = function (){
 						var startPlaylistFrameAd = function(vastData) {
 								var productsHtml = '',
 									currentVideoDuration = 0;
-
-								var offerButtonTypes = [
-										'color',
-										'line'
-									];
-
-								var currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
 								var jsonPlaylistMockup = {
 										products: [
