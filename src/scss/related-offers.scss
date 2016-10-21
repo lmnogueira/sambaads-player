@@ -133,6 +133,8 @@
     }
 }
 
+// Black Friday Ad
+
 .black-friday-playlist {
     background: #000;
     text-align: center;
@@ -156,5 +158,30 @@
     .playlist-footer {
         height: 50px;
         padding: 0;
+    }
+}
+
+.blackfriday-frame {
+    .frame-trigger {
+        &:before {
+            max-width: 153px;
+            max-height: 168px;
+            background-image: url(../native/black-friday/image/black-friday-text.png);
+        }
+    }
+
+    .frame-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+}
+
+.jwplayer {
+    &.blackfriday-player-frame {
+        &.native-frame {
+            &.active-native-frame {
+                background: #000;
+            }
+        }
     }
 }
