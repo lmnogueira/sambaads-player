@@ -169,15 +169,8 @@ SambaAdsPlayerControllerNative = function (){
 					self.nativeTimerTrigger = function(){};
 				};
 
-			//self.stopNativeFunction = currentStopFunction();
-
 			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
-			// var videoType = {
-			// 		'60474': 'glam_box_frame',
-			// 		'60475': 'glam_club_frame',
-			// 		'60476': 'glam_mag_frame'
-			// 	},
 			var videoType = [
 					'glam_box_frame',
 					'glam_club_frame'
@@ -680,7 +673,7 @@ SambaAdsPlayerControllerNative = function (){
 					],
 					currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
-				var defaultHtmlContent = '<div id="black-friday-playlist" class="related-offers-playlist ad-playlist">' +
+				var defaultHtmlContent = '<div id="related-offers-playlistt" class="related-offers-playlist ad-playlist">' +
 											'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
 											'<div class="related-offers-playlist-title ad-playlist-title">Ofertas Incríveis para Você</div>' +
 											'<div id="playlist-products-area" class="playlist-products-area"></div>' +
@@ -970,6 +963,16 @@ SambaAdsPlayerControllerNative = function (){
 
 		if(empiricusHash) {
 			empiricusAd(videoId);
+		}
+
+		var blackFridayVideo = false;
+
+		if(blackFridayVideo) {
+			// 62904 - Smartphone - Bateria
+			// 62903 - Smartphone - Fotos
+			// 70261 - Beleza - Boca Glitter
+			// 71472 - Beleza - Delineado Esfumado
+			blackFriday(videoId);
 		}
 	};
 
