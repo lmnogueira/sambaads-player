@@ -502,9 +502,9 @@ SambaAdsPlayerControllerNative = function (){
 				impression_trigger = false,
 				currentFrameStop = function(){};
 
-			var defaultHtmlContent = '<div id="related-offers-playlist" class="black-friday-playlist ad-playlist">' +
-										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
-										'<div class="related-offers-playlist-title ad-playlist-title"><img src="/native/black-friday/image/logo-black-friday.png"></div>' +
+			var defaultHtmlContent = '<div id="black-friday-playlist" class="black-friday-playlist ad-playlist">' +
+										'<button type="button" id="black-friday-playlist-close" class="black-friday-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
+										'<div class="black-friday-playlist-title ad-playlist-title"><img src="/native/black-friday/image/logo-black-friday.png"></div>' +
 										'<div id="playlist-products-area" class="playlist-products-area"></div>' +
 										'<div id="playlist-footer" class="playlist-footer"></div>' +
 									'</div>';
@@ -527,7 +527,8 @@ SambaAdsPlayerControllerNative = function (){
 			var adsType = {
 					playlistFrame: function(videoId) {
 						var $closeButton = null,
-							$currentPlaylistAd = null;
+							$currentPlaylistAd = null,
+
 
 						tagUrl = setVastUrl('playlist_frame');
 
@@ -535,33 +536,110 @@ SambaAdsPlayerControllerNative = function (){
 								var productsHtml = '',
 									currentVideoDuration = 0;
 
+									// 62904 - Smartphone - Bateria
+									// 62903 - Smartphone - Fotos
+									// 70261 - Beleza - Boca Glitter
+									// 71472 - Beleza - Delineado Esfumado
+
+								var videosCheck = {
+										62904: 'tech',
+										62903: 'tech',
+										70261: 'boca_glitter',
+										71472: 'delineado_esfumado'
+									};
+
 								var jsonPlaylistMockup = {
-										products: [
-											{
-												title: 'Iphone 6',
-												clickThrough: 'http://wwww.ycontent.com.br',
-												image: '/native/black-friday/image/iphone.png'
+										type: {
+											full: {
+												tech: {
+													products: [
+														{
+															title: 'Iphone 6',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/iphone.png'
+														},
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														},
+														{
+															title: 'Motorola',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												},
 											},
-											{
-												title: 'Samsung Galaxy',
-												clickThrough: 'http://wwww.ycontent.com.br',
-												image: '/native/black-friday/image/samsung.png'
+											playlist_only: {
+												tech: {
+													products: [
+														{
+															title: 'Iphone 6',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/iphone.png'
+														},
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												},
+												boca_glitter: {
+													products: [
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														},
+														{
+															title: 'Motorola',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												},
+												delineado_esfumado: {
+													products: [
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														},
+														{
+															title: 'Motorola',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												}
 											}
-										],
+										},
 										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
 									};
 
-								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
-									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
-													'" id="' + x + '" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
-													'" alt="' + jsonPlaylistMockup.products[x].title +
-													'" title="' + jsonPlaylistMockup.products[x].title + '" ></a>';
+								videoId = 62904;
+
+								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
+
+								for(var x = 0; x < currentProducts.length; x++) {
+									productsHtml += '<a href="' + currentProducts[x].clickThrough +
+													'" id="' + x + '" target="_blank" class="playlist-product"><img src="' + currentProducts[x].image +
+													'" alt="' + currentProducts[x].title +
+													'" title="' + currentProducts[x].title + '" ></a>';
 								}
 
 								$('#playlist-products-area').html(productsHtml);
+								$('#black-friday-playlist').addClass(currentAdType);
 								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
 
-								$('.playlist-product').on('click', function(e){
+								var $currentPlaylistAd = $('#black-friday-playlist'),
+									$playlistAdArea = $('#playlist-ad-area'),
+									$closeButton = $('#black-friday-playlist-close'),
+									$productsTrigger = $('.playlist-product');
+
+								$productsTrigger.on('click', function(e){
 									JWPlayer.pause();
 									ga('send', 'event', 'Performance', 'click', 'hotmart', this.id);
 								});
@@ -716,16 +794,21 @@ SambaAdsPlayerControllerNative = function (){
 					}
 				};
 
-			var $playlistAdArea = null;
+			var $playlistAdArea = null,
+				currentAdType = ['full','playlist_only'][Math.round(Math.random())],
+				startAd = function() {
+					adsType.playlistFrame(videoId);
+					if(currentAdType ==='full') {
+						adsType.blackFridayFrame(videoId);
+					}
+				};
 
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
 				$playlistAdArea = $('.playlist-ad-right');
-				adsType.playlistFrame(videoId);
-				adsType.blackFridayFrame(videoId);
+				startAd();
 			} else if (playerConfiguration.detail.data.playlist.position === 'bottom-horizontal') {
 				$playlistAdArea = $('.playlist-ad-horizontal');
-				adsType.playlistFrame(videoId);
-				adsType.blackFridayFrame(videoId);
+				startAd();
 			}
 		};
 

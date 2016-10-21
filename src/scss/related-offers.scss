@@ -142,11 +142,12 @@
 
     .playlist-product {
         padding: 0;
-        height: 90px;
+        height: 77px;
         margin-bottom: 15px;
 
         img {
             height: 100%;
+            width: auto;
         }
     }
 
@@ -190,6 +191,22 @@
             &.active-native-frame {
                 background: #000;
             }
+        }
+    }
+}
+
+.black-friday-playlist {
+    &.full {
+        .ad-playlist-title {
+            display: none;
+        }
+
+        .playlist-footer {
+            left: 20px;
+        }
+
+        .playlist-product {
+            height: 75px;
         }
     }
 }
