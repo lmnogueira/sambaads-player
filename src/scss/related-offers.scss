@@ -110,6 +110,7 @@
         height: 100%;
         display: inline-block;
         margin: 0 35px 0 0;
+        padding: 0;
         float: none;
         vertical-align: top;
 
@@ -158,6 +159,13 @@
     .playlist-footer {
         height: 50px;
         padding: 0;
+    }
+
+    .ad-playlist-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        width: 18px;
+        height: 18px;
     }
 }
 

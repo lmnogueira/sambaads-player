@@ -499,7 +499,8 @@ SambaAdsPlayerControllerNative = function (){
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
 				tagUrl = '',
-				impression_trigger = false;
+				impression_trigger = false,
+				currentFrameStop = function(){};
 
 			var defaultHtmlContent = '<div id="related-offers-playlist" class="black-friday-playlist ad-playlist">' +
 										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
@@ -593,7 +594,7 @@ SambaAdsPlayerControllerNative = function (){
 
 												$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
 											} if(currentTime >= 4) {
-												//self.trackImpression(vastData.impression_url);
+												self.trackImpression(vastData.impression_url);
 
 												$playlistAdArea.addClass('active');
 												$currentPlaylistAd.addClass('active');
@@ -617,13 +618,13 @@ SambaAdsPlayerControllerNative = function (){
 										                    if(currentLeftTime === 0) {
 										                        clearTimeout(showAdTimeout);
 																currentStopFunction();
+																currentFrameStop();
 										                    } else {
 										                        timerCount++;
 										                        timerControl();
 										                    }
 										                }, 1000);
 										            };
-
 										        timerControl();
 											}
 										}
@@ -635,6 +636,7 @@ SambaAdsPlayerControllerNative = function (){
 									event.preventDefault();
 									event.stopPropagation();
 									currentStopFunction();
+									currentFrameStop();
 								});
 							};
 
@@ -648,6 +650,69 @@ SambaAdsPlayerControllerNative = function (){
 						};
 
 						self.loadVastTag(tagUrl, vastSuccessAction);
+					},
+					blackFridayFrame: function(videoId) {
+						self.setCurrentNative($('#blackfriday-frame'));
+
+						var JWplayerArea = $('#jw_sambaads_player'),
+							blackFridayFrame = $('#blackfriday-frame'),
+							frameClose = blackFridayFrame.find('.frame-close'),
+							videoTitleBar = $('#video-title-bar'),
+							closeActive = true,
+							impression_trigger = false;
+
+						self.nativeTimerTrigger = function(event) {
+							if(closeActive) {
+								var currentTime = parseInt(event.detail.data.position);
+
+								if(currentTime >= 1) {
+									JWplayerArea.addClass('native-frame');
+									JWplayerArea.addClass('blackfriday-player-frame');
+								} if(currentTime == 4) {
+									if(!impression_trigger){
+										impression_trigger = true;
+										self.trackImpression(currentVastData.impression_url);
+									}
+									JWplayerArea.addClass('active-native-frame');
+									blackFridayFrame.addClass('active-native-frame');
+									videoTitleBar.addClass('inactive');
+								} if(currentTime >= 14) {
+									frameClose.addClass('active');
+								}
+							}
+						};
+
+						currentFrameStop = function(event) {
+							JWplayerArea.removeClass('active-native-frame');
+							blackFridayFrame.removeClass('active-native-frame');
+							JWplayerArea.removeClass('native-frame');
+							JWplayerArea.removeClass('blackfriday-player-frame');
+							frameClose.removeClass('active');
+							videoTitleBar.removeClass('inactive');
+							self.nativeTimerTrigger = function(){};
+						};
+
+						SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentFrameStop);
+
+						frameTrigger = $('.frame-trigger');
+
+						frameTrigger.off();
+						frameTrigger.on('click', function(event){
+							event.preventDefault();
+							window.open(vastData.click_url);
+						});
+
+						frameClose.on('click', function(event){
+							event.preventDefault();
+							closeActive = false;
+							JWplayerArea.removeClass('active-native-frame');
+							blackFridayFrame.removeClass('active-native-frame');
+							frameClose.removeClass('active');
+
+							window.setTimeout(function(){
+								videoTitleBar.removeClass('inactive');
+							}, 2500);
+						});
 					}
 				};
 
@@ -656,92 +721,13 @@ SambaAdsPlayerControllerNative = function (){
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
 				$playlistAdArea = $('.playlist-ad-right');
 				adsType.playlistFrame(videoId);
+				adsType.blackFridayFrame(videoId);
 			} else if (playerConfiguration.detail.data.playlist.position === 'bottom-horizontal') {
 				$playlistAdArea = $('.playlist-ad-horizontal');
 				adsType.playlistFrame(videoId);
+				adsType.blackFridayFrame(videoId);
 			}
 		};
-
-		var blackFridayFrame = function(videoId) {
-				self.setCurrentNative($('#blackfriday-frame'));
-
-				var JWplayerArea = $('#jw_sambaads_player'),
-					blackFridayFrame = $('#blackfriday-frame'),
-					frameClose = blackFridayFrame.find('.frame-close'),
-					videoTitleBar = $('#video-title-bar'),
-					closeActive = true,
-					impression_trigger = false;
-
-				self.nativeTimerTrigger = function(event) {
-					if(closeActive) {
-						var currentTime = parseInt(event.detail.data.position);
-
-						if(currentTime >= 1) {
-							JWplayerArea.addClass('native-frame');
-							JWplayerArea.addClass('blackfriday-player-frame');
-						} if(currentTime == 10) {
-							if(!impression_trigger){
-								impression_trigger = true;
-								self.trackImpression(currentVastData.impression_url);
-							}
-							JWplayerArea.addClass('active-native-frame');
-							blackFridayFrame.addClass('active-native-frame');
-							videoTitleBar.addClass('inactive');
-						} if(currentTime >= 14) {
-							frameClose.addClass('active');
-						}
-					}
-				};
-
-				var currentStopFunction = function(event) {
-						JWplayerArea.removeClass('active-native-frame');
-						blackFridayFrame.removeClass('active-native-frame');
-						JWplayerArea.removeClass('native-frame');
-						JWplayerArea.removeClass('blackfriday-player-frame');
-						frameClose.removeClass('active');
-						videoTitleBar.removeClass('inactive');
-						self.nativeTimerTrigger = function(){};
-					};
-
-				SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
-
-				var currentFrame = 'lorem_ipsum';
-
-				var tags = self.video.dfp_tags + ",native,blackfriday_frame_" + currentFrame,
-					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-
-		 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-					 		 "sz=640x360" +
-					 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-					 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-					 		 "&cust_params=" + custom_params +
-					 		 "&cmsid=" + self.video.dfp_partner_id +
-					 		 "&vid=" + self.video.hashed_code +
-					 		 "&correlator=" + new Date().getTime();
-
-				self.loadVastTag(tagUrl, function(vastData, data){
-					frameTrigger.off();
-
-					currentVastData = vastData;
-
-					frameTrigger.on('click', function(event){
-						event.preventDefault();
-						window.open(vastData.click_url);
-					});
-				});
-
-				frameClose.on('click', function(event){
-					event.preventDefault();
-					closeActive = false;
-					JWplayerArea.removeClass('active-native-frame');
-					blackFridayFrame.removeClass('active-native-frame');
-					frameClose.removeClass('active');
-
-					window.setTimeout(function(){
-						videoTitleBar.removeClass('inactive');
-					}, 2500);
-				});
-			};
 
 		var relatedOffersAd = function(videoId) {
 				var vastSuccessAction = function(vastData, data){}
@@ -1054,7 +1040,6 @@ SambaAdsPlayerControllerNative = function (){
 			// 70261 - Beleza - Boca Glitter
 			// 71472 - Beleza - Delineado Esfumado
 			blackFriday(videoId);
-			blackFridayFrame(videoId);
 		}
 	};
 
