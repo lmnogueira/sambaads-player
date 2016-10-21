@@ -483,9 +483,9 @@ var ExpandedCinema = function (cw, currentIframe){
                parameters.sk = "blue";
             }
 
-            if(!isNaN(parameters.sk)){
-                parameters.sk = "blue";
-            }
+            // if(!isNaN(parameters.sk)){
+            //     parameters.sk = "blue";
+            // }
         }
 
 
