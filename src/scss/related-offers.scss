@@ -10,6 +10,16 @@
     }
 }
 
+.playlist-product {
+    margin: 0;
+    padding: 15px 0;
+    border-bottom: solid 1px rgba(151, 151, 151, .17);
+
+    &:last-child {
+        border: none;
+    }
+}
+
 .playlist-ad-horizontal {
     .playlist-products-area {
         text-align: center;
@@ -42,4 +52,8 @@
     .footer-time {
         line-height: 35px;
     }
+}
+
+.black-friday-playlist {
+    background: #000;
 }
