@@ -1150,7 +1150,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		//blackFridayCheck = true;
 
-		if(blackFridayCheck) {
+		if(blackFridayCheck && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
 			currentAd = blackFriday;
 		}
 
