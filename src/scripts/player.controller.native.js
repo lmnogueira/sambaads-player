@@ -648,6 +648,7 @@ SambaAdsPlayerControllerNative = function (){
 									};
 
 								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
+								//var currentProducts = jsonPlaylistMockup.type[videosCheck[videoId]].products;
 
 								for(var x = 0; x < currentProducts.length; x++) {
 									productsHtml += '<a href="' + currentProducts[x].clickThrough +
@@ -821,7 +822,8 @@ SambaAdsPlayerControllerNative = function (){
 				};
 
 			var $playlistAdArea = null,
-				currentAdType = ['full','playlist_only'][Math.round(Math.random())],
+				//currentAdType = ['full','playlist_only'][Math.round(Math.random())],
+				currentAdType = 'full',
 				startAd = function() {
 					adsType.playlistFrame(videoId);
 					if(currentAdType ==='full') {
