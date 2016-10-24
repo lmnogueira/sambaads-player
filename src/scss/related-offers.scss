@@ -1,3 +1,82 @@
+.ad-playlist {
+    background-color: #f7f7f7;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 15px;
+    opacity: 0;
+    z-index: 300;
+    transition: opacity 200ms linear;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.playlist-ad-area {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.ad-playlist-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 0 8px 0;
+    border-bottom: solid 1px rgba(151, 151, 151, .17);
+    color: rgba(30, 37, 53, .94);
+}
+
+.ad-playlist-close {
+    border: none;
+    background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    top: 15px;
+    right: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 200ms linear;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.playlist-product {
+    width: 100%;
+    margin: 10px 0;
+    float: left;
+
+    img {
+        width: 100%;
+    }
+}
+
+.playlist-footer {
+    //border-top: solid 1px rgba(151, 151, 151, .17); 
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    height: 78px;
+    padding: 15px;
+    text-align: center;
+
+    img {
+        height: 100%;
+    }
+}
+
 .footer-time {
     font-size: 13px;
     color: rgba(183, 183, 183, .94);
@@ -31,6 +110,7 @@
         height: 100%;
         display: inline-block;
         margin: 0 35px 0 0;
+        padding: 0;
         float: none;
         vertical-align: top;
 
@@ -54,6 +134,83 @@
     }
 }
 
+// Black Friday Ad
+
 .black-friday-playlist {
     background: #000;
+    text-align: center;
+
+    .playlist-product {
+        padding: 0;
+        height: 77px;
+        margin-bottom: 15px;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+
+    .footer-time {
+        span {
+            color: #fff;
+        }
+    }
+
+    .playlist-footer {
+        height: 50px;
+        padding: 0;
+    }
+
+    .ad-playlist-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.blackfriday-frame {
+    .frame-trigger {
+        &:before {
+            max-width: 153px;
+            max-height: 168px;
+            background-image: url(../native/black-friday/image/black-friday-text.png);
+        }
+    }
+
+    .frame-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+}
+
+.jwplayer {
+    &.blackfriday-player-frame {
+        &.native-frame {
+            &.active-native-frame {
+                background: #000;
+            }
+        }
+    }
+}
+
+.black-friday-playlist {
+    &.full {
+        .ad-playlist-title {
+            display: none;
+        }
+
+        .playlist-footer {
+            left: 20px;
+        }
+
+        .playlist-products-area {
+            padding-top: 20px;
+        }
+
+        .playlist-product {
+            height: 75px;
+        }
+    }
 }

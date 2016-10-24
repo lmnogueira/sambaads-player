@@ -169,15 +169,8 @@ SambaAdsPlayerControllerNative = function (){
 					self.nativeTimerTrigger = function(){};
 				};
 
-			//self.stopNativeFunction = currentStopFunction();
-
 			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
-			// var videoType = {
-			// 		'60474': 'glam_box_frame',
-			// 		'60475': 'glam_club_frame',
-			// 		'60476': 'glam_mag_frame'
-			// 	},
 			var videoType = [
 					'glam_box_frame',
 					'glam_club_frame'
@@ -506,12 +499,13 @@ SambaAdsPlayerControllerNative = function (){
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
 				tagUrl = '',
-				impression_trigger = false;
+				impression_trigger = false,
+				currentFrameStop = function(){};
 
-			var defaultHtmlContent = '<div id="related-offers-playlist" class="black-friday-playlist ad-playlist">' +
-										'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
-										'<div class="related-offers-playlist-title ad-playlist-title"><img src="/native/black-friday/image/logo-black-friday.png"></div>' +
-										'<div id="playlist-products-area" class="playlist-products-area"></div>' +
+			var defaultHtmlContent = '<div id="black-friday-playlist" class="black-friday-playlist ad-playlist">' +
+										'<button type="button" id="black-friday-playlist-close" class="black-friday-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
+										'<div class="black-friday-playlist-title ad-playlist-title"><img src="/native/black-friday/image/logo-black-friday.png"></div>' +
+										'<div id="playlist-products-area" class="playlist-products-area cf"></div>' +
 										'<div id="playlist-footer" class="playlist-footer"></div>' +
 									'</div>';
 
@@ -533,7 +527,8 @@ SambaAdsPlayerControllerNative = function (){
 			var adsType = {
 					playlistFrame: function(videoId) {
 						var $closeButton = null,
-							$currentPlaylistAd = null;
+							$currentPlaylistAd = null,
+
 
 						tagUrl = setVastUrl('playlist_frame');
 
@@ -541,33 +536,137 @@ SambaAdsPlayerControllerNative = function (){
 								var productsHtml = '',
 									currentVideoDuration = 0;
 
+									// 62904 - Smartphone - Bateria
+									// 62903 - Smartphone - Fotos
+									// 70261 - Beleza - Boca Glitter
+									// 71472 - Beleza - Delineado Esfumado
+
+								var videosCheck = {
+										62904: 'tech',
+										62903: 'tech',
+										70261: 'boca_glitter',
+										71472: 'delineado_esfumado'
+									};
+
 								var jsonPlaylistMockup = {
-										products: [
-											{
-												title: 'Iphone 6',
-												clickThrough: 'http://wwww.ycontent.com.br',
-												image: '/native/black-friday/image/iphone.png'
+										type: {
+											full: {
+												tech: {
+													products: [
+														{
+															title: 'Iphone 6',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/iphone.png'
+														},
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														},
+														{
+															title: 'Motorola',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												},
+												boca_glitter: {
+													products: [
+														{
+															title: 'Batom Retro',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/battom-retro.png'
+														},
+														{
+															title: 'Mac Sombra',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/mac-sombra.png'
+														}
+													]
+												},
+												delineado_esfumado: {
+													products: [
+														{
+															title: 'Perfect Lapis',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/lapis.png'
+														},
+														{
+															title: 'Cilios',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/cilios.png'
+														}
+													]
+												}
 											},
-											{
-												title: 'Samsung Galaxy',
-												clickThrough: 'http://wwww.ycontent.com.br',
-												image: '/native/black-friday/image/samsung.png'
+											playlist_only: {
+												tech: {
+													products: [
+														{
+															title: 'Iphone 6',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/iphone.png'
+														},
+														{
+															title: 'Samsung Galaxy',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/samsung.png'
+														}
+													]
+												},
+												boca_glitter: {
+													products: [
+														{
+															title: 'Batom Líquido',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/battom-retro.png'
+														},
+														{
+															title: 'Mac Sombra',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/mac-sombra.png'
+														}
+													]
+												},
+												delineado_esfumado: {
+													products: [
+														{
+															title: 'Perfect Lapis',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/lapis.png'
+														},
+														{
+															title: 'Cilios',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/cilios.png'
+														}
+													]
+												}
 											}
-										],
+										},
 										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
 									};
 
-								for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
-									productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
-													'" id="' + x + '" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
-													'" alt="' + jsonPlaylistMockup.products[x].title +
-													'" title="' + jsonPlaylistMockup.products[x].title + '" ></a>';
+								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
+								//var currentProducts = jsonPlaylistMockup.type[videosCheck[videoId]].products;
+
+								for(var x = 0; x < currentProducts.length; x++) {
+									productsHtml += '<a href="' + currentProducts[x].clickThrough +
+													'" id="' + x + '" target="_blank" class="playlist-product"><img src="' + currentProducts[x].image +
+													'" alt="' + currentProducts[x].title +
+													'" title="' + currentProducts[x].title + '" ></a>';
 								}
 
 								$('#playlist-products-area').html(productsHtml);
+								$('#black-friday-playlist').addClass(currentAdType);
 								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
 
-								$('.playlist-product').on('click', function(e){
+								var $currentPlaylistAd = $('#black-friday-playlist'),
+									$playlistAdArea = $('#playlist-ad-area'),
+									$closeButton = $('#black-friday-playlist-close'),
+									$productsTrigger = $('.playlist-product');
+
+								$productsTrigger.on('click', function(e){
 									JWPlayer.pause();
 									ga('send', 'event', 'Performance', 'click', 'hotmart', this.id);
 								});
@@ -600,7 +699,7 @@ SambaAdsPlayerControllerNative = function (){
 
 												$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
 											} if(currentTime >= 4) {
-												//self.trackImpression(vastData.impression_url);
+												self.trackImpression(vastData.impression_url);
 
 												$playlistAdArea.addClass('active');
 												$currentPlaylistAd.addClass('active');
@@ -624,13 +723,13 @@ SambaAdsPlayerControllerNative = function (){
 										                    if(currentLeftTime === 0) {
 										                        clearTimeout(showAdTimeout);
 																currentStopFunction();
+																currentFrameStop();
 										                    } else {
 										                        timerCount++;
 										                        timerControl();
 										                    }
 										                }, 1000);
 										            };
-
 										        timerControl();
 											}
 										}
@@ -642,6 +741,7 @@ SambaAdsPlayerControllerNative = function (){
 									event.preventDefault();
 									event.stopPropagation();
 									currentStopFunction();
+									currentFrameStop();
 								});
 							};
 
@@ -655,17 +755,88 @@ SambaAdsPlayerControllerNative = function (){
 						};
 
 						self.loadVastTag(tagUrl, vastSuccessAction);
+					},
+					blackFridayFrame: function(videoId) {
+						self.setCurrentNative($('#blackfriday-frame'));
+
+						var JWplayerArea = $('#jw_sambaads_player'),
+							blackFridayFrame = $('#blackfriday-frame'),
+							frameClose = blackFridayFrame.find('.frame-close'),
+							videoTitleBar = $('#video-title-bar'),
+							closeActive = true,
+							impression_trigger = false;
+
+						self.nativeTimerTrigger = function(event) {
+							if(closeActive) {
+								var currentTime = parseInt(event.detail.data.position);
+
+								if(currentTime >= 1) {
+									JWplayerArea.addClass('native-frame');
+									JWplayerArea.addClass('blackfriday-player-frame');
+								} if(currentTime == 4) {
+									if(!impression_trigger){
+										impression_trigger = true;
+										self.trackImpression(currentVastData.impression_url);
+									}
+									JWplayerArea.addClass('active-native-frame');
+									blackFridayFrame.addClass('active-native-frame');
+									videoTitleBar.addClass('inactive');
+								} if(currentTime >= 14) {
+									frameClose.addClass('active');
+								}
+							}
+						};
+
+						currentFrameStop = function(event) {
+							JWplayerArea.removeClass('active-native-frame');
+							blackFridayFrame.removeClass('active-native-frame');
+							JWplayerArea.removeClass('native-frame');
+							JWplayerArea.removeClass('blackfriday-player-frame');
+							frameClose.removeClass('active');
+							videoTitleBar.removeClass('inactive');
+							self.nativeTimerTrigger = function(){};
+						};
+
+						SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentFrameStop);
+
+						frameTrigger = $('.frame-trigger');
+
+						frameTrigger.off();
+						frameTrigger.on('click', function(event){
+							event.preventDefault();
+							window.open(vastData.click_url);
+						});
+
+						frameClose.on('click', function(event){
+							event.preventDefault();
+							closeActive = false;
+							JWplayerArea.removeClass('active-native-frame');
+							blackFridayFrame.removeClass('active-native-frame');
+							frameClose.removeClass('active');
+
+							window.setTimeout(function(){
+								videoTitleBar.removeClass('inactive');
+							}, 2500);
+						});
 					}
 				};
 
-			var $playlistAdArea = null;
+			var $playlistAdArea = null,
+				//currentAdType = ['full','playlist_only'][Math.round(Math.random())],
+				currentAdType = 'full',
+				startAd = function() {
+					adsType.playlistFrame(videoId);
+					if(currentAdType ==='full') {
+						adsType.blackFridayFrame(videoId);
+					}
+				};
 
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
 				$playlistAdArea = $('.playlist-ad-right');
-				adsType.playlistFrame(videoId);
+				startAd();
 			} else if (playerConfiguration.detail.data.playlist.position === 'bottom-horizontal') {
 				$playlistAdArea = $('.playlist-ad-horizontal');
-				adsType.playlistFrame(videoId);
+				startAd();
 			}
 		};
 
@@ -680,7 +851,7 @@ SambaAdsPlayerControllerNative = function (){
 					],
 					currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
-				var defaultHtmlContent = '<div id="black-friday-playlist" class="related-offers-playlist ad-playlist">' +
+				var defaultHtmlContent = '<div id="related-offers-playlist" class="related-offers-playlist ad-playlist">' +
 											'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
 											'<div class="related-offers-playlist-title ad-playlist-title">Ofertas Incríveis para Você</div>' +
 											'<div id="playlist-products-area" class="playlist-products-area"></div>' +
@@ -822,7 +993,7 @@ SambaAdsPlayerControllerNative = function (){
 							vastSuccessAction = function(vastData, data) {
 								$playlistAdArea.html(defaultHtmlContent).promise().done(function(){
 									$closeButton = $('.ad-playlist-close');
-									$currentPlaylistAd = $('#black-friday-playlist');
+									$currentPlaylistAd = $('#related-offers-playlist');
 
 									startPlaylistFrameAd(vastData);
 								});
@@ -961,16 +1132,31 @@ SambaAdsPlayerControllerNative = function (){
 		//if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
 			//toroRadarFrame(videoId);
 		//} else
+
+		var currentAd = function(){};
+
 		if(can_publisher_play || can_vertical_play) {
-			glamboxFrame(videoId);
-			relatedOffersAd(videoId);
+			currentAd = function() {
+				glamboxFrame(videoId);
+				relatedOffersAd(videoId);
+			}
 		}
 
 		var empiricusHash = false;
 
 		if(empiricusHash) {
-			empiricusAd(videoId);
+			currentAd = empiricusAd;
 		}
+
+		var blackFridayCheck = videoId === 62904 || videoId === 62903 || videoId === 70261 || videoId === 71472;
+
+		//blackFridayCheck = true;
+
+		if(blackFridayCheck && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
+			currentAd = blackFriday;
+		}
+
+		currentAd(videoId);
 	};
 
 	self.setCurrentNative = function(nativeEl) {
