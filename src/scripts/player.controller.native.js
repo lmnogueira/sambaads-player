@@ -619,8 +619,6 @@ SambaAdsPlayerControllerNative = function (){
 										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
 									};
 
-								videoId = 62904;
-
 								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
 
 								for(var x = 0; x < currentProducts.length; x++) {
@@ -823,7 +821,7 @@ SambaAdsPlayerControllerNative = function (){
 					],
 					currentButtonType = offerButtonTypes[Math.round(Math.random())];
 
-				var defaultHtmlContent = '<div id="related-offers-playlistt" class="related-offers-playlist ad-playlist">' +
+				var defaultHtmlContent = '<div id="related-offers-playlist" class="related-offers-playlist ad-playlist">' +
 											'<button type="button" id="related-offers-playlist-close" class="related-offers-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
 											'<div class="related-offers-playlist-title ad-playlist-title">Ofertas Incríveis para Você</div>' +
 											'<div id="playlist-products-area" class="playlist-products-area"></div>' +
@@ -965,7 +963,7 @@ SambaAdsPlayerControllerNative = function (){
 							vastSuccessAction = function(vastData, data) {
 								$playlistAdArea.html(defaultHtmlContent).promise().done(function(){
 									$closeButton = $('.ad-playlist-close');
-									$currentPlaylistAd = $('#black-friday-playlist');
+									$currentPlaylistAd = $('#related-offers-playlist');
 
 									startPlaylistFrameAd(vastData);
 								});
@@ -1104,9 +1102,10 @@ SambaAdsPlayerControllerNative = function (){
 		//if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
 			//toroRadarFrame(videoId);
 		//} else
+
 		if(can_publisher_play || can_vertical_play) {
-			//glamboxFrame(videoId);
-			//relatedOffersAd(videoId);
+			glamboxFrame(videoId);
+			relatedOffersAd(videoId);
 		}
 
 		var empiricusHash = false;
@@ -1115,13 +1114,11 @@ SambaAdsPlayerControllerNative = function (){
 			empiricusAd(videoId);
 		}
 
-		var blackFridayVideo = true;
+		var blackFridayCheck = videoId === 62904 || videoId === 62903 || videoId === 70261 || videoId === 71472;
 
-		if(blackFridayVideo) {
-			// 62904 - Smartphone - Bateria
-			// 62903 - Smartphone - Fotos
-			// 70261 - Beleza - Boca Glitter
-			// 71472 - Beleza - Delineado Esfumado
+		//blackFridayCheck = true;
+
+		if(blackFridayCheck) {
 			blackFriday(videoId);
 		}
 	};
