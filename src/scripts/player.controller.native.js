@@ -505,7 +505,7 @@ SambaAdsPlayerControllerNative = function (){
 			var defaultHtmlContent = '<div id="black-friday-playlist" class="black-friday-playlist ad-playlist">' +
 										'<button type="button" id="black-friday-playlist-close" class="black-friday-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button>' +
 										'<div class="black-friday-playlist-title ad-playlist-title"><img src="/native/black-friday/image/logo-black-friday.png"></div>' +
-										'<div id="playlist-products-area" class="playlist-products-area"></div>' +
+										'<div id="playlist-products-area" class="playlist-products-area cf"></div>' +
 										'<div id="playlist-footer" class="playlist-footer"></div>' +
 									'</div>';
 
@@ -570,6 +570,34 @@ SambaAdsPlayerControllerNative = function (){
 														}
 													]
 												},
+												boca_glitter: {
+													products: [
+														{
+															title: 'Batom Retro',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/battom-retro.png'
+														},
+														{
+															title: 'Mac Sombra',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/mac-sombra.png'
+														}
+													]
+												},
+												delineado_esfumado: {
+													products: [
+														{
+															title: 'Perfect Lapis',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/lapis.png'
+														},
+														{
+															title: 'Cilios',
+															clickThrough: 'http://wwww.ycontent.com.br',
+															image: '/native/black-friday/image/cilios.png'
+														}
+													]
+												}
 											},
 											playlist_only: {
 												tech: {
@@ -589,28 +617,28 @@ SambaAdsPlayerControllerNative = function (){
 												boca_glitter: {
 													products: [
 														{
-															title: 'Samsung Galaxy',
+															title: 'Batom Líquido',
 															clickThrough: 'http://wwww.ycontent.com.br',
-															image: '/native/black-friday/image/samsung.png'
+															image: '/native/black-friday/image/battom-retro.png'
 														},
 														{
-															title: 'Motorola',
+															title: 'Mac Sombra',
 															clickThrough: 'http://wwww.ycontent.com.br',
-															image: '/native/black-friday/image/samsung.png'
+															image: '/native/black-friday/image/mac-sombra.png'
 														}
 													]
 												},
 												delineado_esfumado: {
 													products: [
 														{
-															title: 'Samsung Galaxy',
+															title: 'Perfect Lapis',
 															clickThrough: 'http://wwww.ycontent.com.br',
-															image: '/native/black-friday/image/samsung.png'
+															image: '/native/black-friday/image/lapis.png'
 														},
 														{
-															title: 'Motorola',
+															title: 'Cilios',
 															clickThrough: 'http://wwww.ycontent.com.br',
-															image: '/native/black-friday/image/samsung.png'
+															image: '/native/black-friday/image/cilios.png'
 														}
 													]
 												}
@@ -1103,15 +1131,19 @@ SambaAdsPlayerControllerNative = function (){
 			//toroRadarFrame(videoId);
 		//} else
 
+		var currentAd = function(){};
+
 		if(can_publisher_play || can_vertical_play) {
-			glamboxFrame(videoId);
-			relatedOffersAd(videoId);
+			currentAd = function() {
+				glamboxFrame(videoId);
+				relatedOffersAd(videoId);
+			}
 		}
 
 		var empiricusHash = false;
 
 		if(empiricusHash) {
-			empiricusAd(videoId);
+			currentAd = empiricusAd;
 		}
 
 		var blackFridayCheck = videoId === 62904 || videoId === 62903 || videoId === 70261 || videoId === 71472;
@@ -1119,8 +1151,10 @@ SambaAdsPlayerControllerNative = function (){
 		//blackFridayCheck = true;
 
 		if(blackFridayCheck) {
-			blackFriday(videoId);
+			currentAd = blackFriday;
 		}
+
+		currentAd(videoId);
 	};
 
 	self.setCurrentNative = function(nativeEl) {
