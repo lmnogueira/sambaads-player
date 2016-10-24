@@ -1014,6 +1014,29 @@ SambaAdsPlayerControllerNative = function (){
 				}
 			};
 
+	var showFullAd = function(videoId) {
+		var $playerContainer = $('.sambaads-player-container'),
+			$fullAdClose = $('.full-ad-close');
+
+		$playerContainer.addClass('full-ad');
+
+		setTimeout(function(){
+			$playerContainer.addClass('active-full-ad');
+		}, 2000);
+
+		$('.full-ad-main-trigger').on('click', function(event){
+			console.log('full-click!');
+		});
+
+		$fullAdClose.on('click', function(event){
+			event.preventDefault();
+			$playerContainer.removeClass('active-full-ad');
+		});
+
+		SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, function(){
+			$playerContainer.removeClass('active-full-ad');
+		});
+	};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
 		if(typeof beforeAd === 'function') {
@@ -1157,7 +1180,10 @@ SambaAdsPlayerControllerNative = function (){
 		}
 
 		currentAd(videoId);
+
+		//showFullAd();
 	};
+
 
 	self.setCurrentNative = function(nativeEl) {
 		$('.current-native').removeClass('current-native');
