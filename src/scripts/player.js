@@ -606,7 +606,7 @@ var ExpandedCinema = function (cw, currentIframe){
         };
 
         iframeData.isReady = setInterval(function(){
-            iframeData.sendMessage("onReady", btoa(getContentByMetaTagName("description")));
+            iframeData.sendMessage("onReady", btoa(getContentByMetaTagName("title")));
         },1000)
     };
 
