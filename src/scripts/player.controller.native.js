@@ -644,7 +644,7 @@ SambaAdsPlayerControllerNative = function (){
 												}
 											}
 										},
-										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
+										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="blackfriday-time-left" class="time-left"></span> minutos</span></span>'
 									};
 
 								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
@@ -664,7 +664,8 @@ SambaAdsPlayerControllerNative = function (){
 								var $currentPlaylistAd = $('#black-friday-playlist'),
 									$playlistAdArea = $('#playlist-ad-area'),
 									$closeButton = $('#black-friday-playlist-close'),
-									$productsTrigger = $('.playlist-product');
+									$productsTrigger = $('.playlist-product'),
+									$timeLeft = $('#blackfriday-time-left');
 
 								$productsTrigger.on('click', function(e){
 									JWPlayer.pause();
@@ -697,7 +698,7 @@ SambaAdsPlayerControllerNative = function (){
 													//ga('send', 'event', 'Performance', 'impression', 'hotmart');
 												}
 
-												$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+												$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
 											} if(currentTime >= 4) {
 												self.trackImpression(vastData.impression_url);
 
@@ -718,7 +719,7 @@ SambaAdsPlayerControllerNative = function (){
 															var currentLeftTime = currentVideoDuration - timerCount,
 																timeLeft = secondsToTime(currentLeftTime);
 
-															$('#time-left').html(timeLeft);
+															$timeLeft.html(timeLeft);
 
 										                    if(currentLeftTime === 0) {
 										                        clearTimeout(showAdTimeout);
@@ -776,7 +777,7 @@ SambaAdsPlayerControllerNative = function (){
 								} if(currentTime == 4) {
 									if(!impression_trigger){
 										impression_trigger = true;
-										self.trackImpression(currentVastData.impression_url);
+										//self.trackImpression(currentVastData.impression_url);
 									}
 									JWplayerArea.addClass('active-native-frame');
 									blackFridayFrame.addClass('active-native-frame');
@@ -1014,15 +1015,30 @@ SambaAdsPlayerControllerNative = function (){
 				}
 			};
 
+	var secondsToTime = function(currentSeconds) {
+			var minutes = Math.floor(currentSeconds % 3600 / 60),
+				seconds = Math.floor(currentSeconds % 3600 % 60);
+
+			return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+		};
+
 	var showFullAd = function(videoId) {
 		var $playerContainer = $('.sambaads-player-container'),
-			$fullAdClose = $('.full-ad-close');
+			$fullAdClose = $('.full-ad-close'),
+			isRunning = true;
 
-		$playerContainer.addClass('full-ad');
-
-		setTimeout(function(){
+		var fullAdStart = function() {
 			$playerContainer.addClass('active-full-ad');
-		}, 2000);
+		};
+
+		var fullAdStop = function() {
+			$playerContainer.removeClass('active-full-ad');
+			isRunning = false;
+		};
+
+		var fullAdBeforeStart = function() {
+			$playerContainer.addClass('full-ad');
+		};
 
 		$('.full-ad-main-trigger').on('click', function(event){
 			console.log('full-click!');
@@ -1030,12 +1046,54 @@ SambaAdsPlayerControllerNative = function (){
 
 		$fullAdClose.on('click', function(event){
 			event.preventDefault();
-			$playerContainer.removeClass('active-full-ad');
+			fullAdStop();
 		});
 
 		SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, function(){
 			$playerContainer.removeClass('active-full-ad');
 		});
+
+		var currentVideoDuration = 0;
+		fullAdBeforeStart();
+
+		var nativeTimerTrigger = function(event) {
+				if(isRunning) {
+					var currentTime = parseInt(event.detail.data.position);
+
+					if(currentTime === 0) {
+						$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+					} if(currentTime >= 4) {
+						fullAdStart();
+					} if(currentTime >= 14) {
+						$fullAdClose.addClass('active');
+					} if(currentTime >= 4 && currentVideoDuration === 0) {
+						currentVideoDuration = parseInt(event.detail.data.duration) - 4;
+
+						var timerCount = 0,
+							timerControl = function() {
+								showAdTimeout = setTimeout(function(){
+
+									var currentLeftTime = currentVideoDuration - timerCount,
+										timeLeft = secondsToTime(currentLeftTime);
+
+									$('#time-left').html(timeLeft);
+
+									if(currentLeftTime === 0) {
+										clearTimeout(showAdTimeout);
+										fullAdStop();
+									} else {
+										timerCount++;
+										timerControl();
+									}
+								}, 1000);
+							};
+
+						timerControl();
+					}
+				}
+			};
+
+		SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, nativeTimerTrigger);
 	};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
@@ -1183,7 +1241,6 @@ SambaAdsPlayerControllerNative = function (){
 
 		//showFullAd();
 	};
-
 
 	self.setCurrentNative = function(nativeEl) {
 		$('.current-native').removeClass('current-native');
