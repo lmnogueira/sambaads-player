@@ -644,7 +644,7 @@ SambaAdsPlayerControllerNative = function (){
 												}
 											}
 										},
-										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
+										footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="blackfriday-time-left" class="time-left"></span> minutos</span></span>'
 									};
 
 								var currentProducts = jsonPlaylistMockup.type[currentAdType][videosCheck[videoId]].products;
@@ -664,7 +664,8 @@ SambaAdsPlayerControllerNative = function (){
 								var $currentPlaylistAd = $('#black-friday-playlist'),
 									$playlistAdArea = $('#playlist-ad-area'),
 									$closeButton = $('#black-friday-playlist-close'),
-									$productsTrigger = $('.playlist-product');
+									$productsTrigger = $('.playlist-product'),
+									$timeLeft = $('#blackfriday-time-left');
 
 								$productsTrigger.on('click', function(e){
 									JWPlayer.pause();
@@ -697,7 +698,7 @@ SambaAdsPlayerControllerNative = function (){
 													//ga('send', 'event', 'Performance', 'impression', 'hotmart');
 												}
 
-												$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+												$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
 											} if(currentTime >= 4) {
 												self.trackImpression(vastData.impression_url);
 
@@ -718,7 +719,7 @@ SambaAdsPlayerControllerNative = function (){
 															var currentLeftTime = currentVideoDuration - timerCount,
 																timeLeft = secondsToTime(currentLeftTime);
 
-															$('#time-left').html(timeLeft);
+															$timeLeft.html(timeLeft);
 
 										                    if(currentLeftTime === 0) {
 										                        clearTimeout(showAdTimeout);
@@ -776,7 +777,7 @@ SambaAdsPlayerControllerNative = function (){
 								} if(currentTime == 4) {
 									if(!impression_trigger){
 										impression_trigger = true;
-										self.trackImpression(currentVastData.impression_url);
+										//self.trackImpression(currentVastData.impression_url);
 									}
 									JWplayerArea.addClass('active-native-frame');
 									blackFridayFrame.addClass('active-native-frame');
