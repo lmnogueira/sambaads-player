@@ -1014,15 +1014,30 @@ SambaAdsPlayerControllerNative = function (){
 				}
 			};
 
+	var secondsToTime = function(currentSeconds) {
+			var minutes = Math.floor(currentSeconds % 3600 / 60),
+				seconds = Math.floor(currentSeconds % 3600 % 60);
+
+			return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+		};
+
 	var showFullAd = function(videoId) {
 		var $playerContainer = $('.sambaads-player-container'),
-			$fullAdClose = $('.full-ad-close');
+			$fullAdClose = $('.full-ad-close'),
+			isRunning = true;
 
-		$playerContainer.addClass('full-ad');
-
-		setTimeout(function(){
+		var fullAdStart = function() {
 			$playerContainer.addClass('active-full-ad');
-		}, 2000);
+		};
+
+		var fullAdStop = function() {
+			$playerContainer.removeClass('active-full-ad');
+			isRunning = false;
+		};
+
+		var fullAdBeforeStart = function() {
+			$playerContainer.addClass('full-ad');
+		};
 
 		$('.full-ad-main-trigger').on('click', function(event){
 			console.log('full-click!');
@@ -1030,12 +1045,54 @@ SambaAdsPlayerControllerNative = function (){
 
 		$fullAdClose.on('click', function(event){
 			event.preventDefault();
-			$playerContainer.removeClass('active-full-ad');
+			fullAdStop();
 		});
 
 		SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, function(){
 			$playerContainer.removeClass('active-full-ad');
 		});
+
+		var currentVideoDuration = 0;
+		fullAdBeforeStart();
+
+		var nativeTimerTrigger = function(event) {
+				if(isRunning) {
+					var currentTime = parseInt(event.detail.data.position);
+
+					if(currentTime === 0) {
+						$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+					} if(currentTime >= 4) {
+						fullAdStart();
+					} if(currentTime >= 14) {
+						$fullAdClose.addClass('active');
+					} if(currentTime >= 4 && currentVideoDuration === 0) {
+						currentVideoDuration = parseInt(event.detail.data.duration) - 4;
+
+						var timerCount = 0,
+							timerControl = function() {
+								showAdTimeout = setTimeout(function(){
+
+									var currentLeftTime = currentVideoDuration - timerCount,
+										timeLeft = secondsToTime(currentLeftTime);
+
+									$('#time-left').html(timeLeft);
+
+									if(currentLeftTime === 0) {
+										clearTimeout(showAdTimeout);
+										fullAdStop();
+									} else {
+										timerCount++;
+										timerControl();
+									}
+								}, 1000);
+							};
+
+						timerControl();
+					}
+				}
+			};
+
+		SambaAdsPlayerMessageBroker().addEventListener(Event.TIME, nativeTimerTrigger);
 	};
 
 	self.setAdTimeout = function(time, beforeAd, callback) {
@@ -1183,7 +1240,6 @@ SambaAdsPlayerControllerNative = function (){
 
 		//showFullAd();
 	};
-
 
 	self.setCurrentNative = function(nativeEl) {
 		$('.current-native').removeClass('current-native');
