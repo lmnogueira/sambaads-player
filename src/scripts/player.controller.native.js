@@ -272,20 +272,26 @@ SambaAdsPlayerControllerNative = function (){
 					'today-scenario',
 					'ebook'
 				],
+				bgType = [
+					'toro-black',
+					'toro-blue',
+					'toro-green'
+				],
 				frameTrigger = $('.frame-trigger');
 
 				self.currentData = {
 					id: videoId
 				};
 
-			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)];
+			var currentFrameType = frameType[Math.floor(Math.random() * frameType.length)],
+				currentBgType = bgType[Math.floor(Math.random() * frameType.length)];
 
 			frameTrigger.addClass(currentFrameType);
+			JWplayerArea.addClass(currentBgType);
 
-			var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + ",",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-
-	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+			var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + "toro_bg_type" + currentBgType + ",",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+				tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
 				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
 				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
@@ -298,8 +304,6 @@ SambaAdsPlayerControllerNative = function (){
 				frameTrigger.off();
 
 				currentVastData = vastData;
-
-				console.log('VAST LOADED');
 
 				frameTrigger.on('click', function(event){
 					event.preventDefault();
@@ -1025,7 +1029,9 @@ SambaAdsPlayerControllerNative = function (){
 	var showFullAd = function(videoId) {
 		var $playerContainer = $('.sambaads-player-container'),
 			$fullAdClose = $('.full-ad-close'),
-			isRunning = true;
+			$timeLeft = $('#time-left'),
+			isRunning = true,
+			adStartSeconds = 5;
 
 		var fullAdStart = function() {
 			$playerContainer.addClass('active-full-ad');
@@ -1061,13 +1067,13 @@ SambaAdsPlayerControllerNative = function (){
 					var currentTime = parseInt(event.detail.data.position);
 
 					if(currentTime === 0) {
-						$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
-					} if(currentTime >= 4) {
+						$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
+					} if(currentTime >= adStartSeconds) {
 						fullAdStart();
 					} if(currentTime >= 14) {
 						$fullAdClose.addClass('active');
-					} if(currentTime >= 4 && currentVideoDuration === 0) {
-						currentVideoDuration = parseInt(event.detail.data.duration) - 4;
+					} if(currentTime >= adStartSeconds && currentVideoDuration === 0) {
+						currentVideoDuration = parseInt(event.detail.data.duration) - adStartSeconds;
 
 						var timerCount = 0,
 							timerControl = function() {
@@ -1076,7 +1082,7 @@ SambaAdsPlayerControllerNative = function (){
 									var currentLeftTime = currentVideoDuration - timerCount,
 										timeLeft = secondsToTime(currentLeftTime);
 
-									$('#time-left').html(timeLeft);
+									$timeLeft.html(timeLeft);
 
 									if(currentLeftTime === 0) {
 										clearTimeout(showAdTimeout);
@@ -1223,23 +1229,25 @@ SambaAdsPlayerControllerNative = function (){
 			}
 		}
 
-		var empiricusHash = false;
+		var empiricusCheck = false;
 
-		if(empiricusHash) {
+		if(empiricusCheck) {
 			currentAd = empiricusAd;
 		}
 
 		var blackFridayCheck = videoId === 62904 || videoId === 62903 || videoId === 70261 || videoId === 71472;
 
-		//blackFridayCheck = true;
-
 		if(blackFridayCheck && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
 			currentAd = blackFriday;
 		}
 
-		currentAd(videoId);
+		if(videoId === 62073 && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
+			currentAd = showFullAd;
+		}
 
-		//showFullAd();
+		//currentAd = toroRadarFrame;
+
+		currentAd(videoId);
 	};
 
 	self.setCurrentNative = function(nativeEl) {

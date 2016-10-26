@@ -479,8 +479,19 @@
     &.toro-player-frame {
         &.native-frame {
             &.active-native-frame {
-                background: #fff url(../native/toro-radar/image/background.png) no-repeat;
                 background-size: 100% 100%;
+
+                &.toro-black {
+                    background: #fff url(../native/toro-radar-new/image/bg-black.jpg) no-repeat;
+                }
+
+                &.toro-blue {
+                    background: #fff url(../native/toro-radar-new/image/bg-blue.jpg) no-repeat;
+                }
+
+                &.toro-green {
+                    background: #fff url(../native/toro-radar-new/image/bg-green.jpg) no-repeat;
+                }
             }
         }
     }
@@ -622,25 +633,25 @@
     .frame-trigger {
         &.start-investing {
             &:before {
-                max-width: 181px;
-            	max-height: 146px;
-                background-image: url(../native/toro-radar/image/text-1.png);
+                max-width: 161px;
+            	max-height: 135px;
+                background-image: url(../native/toro-radar-new/image/text-1.png);
             }
         }
 
         &.today-scenario {
             &:before {
-                max-width: 182px;
-                max-height: 162px;
-                background-image: url(../native/toro-radar/image/text-2.png);
+                max-width: 156px;
+                max-height: 135px;
+                background-image: url(../native/toro-radar-new/image/text-2.png);
             }
         }
 
         &.ebook {
             &:before {
-                max-width: 175px;
-                max-height: 238px;
-                background-image: url(../native/toro-radar/image/text-3.png);
+                max-width: 163px;
+                max-height: 243px;
+                background-image: url(../native/toro-radar-new/image/text-3.png);
             }
         }
     }
@@ -654,11 +665,11 @@
 
     .frame-bottom-text {
     	height: 27px;
-        width: 287px;
+        width: 286px;
         max-width: 70%;
         bottom: 4%;
         left: 20px;
-        background: url(../native/toro-radar/image/frame-bottom-text.png) no-repeat;
+        background: url(../native/toro-radar-new/image/assinatura-toro.png) no-repeat;
         background-size: 100% auto;
     }
 
