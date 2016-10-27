@@ -1,42 +1,69 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt" dir="ltr">
 <head>
+    <title>YContent Player Test Playground</title>
+    <meta name="description"
+                      content="O juiz federal S&eacute;rgio Moro alertou para a &quot;habilidade&quot; do ex-presidente da C&acirc;mara Eduardo Cunha (PMDB-RJ) em &quot;ocultar e di" />
+
+    <meta property="og:description"
+                      itemprop="description"
+                      content="O juiz federal S&eacute;rgio Moro alertou para a &quot;habilidade&quot; do ex-presidente da C&acirc;mara Eduardo Cunha (PMDB-RJ) em &quot;ocultar e di" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!--    <style type="text/css">
-    	iframe{
-    		position: absolute;
-    		top: 0;
-    		right: 0;
-    		bottom: 0;
-    		left: 0;
-    		margin: auto;
-    	}
+        iframe{
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
     </style>-->
-    <script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js" ></script>
+
 </head>
 
 <body>
 
-    <% if(type_player == "singleplayer") { %>
-    <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script>
+    <% if(type_player == "multiple-sizes") { %>
+    <!-- <p><script src='/javascripts/player.js?m=60474&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=320&h=180&debug=true' defer></script></p>
+    <p><script src='/javascripts/player.js?m=60475&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=320&h=180&debug=true' defer></script></p> -->
+    <p><script src='/javascripts/player.js?m=60476&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=320&h=180&debug=true' defer></script></p>
+    <!-- <p><script src='/javascripts/player.js?m=60474&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=480&h=270&debug=true' defer></script></p>
+    <p><script src='/javascripts/player.js?m=60475&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=480&h=270&debug=true' defer></script></p> -->
+    <p><script src='/javascripts/player.js?m=60476&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=480&h=270&debug=true' defer></script></p>
+    <!-- <p><script src='/javascripts/player.js?m=60474&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script></p>
+    <p><script src='/javascripts/player.js?m=60475&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script></p> -->
+    <p><script src='/javascripts/player.js?m=60476&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script></p>
+    <% } if(type_player == "singleplayer") { %>
+    <script src='/javascripts/player.js?m=13937&p=e7a0e7ece4bf9e68a0656c09ce1479a0&sk=blue&tm=dark&tb=&tbbg=&w=640&h=360&debug=true' defer></script>
     <% } if(type_player == "small_player") { %>
     <script src='/javascripts/player.js?m=13937&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=dark&tb=&tbbg=&w=400&h=300&debug=true' defer></script>
     <% } if(type_player == "playlist") { %>
-    <script src='/javascripts/player.js?plid=LoovF0te&p=b417f7927e0e950a5ddb2ad9f9b8715b&sk=blue&tm=dark&tb=&tbbg=&w=920&h=360&debug=true' defer></script>
+        <script src='/javascripts/player.js?plid=wqq5t4Hn&p=e7a0e7ece4bf9e68a0656c09ce1479a0&w=900&h=360' defer></script>
+    <% } if(type_player == "playlist_mobile") { %>
+        <script src='/javascripts/player.js?plid=wqq5t4Hn&p=e7a0e7ece4bf9e68a0656c09ce1479a0&w=100%&h=500' defer></script>
     <% } else if(type_player == "smartplayerv") { %>
-    <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
+    <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=100%&h=360&debug=true' async></script>
+    <% } else if(type_player == "smartplayer-normal") { %>
+    <!-- <script src="/javascripts/player.js?plid=7EEDSJCx&p=ab1f939133333fbc4ba49b1984248a47&w=940&h=360" defer></script> -->
+    <script src="/javascripts/player.js?plid=ZYYefot0&p=ab1f939133333fbc4ba49b1984248a47&w=924&h=352" defer></script>
+    <!-- <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=300&plh=&tb=Teste&tbbg=&w=940&h=360&debug=true' async></script> -->
     <% } else if(type_player == "smartplayerbv") { %>
-    <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bv&plw=280&plh=&tb=Teste&tbbg=&w=320&h=500&debug=true' async></script>
+    <script src='/javascripts/player.js?c=gastronomia&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bv&plw=&plh=260&tb=&tbbg=&w=426&h=500&debug=true' async></script>
     <% } else if(type_player == "magiccontent") { %>
-    <script src='/javascripts/player.js?c=&d=360p&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=r&plw=280&plh=&tb=Teste&tbbg=&w=920&h=360&debug=true' async></script>
+    <script src='/javascripts/player.js?p=611f0df0ba9d1675881c5aaa686e1152&t=&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=recomendados%20para%20voc%C3%AA&tbbg=&w=640&h=530' async></script>
     <% } else if(type_player == "smartplayerh") { %>
-    <script src='/javascripts/player.js?c=business&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
+    <script src='/javascripts/player.js?c=business&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=600&debug=true'></script>
     <% } else if(type_player == "smarttags") { %>
     <script src="/javascripts/player.js?p=442a96c90430a04a2f204a3460a6f23e&c=&d=360p&t=alimentacao,apps,arquitetura&sk=red&tm=dark&plp=r&plw=280&plh=&tb=&tbbg=&w=920&h=360"></script>
     <% } else if(type_player == "youtubeid") { %>
     <script src='http://staging-player.sambaads.com/javascripts/player.js?m=_2lIldEuX3c&p=00d24b737eb3be1f10f9af9094814c4d&sk=blue&tm=light&tb=&tbbg=&w=640&h=360&debug=true'></script>
     <% } else if(type_player == "custom") { %>
-   <script src='/javascripts/player.js?c=&d=custom&p=00d24b737eb3be1f10f9af9094814c4d&t=noticia&sk=blue&tm=dark&plp=bh&plw=&plh=&tb=Teste&tbbg=&w=840&h=472.5&debug=true'></script>
+    
+    <!----><script src='/javascripts/player.js?m=13937&p=e7a0e7ece4bf9e68a0656c09ce1479a0&sk=blue&tm=dark&tb=&tbbg=&w=300&h=200&debug=true' defer></script><!---->
+
+    <!----<iframe src="http://player.sambaads.com/iframe/89793a4202351ecff45b1979e8ca9459?m=74853&p=89793a4202351ecff45b1979e8ca9459&sk=blue&tm=light&tb=&tbbg=&w=300&h=169" width="300" height="169" scrolling="no"><!---->
 
     <% } else if(type_player == "dynamic") { %>
         <script src='/javascripts/player.js'></script>
@@ -69,7 +96,7 @@
                     w:840,
                     h:472.5
                 });
-                
+
             }, false);
 
         </script>
@@ -78,6 +105,9 @@
         <div id="player2"></div>
 
     <% } else if(type_player == "jwp6") { %>
+
+    <script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js" ></script>
+
         <div id="container">Loading video player...</div>
 
         <script type='text/javascript'>
@@ -98,11 +128,36 @@
                 jwplayer("container").playAd('http://ad4.liverail.com/?LR_PUBLISHER_ID=152191&LR_SCHEMA=vast2-vpaid');
             });
         </script>
+    <% } else if(type_player == "jwp7") { %>
+        <script src="//ssl.p.jwpcdn.com/player/v/7.7.0/jwplayer.js"></script>
+        <div id="container">Loading video player...</div>
+
+        <script type='text/javascript'>
+            jwplayer.key="fg2E6RxmRfFIhFDYCJYLPglvuybnkF6v0sjOSA";
+            jwplayer("container").setup({
+
+            width: 640,
+            height: 360,
+            file: "https://pvbps-sambavideos.akamaized.net/account/259/21/2016-05-14/video/5882e627be9196904780b3c477344bb5/vYY8iMFe-raw20160514-23932-3zz8ei_240p.mp4",
+            advertising: {
+                client:'googima',
+                vpaidmode: 'enabled'
+            },
+
+            });
+
+            jwplayer("container").on("beforePlay",function(evt){
+
+                jwplayer("container").playAd('https://local-advertising.sambaads.com/vast/full_vast-qdb.xml');
+
+            });
+        </script>
     <% } %>
 
     <script type="text/javascript">
              window.onload = function () {
-                var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart; 
+                var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
+
                 console.log('Page load time is '+ loadTime);
             }
     </script>

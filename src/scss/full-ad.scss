@@ -1,0 +1,157 @@
+.sambaads-player-container {
+    &.full-ad {
+        .jw-video {
+            transition: width 200ms ease;
+            height: auto;
+            left: 0;
+            right: auto;
+        }
+
+        &.active-full-ad {
+            .sambaads-embed {
+                z-index: 300;
+            }
+
+            .jwplayer,
+            .video-title {
+                background: none;
+            }
+
+            .jw-video {
+                width: 70%;
+            }
+
+            .sambaads-playlist {
+                opacity: 0;
+            }
+
+            .full-ad-area {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .full-ad-main-trigger {
+                opacity: 1;
+                transform: scale3d(1,1,1);
+            }
+
+            .full-empiricus-product {
+                transition-delay: 0s;
+                opacity: 1;
+
+                &:hover {
+                    opacity: .7;
+                }
+            }
+        }
+    }
+}
+
+.full-ad-area {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: #000;
+    transition: opacity 1s ease;
+}
+
+.full-ad-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    pointer-events: none;
+
+    &.active {
+        pointer-events: all;
+    }
+}
+
+.full-ad-usable-area {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 61px;
+    left: 0;
+    left: 48%;
+    z-index: 400;
+}
+
+.full-ad-bottom-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 61px;
+    width: 32%;
+    z-index: 400;
+}
+
+//Empiricus
+
+.full-empiricus {
+    background: url(../native/empiricus-new/image/background.png) no-repeat;
+    background-size: 100%;
+
+    .full-ad-main-trigger {
+        background: url(../native/empiricus-new/image/call-to-action.png) no-repeat;
+        background-size: 100%;
+        border: none;
+        width: 188px;
+        height: 194px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        margin: auto;
+        opacity: 0;
+        transform: scale3d(.8,.8,1);
+        transition: all 200ms ease 200ms;
+    }
+}
+
+.full-empiricus-product {
+    width: 232px;
+    margin-bottom: 30px;
+    text-align: left;
+    opacity: 0;
+    transition: all 300ms linear 600ms;
+
+    img {
+        width: 100%;
+    }
+}
+
+.full-empiricus-products-list {
+    margin: 45px 20px 0 0;
+    float: right;
+}
+
+.empiricus-time-left {
+    text-align: center;
+    font-size: 13px;
+	color: rgba(198, 194, 194, .9);
+    padding-top: 20px;
+
+    span {
+        color: #fff;
+        font-weight: bold;
+    }
+}
+
+.full-empiricus-close {
+    width: 13px;
+    height: 13px;
+    background: url(../native/empiricus-new/image/icon-close.png) no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    top: 21px;
+    right: 16px;
+    border: none;
+    cursor: pointer;
+}

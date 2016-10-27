@@ -29,7 +29,7 @@ server {
   }
 
   location /javascripts\/player.js/ {
-    expires 5m;
+    expires 15m;
     add_header Cache-Control public;
     add_header Last-Modified "";
     add_header ETag "";
@@ -38,7 +38,7 @@ server {
 
   location ~ ^/scripts/(player.js)$ {
     alias <%= current_path %>/app/public/javascripts/$1;
-    expires 5m;
+    expires 15m;
     add_header Cache-Control public;
     add_header Last-Modified "";
     add_header ETag "";
@@ -47,7 +47,7 @@ server {
   
   location ~ ^/embed/(player.js)$ {
     alias <%= current_path %>/app/public/javascripts/$1;
-    expires 5m;
+    expires 15m;
     add_header Cache-Control public;
     add_header Last-Modified "";
     add_header ETag "";
@@ -56,6 +56,9 @@ server {
 
   location / {
       expires 5m;
+
+      add_header Access-Control-Allow-Origin *;
+
       add_header Cache-Control public;
       add_header Last-Modified "";
       add_header ETag "";
