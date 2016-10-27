@@ -559,17 +559,17 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Iphone 6',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/iphone.png'
 														},
 														{
 															title: 'Samsung Galaxy',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/samsung.png'
 														},
 														{
 															title: 'Motorola',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/samsung.png'
 														}
 													]
@@ -578,12 +578,12 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Batom Retro',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/battom-retro.png'
 														},
 														{
 															title: 'Mac Sombra',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/mac-sombra.png'
 														}
 													]
@@ -592,12 +592,12 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Perfect Lapis',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/lapis.png'
 														},
 														{
 															title: 'Cilios',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/cilios.png'
 														}
 													]
@@ -608,12 +608,12 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Iphone 6',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/iphone.png'
 														},
 														{
 															title: 'Samsung Galaxy',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/samsung.png'
 														}
 													]
@@ -622,12 +622,12 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Batom Líquido',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/battom-retro.png'
 														},
 														{
 															title: 'Mac Sombra',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/mac-sombra.png'
 														}
 													]
@@ -636,12 +636,12 @@ SambaAdsPlayerControllerNative = function (){
 													products: [
 														{
 															title: 'Perfect Lapis',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/lapis.png'
 														},
 														{
 															title: 'Cilios',
-															clickThrough: 'http://wwww.ycontent.com.br',
+															clickThrough: 'http://www.ycontent.com.br',
 															image: '/native/black-friday/image/cilios.png'
 														}
 													]
@@ -1028,10 +1028,16 @@ SambaAdsPlayerControllerNative = function (){
 
 	var showFullAd = function(videoId) {
 		var $playerContainer = $('.sambaads-player-container'),
-			$fullAdClose = $('.full-ad-close'),
-			$timeLeft = $('#time-left'),
+			$fullAdArea = $('#full-ad-area'),
 			isRunning = true,
 			adStartSeconds = 5;
+
+		var adContent = '<div class="full-ad-item full-empiricus active"><div class="full-ad-usable-area"><button type="button" class="full-ad-main-trigger">Trigger!</button><button type="button" class="full-ad-close full-empiricus-close"></button><div class="full-empiricus-products-list"><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/petrobras-report.png" alt="Relatório Petrobrás"></a></div><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/book-febre.png" alt="Livro Febre do Ouro"></a></div></div></div><div class="full-ad-bottom-area"><div class="empiricus-time-left">Essa oferta termina em: <span><span id="time-left">00:00</span> minutos</span></div></div></div>'
+
+		$fullAdArea.html(adContent);
+
+		var $fullAdClose = $('.full-ad-close'),
+			$timeLeft = $('#time-left');
 
 		var fullAdStart = function() {
 			$playerContainer.addClass('active-full-ad');
