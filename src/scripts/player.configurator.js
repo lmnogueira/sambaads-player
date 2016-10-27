@@ -83,11 +83,11 @@ SambaAdsPlayerConfigurator.prototype.configureDimensions = function(){
 SambaAdsPlayerConfigurator.prototype.generateUniqueScore = function() {
 	var self = this;
 
-	function generate() {
-		return 1;
-	};
+	// function generate() {
+	// 	return 1;
+	// };
 	
-	self.configuration.user.unique_score = generate();
+	// self.configuration.user.unique_score = generate();
 };
 
 

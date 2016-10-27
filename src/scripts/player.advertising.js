@@ -15,11 +15,10 @@ SambaAdsPlayerAdvertising = function (){
  		var tags = self.playingNow.dfp_tags;
 		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.playingNow.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
-		console.log(self.user);
+		//"&scor=" + self.user.unique_score +
 
  		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
  		"sz=640x360" +
- 		"&scor=" + self.user.unique_score +
  		"&iu=" + self.client.ad_unit_id +
  		"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1" +
  		"&url=" + encodeURIComponent(self.player.url) +
