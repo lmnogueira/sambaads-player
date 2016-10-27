@@ -22,7 +22,7 @@ SambaAdsPlayerAdvertising = function (){
  		"&iu=" + self.client.ad_unit_id +
  		"&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1" +
  		"&url=" + encodeURIComponent(self.player.url) +
- 		"&description_url=" + self.player.url + 
+ 		"&description_url=" + self.player.url +
  		"&cust_params=" + custom_params +
  		"&cmsid=" + self.playingNow.dfp_partner_id +
  		"&vid=" + self.playingNow.hashed_code +
@@ -36,7 +36,7 @@ SambaAdsPlayerAdvertising = function (){
  			//tagUrl = "https://local-vpaid.sambaads.com/vast/adselector.xml";
 
  			//if(self.playingNow.media_id == 66007){
- 			//  	self.playingNow.sponsored = true;
+ 			  	self.playingNow.sponsored = true;
  			//}
 
 
