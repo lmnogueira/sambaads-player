@@ -1,11 +1,11 @@
 set :stage, :staging
-set :branch, 'staging'
+set :branch, 'NEW_jwplayer_version_7'
 
 set :node_env, 'staging'
 
 set :with_user, "sambaads"
 
-server '54.84.90.95', user: fetch(:with_user), roles: %w{app db web}
+server 'staging.ycontent.com', roles: %w{app db web}
 
 set :nvm_type, :user
 set :nvm_node, 'v4.4.0'

@@ -68,23 +68,23 @@ body {
 	background:url(../images/video-title-gradient.png) repeat-x 0 0;
 	height:56px;
 	padding:15px 60px 0 15px;
+	margin-bottom: .2em;
+	pointer-events: none;
 }
+
 .video-title h3 {
 	font-size:17px;
+	font-weight: 700;
 	color:#fff;
 	font-weight:bold;
-	margin-bottom: 0.2em;
+	margin-bottom: .2em;
 }
 
 .video-title h2 {
-	color: #EEE;
-    font-weight: normal;
+    color: #EEE;
+    font-weight: 400;
     font-size: 12px;
-    margin-bottom: 0.2em;
-}
-
-.video-title h2 span {
-    font-weight: bold;
+    margin-bottom: .2em;
 }
 
 .share-button {
@@ -117,6 +117,12 @@ body {
 
 .sambaads-playlist {
 	display:none;
+	z-index: 150;
+	position: relative;
+}
+
+#playlist-h-item.highlight {
+	padding: 0;
 }
 
 .display-overlay {
@@ -140,21 +146,6 @@ body {
 	left:0; top:0;
 	width:100%;
 }
-
-/*
-.display-overlay.size-180 {
-	width:320px;
-	height:180px;
-}
-.display-overlay.size-240 {
-	width:427px;
-	height:240px;
-}
-.display-overlay.size-360 {
-	width:640px;
-	height:360px;
-}
-*/
 
 .cursor {
 	cursor: pointer;
@@ -393,7 +384,7 @@ body {
 	padding:0 60px;
 	left:0;
 	top:50%;
-	margin-top:-62px;	
+	margin-top:-62px;
 }
 .next-thumb {
 	float:left;
@@ -599,12 +590,7 @@ body {
 	left: 5px;
     top: 20px;
 }
-.light .highlight {
-	/*background-color:#ebebeb;*/
-}
-.dark .highlight {
-	/*background-color:#484848;*/
-}
+
 .video-thumb {
 	float:left;
 	width:130px;
@@ -1104,4 +1090,157 @@ body {
 }
 ul.lightSlider {
 	height:auto !important;
+}
+
+.logo-icon-bar {
+	background: url(../images/ycontent-icon-white.png) no-repeat;
+	width: 23px;
+    height: 22px;
+}
+
+/* Native */
+
+.jw-controls {
+	z-index: 150;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@font-face {
+  font-family: 'Circular Std';
+  src: url(../native/glambox/font/CircularStd-Book.woff) format('woff');
+
+  font-style: normal;
+  font-weight: 400;
+}
+
+.glambox {
+  color: #fff;
+  padding: 12px 20px;
+  height: 60px;
+  font-family: 'Circular Std';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  cursor: pointer;
+  opacity: 0;
+  transform: translate3d(0, 80%, 0);
+  transition: all .5s;
+  pointer-events: all;
+}
+
+.glambox .simple-text {
+	font-size: 16px;
+	width: 262px;
+	float: left;
+	text-align: left;
+	margin-right: 20px;
+	text-align: center;
+	height: 40px;
+	line-height: 38px;
+}
+
+.glambox .simple-text span {
+	line-height: 1.2em;
+	display: inline-block;
+}
+
+.glambox .simple-text.single-line {
+	font-size: 18px;
+	line-height: 32px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.glambox .highlight-box {
+  background: #008000;
+  border-radius: 20px;
+  width: 240px;
+  height: 40px;
+  float: left;
+}
+
+.glambox .highlight-box span {
+  height: 40px;
+  line-height: 41px;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.glambox .highlight-box .single-text,
+.glambox.type-2 .highlight-box .single-text {
+	font-size: 14px;
+}
+
+.glambox .highlight-box .large-text,
+.glambox.type-2 .highlight-box .large-text {
+  font-size: 27px;
+  margin: 0 8px;
+}
+
+.glambox.type-2 .highlight-box {
+	height: 35px;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	background: transparent;
+}
+
+.glambox.type-2 .highlight-box span {
+	height: 31px;
+    line-height: 31px;
+	font-size: 10px;
+}
+
+.glambox .glambox-logo {
+  width: 72px;
+  height: 15px;
+  background: url(../native/glambox/image/glambox-logo.png) no-repeat;
+  float: right;
+  background-size: 100% auto;
+  margin-top: 12px;
+  margin-right: -7px;
+}
+
+.active-native .glambox.current-native {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+
+.active-native.show-controls .glambox.current-native {
+	opacity: 1;
+	transform: translate3d(0, -100%, 0);
+	transition: all .15s;
+}
+
+@media only screen and (max-width: 39em) {
+	.glambox {
+		padding: 10px;
+	}
+
+	.glambox .simple-text {
+		display: none;
+	}
+
+	.glambox .glambox-logo {
+		position: absolute;
+	    right: 12px;
+	    width: 60px;
+	}
+}
+
+#jw_sambaads_player_googima {
+	top: 0 !important;
+	bottom: 0 !important;
 }
