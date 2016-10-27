@@ -3,15 +3,19 @@ server {
   server_name <%= fetch(:nginx_sever_name) %>;
   root <%= current_path %>/app/public;
 
-  location /iframe/data {
+  gzip on;
+  gzip_proxied any;
+  gzip_types application/json text/json application/javascript text/xml text/plain text/css application/x-javascript;
+  gzip_vary on;
+  gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+  gzip_static  on;
+
+  location ~ ^/(robots.txt|manager) {
     return 404;
   }
 
-  location /iframe/iframe/data {
-    return 404;
-  }
-
-  location /iframe/robots.txt {
+  location ~ ^/iframe/(data|vast.js|iframe|jwplayer.js|robots.txt|jwplayer.html5.js|gapro.js|data").* {
     return 404;
   }
 
@@ -51,6 +55,22 @@ server {
   }
 
   location / {
+      expires 5m;
+      add_header Cache-Control public;
+      add_header Last-Modified "";
+      add_header ETag "";
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_pass <%= fetch(:nginx_host) %>;
+  }
+
+  error_page 502 /502.html;
+  location = /502.html {
+      root  <%= current_path %>/app/public/502.html;
+  }
+
+  error_page 404 /404.html;
+  location = /404.html {
+      root  <%= current_path %>/app/public/404.html;
   }
 }

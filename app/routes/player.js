@@ -11,8 +11,6 @@ router.get('/:pid', function(req, res, next) {
 	if(req.query.plid){
 		request.get(
 		{
-			//url: "http://api2.sambaads.com/iframe//data?plid=lJJDuDUV&c=tecnologia&t=&sk=blue&tm=dark&plp=r&tb=Confiradeos&tbbg=#006600&w=940&h=360&plw=480&plh=&ads=false&cb=" + new Date(), 
-			//url: 'https://api2.sambaads.com/api/15663c838a3846e8c06e25a69b89f276/playlists/' + req.query.plid + '/data.json', 
 			url: nconf.get("SMARTSEED_URL") + '/api/' + req.params.pid +  '/playlists/' + req.query.plid + '/data.json', 
 			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
 		}, function(error, response, body){
@@ -54,6 +52,7 @@ router.get('/player/single_player/:media_id/:pid', function(req, res, next) {
 
 	req.query.id = req.params.pid;
 	req.query.m  = req.params.media_id;
+
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data.json?' + querystring.stringify(req.query), function(error, response, body){
 		res.header('Content-Type', 'text/html');
 		if(response && response.statusCode == 200){
@@ -137,6 +136,7 @@ router.get('/services/oembed', function(req, res, next) {
 			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
 		}, function(error, response, body){
 			res.header('Content-Type', 'application/json');
+			
 			if(response && response.statusCode == 200){
 				res.json( JSON.parse(body));
 			}else{

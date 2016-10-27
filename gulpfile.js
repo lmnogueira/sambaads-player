@@ -57,6 +57,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task("build-javascripts-player", function(){
+
   gulp.src([
       paths.scripts + "vendor/jquery.1.11.0.min.js",
       paths.scripts + "vendor/circle_progress.js",
@@ -151,6 +152,7 @@ gulp.task("build-jwplayer", function(){
         ]
     )
     .pipe(gulp.dest('app/public/javascripts/player'));
+
 });
 
 gulp.task("build-images", function(){
@@ -166,6 +168,11 @@ gulp.task("build-native", function(){
 gulp.task("build-crossdomain", function(){
     gulp.src('./src/crossdomain/*.*')
         .pipe(gulp.dest('app/public/'));
+});
+
+gulp.task("build-error-pages", function(){
+  gulp.src('./src/error_pages/*.*')
+    .pipe(gulp.dest('app/public/'));
 });
 
 gulp.task("build-css", function(){

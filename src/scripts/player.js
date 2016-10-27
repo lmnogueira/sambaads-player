@@ -30,6 +30,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
             return false;
         }
     };
+    
 
     this.fireIfElementVisible = function(el) {
       var self = this;
@@ -161,11 +162,11 @@ var ExpandedCinema = function (cw, currentIframe){
 };
 
 (function(cw){
-
     var detectScript = function(){
+
         var currentScript = document.currentScript || (function() {
             var scripts = document.getElementsByTagName('script');
-            //console.log(scripts);
+
             if(scripts[scripts.length - 1].src.indexOf("player.sambaads.com") >= 0) {
                 return scripts[scripts.length - 1];
             } else {
@@ -289,7 +290,6 @@ var ExpandedCinema = function (cw, currentIframe){
     }
 
     var insert = function (referenceNode, newNode) {
-
         if (referenceNode.tagName != "SCRIPT"){
             referenceNode.appendChild(newNode);
         } else {
@@ -386,6 +386,7 @@ var ExpandedCinema = function (cw, currentIframe){
             insert((targetElement || currentScript), div.firstChild);
         }
 
+
         var iframe_data = {
             id : iframe_id,
             pid : parameters.p || parameters.pid || "",
@@ -411,6 +412,7 @@ var ExpandedCinema = function (cw, currentIframe){
                 }
             },
             doPlay:function(force){
+
                 force = force || false;
 
                 if(this.contentWindow().postMessage){
@@ -421,7 +423,6 @@ var ExpandedCinema = function (cw, currentIframe){
             },
 
             setVisible:function(data){
-
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
                     this.contentWindow().postMessage( this.id + "::onVisible::" + data, this.iframe_target_host )
@@ -429,7 +430,6 @@ var ExpandedCinema = function (cw, currentIframe){
 
             },
             setMute:function(data){
-
                 if(this.contentWindow().postMessage){
                     //console.log("CORE SEND:" + this.id + "::play::");
                     this.contentWindow().postMessage( this.id + "::onMute::" + data, this.iframe_target_host )
@@ -490,7 +490,6 @@ var ExpandedCinema = function (cw, currentIframe){
             }
         }
 
-
         videoContainer = currentScript.parentNode;
 
         // Check script is dynamic append in DOM
@@ -519,6 +518,7 @@ var ExpandedCinema = function (cw, currentIframe){
             for (var i = 0; i < playersLength; i++) {
 
                 playListItem = playersList[i],
+
                 playerEl = document.getElementById(playListItem.id);
 
                 if(!playListItem.onMouseOver) {
@@ -615,6 +615,7 @@ var ExpandedCinema = function (cw, currentIframe){
         // The public function name defaults to window.docReady
         // but you can modify the last line of this function to pass in a different object or method name
         // if you want to put them in a different namespace and those will be used instead of
+
         // window.docReady(...)
         funcName = funcName || "docReady";
         baseObj = baseObj || window;
@@ -691,4 +692,5 @@ var ExpandedCinema = function (cw, currentIframe){
     // } else {
         init();
     //}
+
 })(this);

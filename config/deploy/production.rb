@@ -10,6 +10,7 @@ set :server2, '54.172.141.91'
 set :server3, '52.90.63.130'
 
 set :hostname_list, {server1: fetch(:server1), server2: fetch(:server2), server3: fetch(:server3)}
+
 set :filter, hosts: fetch(:hostname_list).values
 
 server fetch(:server1), user: fetch(:with_user), roles: %w{app db web}
