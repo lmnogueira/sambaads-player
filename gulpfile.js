@@ -175,6 +175,11 @@ gulp.task("build-error-pages", function(){
     .pipe(gulp.dest('app/public/'));
 });
 
+gulp.task("build-error-pages", function(){
+  gulp.src('./src/error_pages/*.*')
+    .pipe(gulp.dest('app/public/'));
+});
+
 gulp.task("build-css", function(){
     var css = gulp.src(paths.css + 'sambaads.player.css'),
         scss = gulp.src(paths.scss + '/**/*.scss')

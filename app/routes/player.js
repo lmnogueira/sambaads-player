@@ -136,7 +136,7 @@ router.get('/services/oembed', function(req, res, next) {
 			headers: {'Accept': "application/vnd.sambaads.v1; application/json;"}
 		}, function(error, response, body){
 			res.header('Content-Type', 'application/json');
-			
+
 			if(response && response.statusCode == 200){
 				res.json( JSON.parse(body));
 			}else{

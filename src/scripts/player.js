@@ -175,6 +175,7 @@ var ExpandedCinema = function (cw, currentIframe){
                         cw.sambaads.processedScripts.push(scripts[i].src);
                         return scripts[i];
                      }
+
                 }
             }
         })();
@@ -290,6 +291,7 @@ var ExpandedCinema = function (cw, currentIframe){
     }
 
     var insert = function (referenceNode, newNode) {
+
         if (referenceNode.tagName != "SCRIPT"){
             referenceNode.appendChild(newNode);
         } else {
@@ -385,7 +387,6 @@ var ExpandedCinema = function (cw, currentIframe){
         } else if (parameters.p != '29e21db92767b2e54997e8dfab1b5f28'){
             insert((targetElement || currentScript), div.firstChild);
         }
-
 
         var iframe_data = {
             id : iframe_id,
