@@ -1,0 +1,995 @@
+.native-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+
+    button {
+        outline: none;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+}
+
+.ir {
+    overflow: hidden;
+    text-indent: 150%;
+    white-space: nowrap;
+}
+
+.cf {
+    &:after {
+        display: table;
+        clear: both;
+        content: " ";
+    }
+}
+
+.align-right {
+    text-align: right;
+}
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url(../native/glambox/font/gotham-book.woff) format('woff');
+}
+
+.active-native {
+    .glambox-new,
+    .wine-native,
+    .native-item {
+        &.current-native {
+            opacity: 1;
+            transform: scale(1);
+
+            button {
+                pointer-events: all;
+            }
+
+            &.flip {
+                .sides-wrapper {
+                    transform: rotateY(90deg);
+                }
+
+                .front {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+    .wine-native {
+        &.current-native {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+.ad-area[type] {
+    display: none;
+}
+
+.glambox-new,
+.wine-native {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url(../native/glambox/image/shadow.png) no-repeat;
+    background-position: bottom right;
+    background-size: 100% auto;
+    opacity: 0;
+    transform: scale(.9);
+    transform-origin: bottom right;
+    transition: all 300ms linear;
+    pointer-events: none;
+
+    .row {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    button {
+        background: none;
+        text-transform: uppercase;
+        text-align: right;
+        font-family: 'Gotham Book';
+        padding: 0;
+        right: 0;
+        border: none;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .glambox-logo {
+        width: 89px;
+        height: 19px;
+        background: url(../native/glambox/image/glambox-logo.png) no-repeat;
+        float: right;
+        background-size: 100% auto;
+    }
+
+    .ad-button {
+        bottom: 0;
+    }
+
+    .ad-area {
+        position: absolute;
+        bottom: 0;
+        width: 155px;
+        height: 254px;
+        right: 25px;
+    }
+
+    .ad-close {
+        width: 13px;
+        height: 11px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        top: -20px;
+        @extend .ir;
+    }
+
+    .color-text {
+        color: #f03186;
+        font-weight: bold;
+    }
+
+    .main-title {
+        font-size: 30px;
+        width: 100%;
+        font-size: 14px;
+        letter-spacing: -0.9px;
+        color: #fff;
+        line-height: 1.2em;
+        float: right;
+        margin-bottom: 12px;
+
+        span {
+            font-size: 18px;
+            color: #f03186;
+            font-weight: bold;
+            letter-spacing: -1.2px;
+        }
+    }
+
+    .sign-now {
+        font-size: 15px;
+    	font-weight: 900;
+    	letter-spacing: -0.2px;
+        line-height: 1.2em;
+        background: #f03186;
+        padding: 2px 7px;
+        margin-bottom: 10px;
+        color: #fff;
+        float: right;
+        clear: both;
+        border-radius: 5px;
+        text-align: center;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .subtitle {
+        font-size: 11px;
+    	font-weight: 500;
+    	letter-spacing: -0.7px;
+        color: #fff;
+        clear: both;
+
+        span.love {
+            width: 10px;
+            height: 10px;
+            background: url(../native/glambox/image/mini-hearth.png) no-repeat;
+            background-size: 100% auto;
+            display: inline-block;
+            margin: 0 4px;
+            @extend .ir;
+        }
+    }
+
+    .products {
+        width: 139px;
+        height: 153px;
+        background: url(../native/glambox/image/products.png) no-repeat;
+        background-size: 100% auto;
+        margin-top: 10px;
+        display: inline-block;
+
+        @media only screen and (max-width: 30em) {
+            display: none;
+        }
+    }
+
+    &.type-1 {
+        .ad-area[type="1"] {
+            display: block;
+            width: 186px;
+            height: 265px;
+
+            @media only screen and (max-width: 30em) {
+                height: 100px;
+                bottom: 30%;
+            }
+        }
+    }
+
+    &.type-2 {
+        background: url(../native/glambox/image/shadow-left.png) no-repeat;
+        background-position: bottom right;
+        transform-origin: bottom right;
+        background-size: 100% auto;
+
+        .ad-area[type="2"] {
+            display: block;
+            left: auto;
+            right: 25px;
+            width: 182px;
+
+            .glambox-new-trigger {
+                height: 70px;
+                width: 100%;
+            }
+
+            @media only screen and (max-width: 30em) {
+                height: 60px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
+        }
+    }
+
+    &.type-3 {
+        background: url(../native/glambox/image/shadow-strong.png) no-repeat;
+        background-position: bottom left;
+        transform-origin: bottom left;
+
+        .ad-area[type="3"] {
+            width: 190px;
+            padding-top: 5px;
+            display: block;
+
+            @media only screen and (max-width: 30em) {
+                height: 100px;
+                left: 20px;
+                bottom: 5%;
+                top: 0;
+                margin: auto;
+            }
+
+            button {
+                .tips {
+                    color: #fff;
+                    background-color: #f03186;
+                    font-weight: 900;
+                	letter-spacing: -0.2px;
+                    line-height: 1.2em;
+                    padding: 2px 7px;
+                    display: block;
+                    margin: 4px 0;
+                    width: 145px;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+
+                .love {
+                    display: inline-block;
+                    background-color: none;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .subtitle {
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+
+    .ad-area[type="2"],
+    .ad-area[type="3"] {
+        left: 40px;
+        right: auto;
+        text-align: left;
+        height: 200px;
+        padding-top: 8px;
+
+        button {
+            font-size: 14px;
+            font-weight: 500;
+            font-weight: 500;
+        	line-height: 1.2;
+        	letter-spacing: -0.9px;
+            color: #fff;
+            text-align: left;
+
+            span {
+                color: #f03186;
+                clear: both;
+                font-weight: 900;
+            }
+        }
+
+        .glambox-logo {
+            position: absolute;
+            top: -30px;
+        }
+
+        .ad-close {
+            right: 10px;
+        }
+
+        .sign-now {
+            float: left;
+        }
+    }
+}
+
+.glambox-new-trigger {
+    transform: translate3d(0,0,0);
+    transform-style: preserve-3d;
+}
+
+.sides-wrapper {
+    transition: transform .5s linear;
+    transform-style: preserve-3d;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 50px;
+    width: 100%;
+}
+
+.back,
+.front {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.back {
+    transform: rotateY(-90deg) translateZ(150px);
+}
+
+.front {
+    transform: translateZ(150px);
+    transition: opacity .3s linear;
+}
+
+
+.wine-native {
+    .ad-area {
+        width: 193px;
+        height: 290px;
+        text-align: left;
+    }
+
+    .ad-trigger {
+        div {
+            font-size: 13px;
+            color: #fff;
+            text-transform: none;
+            margin-bottom: 7px;
+            font-weight: 900;
+            text-align: left;
+
+            &.subtitle {
+                font-size: 11px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            &.buy-now {
+                font-size: 11px;
+                background: #5d003f;
+                text-transform: uppercase;
+                width: 125px;
+                padding: 4px;
+                margin: 0 auto 7px;
+                text-align: center;
+            }
+
+            &.upper {
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            span.love {
+                margin: 0 4px;
+            }
+        }
+    }
+
+    .highlight-text {
+        color: #5d003f;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .wine-bottle {
+        width: 73px;
+        height: 130px;
+        background: url(../native/wine/image/wine-bottle.png) no-repeat;
+        background-size: 100% auto;
+        margin: 0 auto;
+
+        @media only screen and (max-width: 30em) {
+            display: none;
+        }
+    }
+}
+
+/* Glambox Frame */
+
+.jwplayer {
+    &.native-frame {
+        .jw-video {
+            transition: all .5s linear;
+            left: 0;
+            height: auto !important;
+            right: auto !important;
+            max-height: 100%;
+        }
+
+        &.active-native-frame {
+            .jw-video {
+                width: 68%;
+                max-height: 75%;
+            }
+        }
+    }
+
+    &.glambox-player-frame {
+        &.type-1 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
+                    background-size: 100% 100%;
+                }
+            }
+        }
+
+        &.type-2 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: #fff url(../native/glambox/image/frame-bg-2.jpg) no-repeat;
+                    background-size: 100% 100%;
+                }
+            }
+        }
+
+        &.type-3 {
+            &.native-frame {
+                &.active-native-frame {
+                    background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
+                    background-size: 100% 100%;
+                }
+            }
+        }
+    }
+
+
+    &.toro-player-frame {
+        &.native-frame {
+            &.active-native-frame {
+                background-size: 100% 100%;
+
+                &.toro-black {
+                    background: #fff url(../native/toro-radar-new/image/bg-black.jpg) no-repeat;
+                }
+
+                &.toro-blue {
+                    background: #fff url(../native/toro-radar-new/image/bg-blue.jpg) no-repeat;
+                }
+
+                &.toro-green {
+                    background: #fff url(../native/toro-radar-new/image/bg-green.jpg) no-repeat;
+                }
+            }
+        }
+    }
+}
+
+.frame-ad {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 2;
+
+    &.active-native-frame {
+        opacity: 1;
+
+        .frame-trigger {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    .frame-trigger {
+        width: 32%;
+        max-height: 90%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        opacity: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: opacity .2s linear .5s;
+
+        &:before {
+            content: '';
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            background-position: 50%;
+            top: 0;
+            right: 16px;
+            bottom: 0;
+            left: 16px;
+            margin: auto;
+            position: absolute;
+            transform: translate3d(0,0,0);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+
+            @media only screen and (max-width: 321px) {
+                right: 4px;
+                left: 4px;
+            }
+        }
+    }
+
+    .frame-close {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .2s linear;
+
+        &.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+}
+
+.video-title {
+    &.inactive {
+        display: none;
+    }
+}
+
+.frame-bottom-text {
+    width: 232px;
+    height: 15px;
+    bottom: 6%;
+    left: 35px;
+    background: url(../native/glambox/image/frame-bottom-text.png) no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    display: block;
+    margin: 0;
+    @extend .ir;
+}
+
+.glambox-frame {
+    .frame-trigger {
+        &.glam_box_frame {
+            &:before {
+                max-width: 179px;
+                max-height: 195px;
+                background-image: url(../native/glambox/image/frame-subscribe.png);
+            }
+        }
+
+        &.glam_club_frame {
+            &:before {
+                max-width: 171px;
+                max-height: 130px;
+                background-image: url(../native/glambox/image/frame-receive.png);
+            }
+        }
+
+        &.glam_mag_frame {
+            &:before {
+                max-width: 184px;
+                max-height: 163px;
+                background-image: url(../native/glambox/image/frame-read-now.png);
+            }
+        }
+    }
+
+    .frame-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .frame-bottom-text {
+        background: url(../native/glambox/image/frame-bottom-text.png) no-repeat;
+        background-size: 100% auto;
+    }
+}
+
+.toro-frame {
+    .frame-trigger {
+        &.start-investing {
+            &:before {
+                max-width: 161px;
+            	max-height: 135px;
+                background-image: url(../native/toro-radar-new/image/text-1.png);
+            }
+        }
+
+        &.today-scenario {
+            &:before {
+                max-width: 156px;
+                max-height: 135px;
+                background-image: url(../native/toro-radar-new/image/text-2.png);
+            }
+        }
+
+        &.ebook {
+            &:before {
+                max-width: 163px;
+                max-height: 243px;
+                background-image: url(../native/toro-radar-new/image/text-3.png);
+            }
+        }
+    }
+
+    .frame-close {
+        width: 16px;
+        height: 16px;
+        background: url(../native/toro-radar/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .frame-bottom-text {
+    	height: 27px;
+        width: 286px;
+        max-width: 70%;
+        bottom: 4%;
+        left: 20px;
+        background: url(../native/toro-radar-new/image/assinatura-toro.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    @media screen and (max-width: 320px) {
+        .frame-bottom-text {
+            bottom: 0;
+            max-width: 65%;
+            left: 10px;
+        }
+
+        .frame-close {
+            top: 6px;
+            right: 6px;
+            width: 10px;
+            height: 10px;
+        }
+    }
+}
+
+/* Empiricus Lead */
+.native-area {
+    .empiricus-lead {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 150;
+    }
+
+    .empiricus-trigger {
+        width: 268px;
+        height: 92px;
+        bottom: 57px;
+        right: 16px;
+        position: absolute;
+        background: url(../native/empiricus/image/empiricus-trigger.png) no-repeat;
+        background-size: 100% auto;
+        z-index: 150;
+        opacity: 0;
+        transform: scale(.8);
+        cursor: pointer;
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+    }
+
+    .empiricus-lead-close {
+        width: 16px;
+    	height: 16px;
+    	opacity: 0.74;
+        bottom: 140px;
+        right: 20px;
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+        background-position: 50%;
+        position: absolute;
+        z-index: 200;
+        opacity: 0;
+        transition: opacity 200ms linear;
+
+        &.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    .empriricus-lead-area {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 24px;
+        background-color: #f7f7f7;
+        text-align: center;
+        pointer-events: none;
+        opacity: 0;
+        transform: scale(.8);
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+
+            .lead-area-content {
+                &.active {
+                    pointer-events: auto;
+                }
+            }
+
+            .lead-area-holder {
+                pointer-events: auto;
+            }
+        }
+    }
+
+    .empiricus-logo {
+        width: 242px;
+        height: 83px;
+        background: url(../native/empiricus/image/logo-empiricus.png) no-repeat;
+        background-size: 100% auto;
+        display: inline-block;
+        margin-bottom: 25px;
+    }
+
+    .lead-area-holder {
+        width: 100%;
+        height: 100%;
+        max-width: 80%;
+        margin: 0 auto;
+        pointer-events: none;
+        position: relative;
+    }
+
+    .lead-area-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        opacity: 0;
+        max-height: 360px;
+        margin: auto;
+        pointer-events: none;
+        transition: all 200ms linear;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+    .lead-text {
+        opacity: 0.94;
+    	font-family: sans-serif;
+    	font-size: 22px;
+    	line-height: 1.1em;
+        max-width: 360px;
+    	color: #6d6d6d;
+        display: inline-block;
+        margin-bottom: 14px;
+    }
+
+    .input-holder {
+        width: 100%;
+    	height: 54px;
+    	border-radius: 17px;
+	    border: solid 2px #979797;
+        padding: 5px 10px 5px 62px;
+        margin-bottom: 14px;
+        display: inline-block;
+
+        input {
+            width: 100%;
+            height: 100%;
+            float: left;
+            background: none;
+            border: none;
+            box-shadow: none;
+            font-size: 26px;
+        }
+
+        &.input-email {
+            background: url(../native/empiricus/image/icon-message.png) no-repeat;
+            background-size: 26px 20px;
+            background-position: 21px 50%;
+        }
+    }
+
+    .send-lead {
+        max-width: 197px;
+    	height: 49px;
+        border-radius: 17px;
+    	background-color: rgba(191, 19, 26, .94);
+    	font-size: 24px;
+    	line-height: 1.1em;
+        padding: 0 54px;
+    	color: #fff;
+        display: inline-block;
+        text-transform: uppercase;
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+    .back-to-video {
+        opacity: .94;
+    	font-size: 22px;
+    	line-height: 1em;
+    	color: rgba(191, 19, 26, .94);
+        text-decoration: underline;
+        display: inline-block;
+        padding: 0 7px;
+        margin-top: 28px;
+    }
+
+    /* Webkit */
+    ::-webkit-input-placeholder { color: #6d6d6d; }
+    /* Firefox 4-18 */
+    :-moz-placeholder { color: #6d6d6d; }
+    /* Firefox 19+ */
+    ::-moz-placeholder { color: #6d6d6d; }
+    /* IE10+ */
+    :-ms-input-placeholder { color: #6d6d6d; }
+
+
+    @media only screen and (max-width: 480px) {
+        .empiricus-trigger {
+            width: 220px;
+            height: 75px;
+        }
+
+        .empiricus-lead-close {
+            bottom: 125px;
+        }
+
+        .empiricus-logo {
+            width: 160px;
+            height: 55px;
+            margin-bottom: 12px;
+        }
+
+        .lead-text {
+            font-size: 18px;
+        }
+
+        .input-holder {
+            height: 38px;
+            padding-left: 50px;
+
+            input {
+                font-size: 18px
+            }
+
+            &.input-email {
+                background-size: 16px auto;
+            }
+        }
+
+        .send-lead {
+            height: 38px;
+            padding: 0 32px;
+            font-size: 18px;
+        }
+
+        .back-to-video {
+            font-size: 18px;
+        }
+    }
+
+
+    @media only screen and (max-width: 320px) {
+        .empiricus-trigger {
+            width: 150px;
+            height: 52px;
+        }
+
+        .empiricus-lead-close {
+            bottom: 105px;
+        }
+
+        .empiricus-logo {
+            width: 120px;
+            height: 41px;
+            margin-bottom: 8px;
+        }
+
+        .empriricus-lead-area {
+            padding: 12px;
+        }
+
+        .lead-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-holder {
+            height: 28px;
+            padding-left: 30px;
+            margin-bottom: 6px;
+
+            input {
+                font-size: 14px;
+            }
+
+            &.input-email {
+                background-size: 11px auto;
+                background-position: 10px 50%;
+            }
+        }
+
+        .send-lead {
+            height: 28px;
+            padding: 0 22px;
+            font-size: 14px;
+        }
+
+        .back-to-video {
+            font-size: 14px;
+        }
+    }
+}
+
+.empiricus-inside-close {
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+@import 'related-offers';
+@import 'full-ad';

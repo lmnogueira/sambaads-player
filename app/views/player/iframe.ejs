@@ -1,172 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/sambaads.player.css">
-    <style type="text/css">
-        body { margin: 0px; background: #000000; padding: 0; }
-        #extensive { box-shadow: 0 0 5px #ccc; }
-    </style>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <% if(info.playlist.length > 0){ %>
-        
-        <meta property="fb:app_id" content="903775732996455" />
-        <meta property="og:title" content="<%=info.playlist.length >= 1 ? info.playlist[0].title : ''%>" /> 
-        <meta property="og:description" content="<%=info.playlist.length >= 1 ? info.playlist[0].description : ''%>" />
-        <meta property="og:url" content="" /> 
-        <meta property="og:type" content="video" /> 
-        
-        <!-- html5 --
-        <meta property="og:video:url" content="http://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>&sk=blue&tm=light" />
-        <meta property="og:video:secure_url" content="https://player.sambaads.com/iframe/<%=info.publisher_info.hash_code %>?m=<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>&sk=blue&tm=light" />
-        <meta property="og:video:type" content="text/html" />
-        <meta property="og:video:height" content="273" /> 
-        <meta property="og:video:width" content="486" /> 
-        <!-- fim html5 -->
-
-        <!-- flash -->
-          <meta property="og:video:url" content="http://d3655zppehxyvi.cloudfront.net/player/5.1/player.swf?config=https%3a%2f%2fapp.sambaads.com%2fapi%2fplayer_config.xml%3fpid%3d<%=info.publisher_info.hash_code %>%26mid%3d<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>" />
-          <meta property="og:video:secure_url" content="https://d3655zppehxyvi.cloudfront.net/player/5.1/player.swf?config=https%3a%2f%2fapp.sambaads.com%2fapi%2fplayer_config.xml%3fpid%3d<%=info.publisher_info.hash_code %>%26mid%3d<%=info.playlist.length >= 1 ? info.playlist[0].media_id : ''%>" />
-          <meta property="og:video:type" content="application/x-shockwave-flash" />
-          <meta property="og:video:height" content="273" /> 
-          <meta property="og:video:width" content="486" /> 
-        <!-- fim flash -->
-
-        <meta property="og:image" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : ''%>" />
-        <meta property="og:image:secure_url" content="<%=info.playlist.length >= 1 ? info.playlist[0].thumbnails['180'] : '' %>">
-        <meta property="og:image:type" content="image/jpeg">
-    <% } %>
-
-    <!-- oembed discovery -->
-    <link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&maxwidth=<%=width%>&maxheight=<%=height%>&format=json" title="" />
-    <link rel="alternate" type="text/xml+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&maxwidth=<%=width%>&maxheight=<%=height%>&format=xml" title="" />
-    <!-- end oembed discovery -->
-    <script src="//jwpsrv.com/library/RMtQ+OM0EeK_lyIACqoQEQ.js"></script>
-</head>
-<body>
-
-<div class="sambaads-player-container">
-
-        <div id="titlebar" class="titlebar">
-          <h2 id="titlebar-title"></h2>
-          <a href="http://www.ycontent.com.br/?utm_campaign=Recomendador&utm_medium=Logo&utm_source=Smartplayer" target="_blank" class="logo-sambaads">
-            <img src="/images/ycontent-icon-white.png" alt="Samba Ads">
-          </a>
-        </div>
-
-        <div id="sambaads-embed" class="sambaads-embed">
-            <span id="share-button-dock" class="share-button" style="display:none">
-                <i class="icon-share"></i>
-            </span>
-
-            <div id="display-overlay-title-share" class="section-display-title-share">
-              <div id="video-title-bar" class="video-title">
-                  <h3 id="video-title"></h3>
-                  <h2 id="video-author"></h2>
-                  <h2 id="video-views"><span id="video-views-number"></span> visualizações</h2>
-                    <span id="share-button" class="share-button">
-                      <i class="icon-share"></i>
-                    </span>
-                </div>
-            </div>
-
-            <div id="display-overlay" class="display-overlay">
-              <div id="display-overlay-play" class="section-display cursor">
-                  <div id="display-buttom-play" class="display-buttom">
-                      <!-- Play -->
-                      <i class="icon-display-play"></i>
-                  </div>
-              </div>
-
-              <div id="display-overlay-loader" class="section-display">
-                  <div id="display-loader" class="display-buttom">
-                      <!-- Loader -->
-                      <i class="icon-display-loader"></i>
-                  </div>
-              </div>
-
-              <div id="display-overlay-share" class="section-share">
-                  <span id="close-button" class="close-button">
-                        <i class="icon-close"></i>
-                  </span>
-                  <div class="wrapper-share">
-                        <h4>Compartilhe este vídeo</h4>
-                        <ul class="share-social-list">
-                          <li><a id="facebook-url-share" href="#" target="_blank"><i class="icon-share-facebook"></i></a></li>
-                          <!--<li><a href="#"><i class="icon-share-twitter"></i></a></li>-->
-                        </ul>
-
-                        <form class="form-share">
-                            <div class="form-group">
-                                <input id="share-embed" type="text" class="form-control" value="" />
-                                <button id="btn-select-embed" type="button" class="btn btn-active">Selecionar embed</button>
-                            </div>
-                        </form>
-                    </div>
-              </div>
-
-              <div id="display-overlay-next" class="section-next">
-                  <span id="replay-button" class="replay-button">
-                        <i class="icon-replay"></i>
-                    </span>
-                  <div class="wrapper-next">
-                      <div class="next-thumb">
-                          <img id="video-next-thumbnail" src="" alt="" />
-                        </div>
-                        <div class="wrapper-next-description">
-                            <div class="next-description">
-                                <h4>A seguir</h4>
-                                <h5 id="video-next-title"></h5>
-                                <div class="wrapper-next-counter">
-                                    <div id="next-counter" class="next-counter">
-                                        <i class="icon-play-counter"></i>
-                                        <div class="progress-circle"></div>
-                                    </div>
-                                    <span class="next-counter-seconds"><span id="counter-down"></span> segundos</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-              </div>
-
-              <div id="jw_sambaads_player"></div>
-            </div>
-        </div>
-
-        <div class="sambaads-playlist">
-
-          <div class="sambaads-playlist horizontal" >
-                <ul id="playlist-h-items">
-                    <li id="playlist-h-item">
-                        <div class="playlist-item">
-                            <!-- <span class="label-patrocinado">Patrocinado</span> -->
-                            <div class="video-thumb">
-                                <a href="#">
-                                    <span class="video-duration" style="display:none;">05:33</span>
-                                    <img src="" alt="Título do vídeo" />
-                                </a>
-                            </div>
-                            <div class="video-description">
-                                <h4>
-                                    <a href="#">Her: A Spike Jonze love story</a>
-                                </h4>                                
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-          </div>
-
-          <div class="sambaads-playlist vertical">
-                <div class="nano">
-                    <div class="nano-content">
-                        <div id="playlist-v-items" class="wrapper-playlist">
-                            <div id="playlist-v-item" class="playlist-item">
-                                <!-- <span class="label-patrocinado">Patrocinado</span> -->
+<!DOCTYPE html><html lang="pt-br"><head><link rel="stylesheet" type="text/css" href="/stylesheets/sambaads.player.css"><style type="text/css">body { margin: 0px; background: #F5F5F5; padding: 0; }
+        #extensive { box-shadow: 0 0 5px #ccc; }</style><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><!-- oembed discovery --><link rel="alternate" type="application/json+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title=""><link rel="alternate" type="text/xml+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=xml" title=""><!-- end oembed discovery --></head><body><div class="sambaads-player-container"><div id="full-ad-area" class="full-ad-area" style="overflow:hidden"><div class="full-ad-item full-empiricus active"><div class="full-ad-usable-area"><button type="button" class="full-ad-main-trigger">Trigger!</button> <button type="button" class="full-ad-close full-empiricus-close"></button><div class="full-empiricus-products-list"><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/petrobras-report.png" alt="Relatório Petrobrás"></a></div><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/book-febre.png" alt="Livro Febre do Ouro"></a></div></div></div><div class="full-ad-bottom-area"><div class="empiricus-time-left">Essa oferta termina em: <span><span id="time-left">00:00</span> minutos</span></div></div></div></div><div id="titlebar" class="titlebar"><h2 id="titlebar-title"></h2><a href="http://www.sambaads.com.br/?utm_campaign=Recomendador&utm_medium=Logo&utm_source=Smartplayer" target="_blank" class="logo-sambaads"><div class="logo-icon-bar"></div></a></div><div id="sambaads-embed" class="sambaads-embed"><span id="share-button-dock" class="share-button" style="display:none"><i class="icon-share"></i></span><div id="display-overlay-title-share" class="section-display-title-share"><div id="video-title-bar" class="video-title"><h3 id="video-title"></h3><h2 id="video-author"></h2><h2 id="video-views"><span id="video-views-number"></span> visualizações</h2><span id="share-button" class="share-button" style="display:none"><i class="icon-share"></i></span></div></div><div id="display-overlay" class="display-overlay"><div id="display-overlay-play" class="section-display cursor"><div id="display-buttom-play" class="display-buttom"><!-- Play --> <i class="icon-display-play"></i></div></div><div id="display-overlay-loader" class="section-display"><div id="display-loader" class="display-buttom"><!-- Loader --> <i class="icon-display-loader"></i></div></div><div id="display-overlay-share" class="section-share"><span id="close-button" class="close-button"><i class="icon-close"></i></span><div class="wrapper-share"><h4>Compartilhe este vídeo</h4><ul class="share-social-list"><li><a id="facebook-url-share" href="#" target="_blank"><i class="icon-share-facebook"></i></a></li><!--<li><a href="#"><i class="icon-share-twitter"></i></a></li>--></ul><form class="form-share"><!--<div class="form-group">
+                                <input id="share-link" type="text" class="form-control" value="www.sambaads.com.br/galeria/#sitesambaads" />
+                                <button type="button" class="btn">Selecionar link</button>
+                            </div>--><div class="form-group"><input id="share-embed" type="text" class="form-control" value="www.sambaads.com.br/galeria/#sitesambaads"> <button id="btn-select-embed" type="button" class="btn btn-active">Selecionar embed</button></div></form></div></div><div id="display-overlay-next" class="section-next"><span id="replay-button" class="replay-button"><i class="icon-replay"></i></span><div class="wrapper-next"><div class="next-thumb"><img id="video-next-thumbnail" src="" alt=""></div><div class="wrapper-next-description"><div class="next-description"><h4>A seguir</h4><h5 id="video-next-title"></h5><div class="wrapper-next-counter"><div id="next-counter" class="next-counter"><i class="icon-play-counter"></i><div class="progress-circle"></div></div><span class="next-counter-seconds"><span id="counter-down"></span> segundos</span></div></div></div></div></div><div id="jw_sambaads_player"></div><div id="native-area" class="native-area"><button type="button" class="glambox" data-hashcode="glambox" id="glambox-trigger">{{glamText}}<div class="highlight-box">{{highlightText}}</div><div class="glambox-logo"></div></button><div class="glambox-new" data-hashcode="glambox-new"><div class="ad-area" type="1"><button type="button" class="ad-close" id="glambox-new-close">Fechar AD</button> <button type="button" class="ad-button glambox-new-trigger"><div class="main-title">DESCONTO DE <span>R$25</span> ESPECIAL PARA VOCÊ</div><span class="row"><div class="sign-now">Clique e aproveite!</div></span><div class="subtitle">Com <span class="love">love</span> Glambox</div><div class="products"></div></button></div><div class="ad-area" type="2"><button type="button" class="ad-close" id="glambox-new-close">Fechar AD</button> <button type="button" class="glambox-new-trigger"><div class="sides-wrapper"><div class="back"><div class="row">Tenha acesso ao</div><div class="row">Conteúdo exclusivo</div><div class="row"><div class="sign-now">Clique e saiba mais</div></div><div class="subtitle">Com <span class="love">love</span> Glambox</div></div><div class="front"><div class="glambox-logo"></div><div>Quer mais <span class="color-text">dicas</span></div><div><span class="color-text">de beleza</span>grátis?</div></div></div></button></div><div class="ad-area" type="3"><button type="button" class="ad-close" id="glambox-new-close">Fechar AD</button> <button type="button" class="glambox-new-trigger"><div class="row">Quer conhecer</div><div class="row color-text">produtos incríveis?</div><div class="row">Conheça nosso club!</div><span class="row"><div class="sign-now">Clique e faça parte</div></span><div class="subtitle">Com <span class="love">love</span> Glambox</div></button></div></div><div class="wine-native" id="wine-native"><div class="ad-area"><button type="button" class="ad-close">Fechar AD</button> <button type="button" class="ad-trigger"><div>Para acompanhar esta receita recomendamos o Gérard Bertrand Gio Grenache Rosé 2015</div><div class="upper">DESCONTO DE <span class="highlight-text">R$20</span></div><div class="buy-now">Compre Agora</div><div class="subtitle">com <span class="love"></span>wine</div><div class="wine-bottle"></div></button></div></div><div class="glambox-frame frame-ad" id="glambox-frame"><button type="button" class="frame-trigger"></button> <button type="button" class="frame-close"></button><p class="frame-bottom-text">Este vídeo é oferecido por glambox</p></div><div class="toro-frame frame-ad" id="toro-frame"><button type="button" class="frame-trigger"></button> <button type="button" class="frame-close"></button><p class="frame-bottom-text">Este vídeo é apoiado por ToroRadar</p></div><div class="blackfriday-frame frame-ad" id="blackfriday-frame"><button type="button" class="frame-trigger"></button></div><div class="empiricus-lead" id="empiricus-lead"><button type="button" id="empiricus-trigger" class="empiricus-trigger ir" title="Baixe o relatório gratuito">Baixe o relatório gratuito</button> <button type="button" id="empiricus-lead-close" class="empiricus-lead-close ir" title="Fechar promoção">Fechar</button><div id="empriricus-lead-area" class="empriricus-lead-area"><button type="button" id="empiricus-inside-close" class="empiricus-inside-close ir inside-close">Fechar</button><div class="lead-area-holder"><div id="lead-form" class="lead-area-content active"><div><div class="empiricus-logo"></div></div><div><p class="lead-text">Digite seu e-mail para enviarmos o relatório gratuito</p></div><div><div class="input-holder input-email"><input type="text" id="lead-email" class="lead-email" placeholder="e-mail"></div></div><div class="align-right"><button type="button" id="send-lead" class="send-lead">Enviar</button></div></div><div id="lead-success" class="lead-area-content"><div><div class="empiricus-logo"></div></div><div><p class="lead-text">O Relatório foi enviado para o seu e-mail com sucesso!</p></div><div><a href="#" class="back-to-video inside-close">Voltar ao vídeo</a></div></div></div></div></div></div></div></div><div class="sambaads-playlist"><div class="sambaads-playlist horizontal"><ul id="playlist-h-items"><li id="playlist-h-item"><div class="playlist-item"><div class="video-thumb"><a href="#"><span class="video-duration" style="display:none">05:33</span> <img src="" alt="Título do vídeo"></a></div><div class="video-description"><h4><a href="#">Her: A Spike Jonze love story</a></h4></div></div></li><li><div class="playlist-item highlight"><div class="video-thumb"><a href="#"><span class="video-duration" style="display:none">05:33</span> <img src="" alt="Título do vídeo"></a></div><div class="video-description"><h4><a href="#">Her: A Spike Jonze love story</a></h4></div><span class="label-patrocinado">Patrocinado</span></div></li></ul><div class="playlist-ad-area playlist-ad-horizontal"></div></div></div><div class="sambaads-playlist vertical"><div class="nano"><div class="nano-content"><div id="playlist-v-items" class="wrapper-playlist"><div id="playlist-v-item" class="playlist-item"><div class="video-thumb"><a href="#"><span class="video-duration" style="display:none">05:33</span> <img src="" alt=""></a></div><div class="video-description"><div class="description"><h4><a href="#">Her: A Spike Jonze love story</a></h4></div></div></div><!--
+                            <div class="playlist-item highlight">
                                 <div class="video-thumb">
                                     <a href="#">
-                                        <span class="video-duration" style="display:none;">05:33</span>
-                                        <img src="" alt="" />
+                                        <span class="video-duration">05:33</span>
+                                        <img src="images/thumb-playlist-02.jpg" alt="Título do vídeo" />
                                     </a>
                                 </div>
                                 <div class="video-description">
@@ -174,36 +15,16 @@
                                         <h4>
                                             <a href="#">Her: A Spike Jonze love story</a>
                                         </h4>
+                                        <span class="label-patrocinado">Patrocinado</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.5/javascripts/jquery.nanoscroller.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.5/js/lightslider.min.js" defer></script>
-<script src="/javascripts/sambaads.player.js" defer></script>
-
-<script type="text/javascript">
-	// START COMSCORE
+                            --></div></div></div><div id="playlist-ad-area" class="playlist-ad-area playlist-ad-right"><div id="empiricus-playlist" class="empiricus-playlist ad-playlist"><button type="button" id="empiricus-playlist-close" class="empiricus-playlist-close ad-playlist-close ir inside-close" title="Fechar playlist Ad">Fechar</button><div class="ad-playlist-title empiricus-playlist-title">Materiais Gratuitos</div><div id="playlist-products-area"></div><div id="playlist-footer" class="playlist-footer"></div></div></div></div></div><script src="//ssl.p.jwpcdn.com/player/v/7.7.0/jwplayer.js"></script><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="/javascripts/sambaads.player.js"></script><script type="text/javascript">// START COMSCORE
 	document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
 	// END COMSCORE
 
-    var check = setInterval(function(){
-        if ((typeof SambaAdsPlayerView === 'function') && (typeof SambaAdsPlayerControler === 'function') && jQuery && (typeof window.jwplayer === 'function')){
-            // START SAMBAADS
-            var smb = new SambaAdsPlayerView();
-            smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
-            var smbCtrl = new SambaAdsPlayerControler("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
-            // END SAMBAADS
-            clearInterval(check);
-        }
-    },1);
-</script>
-
-</body>
-</html>
+	// START SAMBAADS
+    var smb = new SambaAdsPlayerView()
+    smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
+    var smbCtrl = new SambaAdsPlayerController("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
+  // END SAMBAADS</script></body></html>
