@@ -902,7 +902,7 @@ SambaAdsPlayerControllerNative = function (){
 													image: '/native/offers/image/offer-2-' + currentButtonType + '.png'
 												}
 											],
-											footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
+											footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left-offers" class="time-left"></span> minutos</span></span>'
 										};
 
 									for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
@@ -938,6 +938,8 @@ SambaAdsPlayerControllerNative = function (){
 
 									SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
+									$timeLeft = $('#time-left-offers');
+
 									var nativeTimerTrigger = function(event) {
 											if(showClose) {
 												var currentTime = parseInt(event.detail.data.position);
@@ -948,7 +950,7 @@ SambaAdsPlayerControllerNative = function (){
 														ga('send', 'event', 'Performance', 'impression', 'hotmart');
 													}
 
-													$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+													$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
 												} if(currentTime >= 4) {
 													//self.trackImpression(vastData.impression_url);
 
@@ -969,7 +971,7 @@ SambaAdsPlayerControllerNative = function (){
 																var currentLeftTime = currentVideoDuration - timerCount,
 																	timeLeft = secondsToTime(currentLeftTime);
 
-																$('#time-left').html(timeLeft);
+																$timeLeft.html(timeLeft);
 
 											                    if(currentLeftTime === 0) {
 											                        clearTimeout(showAdTimeout);
