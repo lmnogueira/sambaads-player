@@ -29,20 +29,6 @@
                 opacity: 1;
                 pointer-events: auto;
             }
-
-            .full-ad-main-trigger {
-                opacity: 1;
-                transform: scale3d(1,1,1);
-            }
-
-            .full-empiricus-product {
-                transition-delay: 0s;
-                opacity: 1;
-
-                &:hover {
-                    opacity: .7;
-                }
-            }
         }
     }
 }
@@ -127,7 +113,7 @@
     }
 }
 
-.full-empiricus-products-list {
+.full-ad-products-list {
     margin: 45px 20px 0 0;
     float: right;
 }
@@ -144,7 +130,7 @@
     }
 }
 
-.full-empiricus-close {
+.full-ad-close {
     width: 13px;
     height: 13px;
     background: url(../native/empiricus-new/image/icon-close.png) no-repeat;
@@ -154,4 +140,103 @@
     right: 16px;
     border: none;
     cursor: pointer;
+}
+
+.sambaads-player-container {
+    &.full-ad {
+        &.active-full-ad {
+            .full-empiricus {
+                .full-ad-main-trigger {
+                    opacity: 1;
+                    transform: scale3d(1,1,1);
+                }
+
+                .full-empiricus-product {
+                    transition-delay: 0s;
+                    opacity: 1;
+
+                    &:hover {
+                        opacity: .7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Sephora
+
+.full-sephora {
+    background-color: #FEFEFE;
+    box-shadow: inset 14px 10px 96px 3px rgba(216,216,216,1);
+
+    .full-ad-main-trigger {
+        background: url(../native/sephora/image/main-trigger.png) no-repeat;
+        background-size: 100%;
+        border: none;
+        width: 190px;
+        height: 175px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        margin: auto;
+        opacity: 0;
+        transition: all 200ms ease 200ms;
+    }
+
+    .time-left-holder {
+        display: block;
+    }
+
+    .time-left {
+        color: rgba(117, 116, 116, .9);
+        font-size: 13px;
+        position: absolute;
+        left: 30px;
+        bottom: 15px;
+
+        span {
+            font-size: 14px;
+            font-weight: bold;
+            color: #cd0f00;
+        }
+    }
+
+    .full-ad-close {
+        background: url(../native/sephora/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .full-sephora-products-list {
+        text-align: center;
+    }
+
+    .full-ad-product {
+        &:nth-child(2n) {
+            margin-right: 12px;
+        }
+    }
+}
+
+.sambaads-player-container {
+    &.full-ad {
+        &.active-full-ad {
+            .full-sephora {
+                .full-ad-main-trigger {
+                    opacity: 1;
+                    transform: scale3d(1,1,1);
+                }
+
+                .full-sephora-product {
+                    transition-delay: 0s;
+                    opacity: 1;
+
+                    &:hover {
+                        opacity: .7;
+                    }
+                }
+            }
+        }
+    }
 }
