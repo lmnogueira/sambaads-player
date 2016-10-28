@@ -902,7 +902,7 @@ SambaAdsPlayerControllerNative = function (){
 													image: '/native/offers/image/offer-2-' + currentButtonType + '.png'
 												}
 											],
-											footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left" class="time-left"></span> minutos</span></span>'
+											footerContent: '<span class="footer-time">Essa oferta termina em: <span><span id="time-left-offers" class="time-left"></span> minutos</span></span>'
 										};
 
 									for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
@@ -938,6 +938,8 @@ SambaAdsPlayerControllerNative = function (){
 
 									SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
+									$timeLeft = $('#time-left-offers');
+
 									var nativeTimerTrigger = function(event) {
 											if(showClose) {
 												var currentTime = parseInt(event.detail.data.position);
@@ -948,7 +950,7 @@ SambaAdsPlayerControllerNative = function (){
 														ga('send', 'event', 'Performance', 'impression', 'hotmart');
 													}
 
-													$('#time-left').html(secondsToTime(parseInt(event.detail.data.duration)));
+													$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
 												} if(currentTime >= 4) {
 													//self.trackImpression(vastData.impression_url);
 
@@ -969,7 +971,7 @@ SambaAdsPlayerControllerNative = function (){
 																var currentLeftTime = currentVideoDuration - timerCount,
 																	timeLeft = secondsToTime(currentLeftTime);
 
-																$('#time-left').html(timeLeft);
+																$timeLeft.html(timeLeft);
 
 											                    if(currentLeftTime === 0) {
 											                        clearTimeout(showAdTimeout);
@@ -1026,15 +1028,15 @@ SambaAdsPlayerControllerNative = function (){
 			return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 		};
 
+	var fullAdContent = '';
+
 	var showFullAd = function(videoId) {
 		var $playerContainer = $('.sambaads-player-container'),
 			$fullAdArea = $('#full-ad-area'),
 			isRunning = true,
 			adStartSeconds = 5;
 
-		var adContent = '<div class="full-ad-item full-empiricus active"><div class="full-ad-usable-area"><button type="button" class="full-ad-main-trigger">Trigger!</button><button type="button" class="full-ad-close full-empiricus-close"></button><div class="full-empiricus-products-list"><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/petrobras-report.png" alt="Relatório Petrobrás"></a></div><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/book-febre.png" alt="Livro Febre do Ouro"></a></div></div></div><div class="full-ad-bottom-area"><div class="empiricus-time-left">Essa oferta termina em: <span><span id="time-left">00:00</span> minutos</span></div></div></div>'
-
-		$fullAdArea.html(adContent);
+		$fullAdArea.html(fullAdContent);
 
 		var $fullAdClose = $('.full-ad-close'),
 			$timeLeft = $('#time-left');
@@ -1249,6 +1251,12 @@ SambaAdsPlayerControllerNative = function (){
 
 		if(videoId === 62073 && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
 			currentAd = showFullAd;
+			fullAdContent = '<div class="full-ad-item full-empiricus active"><div class="full-ad-usable-area"><button type="button" class="full-ad-main-trigger">Trigger!</button><button type="button" class="full-ad-close full-empiricus-close"></button><div class="full-empiricus-products-list full-ad-products-list"><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/petrobras-report.png" alt="Relatório Petrobrás"></a></div><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/book-febre.png" alt="Livro Febre do Ouro"></a></div></div></div><div class="full-ad-bottom-area"><div class="empiricus-time-left">Essa oferta termina em: <span><span id="time-left">00:00</span> minutos</span></div></div></div>';
+		}
+
+		if(videoId === 74616 && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
+			currentAd = showFullAd;
+			fullAdContent = '<div class="full-ad-item full-sephora active"><div class="full-ad-usable-area"><div class="time-left">Essa oferta termina em: <span class="time-left-holder"><span id="time-left">00:00</span> minutos</span></div><button type="button" class="full-ad-main-trigger"></button><button type="button" class="full-ad-close full-sephora-close"></button><div class="full-sephora-products-list full-ad-products-list"><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-1.png" alt="Produto"></a></div><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-2.png" alt="Produto"></a></div><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-3.png" alt="Produto"></a></div></div></div><div class="full-ad-bottom-area"></div></div>';
 		}
 
 		//currentAd = toroRadarFrame;
