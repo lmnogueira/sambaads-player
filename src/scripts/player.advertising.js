@@ -36,7 +36,7 @@ SambaAdsPlayerAdvertising = function (){
  			//tagUrl = "https://local-vpaid.sambaads.com/vast/adselector.xml";
 
  			//if(self.playingNow.media_id == 66007){
- 			  	self.playingNow.sponsored = true;
+ 			//  	self.playingNow.sponsored = true;
  			//}
 
 
