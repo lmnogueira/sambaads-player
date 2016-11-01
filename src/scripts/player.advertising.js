@@ -8,12 +8,28 @@ SambaAdsPlayerAdvertising = function (){
 		self.client = e.detail.data.client;
 		self.player = e.detail.data.player;
 		self.user = e.detail.data.user;
+		self.navegg = e.detail.data.navegg_perfil;
 	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
 
  		var tags = self.playingNow.dfp_tags;
-		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.playingNow.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+ 		var navegg_tags = "nvg_gender="+ self.navegg.gender
+ 		+ "&nvg_age=" + self.navegg.age
+ 		+ "&nvg_educat=" + self.navegg.education
+ 		+ "&nvg_marita=" + self.navegg.marital
+ 		+ "&nvg_income=" + self.navegg.income
+ 		+ "&nvg_intere=" + self.navegg.interest.replace(/-/g,",")
+ 		+ "&nvg_produc=" + self.navegg.product.replace(/-/g,",")
+ 		+ "&nvg_career=" + self.navegg.career
+ 		+ "&nvg_brand="  + self.navegg.brand.replace(/-/g,",")
+ 		+ "&nvg_connec=" + self.navegg.connection.replace(/-/g,",")
+ 		+ "&nvg_everyb=" + self.navegg.everybuyer.replace(/-/g,",")
+ 		+ "&nvg_custom=" + self.navegg.custom;
+
+ 		console.log(navegg_tags);
+
+ 		var custom_params = encodeURIComponent(navegg_tags + "&duration=&CNT_Position=preroll&category=" + self.playingNow.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 		//"&scor=" + self.user.unique_score +
 

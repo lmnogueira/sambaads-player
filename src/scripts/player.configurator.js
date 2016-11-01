@@ -7,7 +7,8 @@ SambaAdsPlayerConfigurator = function (){
 	self.configuration = {
 		playlist : {},
 		player: {},
-		user: {}
+		user: {},
+		navegg_perfil: {}
 	};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLATFORM_METADATA_LOADED, function(e){
@@ -20,6 +21,7 @@ SambaAdsPlayerConfigurator = function (){
 		self.configurePlayer();
 		self.configureClient();
 		self.configureUser();
+		self.configureNavegg();
 		SambaAdsPlayerMessageBroker().send(Event.CONFIGURATION_READY, self.configuration);
 	});
 
@@ -36,6 +38,32 @@ SambaAdsPlayerConfigurator = function (){
 SambaAdsPlayerConfigurator.prototype.resolveParams = function(){
 	this.configuration.player.params = this.parseQueryString(window.location.href);
 };
+
+
+SambaAdsPlayerConfigurator.prototype.configureNavegg = function(){
+	var self = this;
+	// lista de segmentos aqui: http://www.navegg.com/segmentos/
+	
+	// Critérios com valor único:
+	self.configuration.navegg_perfil.gender = nvgGetSegment('gender'); //Exemplo de resposta: “1"
+	self.configuration.navegg_perfil.age = nvgGetSegment('age');
+	self.configuration.navegg_perfil.education = nvgGetSegment('education');
+	self.configuration.navegg_perfil.marital = nvgGetSegment('marital');
+	self.configuration.navegg_perfil.income = nvgGetSegment('income');
+	self.configuration.navegg_perfil.everyone = nvgGetSegment('everyone');
+	self.configuration.navegg_perfil.city = nvgGetSegment('city');
+	self.configuration.navegg_perfil.region = nvgGetSegment('region');
+	self.configuration.navegg_perfil.country = nvgGetSegment('country');
+	 
+	// Critérios multi-valorados:
+	self.configuration.navegg_perfil.interest = nvgGetSegment('interest'); //Exemplo de resposta: “232-233-241-248-359"
+	self.configuration.navegg_perfil.product = nvgGetSegment('product');
+	self.configuration.navegg_perfil.brand = nvgGetSegment('brand');
+	self.configuration.navegg_perfil.connection = nvgGetSegment('connection');
+	self.configuration.navegg_perfil.career = nvgGetSegment('career');
+	self.configuration.navegg_perfil.everybuyer = nvgGetSegment('everybuyer');
+	self.configuration.navegg_perfil.custom = nvgGetSegment('custom');
+}
 
 SambaAdsPlayerConfigurator.prototype.configureDimensionsPlayer = function(){
 	this.configuration.player.width = this.calculatePlayerWidth();
