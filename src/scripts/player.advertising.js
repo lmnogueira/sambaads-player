@@ -27,8 +27,6 @@ SambaAdsPlayerAdvertising = function (){
  		+ "&nvg_everyb=" + self.navegg.everybuyer.replace(/-/g,",")
  		+ "&nvg_custom=" + self.navegg.custom;
 
- 		console.log(navegg_tags);
-
  		var custom_params = encodeURIComponent(navegg_tags + "&duration=&CNT_Position=preroll&category=" + self.playingNow.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 		//"&scor=" + self.user.unique_score +
