@@ -1233,7 +1233,7 @@ SambaAdsPlayerControllerNative = function (){
 		if(can_publisher_play || can_vertical_play) {
 			currentAd = function() {
 				//glamboxFrame(videoId);
-				relatedOffersAd(videoId);
+				//relatedOffersAd(videoId);
 			}
 		}
 
