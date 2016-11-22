@@ -12,8 +12,10 @@ SambaAdsPlayerControllerComscore = function (){
 
 	self.trackPlay = function(e){
 		if(self.currentId != self.media.media_id){
-			self.currentId = self.media.media_id;
-			self.computeComscore("04", self.media.category_name);
+			setTimeout(function(){
+				self.currentId = self.media.media_id;
+				self.computeComscore("04", self.media.category_name);
+			}, 1000);	
 		}
 	};
 
