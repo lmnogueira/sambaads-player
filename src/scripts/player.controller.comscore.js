@@ -39,6 +39,7 @@ SambaAdsPlayerControllerComscore = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.configuration = e.detail.data;
+		self.media = self.configuration.playlist.playlist[0];
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
