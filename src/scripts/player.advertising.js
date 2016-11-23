@@ -9,7 +9,7 @@ SambaAdsPlayerAdvertising = function (){
 		self.player = e.detail.data.player;
 		self.user = e.detail.data.user;
 		self.navegg = e.detail.data.navegg_perfil;
-		self.playingNow = self.configuration.playlist.playlist[0];
+		self.playingNow = e.detail.data.playlist.playlist[0];
 	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
