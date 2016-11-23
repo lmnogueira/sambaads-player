@@ -14,7 +14,7 @@ SambaAdsPlayerAdvertising = function (){
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
 
- 		var tags = self.playingNow.dfp_tags;
+ 		var tags = "";//self.playingNow.dfp_tags.replace(",ggladxoff","");
  		var navegg_tags = "nvg_gender="+ self.navegg.gender
  		+ "&nvg_age=" + self.navegg.age
  		+ "&nvg_educat=" + self.navegg.education
@@ -59,6 +59,15 @@ SambaAdsPlayerAdvertising = function (){
 			params_ads_check = loc.split('?')[1];
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
 				e.detail.data.playAd(tagUrl);
+
+				if (!self.fallbackYoutubeProblem){
+					self.fallbackYoutubeProblem = setTimeout(function(){
+						e.detail.data.playAd(tagUrl);
+						self.fallbackYoutubeProblem = true;
+					},1500);
+				}
+					
+				
  			}
 
  			//if(self.playingNow.sponsored){
