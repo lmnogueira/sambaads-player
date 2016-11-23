@@ -14,7 +14,7 @@ SambaAdsPlayerAdvertising = function (){
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
 
- 		var tags = "";//self.playingNow.dfp_tags.replace(",ggladxoff","");
+ 		var tags = self.playingNow.dfp_tags;
  		var navegg_tags = "nvg_gender="+ self.navegg.gender
  		+ "&nvg_age=" + self.navegg.age
  		+ "&nvg_educat=" + self.navegg.education
