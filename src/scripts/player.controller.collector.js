@@ -104,6 +104,7 @@ SambaAdsPlayerControllerCollector = function (){
 	
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.configuration = e.detail.data;
+		self.media = e.detail.data.playlist.playlist[0];
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
