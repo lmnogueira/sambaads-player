@@ -78,7 +78,7 @@ SambaAdsPlayerPostMessage.prototype.onVisible = function(data){
 		  			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 		  		}
 
-		  		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
+		  		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
 			} else {
 				SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 			}
@@ -113,6 +113,7 @@ SambaAdsPlayerPostMessage.prototype.onMute = function(data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onMouseOver = function(data){
+	console.log(data);
 	if(this.newstate != PlayerState.IDLE){
 		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 	}

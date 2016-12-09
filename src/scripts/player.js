@@ -1,10 +1,10 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 var ViewabilityMonitorPlugin = function (cw, currentIframe){
-    this.visiblePlayTimeout = 2000;
+    this.visiblePlayTimeout = 500;
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
-        var percentage_of_exposition = 0.5;
+        var percentage_of_exposition = 0.2;
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
@@ -524,12 +524,14 @@ var ExpandedCinema = function (cw, currentIframe){
 
                 if(!playListItem.onMouseOver) {
                     playListItem.onMouseOver = function(event){
-                        if(typeof playListItem.state != "undefined") {
-                            if(playListItem.state == "PLAYING" || playListItem.state == "PAUSED") {
-                                playListItem.sendMessage("mouseover","");
-                                playerEl.removeEventListener("mouseover", playListItem.onMouseOver);
-                            }
-                        }
+
+                        //if(typeof playListItem.state != "undefined") {
+                        //    console.log(event);
+                        //    if(playListItem.state == "PLAYING" || playListItem.state == "PAUSED") {
+                                playListItem.sendMessage("onMouseOver","");
+                         //       playerEl.removeEventListener("mouseover", playListItem.onMouseOver);
+                        //    }
+                        //}
                     };
 
                     if (playerEl.addEventListener) {
