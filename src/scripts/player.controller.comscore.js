@@ -12,8 +12,10 @@ SambaAdsPlayerControllerComscore = function (){
 
 	self.trackPlay = function(e){
 		if(self.currentId != self.media.media_id){
-			self.currentId = self.media.media_id;
-			self.computeComscore("04", self.media.category_name);
+			setTimeout(function(){
+				self.currentId = self.media.media_id;
+				self.computeComscore("04", self.media.category_name);
+			}, 1000);	
 		}
 	};
 
@@ -37,6 +39,7 @@ SambaAdsPlayerControllerComscore = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.configuration = e.detail.data;
+		self.media = self.configuration.playlist.playlist[0];
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){

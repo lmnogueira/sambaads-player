@@ -5,6 +5,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
 
     this.isElementInViewport = function (el) {
         var percentage_of_exposition = 0.2;
+
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
