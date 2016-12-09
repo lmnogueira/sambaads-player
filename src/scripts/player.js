@@ -1,10 +1,10 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 var ViewabilityMonitorPlugin = function (cw, currentIframe){
-    this.visiblePlayTimeout = 2000;
+    this.visiblePlayTimeout = 500;
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
-        var percentage_of_exposition = 0.5;
+        var percentage_of_exposition = 0.8;
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
