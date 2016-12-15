@@ -11,6 +11,10 @@ SambaAdsPlayerPostMessage = function (){
 		self.newState = e.detail.data.newState;
 	});
 
+	SambaAdsPlayerMessageBroker().addEventListener(Event.SETUP_ERROR, function(e){
+		self.sendMessage("onSetupError", "" );
+	});
+
 	 window.onMessageReceive = function(evt){
 	 	self.onMessageReceive(evt);
 	 }

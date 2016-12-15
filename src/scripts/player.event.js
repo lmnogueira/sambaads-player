@@ -7,6 +7,7 @@ var Event = {
 	BUFFER: "buffer",
 	TIME: "time",
 	RESIZE: "resize",
+	SETUP_ERROR: "setupError",
 	PLAYER_STATE_CHANGE: "stateChange",
 	VIEW_STATE_CHANGE: "viewStateChange",
 	PLAY_LIST_ITEM: "playListItem",
