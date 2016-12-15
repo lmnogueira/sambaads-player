@@ -183,7 +183,7 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		if(evt.detail.data){
 			jwplayer().setVolume(0);
 		} else {
-			jwplayer().setVolume(10);
+			jwplayer().setVolume(40);
 		}
 	});
 
