@@ -16,6 +16,10 @@ SambaAdsPlayerCore = function (options){
 	if (options) {
 		self.setup(options);
 	}
+
+	window.videojs("vjs_sambaads_player", {}, function(){
+  	SambaAdsPlayerMessageBroker().send(Event.READY, (this));
+	});
 };
 
 
@@ -24,17 +28,13 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 
 	self.JWPlayer.setup(options);
 
-
 	self.JWPlayer.on('setupError', function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.SETUP_ERROR, evt);
 	});
-	self.JWPlayer.on('playlist', function(evt){});
-	self.JWPlayer.on('playlistComplete', function(evt){});
-	self.JWPlayer.on('bufferChange', function(evt){});
 
-	self.JWPlayer.on('ready', function(evt){
-		SambaAdsPlayerMessageBroker().send(Event.READY, evt);
-	});
+	// self.JWPlayer.on('ready', function(evt){
+	// 	SambaAdsPlayerMessageBroker().send(Event.READY, evt);
+	// });
 
 	self.JWPlayer.on('playlistItem', function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.PLAY_LIST_ITEM, evt);
@@ -54,81 +54,53 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 		SambaAdsPlayerMessageBroker().send(Event.BUFFER, evt);
 	});
 
-	//self.JWPlayer.on('idle', function(evt){});
-
-
 	self.JWPlayer.on(Event.COMPLETE, function(evt){
 		self.JWPlayer.stop();
 		SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
 		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
 	});
 
-	//self.JWPlayer.on('error', function(evt){});
-	//self.JWPlayer.on('seek', function(evt){});
-	//self.JWPlayer.on('seeked', function(evt){});
 	self.JWPlayer.on(Event.TIME, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.TIME, evt);
 	});
-	//self.JWPlayer.on('mute', function(evt){});
-	//self.JWPlayer.on('volume', function(evt){});
-	//self.JWPlayer.on('fullscreen', function(evt){});
 
 	self.JWPlayer.on(Event.RESIZE, function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.RESIZE, evt);
 	});
 
-	//self.JWPlayer.on('levels', function(evt){});
-	//self.JWPlayer.on('levelsChanged', function(evt){});
-	//self.JWPlayer.on('captionsList', function(evt){});
-	//self.JWPlayer.on('captionsChange', function(evt){});
-	self.JWPlayer.on('controls', function(evt){
-		console.log(evt);
-	});
-	//self.JWPlayer.on('meta', function(evt){});
-	//self.JWPlayer.on('displayClick', function(evt){});
-	self.JWPlayer.on('adClick', function(evt){
-		//console.log(evt);
-	});
-	self.JWPlayer.on('adCompanions', function(evt){
-		//console.log(evt);
-	});
 	self.JWPlayer.on('adComplete', function(evt){
 		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	});
+
 	self.JWPlayer.on('adError', function(evt){
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
-		//console.log(evt);
 	});
+
 	self.JWPlayer.on('adImpression', function(evt){
 		self.JWPlayer.setControls(true);
 		self._isAds = true;
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
-
-		//console.log(evt);
 	});
+
 	self.JWPlayer.on('adTime', function(evt){
 		self._isAds = true;
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
 		SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
 	});
+
 	self.JWPlayer.on('adSkipped', function(evt){
 		self._isAds = false;
 		$(".jw-icon-fullscreen").removeClass("jw-hidden");
 		$(".jw-icon-fullscreen").show();
 		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
-		//console.log(evt);
 	});
 
 	self.JWPlayer.on('beforePlay', function(evt){
 		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.JWPlayer);
-	});
-
-	self.JWPlayer.on('beforeComplete', function(evt){
-		//SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_COMLETE, evt);
 	});
 
 	self.getStatePropagator = setInterval(function(){
