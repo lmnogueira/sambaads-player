@@ -19,13 +19,27 @@ SambaAdsPlayerViewDescriptionBar = function (){
 			( (e.detail.data.newState == PlayerState.PAUSED && e.detail.data.newViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE && e.detail.data.newViewState == PlayerViewState.INITIALIZE) && !e.detail.data.isAds){
 			self.show();
 		}
-		else if( 
-			e.detail.data.newState == PlayerState.PLAYING || 
-			e.detail.data.newState == PlayerState.BUFFERING || 
+		else if(
+			e.detail.data.newState == PlayerState.PLAYING ||
+			e.detail.data.newState == PlayerState.BUFFERING ||
 			e.detail.data.newViewState != PlayerViewState.INITIALIZE || e.detail.data.isAds){
 			self.hide();
 		}
 	});
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
+		self.setTitleBar(e.detail.data.player.title_bar,e.detail.data.player.title_bar_color);
+	});
+
+	SambaAdsPlayerViewDescriptionBar.prototype.setTitleBar = function(title_text, color){
+		if(title_text.length == 0){
+			$("#titlebar").hide();
+		} else {
+			$("#titlebar").css("backgroundColor", (color == '' ? '#000000': color));
+			$("#titlebar").css("display", "block");
+			$("#titlebar-title").text(decodeURIComponent(title_text));
+		}
+	};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.setTitle(e.detail.data.item.title);
