@@ -11,26 +11,22 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
             el = el[0];
         }
 
-        if(el){
-            var rect = el.getBoundingClientRect();
+        var rect = el.getBoundingClientRect();
 
-            var windowHeight = (cw.innerHeight || document.documentElement.clientHeight);
-            var windowWidth = (cw.innerWidth || document.documentElement.clientWidth);
+        var windowHeight = (cw.innerHeight || document.documentElement.clientHeight);
+        var windowWidth = (cw.innerWidth || document.documentElement.clientWidth);
 
-            //validate 20% of top
-            var widthDiff = rect.width * (1-percentage_of_exposition);
-            var heightDiff = rect.height * (1-percentage_of_exposition);
+        //validate 20% of top
+        var widthDiff = rect.width * (1-percentage_of_exposition);
+        var heightDiff = rect.height * (1-percentage_of_exposition);
 
-            var checkWidth = rect.width - widthDiff;
-            var checkHeight = rect.height - heightDiff;
+        var checkWidth = rect.width - widthDiff;
+        var checkHeight = rect.height - heightDiff;
 
-            if(rect.top <= 0 && (checkHeight <= windowHeight) && (rect.bottom >= checkHeight) ){
-                return true;
-            } else if(rect.top >= 0 && (checkHeight <= windowHeight) && ((windowHeight - rect.top) >= checkHeight)){
-                return true;
-            } else {
-                return false;
-            }
+        if(rect.top <= 0 && (checkHeight <= windowHeight) && (rect.bottom >= checkHeight) ){
+            return true;
+        } else if(rect.top >= 0 && (checkHeight <= windowHeight) && ((windowHeight - rect.top) >= checkHeight)){
+            return true;
         } else {
             return false;
         }
