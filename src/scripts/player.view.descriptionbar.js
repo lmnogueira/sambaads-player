@@ -37,7 +37,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 		} else {
 			$("#titlebar").css("backgroundColor", (color == '' ? '#000000': color));
 			$("#titlebar").css("display", "block");
-			$("#titlebar-title").text(decodeURIComponent(title_text));
+			$("#titlebar-title").text(decodeURIComponent(decodeURIComponent(title_text)));
 		}
 	};
 
