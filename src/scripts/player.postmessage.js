@@ -66,9 +66,10 @@ SambaAdsPlayerPostMessage.prototype.onPause = function(data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onReady = function(iframeID, data){
-		window.sambaads.parentIframeID = iframeID; //iframe id received from parent
-		window.sambaads.pageDescription = atob(data);
-		this.sendMessage("onReady", this.configuration.client.auto_start + "," + this.configuration.player.width + "," + this.configuration.player.height );	
+	window.sambaads.parentIframeID = iframeID; //iframe id received from parent
+	window.sambaads.pageDescription = atob(data);
+	this.sendMessage("onReady", this.configuration.client.auto_start + "," + this.configuration.player.width + "," + this.configuration.player.height );
+
 	//this.sendMessage("onNowWatchTitle", this.getCurrentVideo().title);
 };
 
