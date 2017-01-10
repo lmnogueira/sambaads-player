@@ -220,6 +220,7 @@ SambaAdsPlayerConfigurator.prototype.configurePlayer = function(){
 	self.configuration.player.title_bar = self.configuration.player.params.tb;
 	self.configuration.player.title_bar_color = self.configuration.player.params.tbbg;
 	self.configuration.player.player_info = self.metadata.player_info;
+	self.configuration.player.iframe_id = self.configuration.player.params.iid;
 };
 
 SambaAdsPlayerConfigurator.prototype.configureClient = function(){

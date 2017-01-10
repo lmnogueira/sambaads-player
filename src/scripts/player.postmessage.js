@@ -5,6 +5,9 @@ SambaAdsPlayerPostMessage = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.configuration = e.detail.data;
+		if(!window.sambaads.parentIframeID){
+			window.sambaads.parentIframeID = self.configuration.player.iframe_id;
+		}
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
@@ -67,7 +70,7 @@ SambaAdsPlayerPostMessage.prototype.onPause = function(data){
 
 SambaAdsPlayerPostMessage.prototype.onReady = function(iframeID, data){
 	var self = this;
-	window.sambaads.parentIframeID = iframeID; //iframe id received from parent
+	//window.sambaads.parentIframeID = iframeID; //iframe id received from parent
 	window.sambaads.pageDescription = atob(data);
 	self.sendMessage("onReady", self.configuration.client.auto_start + "," + self.configuration.player.width + "," + self.configuration.player.height );
 

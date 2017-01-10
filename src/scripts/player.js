@@ -31,7 +31,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
             return false;
         }
     };
-    
+
 
     this.fireIfElementVisible = function(el) {
       var self = this;
@@ -265,7 +265,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var getContentByMetaTagName = function(metaname) {
       for (var b = document.getElementsByTagName("meta"), a = 0; a < b.length; a++) {
-        
+
         teste1 = b[a].name ? (b[a].name.indexOf(metaname) >= 0) : false;
         teste2 = b[a].getAttribute("property") ? (b[a].getAttribute("property").indexOf(metaname)>=0) : false;
 
@@ -330,6 +330,7 @@ var ExpandedCinema = function (cw, currentIframe){
         parameters.tbbg = parameters.tbbg || "";
         parameters.tbfs = parameters.tbfs || "";
         parameters.org = parameters.org || "";
+        parameters.iid = iframe_id || "";
         parameters.rfr = encodeURIComponent(window.location.href.replace(/%/g, ""));
         //parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
 
@@ -362,6 +363,7 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&org=" + parameters.org +
                 "&w=" + encodeURIComponent(parameters.w) +
                 "&h=" + encodeURIComponent(parameters.h) +
+                "&iid=" + parameters.iid +
                 "&rfr=" + parameters.rfr
 
         if(parameters.ads=="false"){
@@ -550,16 +552,13 @@ var ExpandedCinema = function (cw, currentIframe){
 
             var params = event.data.split("::");
 
-            if (params[1] == "onSetupError" ){
-                console.log(params);
-                if(document.getElementById("sambaads_now_whatch_div") ){
-                    document.getElementById("sambaads_0").remove();
-                    document.getElementById("sambaads_now_whatch_div").remove();
-                }
-            }
-
             if(params[0] == currentIframe.id){
-                //console.log("CORE RECEIVED:" + event.data)
+                if (params[1] == "onSetupError" ){
+                    if(document.getElementById("sambaads_now_whatch_div") ){
+                        document.getElementById(params[0]).remove();
+                        document.getElementById("sambaads_now_whatch_div").remove();
+                    }
+                }
 
                 if (params[1] == "onReady" ){
                     clearInterval(currentIframe.isReady);
