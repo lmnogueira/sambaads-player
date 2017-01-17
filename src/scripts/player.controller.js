@@ -36,6 +36,7 @@ SambaAdsPlayerController.prototype.init = function(data){
         displaytitle: false,
         displaydescription: false,
         visualplaylist: false,
+        preload: "none",
         playlist: data.playlist.playlist,
 
         skin: {
