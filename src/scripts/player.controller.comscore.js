@@ -15,7 +15,7 @@ SambaAdsPlayerControllerComscore = function (){
 			setTimeout(function(){
 				self.currentId = self.media.media_id;
 				self.computeComscore("04", self.media.category_name);
-			}, 1000);	
+			}, 1000);
 		}
 	};
 
@@ -43,7 +43,7 @@ SambaAdsPlayerControllerComscore = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-		self.media = e.detail.data.item;
+		self.media = e.detail.data;
 	});
 };
 

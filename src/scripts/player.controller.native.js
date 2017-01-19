@@ -1,9 +1,10 @@
 var SambaAdsPlayerControllerNative = {};
 
 SambaAdsPlayerControllerNative = function (){
+	console.log('coment jwplayer id');
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-		JWPlayer = window.jwplayer('jw_sambaads_player'),
+		JWPlayer = null, //window.jwplayer('jw_sambaads_player'),
 		playerConfiguration = null,
 		showAdTimeout = null,
 		currentNative = null,

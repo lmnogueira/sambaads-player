@@ -58,16 +58,17 @@ SambaAdsPlayerAdvertising = function (){
  			var loc = window.location.toString();
 			params_ads_check = loc.split('?')[1];
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
-				e.detail.data.playAd(tagUrl);
+                console.log('coment play ad')
+				// e.detail.data.playAd(tagUrl);
 
 				if (!self.fallbackYoutubeProblem){
 					self.fallbackYoutubeProblem = setTimeout(function(){
-						e.detail.data.playAd(tagUrl);
+						// e.detail.data.playAd(tagUrl);
 						self.fallbackYoutubeProblem = true;
 					},1500);
 				}
-					
-				
+
+
  			}
 
  			//if(self.playingNow.sponsored){
@@ -77,7 +78,7 @@ SambaAdsPlayerAdvertising = function (){
  	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
- 		self.playingNow = e.detail.data.item;
+ 		self.playingNow = e.detail.data;
  	});
 };
 

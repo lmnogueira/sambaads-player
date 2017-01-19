@@ -19,18 +19,18 @@ SambaAdsPlayerViewDescriptionBar = function (){
 			( (e.detail.data.newState == PlayerState.PAUSED && e.detail.data.newViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE && e.detail.data.newViewState == PlayerViewState.INITIALIZE) && !e.detail.data.isAds){
 			self.show();
 		}
-		else if( 
-			e.detail.data.newState == PlayerState.PLAYING || 
-			e.detail.data.newState == PlayerState.BUFFERING || 
+		else if(
+			e.detail.data.newState == PlayerState.PLAYING ||
+			e.detail.data.newState == PlayerState.BUFFERING ||
 			e.detail.data.newViewState != PlayerViewState.INITIALIZE || e.detail.data.isAds){
 			self.hide();
 		}
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-		self.setTitle(e.detail.data.item.title);
-		self.setAuthor(e.detail.data.item.owner_name);
-		self.setViews(e.detail.data.item.total_views);
+		self.setTitle(e.detail.data.title);
+		self.setAuthor(e.detail.data.owner_name);
+		self.setViews(e.detail.data.total_views);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, function(e){

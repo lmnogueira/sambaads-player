@@ -1,10 +1,10 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 var ViewabilityMonitorPlugin = function (cw, currentIframe){
-    this.visiblePlayTimeout = 500;
+    this.visiblePlayTimeout = 2000;
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
-        var percentage_of_exposition = 0.2;
+        var percentage_of_exposition = 0.5;
 
         //special bonus for those using jQuery
         if (typeof jQuery === "function" && el instanceof jQuery) {
@@ -31,7 +31,7 @@ var ViewabilityMonitorPlugin = function (cw, currentIframe){
             return false;
         }
     };
-    
+
 
     this.fireIfElementVisible = function(el) {
       var self = this;
@@ -265,7 +265,7 @@ var ExpandedCinema = function (cw, currentIframe){
 
     var getContentByMetaTagName = function(metaname) {
       for (var b = document.getElementsByTagName("meta"), a = 0; a < b.length; a++) {
-        
+
         teste1 = b[a].name ? (b[a].name.indexOf(metaname) >= 0) : false;
         teste2 = b[a].getAttribute("property") ? (b[a].getAttribute("property").indexOf(metaname)>=0) : false;
 
