@@ -5,17 +5,25 @@ SambaAdsPlayerControllerComscore = function (){
 
 	self.trackLoad = function(e){
 		setTimeout(function(){
-			self.computeComscore("04",self.media.category_name);
-			self.computeComscore("01","sambaads_video_advertising");
-		}, 1000);
+			try{
+				self.computeComscore("04",self.media.category_name);
+				self.computeComscore("01","sambaads_video_advertising");
+			} catch(e) {
+				console.log(e);
+			}
+		}, 2000);
 	};
 
 	self.trackPlay = function(e){
 		if(self.currentId != self.media.media_id){
 			setTimeout(function(){
-				self.currentId = self.media.media_id;
-				self.computeComscore("04", self.media.category_name);
-			}, 1000);	
+				try{
+					self.currentId = self.media.media_id;
+					self.computeComscore("04", self.media.category_name);
+				} catch (e){
+					console.log(e);
+				}
+			}, 2000);	
 		}
 	};
 
