@@ -560,6 +560,8 @@ var ExpandedCinema = function (cw, currentIframe){
 
             var params = event.data.split("::");
 
+            console.log(params);
+
             if(params[0] == currentIframe.id){
                 if (params[1] == "onSetupError" ){
                     if(document.getElementById("sambaads_now_whatch_div") ){
