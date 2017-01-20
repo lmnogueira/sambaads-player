@@ -570,9 +570,7 @@ var ExpandedCinema = function (cw, currentIframe){
                             delete div;
                         } else {
                             document.getElementById(params[0]).remove();
-
-                            if(document.getElementById("sambaads_now_whatch_div")
-                                document.getElementById("sambaads_now_whatch_div").remove();
+                            document.getElementById("sambaads_now_whatch_div").remove();
                         }
                 } else if (params[1] == "onReady" ){
                     clearInterval(currentIframe.isReady);
