@@ -560,11 +560,8 @@ var ExpandedCinema = function (cw, currentIframe){
 
             var params = event.data.split("::");
 
-            console.log(params);
-
             if(params[0] == currentIframe.id){
                 if (params[1] == "onSetupError" ){
-                    if(document.getElementById("sambaads_now_whatch_div") ){
                         if(isExplorer()){
                             var player = document.getElementById(params[0]), div = document.getElementById("sambaads_now_whatch_div");
                             player.outerHTML = "";
@@ -573,9 +570,10 @@ var ExpandedCinema = function (cw, currentIframe){
                             delete div;
                         } else {
                             document.getElementById(params[0]).remove();
-                            document.getElementById("sambaads_now_whatch_div").remove();
+
+                            if(document.getElementById("sambaads_now_whatch_div")
+                                document.getElementById("sambaads_now_whatch_div").remove();
                         }
-                    }
                 } else if (params[1] == "onReady" ){
                     clearInterval(currentIframe.isReady);
                     currentIframe.isReady = true;
