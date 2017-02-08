@@ -42,7 +42,6 @@ SambaAdsPlayerControllerCollector = function (){
 	};
 
 	self.trackWatch = function(e){
-		console.log(e.detail.data);
 		var position = e.detail.data.position;
 		var duration = e.detail.data.duration;
 		var percent = Math.floor(position/duration*100);
@@ -54,14 +53,12 @@ SambaAdsPlayerControllerCollector = function (){
 			percent = 100;
 		}
 
-
 		this.time_position = this.time_position || null;
 
 		if((position != this.time_position) && (this.old_percent != percent)){
 
 			this.time_position = parseInt(position);
 			this.old_percent = parseInt(percent);
-
 			
 			duration = parseInt(duration) < 0 || isNaN(duration) ? 0 : parseInt(duration)
 
