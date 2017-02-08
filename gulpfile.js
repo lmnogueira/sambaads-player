@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     concat_util = require('gulp-concat-util'),
-    minify_css = require('gulp-minify-css'),
+    minify_css = require('gulp-clean-css'),
     preprocess = require('gulp-preprocess');
     htmlmin = require('gulp-htmlmin');
     base64 = require('gulp-base64');
@@ -63,7 +63,6 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "vendor/circle_progress.js",
       paths.scripts + "vendor/jquery.nanoscroller.min.js",
       paths.scripts + "vendor/jquery.lightSlider.min.js",
-
       paths.scripts + "player.event.js",
       paths.scripts + "player.view.state.js",
       paths.scripts + "player.controller.collector.tracker.js",
@@ -235,7 +234,7 @@ gulp.task('build-templates', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch([paths.scripts + "**.*"], ["dev-javascripts-player"]);
+  gulp.watch([paths.scripts + "**/**.*"], ["dev-javascripts-player"]);
   gulp.watch([paths.css + '**/*.css', paths.scss + '**/*.scss'], ['build-css']);
   gulp.watch(paths.skins + '**/*.css', ['build-css-skin']);
   gulp.watch(paths.images, ['build-images']);
