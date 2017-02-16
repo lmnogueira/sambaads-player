@@ -19,7 +19,7 @@ select ask1 in "local" "staging" "production"; do
 	    	docker start $CID  && docker attach $CID
 	    	docker ps -a
 		else
-	    	docker run -"$ask2" --name local-player -v "$PWD":/app -e "NODE_ENV=local_production" -p 3002:3002 ycontent/player:latest /bin/bash -c "cd ../app; npm install; cd app; npm install; cd ..; node app/bin/www & gulp";
+	    	docker run --network sambaadsplatformv2_default -"$ask2" --name local-player -v "$PWD":/app -e "NODE_ENV=local_production" -p 3002:3002 ycontent/player:latest /bin/bash -c "cd ../app; npm install; cd app; npm install; cd ..; node app/bin/www & gulp";
 		fi
 	break;;
 
