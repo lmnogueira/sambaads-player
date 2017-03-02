@@ -28,6 +28,7 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 					this.src({type: 'video/mp4', src: options.playlist[0].sources[0].file});
 			  		SambaAdsPlayerMessageBroker().send(Event.READY, (this));
 				});
+
 	window.sambaads.videoJSPlayer = self.player;
 
 	self.getStatePropagator = setInterval(function(){
@@ -57,27 +58,42 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 		}
 	},100);
 
-	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(evt){
-		if(self.videojsGetState() == PlayerState.IDLE || self.videojsGetState() == PlayerState.PAUSED){
+	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PLAY, function(){
+		self.player.userActive(true);
+		var currentState = self.videojsGetState();
+		if(currentState == PlayerState.IDLE){
+			SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.player);
+		} else if (currentState == PlayerState.PAUSED){
 			self.player.play();
 		}
+		self.videoCompleted = false;
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PAUSE, function(evt){
+		self.player.userActive(false);
 		if(self.videojsGetState() == PlayerState.PLAYING){
 			self.player.pause();
 		}
 	});
 
-	self.player.on("timeupdate", function(evt){
-		SambaAdsPlayerMessageBroker().send(Event.TIME, evt);
-	});
+	// self.player.on("timeupdate", function(evt){
+	// 	console.log(window.sambaads.videoJSPlayer.ima.adsActive);
+	// 	if(window.sambaads.videoJSPlayer.ima.adsManager){
+	// 		if(window.sambaads.videoJSPlayer.ima.adsManager.getRemainingTime() != -1){
+	// 			SambaAdsPlayerMessageBroker().send(Event.TIME, evt);
+	// 		}
+	// 	}
+	// });
 
 	self.player.on("ended", function(evt){
-		//self.player.dispose();
-		SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
-		SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
-		SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.player);
+		if(self.videoCompleted == false){
+			self.videoCompleted = true;
+			evt.preventDefault();
+			evt.stopPropagation();
+			SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
+			SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
+			SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.player);
+		}
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.STOP, function(evt){
@@ -91,6 +107,48 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 		} else {
 			self.player.volume(0.4);
 		}
+	});
+
+	self.player.on("adsready", function(){
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.LOADED, function(){
+			window.sambaads.videoJSPlayer.ima.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,self.onAdsManagerLoaded,false);
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.FAILED_TO_REQUEST_ADS, function(){
+			console.log('failed to request ads');
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.AD_ERROR, function(){
+			console.log('failed ads');
+			self._isAds = false;
+			self.stopAdTime();
+			if(document.getElementById('ima-ad-container')){
+				document.getElementById('ima-ad-container').style.visibility = 'hidden';
+			}
+			$(".jw-icon-fullscreen").removeClass("jw-hidden");
+			$(".jw-icon-fullscreen").show();
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.STARTED, function(evt){
+			self._isAds = true;
+			self.onAdsManagerLoaded(evt);
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.IMPRESSION, function(){
+			self.player.userActive(true);
+			self._isAds = true;
+			SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.SKIPPED, function(){
+			self._isAds = false;
+			self.stopAdTime();
+			$(".jw-icon-fullscreen").removeClass("jw-hidden");
+			$(".jw-icon-fullscreen").show();
+			SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
+		});
+		self.player.ima.addEventListener(google.ima.AdEvent.Type.COMPLETE, function(){
+			self._isAds = false;
+			$(".jw-icon-fullscreen").removeClass("jw-hidden");
+			$(".jw-icon-fullscreen").show();
+			self.stopAdTime();
+			SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
+		});
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.VIEW_STATE_CHANGE, function(evt){
@@ -116,6 +174,7 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 		evt.detail.data.sources[0].file = evt.detail.data.sources[0].file.replace('http:', window.location.protocol);
 		self.ChangeMedia(evt);
 	});
+
 }
 
 SambaAdsPlayerCore.prototype.videojsGetState = function(){
@@ -137,7 +196,6 @@ SambaAdsPlayerCore.prototype.videojsGetState = function(){
 		state = PlayerState.PLAYING;
 	} else if(self.player.paused() == 1){
 		state = PlayerState.PAUSED;
-
 	}
 
 	return state;
@@ -145,9 +203,31 @@ SambaAdsPlayerCore.prototype.videojsGetState = function(){
 
 SambaAdsPlayerCore.prototype.ChangeMedia = function(evt){
 	var self = this;
-	self.player.src({type: 'video/mp4', src: evt.detail.data.sources[0].file});
+	self.stopAdTime();
 	self.player.poster(evt.detail.data.thumbnails["360"]);
 	SambaAdsPlayerMessageBroker().send(Event.PLAY_LIST_ITEM, evt.detail.data);
+}
+
+SambaAdsPlayerCore.prototype.stopAdTime = function(){
+	var self = this;
+	if (self.countdownTimer) {
+		clearInterval(self.countdownTimer);
+		self._isAds = false;
+	}
+}
+
+SambaAdsPlayerCore.prototype.onAdsManagerLoaded = function(adEvent){
+	var self = this;
+	if(adEvent.type == google.ima.AdEvent.Type.STARTED){
+		self.countdownTimer = setInterval(function(){
+			if(!self._isAds){
+				self._isAds = true;
+			}
+			var timeRemaining = window.sambaads.videoJSPlayer.ima.adsManager.getRemainingTime();
+			SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
+			SambaAdsPlayerMessageBroker().send(Event.AD_TIME);
+		}, 1000);
+	}
 }
 
 SambaAdsPlayerCore.prototype.setup = function(options){
@@ -195,36 +275,36 @@ SambaAdsPlayerCore.prototype.setup = function(options){
 	// 	SambaAdsPlayerMessageBroker().send(Event.RESIZE, evt);
 	// });
 
-	self.JWPlayer.on('adComplete', function(evt){
-		self._isAds = false;
-		$(".jw-icon-fullscreen").removeClass("jw-hidden");
-		$(".jw-icon-fullscreen").show();
-		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
-	});
+	// self.JWPlayer.on('adComplete', function(evt){
+	// 	self._isAds = false;
+	// 	$(".jw-icon-fullscreen").removeClass("jw-hidden");
+	// 	$(".jw-icon-fullscreen").show();
+	// 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
+	// });
 
-	self.JWPlayer.on('adError', function(evt){
-		$(".jw-icon-fullscreen").removeClass("jw-hidden");
-		$(".jw-icon-fullscreen").show();
-	});
+	// self.JWPlayer.on('adError', function(evt){
+	// 	$(".jw-icon-fullscreen").removeClass("jw-hidden");
+	// 	$(".jw-icon-fullscreen").show();
+	// });
 
-	self.JWPlayer.on('adImpression', function(evt){
-		self.JWPlayer.setControls(true);
-		self._isAds = true;
-		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
-	});
+	// self.JWPlayer.on('adImpression', function(evt){
+	// 	self.JWPlayer.setControls(true);
+	// 	self._isAds = true;
+	// 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
+	// });
+	//
+	// self.JWPlayer.on('adTime', function(evt){
+	// 	self._isAds = true;
+	// 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
+	// 	SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
+	// });
 
-	self.JWPlayer.on('adTime', function(evt){
-		self._isAds = true;
-		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.DISPLAYING_ADS);
-		SambaAdsPlayerMessageBroker().send(Event.AD_TIME, evt);
-	});
-
-	self.JWPlayer.on('adSkipped', function(evt){
-		self._isAds = false;
-		$(".jw-icon-fullscreen").removeClass("jw-hidden");
-		$(".jw-icon-fullscreen").show();
-		SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
-	});
+	// self.JWPlayer.on('adSkipped', function(evt){
+	// 	self._isAds = false;
+	// 	$(".jw-icon-fullscreen").removeClass("jw-hidden");
+	// 	$(".jw-icon-fullscreen").show();
+	// 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
+	// });
 
 	// self.JWPlayer.on('beforePlay', function(evt){
 	// 	SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.JWPlayer);

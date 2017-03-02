@@ -1,6 +1,7 @@
 var Event = {
 	IDLE: "idle",
 	PLAY: "play",
+	AD_BEFORE_PLAY: "adBeforePlay",
 	COMPLETE: "complete",
 	PAUSE: "pause",
 	READY: "ready",

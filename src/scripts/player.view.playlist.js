@@ -14,7 +14,7 @@ SambaAdsPlayerViewPlaylist = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
 		if (e.detail){
 			self.player_width = e.detail.data.width;
-			self.player_height = e.detail.data.height;			
+			self.player_height = e.detail.data.height;
 		}
 	});
 
@@ -93,7 +93,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 
 		new_v_item.attr("id", "v-" + $("#playlist-v-items").children().length);//item.mediaid || item.id);
 		new_h_item.find("div.playlist-item").attr("id", "h-" + $("#playlist-h-items").children().length);
-		
+
 		if (window.location.protocol != "https:"){
 			item.image = item.image.replace('https:', window.location.protocol);
 			item.thumbnails["90"] = item.thumbnails["90"].replace('https:', window.location.protocol);
@@ -176,12 +176,13 @@ SambaAdsPlayerViewPlaylist.prototype.playNext = function(){
 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[self.currentPlaylistIndex]);
 	SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+	self.videoCompleted = true;
 
 };
 
 SambaAdsPlayerViewPlaylist.prototype.updateItemCurrent = function(){
 	var self = this;
-	
+
 	$("div.playlist-item").each(function(idex, item){
 		if(item.id.indexOf("-" + self.currentPlaylistIndex) >= 0){
 			$(item).find("span.video-duration").text("ASSISTINDO");
