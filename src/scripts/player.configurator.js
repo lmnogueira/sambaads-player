@@ -3,7 +3,7 @@ var SambaAdsPlayerConfigurator = {};
 SambaAdsPlayerConfigurator = function (){
 	var self = this;
 	self.pertmitWidthAutoStart = 320;
-	
+
 	self.configuration = {
 		playlist : {},
 		player: {},
@@ -43,7 +43,7 @@ SambaAdsPlayerConfigurator.prototype.resolveParams = function(){
 SambaAdsPlayerConfigurator.prototype.configureNavegg = function(){
 	var self = this;
 	// lista de segmentos aqui: http://www.navegg.com/segmentos/
-	
+
 	// Critérios com valor único:
 	self.configuration.navegg_perfil.gender = nvgGetSegment('gender'); //Exemplo de resposta: “1"
 	self.configuration.navegg_perfil.age = nvgGetSegment('age');
@@ -54,7 +54,7 @@ SambaAdsPlayerConfigurator.prototype.configureNavegg = function(){
 	self.configuration.navegg_perfil.city = nvgGetSegment('city');
 	self.configuration.navegg_perfil.region = nvgGetSegment('region');
 	self.configuration.navegg_perfil.country = nvgGetSegment('country');
-	 
+
 	// Critérios multi-valorados:
 	self.configuration.navegg_perfil.interest = nvgGetSegment('interest'); //Exemplo de resposta: “232-233-241-248-359"
 	self.configuration.navegg_perfil.product = nvgGetSegment('product');
@@ -114,7 +114,7 @@ SambaAdsPlayerConfigurator.prototype.generateUniqueScore = function() {
 	// function generate() {
 	// 	return 1;
 	// };
-	
+
 	// self.configuration.user.unique_score = generate();
 };
 
@@ -161,7 +161,7 @@ SambaAdsPlayerConfigurator.prototype.calculatePlayerHeight = function(){
 	var self = this;
 	var player_height = 0;
 
-	if($("#titlebar").is(':visible')){
+	if(self.configuration.player.params.tb){
 		player_height = ( $( document ).height() - $("#titlebar").outerHeight());
 	} else {
 		player_height = ( $( document ).height());
@@ -217,7 +217,10 @@ SambaAdsPlayerConfigurator.prototype.configurePlayer = function(){
 
     self.configuration.player.hostname = a.hostname;
     self.configuration.player.url = encodeURIComponent(url);
+	self.configuration.player.title_bar = self.configuration.player.params.tb;
+	self.configuration.player.title_bar_color = self.configuration.player.params.tbbg;
 	self.configuration.player.player_info = self.metadata.player_info;
+	self.configuration.player.iframe_id = self.configuration.player.params.iid;
 };
 
 SambaAdsPlayerConfigurator.prototype.configureClient = function(){
@@ -242,4 +245,3 @@ SambaAdsPlayerConfigurator.prototype.configurePlaylist = function(){
 };
 
 new SambaAdsPlayerConfigurator();
-

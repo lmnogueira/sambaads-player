@@ -76,15 +76,19 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	self.cleanPlaylist();
 	self.playlist = options.playlist;
 
-	// for (var i=0; i<self.playlist.length; i++){
-	// 	if(self.playlist[i].sponsored){
-	// 		break;
-	// 	}
-	// }
+	for (var i=0; i<self.playlist.length; i++){
+		if(self.playlist[i].sponsored){
+			break;
+		}
+	}
 
-	// if(self.playlist[i] && self.playlist[i].sponsored){
-	//   	self.playlist.move(i,0);
-	// }
+	var peso = [0,2,4,6,1]
+	var index = 1
+	//peso[Math.floor(Math.random() * 5)]%2
+
+	if(self.playlist[i] && self.playlist[i].sponsored){
+	  	self.playlist.move(i,index);
+	}
 
 	self.playlist.forEach(function(item){
 

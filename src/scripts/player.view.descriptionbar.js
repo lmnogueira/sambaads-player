@@ -27,6 +27,20 @@ SambaAdsPlayerViewDescriptionBar = function (){
 		}
 	});
 
+	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
+		self.setTitleBar(e.detail.data.player.title_bar,e.detail.data.player.title_bar_color);
+	});
+
+	SambaAdsPlayerViewDescriptionBar.prototype.setTitleBar = function(title_text, color){
+		if(title_text.length == 0){
+			$("#titlebar").hide();
+		} else {
+			$("#titlebar").css("backgroundColor", (color == '' ? '#000000': color));
+			$("#titlebar").css("display", "block");
+			$("#titlebar-title").text(decodeURIComponent(decodeURIComponent(title_text)));
+		}
+	};
+
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.setTitle(e.detail.data.title);
 		self.setAuthor(e.detail.data.owner_name);

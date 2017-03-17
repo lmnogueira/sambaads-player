@@ -1,6 +1,7 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 var ViewabilityMonitorPlugin = function (cw, currentIframe){
     this.visiblePlayTimeout = 2000;
+
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {
@@ -330,6 +331,7 @@ var ExpandedCinema = function (cw, currentIframe){
         parameters.tbbg = parameters.tbbg || "";
         parameters.tbfs = parameters.tbfs || "";
         parameters.org = parameters.org || "";
+        parameters.iid = iframe_id || "";
         parameters.rfr = encodeURIComponent(window.location.href.replace(/%/g, ""));
         //parameters.rfr = encodeURIComponent("http://vimh.co/2015/03/entendendo-marketing-de-uma-forma-inesquecivel")
 
@@ -362,6 +364,7 @@ var ExpandedCinema = function (cw, currentIframe){
                 "&org=" + parameters.org +
                 "&w=" + encodeURIComponent(parameters.w) +
                 "&h=" + encodeURIComponent(parameters.h) +
+                "&iid=" + parameters.iid +
                 "&rfr=" + parameters.rfr
 
         if(parameters.ads=="false"){
@@ -545,30 +548,40 @@ var ExpandedCinema = function (cw, currentIframe){
         }
     };
 
+    var isExplorer = function(){
+        if(navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Windows NT") != -1){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     var onMessageReceive = function(event){
         if(event.origin.indexOf("azureedge") >= 0 || event.origin.indexOf('/* @echo CDN_PLAYER_DOMAIN */') >= 0){
 
             var params = event.data.split("::");
 
-            if (params[1] == "onSetupError" ){
-                if(document.getElementById("sambaads_now_whatch_div") ){
-                    document.getElementById("sambaads_0").remove();
-                    document.getElementById("sambaads_now_whatch_div").remove();
-                }
-            }
-
             if(params[0] == currentIframe.id){
-                //console.log("CORE RECEIVED:" + event.data)
+                if (params[1] == "onSetupError" ){
+                        if(isExplorer()){
+                            var player = document.getElementById(params[0]), div = document.getElementById("sambaads_now_whatch_div");
+                            player.outerHTML = "";
+                            delete player;
+                            div.outerHTML = "";
+                            delete div;
+                        } else {
+                            document.getElementById(params[0]).remove();
 
-                if (params[1] == "onReady" ){
+                            if(document.getElementById("sambaads_now_whatch_div") )
+                                document.getElementById("sambaads_now_whatch_div").remove();
+                        }
+                } else if (params[1] == "onReady" ){
                     clearInterval(currentIframe.isReady);
                     currentIframe.isReady = true;
                     currentIframe.player_width = params[2].split(",")[1];
                     currentIframe.player_height = params[2].split(",")[2] - 4; //- 4 pixels ajust
                     initializePluginsAfeterReady();
-                }
-
-                if (params[1] == "onStateChange" ){
+                } else if (params[1] == "onStateChange" ){
                     currentIframe.state = params[2];
 
                     if( typeof cw.sambaads._onStateChange === 'function'){
@@ -580,19 +593,13 @@ var ExpandedCinema = function (cw, currentIframe){
                         }
                         cw.sambaads._onStateChange(evt);
                     }
-                }
-
-                if (params[1] == "onLoadExpandedCinema" ){
+                } else if (params[1] == "onLoadExpandedCinema" ){
                     var player = cw.sambaads.getPlayer(params[0]);
                     cw.sambaads.expandedCinema.load(params[2], player.player_width, player.player_height, player.id);
-                }
-
-                if (params[1] == "onRemoveExpandedCinema" ){
+                } else if (params[1] == "onRemoveExpandedCinema" ){
                     var player = cw.sambaads.getPlayer(params[0]);
                     cw.sambaads.expandedCinema.close(player.id);
-                }
-
-                if (params[1] == "onNowWatchTitle" ) {
+                } else if (params[1] == "onNowWatchTitle" ) {
                     //console.log(params[2])
                     if(document.getElementById("sambaads_now_whatch_title_" + params[0])){
                         document.getElementById("sambaads_now_whatch_title_" + params[0]).innerHTML = params[2];

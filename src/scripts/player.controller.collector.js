@@ -52,13 +52,13 @@ SambaAdsPlayerControllerCollector = function (){
 			percent = 100;
 		}
 
-		this.time_position = this.time_position || 0;
+		this.time_position = this.time_position || null;
 
 		if((position != this.time_position) && (this.old_percent != percent)){
 
 			this.time_position = parseInt(position);
 			this.old_percent = parseInt(percent);
-
+			
 			duration = parseInt(duration) < 0 || isNaN(duration) ? 0 : parseInt(duration)
 
 			var time_slot = parseFloat((parseInt(duration)*parseInt(percent_frequency)/100));
@@ -82,11 +82,23 @@ SambaAdsPlayerControllerCollector = function (){
 	        	});
 
 				self.sendGif(evtObject);
+
+				if((parseInt(self.media.media_id) == 93888) && (percent == 100)){
+					self.trackPixel();
+				}
 			}
 
 		};
 
 	};
+
+	self.trackPixel = function(){
+		$.get('https://ras.reamp.com.br/pxl?znid=336924&dvrtsrd=1000284').done(function(msg) {
+			//alert("success load cont");
+		}).error(function(){
+			//alert("error load cont");
+		});
+	}
 
 	self.sendGif = function(options){
 		$.get('/* @echo COLLECTOR_URL */'+ options.event_type, options.params).done(function(msg) {
@@ -94,7 +106,6 @@ SambaAdsPlayerControllerCollector = function (){
 		}).error(function(){
 			//alert("error load cont");
 		});
-
 	};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TRACK_LOAD, self.trackLoad);
