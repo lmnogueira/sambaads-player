@@ -29,6 +29,7 @@ var Event = {
 };
 
 var DoEvent = {
+	FIRST_PLAY: "doFirstPlay",
 	PLAY: "doPlay",
 	PLAY_NEXT: "doPlayNext",
 	STOP: "doStop",

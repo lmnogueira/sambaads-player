@@ -113,9 +113,8 @@
                     </div>
               </div>
 
-              <div id="jw_sambaads_player"></div>
               <div id="vjs_sambaads_player">
-                  <video id="video_js_player" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"></video>
+                  <video id="video_js_player" class="video-js vjs-default-skin vjs-big-play-centered hide" controls></video>
               </div>
 
                 <div id="native-area" class="native-area">
@@ -341,7 +340,6 @@
         </div>
 </div>
 <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
-<!--<script src="//ssl.p.jwpcdn.com/player/v/7.7.0/jwplayer.js"></script>-->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/4.2.1-0/videojs.ads.min.js"></script>
@@ -355,7 +353,7 @@
 
 	// START SAMBAADS
     var smb = new SambaAdsPlayerView()
-    smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
+    //smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
     var smbCtrl = new SambaAdsPlayerController("vjs_sambaads_player", smb, <%- JSON.stringify(info) %>);
   // END SAMBAADS
 

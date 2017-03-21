@@ -78,18 +78,6 @@ SambaAdsPlayerAdvertising = function (){
                 window.sambaads.videoJSPlayer.ima.initializeAdDisplayContainer();
                 window.sambaads.videoJSPlayer.ima.requestAds();
 
-                if(not_function == 0) {
-                    (window.sambaads.videoJSPlayer.ima.getAdsManager()).start();
-                }
-
-                console.log('comentado correção bug vpaid para jw');
-				// if (!self.fallbackYoutubeProblem){
-				// 	self.fallbackYoutubeProblem = setTimeout(function(){
-				// 		window.sambaads.videoJSPlayer.ima.requestAds();
-				// 		self.fallbackYoutubeProblem = true;
-				// 	},1500);
-				// }
-                window.sambaads.videoJSPlayer.play();
  			} else {
                 window.sambaads.videoJSPlayer.src({type: 'video/mp4', src: self.playingNow.sources[0].file});
             }

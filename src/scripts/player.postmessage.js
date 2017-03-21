@@ -49,9 +49,10 @@ SambaAdsPlayerPostMessage.prototype.sendMessage = function(smbevent,data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onPlay = function(data){
-
+	console.log("go_play");
 	if(this.response.publisher_info.auto_start){
 		if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
+			console.log("go_play");
   			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
   		}
   	}

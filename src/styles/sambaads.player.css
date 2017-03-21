@@ -20,6 +20,10 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
+html, body{
+  height:100%;
+}
+
 .pull-left {
 	float:left;
 }
@@ -1243,4 +1247,9 @@ body {
 #jw_sambaads_player_googima {
 	top: 0 !important;
 	bottom: 0 !important;
+}
+
+.vjs-default-skin.vjs-paused .vjs-big-play-button 
+{
+  display: none;
 }

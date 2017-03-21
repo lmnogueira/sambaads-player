@@ -32,7 +32,11 @@ SambaAdsPlayerViewPlaylist = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(evt){
-		//self.updateItemCurrent();
+
+		if(evt.detail.data.newState == "playing"){
+			self.updateItemCurrent();
+		}
+
 		self.currentState = evt.detail.data.newState;
 	});
 };
@@ -163,7 +167,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 					}
 
 					SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[index]);
-					SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+					SambaAdsPlayerMessageBroker().send(DoEvent.FIRST_PLAY);
 			} else {
 				SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 			}
@@ -179,7 +183,7 @@ SambaAdsPlayerViewPlaylist.prototype.playNext = function(){
 
 	SambaAdsPlayerMessageBroker().send(Event.VIEW_STATE_CHANGE, PlayerViewState.INITIALIZE);
 	SambaAdsPlayerMessageBroker().send(DoEvent.LOAD_MEDIA, self.playlist[self.currentPlaylistIndex]);
-	SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
+	SambaAdsPlayerMessageBroker().send(DoEvent.FIRST_PLAY);
 	self.videoCompleted = true;
 
 };

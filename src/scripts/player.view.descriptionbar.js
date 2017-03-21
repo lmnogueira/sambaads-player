@@ -7,6 +7,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
 		self.show();
+		$("#video-views").hide();
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
@@ -74,10 +75,10 @@ SambaAdsPlayerViewDescriptionBar.prototype.setAuthor = function(author){
 
 SambaAdsPlayerViewDescriptionBar.prototype.setViews = function(views){
 
-	if(views > 0)
-		$("#video-views-number").text(views);
-	else
-		$("#video-views").hide();
+	// if(views > 0)
+	// 	$("#video-views-number").text(views);
+	// else
+	// 	$("#video-views").hide();
 };
 
 SambaAdsPlayerViewDescriptionBar.prototype.show = function(){
