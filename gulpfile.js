@@ -144,14 +144,19 @@ gulp.task("dev-javascripts-player", function(){
         .pipe(gulp.dest('app/public/javascripts/'));
 });
 
-gulp.task("build-jwplayer", function(){
+gulp.task("build-videojs.ima", function(){
     gulp.src(
         [
-            paths.scripts + 'vendor/jwplayer-' + jwplayer_version + '/**/*'
+            paths.scripts + 'vendor/videojs-ima/*'
         ]
     )
-    .pipe(gulp.dest('app/public/javascripts/player'));
-
+    .pipe(gulp.dest('app/public/javascripts'));
+    gulp.src(
+        [
+            paths.css + 'videojs.ima.css'
+        ]
+    )
+    .pipe(gulp.dest('app/public/stylesheets/'));
 });
 
 gulp.task("build-images", function(){
@@ -250,9 +255,9 @@ gulp.task("default",
         'build-images',
         'build-native',
         'build-javascripts-player',
-        'build-jwplayer',
         'build-templates',
         'build-errors-pages',
+        'build-videojs.ima',
         'watch'
     ]
 );
@@ -264,9 +269,9 @@ gulp.task("local-staging",
         'build-images',
         'build-native',
         'dev-javascripts-player',
-        'build-jwplayer',
         'build-templates',
         'build-errors-pages',
+        'build-videojs.ima',
         'watch'
     ]
 );
@@ -278,9 +283,9 @@ gulp.task("local-production",
         'build-images',
         'build-native',
         'dev-javascripts-player',
-        'build-jwplayer',
         'build-templates',
         'build-errors-pages',
+        'build-videojs.ima',
         'watch'
     ]
 );
@@ -293,9 +298,9 @@ gulp.task("staging",
         'build-native',
         'build-javascripts-player',
         'build-crossdomain',
-        'build-jwplayer',
         'build-templates',
-        'build-errors-pages'
+        'build-errors-pages',
+        'build-videojs.ima'
 
     ]
 );
@@ -308,8 +313,8 @@ gulp.task("production",
         'build-native',
         'build-javascripts-player',
         'build-crossdomain',
-        'build-jwplayer',
         'build-templates',
-        'build-errors-pages'
+        'build-errors-pages',
+        'build-videojs.ima'
     ]
 );

@@ -1,4 +1,4 @@
-var SambaAdsPlayerAdvertising = {};
+// var SambaAdsPlayerAdvertising = {};
 
 SambaAdsPlayerAdvertising = function (){
  	var self = this;
@@ -13,6 +13,8 @@ SambaAdsPlayerAdvertising = function (){
 	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, function(e){
+        e.preventDefault();
+        e.stopPropagation();
 
  		var tags = self.playingNow.dfp_tags;
  		var navegg_tags = "nvg_gender="+ self.navegg.gender
@@ -41,7 +43,15 @@ SambaAdsPlayerAdvertising = function (){
  		"&cust_params=" + custom_params +
  		"&cmsid=" + self.playingNow.dfp_partner_id +
  		"&vid=" + self.playingNow.hashed_code +
- 		"&correlator=__timestamp__";
+ 		"&correlator=" + Date.now();
+
+        var options = {
+              id: "video_js_player",
+              adTagUrl: tagUrl,
+              adsRenderingSettings: {
+                  enablePreloading: true
+              }
+            };
 
  		if(self.currentBeforePlayId != self.playingNow.hashed_code){
  			$(".jw-icon-fullscreen").addClass("jw-hidden");
@@ -58,18 +68,19 @@ SambaAdsPlayerAdvertising = function (){
  			var loc = window.location.toString();
 			params_ads_check = loc.split('?')[1];
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
-				e.detail.data.playAd(tagUrl);
+                var not_function = 0;
+                if(typeof window.sambaads.videoJSPlayer.ima === 'function'){
+                    window.sambaads.videoJSPlayer.ima(options);
+                    not_function = 1;
+                }
 
-				if (!self.fallbackYoutubeProblem){
-					self.fallbackYoutubeProblem = setTimeout(function(){
-						e.detail.data.playAd(tagUrl);
-						self.fallbackYoutubeProblem = true;
-					},1500);
-				}
-					
-				
- 			}
+                window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
+                window.sambaads.videoJSPlayer.ima.initializeAdDisplayContainer();
+                window.sambaads.videoJSPlayer.ima.requestAds();
 
+ 			} else {
+                window.sambaads.videoJSPlayer.src({type: 'video/mp4', src: self.playingNow.sources[0].file});
+            }
  			//if(self.playingNow.sponsored){
  				SambaAdsPlayerMessageBroker().send(Event.NATIVE_START, self.playingNow);
  			//}
@@ -77,8 +88,9 @@ SambaAdsPlayerAdvertising = function (){
  	});
 
  	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
- 		self.playingNow = e.detail.data.item;
+ 		self.playingNow = e.detail.data;
  	});
+
 };
 
 new SambaAdsPlayerAdvertising();

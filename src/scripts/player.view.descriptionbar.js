@@ -7,6 +7,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(e){
 		self.show();
+		$("#video-views").hide();
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYER_STATE_CHANGE, function(e){
@@ -42,9 +43,9 @@ SambaAdsPlayerViewDescriptionBar = function (){
 	};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-		self.setTitle(e.detail.data.item.title);
-		self.setAuthor(e.detail.data.item.owner_name);
-		self.setViews(e.detail.data.item.total_views);
+		self.setTitle(e.detail.data.title);
+		self.setAuthor(e.detail.data.owner_name);
+		self.setViews(e.detail.data.total_views);
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.MOUSE_MOVE, function(e){
@@ -74,10 +75,10 @@ SambaAdsPlayerViewDescriptionBar.prototype.setAuthor = function(author){
 
 SambaAdsPlayerViewDescriptionBar.prototype.setViews = function(views){
 
-	if(views > 0)
-		$("#video-views-number").text(views);
-	else
-		$("#video-views").hide();
+	// if(views > 0)
+	// 	$("#video-views-number").text(views);
+	// else
+	// 	$("#video-views").hide();
 };
 
 SambaAdsPlayerViewDescriptionBar.prototype.show = function(){

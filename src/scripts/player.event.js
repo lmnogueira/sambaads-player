@@ -1,6 +1,7 @@
 var Event = {
 	IDLE: "idle",
 	PLAY: "play",
+	AD_BEFORE_PLAY: "adBeforePlay",
 	COMPLETE: "complete",
 	PAUSE: "pause",
 	READY: "ready",
@@ -28,6 +29,7 @@ var Event = {
 };
 
 var DoEvent = {
+	FIRST_PLAY: "doFirstPlay",
 	PLAY: "doPlay",
 	PLAY_NEXT: "doPlayNext",
 	STOP: "doStop",

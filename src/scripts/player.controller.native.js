@@ -3,7 +3,7 @@ var SambaAdsPlayerControllerNative = {};
 SambaAdsPlayerControllerNative = function (){
 	var self = this,
 		displayOverlay = $('#display-overlay'),
-		JWPlayer = window.jwplayer('jw_sambaads_player'),
+		videoJsPlayer = window.document.getElementById('video_js_player'),//JWPlayer = window.jwplayer('jw_sambaads_player'),
 		playerConfiguration = null,
 		showAdTimeout = null,
 		currentNative = null,
@@ -129,7 +129,7 @@ SambaAdsPlayerControllerNative = function (){
 	var glamboxFrame = function(videoId) {
 			self.setCurrentNative($('#glambox-frame'));
 
-			var JWplayerArea = $('#jw_sambaads_player'),
+			var videosJsArea = $('#vjs_sambaads_player'),
 				glamboxFrame = $('#glambox-frame'),
 				frameClose = glamboxFrame.find('.frame-close'),
 				videoTitleBar = $('#video-title-bar'),
@@ -141,15 +141,15 @@ SambaAdsPlayerControllerNative = function (){
 					var currentTime = parseInt(event.detail.data.position);
 
 					if(currentTime >= 1) {
-						JWplayerArea.addClass('native-frame');
-						JWplayerArea.addClass('glambox-player-frame');
+						videosJsArea.addClass('native-frame');
+						videosJsArea.addClass('glambox-player-frame');
 					}
 					if(currentTime == 10) {
 						if(!impression_trigger){
 							impression_trigger = true;
 							self.trackImpression(currentVastData.impression_url);
 						}
-						JWplayerArea.addClass('active-native-frame');
+						videosJsArea.addClass('active-native-frame');
 						glamboxFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
 					}
@@ -160,10 +160,10 @@ SambaAdsPlayerControllerNative = function (){
 			};
 
 			var currentStopFunction = function(event) {
-					JWplayerArea.removeClass('active-native-frame');
+					videosJsArea.removeClass('active-native-frame');
 					glamboxFrame.removeClass('active-native-frame');
-					JWplayerArea.removeClass('native-frame');
-					JWplayerArea.removeClass('glambox-player-frame');
+					videosJsArea.removeClass('native-frame');
+					videosJsArea.removeClass('glambox-player-frame');
 					frameClose.removeClass('active');
 					videoTitleBar.removeClass('inactive');
 					self.nativeTimerTrigger = function(){};
@@ -188,7 +188,7 @@ SambaAdsPlayerControllerNative = function (){
 					style: glamboxRandon.styles[Math.floor(Math.random() * glamboxRandon.styles.length)],
 				};
 
-			JWplayerArea.addClass(self.currentData.style);
+			videosJsArea.addClass(self.currentData.style);
 			frameTrigger.addClass(self.currentData.id);
 
 			var tags = self.video.dfp_tags + ",native," + self.currentData.id + "," + self.currentData.style,
@@ -218,7 +218,7 @@ SambaAdsPlayerControllerNative = function (){
 			frameClose.on('click', function(event){
 				event.preventDefault();
 				closeActive = false;
-				JWplayerArea.removeClass('active-native-frame');
+				videosJsArea.removeClass('active-native-frame');
 				glamboxFrame.removeClass('active-native-frame');
 				frameClose.removeClass('active');
 
@@ -231,7 +231,7 @@ SambaAdsPlayerControllerNative = function (){
 	var toroRadarFrame = function(videoId) {
 			self.setCurrentNative($('#toro-frame'));
 
-			var JWplayerArea = $('#jw_sambaads_player'),
+			var videosJsArea = $('#vjs_sambaads_player'),
 				toroRadarAdFrame = $('#toro-frame'),
 				frameClose = toroRadarAdFrame.find('.frame-close'),
 				videoTitleBar = $('#video-title-bar'),
@@ -242,12 +242,12 @@ SambaAdsPlayerControllerNative = function (){
 					var currentTime = parseInt(event.detail.data.position);
 
 					if(currentTime >= 1) {
-						JWplayerArea.addClass('native-frame');
-						JWplayerArea.addClass('toro-player-frame');
+						videosJsArea.addClass('native-frame');
+						videosJsArea.addClass('toro-player-frame');
 					}
 					if(currentTime == 10) {
 						self.trackImpression(currentVastData.impression_url);
-						JWplayerArea.addClass('active-native-frame');
+						videosJsArea.addClass('active-native-frame');
 						toroRadarAdFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
 					}
@@ -258,10 +258,10 @@ SambaAdsPlayerControllerNative = function (){
 			};
 
 			self.stopNativeFunction = function(event) {
-				JWplayerArea.removeClass('active-native-frame');
+				videosJsArea.removeClass('active-native-frame');
 				toroRadarAdFrame.removeClass('active-native-frame');
-				JWplayerArea.removeClass('native-frame');
-				JWplayerArea.removeClass('toro-player-frame');
+				videosJsArea.removeClass('native-frame');
+				videosJsArea.removeClass('toro-player-frame');
 				frameClose.removeClass('active');
 				videoTitleBar.removeClass('inactive');
 				self.nativeTimerTrigger = function(){};
@@ -287,7 +287,7 @@ SambaAdsPlayerControllerNative = function (){
 				currentBgType = bgType[Math.floor(Math.random() * frameType.length)];
 
 			frameTrigger.addClass(currentFrameType);
-			JWplayerArea.addClass(currentBgType);
+			videosJsArea.addClass(currentBgType);
 
 			var tags = self.video.dfp_tags + ",native,toro_frame_" + currentFrameType + "toro_bg_type" + currentBgType + ",",
 				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
@@ -314,7 +314,7 @@ SambaAdsPlayerControllerNative = function (){
 			frameClose.on('click', function(event){
 				event.preventDefault();
 				closeActive = false;
-				JWplayerArea.removeClass('active-native-frame');
+				videosJsArea.removeClass('active-native-frame');
 				toroRadarAdFrame.removeClass('active-native-frame');
 				frameClose.removeClass('active');
 
@@ -442,7 +442,7 @@ SambaAdsPlayerControllerNative = function (){
 								$currentTrigger.on('click', function(event){
 									event.preventDefault();
 									event.stopPropagation();
-									JWPlayer.pause();
+									videoJsPlayer.pause();
 									showClose = false;
 									$closeButton.removeClass('active');
 									$currentTrigger.removeClass('active');
@@ -455,7 +455,7 @@ SambaAdsPlayerControllerNative = function (){
 									$leadArea.removeClass('active');
 
 									setTimeout(function(){
-										JWPlayer.play();
+										videoJsPlayer.play();
 									}, 200);
 								});
 
@@ -672,7 +672,7 @@ SambaAdsPlayerControllerNative = function (){
 									$timeLeft = $('#blackfriday-time-left');
 
 								$productsTrigger.on('click', function(e){
-									JWPlayer.pause();
+									videoJsPlayer.pause();
 									ga('send', 'event', 'Performance', 'click', 'hotmart', this.id);
 								});
 
@@ -764,7 +764,7 @@ SambaAdsPlayerControllerNative = function (){
 					blackFridayFrame: function(videoId) {
 						self.setCurrentNative($('#blackfriday-frame'));
 
-						var JWplayerArea = $('#jw_sambaads_player'),
+						var videoJsArea = $('#vjs_sambaads_player'),
 							blackFridayFrame = $('#blackfriday-frame'),
 							frameClose = blackFridayFrame.find('.frame-close'),
 							videoTitleBar = $('#video-title-bar'),
@@ -776,14 +776,14 @@ SambaAdsPlayerControllerNative = function (){
 								var currentTime = parseInt(event.detail.data.position);
 
 								if(currentTime >= 1) {
-									JWplayerArea.addClass('native-frame');
-									JWplayerArea.addClass('blackfriday-player-frame');
+									videoJsArea.addClass('native-frame');
+									videoJsArea.addClass('blackfriday-player-frame');
 								} if(currentTime == 4) {
 									if(!impression_trigger){
 										impression_trigger = true;
 										//self.trackImpression(currentVastData.impression_url);
 									}
-									JWplayerArea.addClass('active-native-frame');
+									videoJsArea.addClass('active-native-frame');
 									blackFridayFrame.addClass('active-native-frame');
 									videoTitleBar.addClass('inactive');
 								} if(currentTime >= 14) {
@@ -793,10 +793,10 @@ SambaAdsPlayerControllerNative = function (){
 						};
 
 						currentFrameStop = function(event) {
-							JWplayerArea.removeClass('active-native-frame');
+							videoJsArea.removeClass('active-native-frame');
 							blackFridayFrame.removeClass('active-native-frame');
-							JWplayerArea.removeClass('native-frame');
-							JWplayerArea.removeClass('blackfriday-player-frame');
+							videoJsArea.removeClass('native-frame');
+							videoJsArea.removeClass('blackfriday-player-frame');
 							frameClose.removeClass('active');
 							videoTitleBar.removeClass('inactive');
 							self.nativeTimerTrigger = function(){};
@@ -815,7 +815,7 @@ SambaAdsPlayerControllerNative = function (){
 						frameClose.on('click', function(event){
 							event.preventDefault();
 							closeActive = false;
-							JWplayerArea.removeClass('active-native-frame');
+							videoJsArea.removeClass('active-native-frame');
 							blackFridayFrame.removeClass('active-native-frame');
 							frameClose.removeClass('active');
 
@@ -916,7 +916,7 @@ SambaAdsPlayerControllerNative = function (){
 									$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
 
 									$('.playlist-product').on('click', function(e){
-										JWPlayer.pause();
+										videoJsPlayer.pause();
 										ga('send', 'event', 'Performance', 'click', 'hotmart', this.id);
 									});
 

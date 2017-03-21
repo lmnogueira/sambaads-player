@@ -8,7 +8,7 @@ SambaAdsPlayerController = function (player, view, data){
 		self.init( e.detail.data );
         SambaAdsPlayerMessageBroker().send(Event.TRACK_LOAD,{});
 	});
-	
+
 	SambaAdsPlayerMessageBroker().send(Event.PLATFORM_METADATA_LOADED, data);
 };
 
@@ -31,7 +31,7 @@ SambaAdsPlayerController.prototype.init = function(data){
                 windowColor: '#000000',
                 windowOpacity: 0
     };
-    
+
     var player_config_options = {
         displaytitle: false,
         displaydescription: false,
@@ -69,28 +69,23 @@ SambaAdsPlayerController.prototype.getPlaylist = function(){
 
 SambaAdsPlayerController.prototype.setMute = function(mute){
 	if( typeof Boolean(mute) === 'boolean'){
-		window.jwplayer(this.player).setMute(mute);			
+		window.sambaads.videoJSPlayer.setMute(mute);
 	}
 };
 
 SambaAdsPlayerController.prototype.play = function(){
-    window.jwplayer(this.player).play();
+    window.sambaads.videoJSPlayer.play();
 };
 
 SambaAdsPlayerController.prototype.pause = function(){
-    window.jwplayer(this.player).pause();
+    window.sambaads.videoJSPlayer.pause();
 };
 
 SambaAdsPlayerController.prototype.seekTo = function(seek_to){
-    window.jwplayer(this.player).seek(seek_to);
+    window.sambaads.videoJSPlayer.seek(seek_to);
 };
 
 SambaAdsPlayerController.prototype.stop = function(){
-    window.jwplayer(this.player).stop();
+	console.log('not implemented stop videojs');
+    //window.sambaads.videoJSPlayer.stop();
 };
-
-SambaAdsPlayerController.prototype.playNext = function(){
-    this.loadPlaylist(this.currentPlaylistIndex + 1);
-	window.jwplayer(this.player).play();
-};
-

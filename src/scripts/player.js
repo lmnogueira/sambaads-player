@@ -1,6 +1,7 @@
 //CLASS VIEWABILITY MONITOR PLUGIN
 var ViewabilityMonitorPlugin = function (cw, currentIframe){
-    this.visiblePlayTimeout = 1000;
+    this.visiblePlayTimeout = 2000;
+
     currentIframe.toClearTimeout = 0;
 
     this.isElementInViewport = function (el) {

@@ -13,6 +13,13 @@
     <link rel="alternate" type="text/xml+oembed" href="http://player.sambaads.com/services/oembed?url=<%=base_url%>&format=xml" title="" />
     <!-- end oembed discovery -->
     <script id="navegg" type="text/javascript" src="//tag.navdmp.com/tm43244.js"></script>
+
+    <!--videojs-->
+    <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    <link href="/stylesheets/videojs.ima.css" rel="stylesheet">
+    <link rel="stylesheet" href="" />
+    <!-- If you'd like to support IE8 -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 </head>
 <body>
 <div class="sambaads-player-container">
@@ -106,7 +113,9 @@
                     </div>
               </div>
 
-              <div id="jw_sambaads_player"></div>
+              <div id="vjs_sambaads_player">
+                  <video id="video_js_player" class="video-js vjs-default-skin vjs-big-play-centered hide" controls></video>
+              </div>
 
                 <div id="native-area" class="native-area">
                     <button type="button" class="glambox" data-hashcode="glambox" id="glambox-trigger">
@@ -330,8 +339,11 @@
             </div>
         </div>
 </div>
-<script src="//ssl.p.jwpcdn.com/player/v/7.7.0/jwplayer.js"></script>
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/4.2.1-0/videojs.ads.min.js"></script>
+<script src="/javascripts/videojs.ima.js"></script>
 <script src="/javascripts/sambaads.player.js"></script>
 
 <script type="text/javascript">
@@ -340,8 +352,9 @@
 	// END COMSCORE
 
 	// START SAMBAADS
-    var smb = new SambaAdsPlayerView();
-    var smbCtrl = new SambaAdsPlayerController("jw_sambaads_player", smb, <%- JSON.stringify(info) %>);
+    var smb = new SambaAdsPlayerView()
+    //smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
+    var smbCtrl = new SambaAdsPlayerController("vjs_sambaads_player", smb, <%- JSON.stringify(info) %>);
   // END SAMBAADS
 
 </script>
