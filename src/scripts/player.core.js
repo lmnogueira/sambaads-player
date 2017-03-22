@@ -98,14 +98,12 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 		}
 	});
 
-	// self.player.on("timeupdate", function(evt){
-	// 	console.log(window.sambaads.videoJSPlayer.ima.adsActive);
-	// 	if(window.sambaads.videoJSPlayer.ima.adsManager){
-	// 		if(window.sambaads.videoJSPlayer.ima.adsManager.getRemainingTime() != -1){
-	// 			SambaAdsPlayerMessageBroker().send(Event.TIME, evt);
-	// 		}
-	// 	}
-	// });
+	self.player.on("timeupdate", function(evt){
+		SambaAdsPlayerMessageBroker().send(Event.TRACK_WATCHED, {
+			duration : self.player.duration(),
+			position : self.player.currentTime()
+		});
+	});
 
 	self.player.on("ended", function(evt){
 		if(self.videoCompleted == false){
@@ -114,7 +112,6 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 			evt.stopPropagation();
 			SambaAdsPlayerMessageBroker().send(Event.COMPLETE, evt);
 			SambaAdsPlayerMessageBroker().send(Event.NATIVE_STOP, evt);
-			//SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.player);
 		}
 	});
 

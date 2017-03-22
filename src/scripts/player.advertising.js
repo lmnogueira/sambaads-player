@@ -75,11 +75,12 @@ SambaAdsPlayerAdvertising = function (){
                 }
 
                 window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
-                window.sambaads.videoJSPlayer.ima.initializeAdDisplayContainer();
+                //window.sambaads.videoJSPlayer.ima.initializeAdDisplayContainer();
                 window.sambaads.videoJSPlayer.ima.requestAds();
 
  			} else {
-                window.sambaads.videoJSPlayer.src({type: 'video/mp4', src: self.playingNow.sources[0].file});
+              window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
+                //window.sambaads.videoJSPlayer.src({type: 'video/mp4', src: self.playingNow.sources[0].file});
             }
  			//if(self.playingNow.sponsored){
  				SambaAdsPlayerMessageBroker().send(Event.NATIVE_START, self.playingNow);
