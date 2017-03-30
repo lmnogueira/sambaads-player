@@ -2,7 +2,8 @@
 lock '3.4.0'
 
 set :application, 'sambaads_player'
-set :repo_url, 'git@player.github.com:sambaads/sambaads-player.git'
+
+set :repo_url, 'git@gitlab.predicta.net:Ycontent/sambaads-player.git'
 
 set :deploy_to, '/app/sambaads_player'
 

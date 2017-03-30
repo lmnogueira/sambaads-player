@@ -51,7 +51,7 @@ SambaAdsPlayerControllerComscore = function (){
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-		self.media = e.detail.data.item;
+		self.media = e.detail.data;
 	});
 };
 

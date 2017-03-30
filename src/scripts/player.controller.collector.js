@@ -20,7 +20,6 @@ SambaAdsPlayerControllerCollector = function (){
 	};
 
 	self.trackPlay = function(e){
-
 		var evtObject = new SambaAdsPlayerControllerCollectorTracker(TypeTrackEvent.EVENTS,{
             "satms": self.configuration.user,
             "satmtag": TypeTrackEvent.PLAY,
@@ -81,7 +80,7 @@ SambaAdsPlayerControllerCollector = function (){
 					"satm_origin": self.configuration.player.player_info.origin,
 					'satm_environment': self.configuration.player.player_info.environment
 	        	});
-				
+
 				self.sendGif(evtObject);
 
 				if((parseInt(self.media.media_id) == 93888) && (percent == 100)){
@@ -112,16 +111,15 @@ SambaAdsPlayerControllerCollector = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TRACK_LOAD, self.trackLoad);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.TRACK_WATCHED, self.trackWatch);
 	SambaAdsPlayerMessageBroker().addEventListener(Event.AD_BEFORE_PLAY, self.trackPlay);
-	
+
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
 		self.configuration = e.detail.data;
 		self.media = e.detail.data.playlist.playlist[0];
 	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
-		self.media = e.detail.data.item;
+		self.media = e.detail.data;
 	});
 };
 
 new SambaAdsPlayerControllerCollector();
-
