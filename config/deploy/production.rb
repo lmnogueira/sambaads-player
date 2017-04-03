@@ -1,9 +1,6 @@
 set :stage, :production
 set :branch, "master"
-
-
 set :node_env, "production"
-
 set :with_user, "sambaads"
 
 set :server1, '52.201.230.77'
