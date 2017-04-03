@@ -77,6 +77,7 @@ Array.prototype.move = function (old_index, new_index) {
 
 SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	var self = this;
+	self.count = 0;
 	self.cleanPlaylist();
 	self.playlist = options.playlist;
 
@@ -113,6 +114,8 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 
 			$(new_v_item).find('span.label-patrocinado').show();
 			$(new_h_item).find('span.label-patrocinado').show();
+		} else {
+			self.count++;
 		}
 
 		$(new_v_item).find("img").attr('src',item.thumbnails["90"] || item.image);
@@ -125,8 +128,10 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 		$("#playlist-h-items").append(new_h_item);
 	});
 
-	$(".sambaads-playlist").show();
-
+	if(self.count > 1){
+		$(".sambaads-playlist").show();
+	}
+	
 	$("#playlist-h-items").lightSlider({
 		item: 3,
 		autoWidth: true,
