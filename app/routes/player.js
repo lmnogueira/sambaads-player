@@ -149,7 +149,13 @@ router.get('/services/oembed', function(req, res, next) {
 		});
 });
 
+router.get('/teste/amp', function(req, res, next) {
+	res.header('Content-Type', 'text/html');
+	res.render('player/amp');
+});
+
 router.get('/teste/:type_player', function(req, res, next) {
+	res.header('Content-Type', 'text/html');
 	res.render('player/teste', { type_player: req.params.type_player });
 });
 
