@@ -4,11 +4,6 @@ var querystring = require('querystring');
 var nconf = require('nconf');
 var router = express.Router();
 
-router.get('/malandro', function(req, res, next) {
-	res.header('Content-Type', 'text/html');
-	res.render('player/amp');
-});
-
 router.get('/:pid', function(req, res, next) {
 
 	var urlFinal = encodeURIComponent(req.protocol + "://" + req.hostname + req.originalUrl);
@@ -152,6 +147,11 @@ router.get('/services/oembed', function(req, res, next) {
 				}
 			}
 		});
+});
+
+router.get('/teste/amp', function(req, res, next) {
+	res.header('Content-Type', 'text/html');
+	res.render('player/amp');
 });
 
 router.get('/teste/:type_player', function(req, res, next) {
