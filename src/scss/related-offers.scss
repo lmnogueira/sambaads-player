@@ -52,6 +52,26 @@
     }
 }
 
+.ad-playlist-close-whait {
+    border: none;
+    background: url(../native/empiricus/image/icon-close-lead.png) no-repeat;
+    background-color: #FFFFFF;
+    position: absolute;
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+    top: 19px;
+    right: 19px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 200ms linear;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
 .playlist-product {
     width: 100%;
     margin: 10px 0;
