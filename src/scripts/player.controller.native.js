@@ -8,6 +8,7 @@ SambaAdsPlayerControllerNative = function (){
 		showAdTimeout = null,
 		currentNative = null,
 		currentVastData = null;
+		click_added = false;
 
 	// var glamboxNative = function(videoId) {
 	// 		var videoType = {
@@ -329,7 +330,7 @@ var bradescoAd = function(videoId) {
 			var vastSuccessAction = function(vastData, data){}
 				showClose = true,
 				tagUrl = '';
-
+		
 			var setVastUrl = function(adType) {
 				var tags = self.video.dfp_tags + ",native,bradesco_" + adType + ",",
 					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
@@ -394,11 +395,16 @@ var bradescoAd = function(videoId) {
 									}
 								};
 
-								$('#playlist-products-area').on('click', function(event){
+								if(!self.click_added){
+									self.click_added = true;
+									$('#playlist-products-area').on('click', function(event){
+									
 									event.preventDefault();
 									console.log("teste");
 									window.open(vastData.click_url);
-								});
+									});
+								}
+								
 
 								$closeButton.on('click', function(event){
 									event.preventDefault();
