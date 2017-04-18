@@ -56,7 +56,9 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 				dispatch = true;
 			}
 
-			if(currentState === "playing"){
+			var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+			if(currentState === "playing" || isMobile){
 				$("#video_js_player_html5_api").show();
 			} else if(currentState === "idle"){
 				$("#video_js_player_html5_api").hide();
