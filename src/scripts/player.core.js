@@ -25,7 +25,10 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 						this.poster(options.playlist[0].image);
 						//this.usingNativeControls(false);
 						this.src({type: 'video/mp4', src: options.playlist[0].sources[0].file});
+					} else {
+						SambaAdsPlayerMessageBroker().send(Event.SETUP_ERROR, (this));
 					}
+
 			  		SambaAdsPlayerMessageBroker().send(Event.READY, (this));
 
 			  		$("#video_js_player").removeClass("hide");
