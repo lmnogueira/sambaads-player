@@ -21,10 +21,11 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 
 	self.player = videojs("video_js_player", {width: options.width, height: options.height, preload: "metadata"}, function(){
 					//{fluid:true}, function(){
-					this.poster(options.playlist[0].image);
-					
-					this.src({type: 'video/mp4', src: options.playlist[0].sources[0].file});
-
+					if(options.playlist.length > 0){
+						this.poster(options.playlist[0].image);
+						//this.usingNativeControls(false);
+						this.src({type: 'video/mp4', src: options.playlist[0].sources[0].file});
+					}
 			  		SambaAdsPlayerMessageBroker().send(Event.READY, (this));
 
 			  		$("#video_js_player").removeClass("hide");
