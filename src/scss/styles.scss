@@ -428,9 +428,9 @@
 
 /* Glambox Frame */
 
-.jwplayer {
+.video-js {
     &.native-frame {
-        .jw-video {
+        .vjs-tech {
             transition: all .5s linear;
             left: 0;
             height: auto !important;
@@ -439,14 +439,24 @@
         }
 
         &.active-native-frame {
-            .jw-video {
+            .vjs-tech {
                 width: 68%;
                 max-height: 75%;
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
     }
 
     &.glambox-player-frame {
+        &.native-frame {
+            &.active-native-frame {
+                background: #fff url(../native/glambox/image/frame-bg-1.jpg) no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+        
+
         &.type-1 {
             &.native-frame {
                 &.active-native-frame {
@@ -471,6 +481,15 @@
                     background: linear-gradient(118deg, rgb(37, 35, 36) 0%, rgb(43, 42, 42) 87%);
                     background-size: 100% 100%;
                 }
+            }
+        }
+    }
+
+    &.bradesco-player-frame {
+        &.native-frame {
+            &.active-native-frame {
+                background: #fff url(//thumbs.sambaads.com/thumbnail/frame-bg.png) no-repeat;
+                background-size: 100% 100%;
             }
         }
     }
@@ -589,6 +608,25 @@
     display: block;
     margin: 0;
     @extend .ir;
+}
+
+.bradesco-frame {
+    .frame-trigger {
+        &:before {
+            background-image: url(//thumbs.sambaads.com/thumbnail/frame-more.png);
+            background-size: contain;
+        }
+    }
+
+    .frame-close {
+        background: url(../native/glambox/image/icon-close.png) no-repeat;
+        background-size: 100% auto;
+    }
+
+    .frame-bottom-text {
+        background: url(../native/glambox/image/frame-bottom-text.png) no-repeat;
+        background-size: 100% auto;
+    }
 }
 
 .glambox-frame {
