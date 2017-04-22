@@ -441,7 +441,7 @@
         &.active-native-frame {
             .vjs-tech {
                 width: 68%;
-                max-height: 75%;
+                max-height: 85%;
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -486,6 +486,7 @@
     }
 
     &.bradesco-player-frame {
+        width: 100%;
         &.native-frame {
             &.active-native-frame {
                 background: #fff url(//thumbs.sambaads.com/thumbnail/frame-bg.png) no-repeat;

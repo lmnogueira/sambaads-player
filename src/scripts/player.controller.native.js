@@ -243,21 +243,23 @@ SambaAdsPlayerControllerNative = function (){
 				if(closeActive) {
 					var currentTime = parseInt(event.detail.data.position);
 
-					if(currentTime >= 1) {
+					if(currentTime >= 2) {
 						videosJsArea.addClass('native-frame');
 						videosJsArea.addClass('bradesco-player-frame');
-					}
-					if(currentTime == 10) {
+					//}
+					//if(currentTime == 10) {
 						if(!impression_trigger){
 							impression_trigger = true;
 							$(".vjs-control-bar").css({"display":"none"});
+							$(".sambaads-playlist").hide();
+							$("#sambaads-embed").removeClass('pull-left');
 							self.trackImpression(currentVastData.impression_url);
 						}
 						videosJsArea.addClass('active-native-frame');
 						bradescoFrame.addClass('active-native-frame');
 						videoTitleBar.addClass('inactive');
 					}
-					if(currentTime >= 14) {
+					if(currentTime >= 10) {
 						frameClose.addClass('active');
 					}
 				}
@@ -272,6 +274,9 @@ SambaAdsPlayerControllerNative = function (){
 					videosJsArea.removeClass('bradesco-player-frame');
 					frameClose.removeClass('active');
 					videoTitleBar.removeClass('inactive');
+					if(playerConfiguration.detail.data.playlist.position === 'right') {
+						$("#sambaads-embed").addClass('pull-left');
+					}
 					self.nativeTimerTrigger = function(){};
 				};
 
@@ -324,10 +329,16 @@ SambaAdsPlayerControllerNative = function (){
 			frameClose.on('click', function(event){
 				event.preventDefault();
 				closeActive = false;
+				if(playerConfiguration.detail.data.playlist.position === 'right') {
+					$("#sambaads-embed").addClass('pull-left');
+				}
+				videosJsArea.removeClass('bradesco-player-frame');
 				videosJsArea.removeClass('active-native-frame');
 				bradescoFrame.removeClass('active-native-frame');
 				frameClose.removeClass('active');
 				$(".vjs-control-bar").css({"display":"flex"});
+				$(".sambaads-playlist").show();
+				
 
 				window.setTimeout(function(){
 					videoTitleBar.removeClass('inactive');
