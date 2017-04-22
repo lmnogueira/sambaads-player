@@ -250,7 +250,7 @@ SambaAdsPlayerControllerNative = function (){
 					if(currentTime == 10) {
 						if(!impression_trigger){
 							impression_trigger = true;
-							$(".vjs-control-bar").hide();
+							$(".vjs-control-bar").css({"display":"none"});
 							self.trackImpression(currentVastData.impression_url);
 						}
 						videosJsArea.addClass('active-native-frame');
@@ -264,10 +264,11 @@ SambaAdsPlayerControllerNative = function (){
 			};
 
 			var currentStopFunction = function(event) {
+				    $(".vjs-control-bar").css({"display":"flex"});
 					videosJsArea.removeClass('active-native-frame');
 					bradescoFrame.removeClass('active-native-frame');
 					videosJsArea.removeClass('native-frame');
-					$(".vjs-control-bar").show();
+					
 					videosJsArea.removeClass('bradesco-player-frame');
 					frameClose.removeClass('active');
 					videoTitleBar.removeClass('inactive');
@@ -326,6 +327,7 @@ SambaAdsPlayerControllerNative = function (){
 				videosJsArea.removeClass('active-native-frame');
 				bradescoFrame.removeClass('active-native-frame');
 				frameClose.removeClass('active');
+				$(".vjs-control-bar").css({"display":"flex"});
 
 				window.setTimeout(function(){
 					videoTitleBar.removeClass('inactive');
