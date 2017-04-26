@@ -1309,6 +1309,28 @@ SambaAdsPlayerControllerNative = function (){
 		// 			adsType.playlistFrame(videoId);
 		// 		}
 		// 	};
+	var genericLoad = function(){
+		var tags = self.video.dfp_tags + ",native,bradesco_player_frame",
+				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+				 		 "sz=640x360" +
+				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+				 		 "&cust_params=" + custom_params +
+				 		 "&cmsid=" + self.video.dfp_partner_id +
+				 		 "&vid=" + self.video.hashed_code +
+				 		 "&correlator=" + new Date().getTime();
+
+			self.loadVastTag(tagUrl, function(vastData, data){
+				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
+				 	//oiAd();
+				} else {//if(vastData.custom_ad.advertiser == "bradesco") {
+				 	console.log("bradesco");
+					 //bradescoFrame();
+				}
+			});
+	};	
 
 	var secondsToTime = function(currentSeconds) {
 			var minutes = Math.floor(currentSeconds % 3600 / 60),
@@ -1426,7 +1448,8 @@ SambaAdsPlayerControllerNative = function (){
 
 		 	currentAd = function() {
 		 		//glamboxFrame(videoId);
-				 bradescoFrame();
+				 genericLoad();
+				//bradescoFrame();
 				//relatedOffersAd(videoId);
 		 	}
 
@@ -1458,33 +1481,33 @@ SambaAdsPlayerControllerNative = function (){
 		}
 	};
 
-	self.loadVastTag = function(tagUrl, callback){
-
+	self.loadVastTag = function(tagUrl, callback, dtype="xml"){
+		var self=this;
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
-	        dataType: "xml",
+	        dataType: dtype,
 	        success: function(data) {
 
-				var vastData = {
+				self.vastData = {
 						impression_url: '',
 						click_url: ''
 					};
 
-				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+				if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
-					vastData.impression_url = el.nodeValue;
+					self.vastData.impression_url = el.nodeValue;
 				}
 
-				if(typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+				if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
 						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
-						vastData.click_url = el.nodeValue;
+						self.vastData.click_url = el.nodeValue;
 					}
 				}
 
 				if(typeof callback === 'function') {
-					callback(vastData, data);
+					callback(self.vastData, data);
 				}
 	        },
 	        error: function(xhr, status) {
