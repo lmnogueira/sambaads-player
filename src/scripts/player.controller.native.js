@@ -229,7 +229,12 @@ SambaAdsPlayerControllerNative = function (){
 	// 		});
 	// 	};
 
-	var bradescoFrame = function() {
+	self.bradescoFrame = function() {
+		var self = this;
+
+			if(!self.vastData.impression_url)
+				return;
+
 			self.setCurrentNative($('#bradesco-frame'));
 
 			var videosJsArea = $('#video_js_player'),
@@ -253,7 +258,7 @@ SambaAdsPlayerControllerNative = function (){
 							$(".vjs-control-bar").css({"display":"none"});
 							$(".sambaads-playlist").hide();
 							$("#sambaads-embed").removeClass('pull-left');
-							self.trackImpression(currentVastData.impression_url);
+							self.trackImpression(self.vastData.impression_url);
 						}
 						videosJsArea.addClass('active-native-frame');
 						bradescoFrame.addClass('active-native-frame');
@@ -270,7 +275,7 @@ SambaAdsPlayerControllerNative = function (){
 					videosJsArea.removeClass('active-native-frame');
 					bradescoFrame.removeClass('active-native-frame');
 					videosJsArea.removeClass('native-frame');
-					
+					$(".sambaads-playlist").show();
 					videosJsArea.removeClass('bradesco-player-frame');
 					frameClose.removeClass('active');
 					videoTitleBar.removeClass('inactive');
@@ -283,31 +288,12 @@ SambaAdsPlayerControllerNative = function (){
 			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
 			frameTrigger = $('.frame-trigger');
-
-			var tags = self.video.dfp_tags + ",native,bradesco_playlist_frame,",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
-
-	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-				 		 "sz=640x360" +
-				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-				 		 "&cust_params=" + custom_params +
-				 		 "&cmsid=" + self.video.dfp_partner_id +
-				 		 "&vid=" + self.video.hashed_code +
-
-				 		 "&correlator=" + new Date().getTime();
-
-			self.loadVastTag(tagUrl, function(vastData, data){
-				frameTrigger.off();
-
-				currentVastData = vastData;
-
-				frameTrigger.on('click', function(event){
-					event.preventDefault();
-					window.open(vastData.click_url);
-				});
+			frameTrigger.off();	
+			frameTrigger.on('click', function(event){
+				event.preventDefault();
+				window.open(self.vastData.click_url);
 			});
-
+			
 			frameClose.on('click', function(event){
 				event.preventDefault();
 				closeActive = false;
@@ -321,7 +307,6 @@ SambaAdsPlayerControllerNative = function (){
 				$(".vjs-control-bar").css({"display":"flex"});
 				$(".sambaads-playlist").show();
 				
-
 				window.setTimeout(function(){
 					videoTitleBar.removeClass('inactive');
 				},2500);
@@ -1310,10 +1295,10 @@ SambaAdsPlayerControllerNative = function (){
 		// 		}
 		// 	};
 	var genericLoad = function(){
-		var tags = self.video.dfp_tags + ",native,bradesco_player_frame",
-				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+		var tags = self.video.dfp_tags + ",native",
+			custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
-	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+	 	var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
 				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
 				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
@@ -1322,12 +1307,13 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&vid=" + self.video.hashed_code +
 				 		 "&correlator=" + new Date().getTime();
 
+			console.log(tagUrl);			  
+
 			self.loadVastTag(tagUrl, function(vastData, data){
 				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
 				 	//oiAd();
 				} else {//if(vastData.custom_ad.advertiser == "bradesco") {
-				 	console.log("bradesco");
-					 //bradescoFrame();
+					 self.bradescoFrame();
 				}
 			});
 	};	
