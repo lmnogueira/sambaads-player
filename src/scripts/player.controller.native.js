@@ -1312,8 +1312,10 @@ SambaAdsPlayerControllerNative = function (){
 			self.loadVastTag(tagUrl, function(vastData, data){
 				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
 				 	//oiAd();
-				} else {//if(vastData.custom_ad.advertiser == "bradesco") {
+				} else if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "bradesco") {
 					 self.bradescoFrame();
+				} else {
+					self.bradescoFrame();
 				}
 			});
 	};	
