@@ -1294,9 +1294,71 @@ SambaAdsPlayerControllerNative = function (){
 		// 			adsType.playlistFrame(videoId);
 		// 		}
 		// 	};
-	var genericLoad = function(){
-		var tags = self.video.dfp_tags + ",native",
-			custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+	self.oiAd = function() {
+			var self = this;
+			var showClose = true;
+			var tagUrl = '';
+		
+			var oiPlaylistFrame = function() {
+				var $currentPlaylistAd = $('#empiricus-playlist'),
+					$playlistAdArea = $('#playlist-ad-area'),
+					$closeButton = $('#empiricus-playlist-close'),
+					$productsTrigger = $('.playlist-product');
+
+				var startPlaylistFrameAd = function() {
+					var timestamp = new Date().getTime();
+					var url = self.vastData.custom_ad.source;
+					url = url.replace('[timestamp]',timestamp);
+
+					console.log(url);
+					var banner = '<iframe src="' + url + '" width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'
+					
+					//banner = '<iframe src="http://secure-gl.imrworldwide.com/u/t/00/05/19/29/300x250_survey.html?ce=YContent&ci=nlsnci991&am=3&r=' + timestamp + '" width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'	
+					
+					if(banner){
+						$('#playlist-products-area').html(banner);
+					}
+
+					self.nativeTimerTrigger = function(event) {
+						if(showClose) {
+							var currentTime = parseInt(event.detail.data.position);
+
+							if(currentTime >= 4) {
+									self.trackImpression(self.vastData.impression_url);
+									$playlistAdArea.addClass('active');
+									$currentPlaylistAd.addClass('active');
+							}
+							if(currentTime >= 14) {
+									$closeButton.addClass('active');
+							}
+						}
+					};
+
+					$closeButton.on('click', function(event){
+						event.preventDefault();
+						event.stopPropagation();
+						showClose = false;
+						$playlistAdArea.removeClass('active');
+						$currentPlaylistAd.removeClass('active');
+						$closeButton.removeClass('active');
+					});
+				};
+
+				$productsTrigger.off();
+				if(self.vastData.impression_url){
+					startPlaylistFrameAd();
+				}
+			};
+
+			if(playerConfiguration.detail.data.playlist.position === 'right') {
+				oiPlaylistFrame();
+			} 
+		};
+
+	self.genericLoad = function(){
+		var tags = self.video.dfp_tags + ",native";
+		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 	var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
@@ -1307,11 +1369,10 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&vid=" + self.video.hashed_code +
 				 		 "&correlator=" + new Date().getTime();
 
-			console.log(tagUrl);			  
-
 			self.loadVastTag(tagUrl, function(vastData, data){
+				console.log(vastData);
 				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
-				 	//oiAd();
+				 	self.oiAd();
 				} else if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "bradesco") {
 					 self.bradescoFrame();
 				} else {
@@ -1432,16 +1493,11 @@ SambaAdsPlayerControllerNative = function (){
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 
-		var currentAd = function(){};
-
-		 	currentAd = function() {
 		 		//glamboxFrame(videoId);
-				 genericLoad();
-				//bradescoFrame();
+				//self.bradescoFrame();
+				self.genericLoad();
 				//relatedOffersAd(videoId);
-		 	}
 
-		currentAd();
 	};
 
 	self.setCurrentNative = function(nativeEl) {
@@ -1469,19 +1525,19 @@ SambaAdsPlayerControllerNative = function (){
 		}
 	};
 
+	self.teste = true;
+	self.vastData = {
+				impression_url: '',
+				click_url: '',
+				custom_ad: ''
+			};
 	self.loadVastTag = function(tagUrl, callback, dtype="xml"){
-		var self=this;
+		
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
 	        dataType: dtype,
 	        success: function(data) {
-
-				self.vastData = {
-						impression_url: '',
-						click_url: ''
-					};
-
 				if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
 					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
 					self.vastData.impression_url = el.nodeValue;
@@ -1494,11 +1550,35 @@ SambaAdsPlayerControllerNative = function (){
 					}
 				}
 
-				if(typeof callback === 'function') {
-					callback(self.vastData, data);
+				// if(dtype != 'xml'){
+						//data = '{"advertiser": "oi","source": "http://secure-gl.imrworldwide.com/u/t/00/05/19/29/300x250_survey.html?ce=YContent&ci=nlsnci991&am=3&r=[timestamp]","width": "300","height": "250","type": "iframe"}';
+						//vastData.object = JSON.parse(data);
+						//console.log(vastData.object);
+				// }
+
+				if(dtype == 'xml' && typeof data.getElementsByTagName("VASTAdTagURI")[0] !== 'undefined') {
+		
+				//if(self.teste){
+				//	self.teste = false;
+					el = data.getElementsByTagName("VASTAdTagURI")[0].childNodes[0];
+					self.loadVastTag(el.nodeValue,function(vastData, data){
+					//self.loadVastTag("https://mfa.predicta.predicta.net/mrm-ad/ad/script/?;c=3740;sc=8149;p=59",function(vastData, data){
+					//	console.log(data);
+					//	console.log(vastData);
+						self.vastData.custom_ad = JSON.parse(data);
+						if(typeof callback === 'function') {
+							callback(self.vastData, data);
+						}
+					},'');
+				} else {
+					if(typeof callback === 'function') {
+						callback(self.vastData, data);
+					}
 				}
 	        },
 	        error: function(xhr, status) {
+				console.log(xhr);
+				console.log(status);
 	            console.log("error");
 	        }
     	});
