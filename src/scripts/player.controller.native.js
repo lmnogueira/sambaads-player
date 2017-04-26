@@ -282,25 +282,7 @@ SambaAdsPlayerControllerNative = function (){
 
 			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 
-			// var videoType = [
-			// 		'glam_box_frame',
-			// 		'glam_club_frame'
-			// 	],
-			// 	bradescoRandon = {
-			// 		styles: [
-			// 			'type-1',
-			// 			'type-2'
-			// 		]
-			// 	},
-			 	frameTrigger = $('.frame-trigger');
-
-			// 	self.currentData = {
-			// 		id: videoType[Math.floor(Math.random() * videoType.length)],//[videoId],
-			// 		style: bradescoRandon.styles[Math.floor(Math.random() * bradescoRandon.styles.length)],
-			// 	};
-
-			// videosJsArea.addClass(self.currentData.style);
-			// frameTrigger.addClass(self.currentData.id);
+			frameTrigger = $('.frame-trigger');
 
 			var tags = self.video.dfp_tags + ",native,bradesco_playlist_frame,",
 				custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
@@ -444,191 +426,191 @@ SambaAdsPlayerControllerNative = function (){
 	// 	};
 
 
-var bradescoAd = function(videoId) {
-			var vastSuccessAction = function(vastData, data){}
-				showClose = true,
-				tagUrl = '';
+// var bradescoAd = function(videoId) {
+// 			var vastSuccessAction = function(vastData, data){}
+// 				showClose = true,
+// 				tagUrl = '';
 		
-			var setVastUrl = function(adType) {
-				var tags = self.video.dfp_tags + ",native,bradesco_" + adType + ",",
-					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
-					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-							 "sz=640x360" +
-							 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-							 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-							 "&cust_params=" + custom_params +
-							 "&cmsid=" + self.video.dfp_partner_id +
-							 "&vid=" + self.video.hashed_code +
-							 "&correlator=" + new Date().getTime();
+// 			var setVastUrl = function(adType) {
+// 				var tags = self.video.dfp_tags + ",native,bradesco_" + adType + ",",
+// 					custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags),
+// 					tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
+// 							 "sz=640x360" +
+// 							 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
+// 							 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
+// 							 "&cust_params=" + custom_params +
+// 							 "&cmsid=" + self.video.dfp_partner_id +
+// 							 "&vid=" + self.video.hashed_code +
+// 							 "&correlator=" + new Date().getTime();
 
-					return tagUrl;
-				};
+// 					return tagUrl;
+// 				};
 
-			var adsType = {
-					empiricusPlaylistFrame: function(videoId) {
-						var $currentPlaylistAd = $('#empiricus-playlist'),
-							$playlistAdArea = $('#playlist-ad-area'),
-							$closeButton = $('#empiricus-playlist-close'),
-							$productsTrigger = $('.playlist-product');
+// 			var adsType = {
+// 					empiricusPlaylistFrame: function(videoId) {
+// 						var $currentPlaylistAd = $('#empiricus-playlist'),
+// 							$playlistAdArea = $('#playlist-ad-area'),
+// 							$closeButton = $('#empiricus-playlist-close'),
+// 							$productsTrigger = $('.playlist-product');
 
-						tagUrl = setVastUrl('playlist_frame');
+// 						tagUrl = setVastUrl('playlist_frame');
 
-						var startPlaylistFrameAd = function(vastData) {
-								productsHtml = '';
+// 						var startPlaylistFrameAd = function(vastData) {
+// 								productsHtml = '';
 
-								var jsonPlaylistMockup = {
-										products: [],
-										footerContent: '',
-										banner: '<img width="100%" src="//thumbs.sambaads.com/thumbnail/bradesco_v1.jpg" alt="Empiricus Logo">'
-									};
+// 								var jsonPlaylistMockup = {
+// 										products: [],
+// 										footerContent: '',
+// 										banner: '<img width="100%" src="//thumbs.sambaads.com/thumbnail/bradesco_v1.jpg" alt="Empiricus Logo">'
+// 									};
 
-								// for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
-								// 	productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
-								// 					'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
-								// 					'" alt="' + jsonPlaylistMockup.products[x].title +
-								// 					'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
-								// }
+// 								// for(var x = 0; x < jsonPlaylistMockup.products.length; x++) {
+// 								// 	productsHtml += '<a href="' + jsonPlaylistMockup.products[x].clickThrough +
+// 								// 					'" target="_blank" class="playlist-product"><img src="' + jsonPlaylistMockup.products[x].image +
+// 								// 					'" alt="' + jsonPlaylistMockup.products[x].title +
+// 								// 					'" title="' + jsonPlaylistMockup.products[x].title + '"></a>';
+// 								// }
 
-								if(jsonPlaylistMockup.banner)
-								$('#playlist-products-area').html(jsonPlaylistMockup.banner);
+// 								if(jsonPlaylistMockup.banner)
+// 								$('#playlist-products-area').html(jsonPlaylistMockup.banner);
 
-								if(jsonPlaylistMockup.products.length)
-								$('#playlist-products-area').html(productsHtml);
+// 								if(jsonPlaylistMockup.products.length)
+// 								$('#playlist-products-area').html(productsHtml);
 								
-								if(jsonPlaylistMockup.footerContent)
-								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
+// 								if(jsonPlaylistMockup.footerContent)
+// 								$('#playlist-footer').html(jsonPlaylistMockup.footerContent);
 
-								self.nativeTimerTrigger = function(event) {
-									if(showClose) {
-										var currentTime = parseInt(event.detail.data.position);
+// 								self.nativeTimerTrigger = function(event) {
+// 									if(showClose) {
+// 										var currentTime = parseInt(event.detail.data.position);
 
-										if(currentTime >= 4) {
-												self.trackImpression(vastData.impression_url);
-												$playlistAdArea.addClass('active');
-												$currentPlaylistAd.addClass('active');
-										}
-										if(currentTime >= 14) {
-												$closeButton.addClass('active');
-										}
-									}
-								};
+// 										if(currentTime >= 4) {
+// 												self.trackImpression(vastData.impression_url);
+// 												$playlistAdArea.addClass('active');
+// 												$currentPlaylistAd.addClass('active');
+// 										}
+// 										if(currentTime >= 14) {
+// 												$closeButton.addClass('active');
+// 										}
+// 									}
+// 								};
 
-								if(!self.click_added){
-									self.click_added = true;
-									$('#playlist-products-area').on('click', function(event){
+// 								if(!self.click_added){
+// 									self.click_added = true;
+// 									$('#playlist-products-area').on('click', function(event){
 									
-									event.preventDefault();
-									console.log("teste");
-									window.open(vastData.click_url);
-									});
-								}
+// 									event.preventDefault();
+// 									console.log("teste");
+// 									window.open(vastData.click_url);
+// 									});
+// 								}
 								
 
-								$closeButton.on('click', function(event){
-									event.preventDefault();
-									event.stopPropagation();
-									showClose = false;
-									$playlistAdArea.removeClass('active');
-									$currentPlaylistAd.removeClass('active');
-									$closeButton.removeClass('active');
-								});
-							};
+// 								$closeButton.on('click', function(event){
+// 									event.preventDefault();
+// 									event.stopPropagation();
+// 									showClose = false;
+// 									$playlistAdArea.removeClass('active');
+// 									$currentPlaylistAd.removeClass('active');
+// 									$closeButton.removeClass('active');
+// 								});
+// 							};
 
-						var vastSuccessAction = function(vastData, data) {
-							$productsTrigger.off();
+// 						var vastSuccessAction = function(vastData, data) {
+// 							$productsTrigger.off();
 
-							if(vastData.impression_url){
-								startPlaylistFrameAd(vastData);
-							}
+// 							if(vastData.impression_url){
+// 								startPlaylistFrameAd(vastData);
+// 							}
 							
-						};
+// 						};
 
-						self.loadVastTag(tagUrl, vastSuccessAction);
-					},
-					empiricusLead: function(videoId) {
-						var $currentTrigger = $('#empiricus-trigger'),
-							$closeButton = $('#empiricus-lead-close'),
-							$insideClose = $('.inside-close');
-							$leadArea = $('#empriricus-lead-area'),
-							$sendLead = $('#send-lead'),
-							$leadSuccess = $('#lead-success'),
-							leadAreaContent = $('.lead-area-content');
+// 						self.loadVastTag(tagUrl, vastSuccessAction);
+// 					},
+// 					empiricusLead: function(videoId) {
+// 						var $currentTrigger = $('#empiricus-trigger'),
+// 							$closeButton = $('#empiricus-lead-close'),
+// 							$insideClose = $('.inside-close');
+// 							$leadArea = $('#empriricus-lead-area'),
+// 							$sendLead = $('#send-lead'),
+// 							$leadSuccess = $('#lead-success'),
+// 							leadAreaContent = $('.lead-area-content');
 
-						var startLeadAd = function() {
-								self.nativeTimerTrigger = function(event) {
-									if(showClose) {
-										var currentTime = parseInt(event.detail.data.position);
+// 						var startLeadAd = function() {
+// 								self.nativeTimerTrigger = function(event) {
+// 									if(showClose) {
+// 										var currentTime = parseInt(event.detail.data.position);
 
-										//if(currentTime === 10) {
-										if(currentTime >= 4) {
-											self.trackImpression(currentVastData.impression_url);
-											$currentTrigger.addClass('active');
-										}
-										if(currentTime >= 14) {
-											$closeButton.addClass('active');
-										}
-									}
-								};
+// 										//if(currentTime === 10) {
+// 										if(currentTime >= 4) {
+// 											self.trackImpression(currentVastData.impression_url);
+// 											$currentTrigger.addClass('active');
+// 										}
+// 										if(currentTime >= 14) {
+// 											$closeButton.addClass('active');
+// 										}
+// 									}
+// 								};
 
-								$currentTrigger.on('click', function(event){
-									event.preventDefault();
-									event.stopPropagation();
-									videoJsPlayer.pause();
-									showClose = false;
-									$closeButton.removeClass('active');
-									$currentTrigger.removeClass('active');
-									$leadArea.addClass('active');
-								});
+// 								$currentTrigger.on('click', function(event){
+// 									event.preventDefault();
+// 									event.stopPropagation();
+// 									videoJsPlayer.pause();
+// 									showClose = false;
+// 									$closeButton.removeClass('active');
+// 									$currentTrigger.removeClass('active');
+// 									$leadArea.addClass('active');
+// 								});
 
-								$insideClose.on('click', function(event){
-									event.preventDefault();
-									event.stopPropagation();
-									$leadArea.removeClass('active');
+// 								$insideClose.on('click', function(event){
+// 									event.preventDefault();
+// 									event.stopPropagation();
+// 									$leadArea.removeClass('active');
 
-									setTimeout(function(){
-										videoJsPlayer.play();
-									}, 200);
-								});
+// 									setTimeout(function(){
+// 										videoJsPlayer.play();
+// 									}, 200);
+// 								});
 
-								$closeButton.on('click', function(event){
-									event.preventDefault();
-									event.stopPropagation();
-									showClose = false;
+// 								$closeButton.on('click', function(event){
+// 									event.preventDefault();
+// 									event.stopPropagation();
+// 									showClose = false;
 
-									$closeButton.removeClass('active');
-									$currentTrigger.removeClass('active');
-								});
+// 									$closeButton.removeClass('active');
+// 									$currentTrigger.removeClass('active');
+// 								});
 
-								$sendLead.on('click', function(event){
-									event.preventDefault();
-									event.stopPropagation();
-									leadAreaContent.removeClass('active');
+// 								$sendLead.on('click', function(event){
+// 									event.preventDefault();
+// 									event.stopPropagation();
+// 									leadAreaContent.removeClass('active');
 
-									setTimeout(function () {
-										$leadSuccess.addClass('active');
-									}, 300);
-								});
-							};
+// 									setTimeout(function () {
+// 										$leadSuccess.addClass('active');
+// 									}, 300);
+// 								});
+// 							};
 
-						var vastSuccessAction = function(vastData, data) {
-							$currentTrigger.off();
-							currentVastData = vastData;
-							startLeadAd();
-						};
+// 						var vastSuccessAction = function(vastData, data) {
+// 							$currentTrigger.off();
+// 							currentVastData = vastData;
+// 							startLeadAd();
+// 						};
 
-						tagUrl = setVastUrl('lead');
+// 						tagUrl = setVastUrl('lead');
 
-						self.setCurrentNative($currentTrigger);
-						self.loadVastTag(tagUrl, vastSuccessAction);
-					}
-				};
+// 						self.setCurrentNative($currentTrigger);
+// 						self.loadVastTag(tagUrl, vastSuccessAction);
+// 					}
+// 				};
 
-			if(playerConfiguration.detail.data.playlist.position === 'right') {
-				adsType.empiricusPlaylistFrame(videoId);
-			} else {
-				adsType.empiricusLead(videoId);
-			}
-		};
+// 			if(playerConfiguration.detail.data.playlist.position === 'right') {
+// 				adsType.empiricusPlaylistFrame(videoId);
+// 			} else {
+// 				adsType.empiricusLead(videoId);
+// 			}
+// 		};
 	
 
 	// var empiricusAd = function(videoId) {
@@ -1440,137 +1422,15 @@ var bradescoAd = function(videoId) {
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 
-		// Comment this before deploy on production
-		//ownerId = 38;
-		//videoId = 60475;
-
-		// if(false) {
-		// 	var beforeAd = function() {
-		// 			self.setCurrentNative($('*[data-hashcode="glambox"]'));
-		// 			glamboxNativeUpdate(videoId.toString());
-		// 		},
-		// 		callbackAd = function() {
-		// 			var glamboxClose = $('.current-native .ad-close'),
-		// 				glamboxNew = $('.glambox-new');
-
-		// 			glamboxClose.on('click', function(event){
-		// 				event.stopPropagation();
-		// 				event.preventDefault();
-		// 				self.hideNative();
-		// 			});
-
-		// 			self.trackImpression(currentVastData.impression_url);
-
-		// 			glamboxNew.removeClass('flip');
-
-		// 			if(videoId === 60476) {
-		// 				setTimeout(function(){
-		// 					glamboxNew.addClass('flip');
-		// 				}, 4000);
-		// 			}
-		// 		};
-
-		// 	self.setAdTimeout(15000, beforeAd, callbackAd);
-		// }
-
-		// videoId = 62639;
-
-		// if(videoId === 62639) {
-		// 	var selfVastData = null,
-		// 		beforeAd = function() {
-		// 			self.setCurrentNative($('#wine-native'));
-
-		// 			var custom_params = encodeURIComponent(
-		// 									"duration=&CNT_Position=preroll&category=" +
-		// 									self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" +
-		// 									self.video.dfp_tags +
-		// 									",native," +
-		// 									videoId
-		// 								);
-
-		// 	 		var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
-		// 				 		 "sz=640x360" +
-		// 				 		 "&iu=" + encodeURIComponent(self.client.ad_unit_id) +
-		// 				 		 "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=&description_url=" +
-		// 				 		 "&cust_params=" + custom_params +
-		// 				 		 "&cmsid=" + self.video.dfp_partner_id +
-		// 				 		 "&vid=" + self.video.hashed_code +
-		// 				 		 "&correlator=" + new Date().getTime();
-
-		// 			self.loadVastTag(tagUrl, function(vastData){
-		// 				selfVastData = vastData;
-		// 			});
-		// 		},
-		// 		callbackAd = function() {
-		// 			var wineClose = $('.current-native .ad-close'),
-		// 				wineClick = $('.current-native .ad-trigger');
-
-		// 			wineClose.on('click', function(event){
-		// 				event.preventDefault();
-		// 				self.hideNative();
-		// 			});
-
-		// 			wineClick.off();
-
-		// 			wineClick.on('click', function(event){
-		// 				event.stopPropagation();
-		// 				event.preventDefault();
-		// 				window.open(vastData.click_url);
-		// 			});
-
-		// 			self.trackImpression(selfVastData.impression_url);
-		// 		};
-
-		// 	self.setAdTimeout(2000, beforeAd, callbackAd);
-		// }
-
-		//can_publisher_play = "e7a0e7ece4bf9e68a0656c09ce1479a0,97faba17c7747183dc86c29e40f1adad,949fe90cced05c43bd73410701dc198d,092ac38067a00fa2a5c3335c61565cc1,15663c838a3846e8c06e25a69b89f276".indexOf(self.client.hash_code) >= 0;
-		can_vertical_play = "NOTICIAS,BUSINESS,NOTICIAS_REGIONAIS".indexOf(self.video.category_name) >= 0;
-
-		// Check is InfoMoney hash_code ca04f15a06527c725b9915e91c860e8d
-		//self.client.hash_code = 'ca04f15a06527c725b9915e91c860e8d';
-		//if(self.client.hash_code === 'ca04f15a06527c725b9915e91c860e8d') {
-			//toroRadarFrame(videoId);
-		//} else
-
 		var currentAd = function(){};
 
-		// if(can_publisher_play || can_vertical_play) {
 		 	currentAd = function() {
 		 		//glamboxFrame(videoId);
 				 bradescoFrame();
-		// 		relatedOffersAd(videoId);
+				//relatedOffersAd(videoId);
 		 	}
-		// }
 
-		
-
-		// var empiricusCheck = false;
-
-		 //if(can_vertical_play) {
-		 	//currentAd = empiricusAd;
-			 //currentAd = bradescoAd;
-		//}
-
-		//var blackFridayCheck = videoId === 62904 || videoId === 62903 || videoId === 70261 || videoId === 71472;
-
-		//if(blackFridayCheck && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
-			//currentAd = blackFriday;
-		//}
-
-		// if(videoId === 62073 && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
-		// 	currentAd = showFullAd;
-		// 	fullAdContent = '<div class="full-ad-item full-empiricus active"><div class="full-ad-usable-area"><button type="button" class="full-ad-main-trigger">Trigger!</button><button type="button" class="full-ad-close full-empiricus-close"></button><div class="full-empiricus-products-list full-ad-products-list"><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/petrobras-report.png" alt="Relatório Petrobrás"></a></div><div class="full-empiricus-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/empiricus-new/image/book-febre.png" alt="Livro Febre do Ouro"></a></div></div></div><div class="full-ad-bottom-area"><div class="empiricus-time-left">Essa oferta termina em: <span><span id="time-left">00:00</span> minutos</span></div></div></div>';
-		// }
-
-		// if(videoId === 74616 && self.client.hash_code === 'ab1f939133333fbc4ba49b1984248a47') {
-		// 	currentAd = showFullAd;
-		// 	fullAdContent = '<div class="full-ad-item full-sephora active"><div class="full-ad-usable-area"><div class="time-left">Essa oferta termina em: <span class="time-left-holder"><span id="time-left">00:00</span> minutos</span></div><button type="button" class="full-ad-main-trigger"></button><button type="button" class="full-ad-close full-sephora-close"></button><div class="full-sephora-products-list full-ad-products-list"><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-1.png" alt="Produto"></a></div><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-2.png" alt="Produto"></a></div><div class="full-ad-product"><a href="http:///www.ycontent.com.br" target="_blank"><img src="/native/sephora/image/offer-3.png" alt="Produto"></a></div></div></div><div class="full-ad-bottom-area"></div></div>';
-		// }
-
-		//currentAd = toroRadarFrame;
-
-		currentAd(videoId);
+		currentAd();
 	};
 
 	self.setCurrentNative = function(nativeEl) {
