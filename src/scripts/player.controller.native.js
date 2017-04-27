@@ -229,91 +229,6 @@ SambaAdsPlayerControllerNative = function (){
 	// 		});
 	// 	};
 
-	self.bradescoFrame = function() {
-		var self = this;
-
-			if(!self.vastData.impression_url)
-				return;
-
-			self.setCurrentNative($('#bradesco-frame'));
-
-			var videosJsArea = $('#video_js_player'),
-				bradescoFrame = $('#bradesco-frame'),
-				frameClose = bradescoFrame.find('.frame-close'),
-				videoTitleBar = $('#video-title-bar'),
-				closeActive = true,
-				impression_trigger = false;
-
-			self.nativeTimerTrigger = function(event) {
-				if(closeActive) {
-					var currentTime = parseInt(event.detail.data.position);
-
-					if(currentTime >= 2) {
-						videosJsArea.addClass('native-frame');
-						videosJsArea.addClass('bradesco-player-frame');
-					//}
-					//if(currentTime == 10) {
-						if(!impression_trigger){
-							impression_trigger = true;
-							$(".vjs-control-bar").css({"display":"none"});
-							$(".sambaads-playlist").hide();
-							$("#sambaads-embed").removeClass('pull-left');
-							self.trackImpression(self.vastData.impression_url);
-						}
-						videosJsArea.addClass('active-native-frame');
-						bradescoFrame.addClass('active-native-frame');
-						videoTitleBar.addClass('inactive');
-					}
-					if(currentTime >= 10) {
-						frameClose.addClass('active');
-					}
-				}
-			};
-
-			var currentStopFunction = function(event) {
-				    $(".vjs-control-bar").css({"display":"flex"});
-					videosJsArea.removeClass('active-native-frame');
-					bradescoFrame.removeClass('active-native-frame');
-					videosJsArea.removeClass('native-frame');
-					$(".sambaads-playlist").show();
-					videosJsArea.removeClass('bradesco-player-frame');
-					frameClose.removeClass('active');
-					videoTitleBar.removeClass('inactive');
-					if(playerConfiguration.detail.data.playlist.position === 'right') {
-						$("#sambaads-embed").addClass('pull-left');
-					}
-					self.nativeTimerTrigger = function(){};
-				};
-
-			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
-
-			frameTrigger = $('.frame-trigger');
-			frameTrigger.off();	
-			frameTrigger.on('click', function(event){
-				event.preventDefault();
-				window.open(self.vastData.click_url);
-			});
-			
-			frameClose.on('click', function(event){
-				event.preventDefault();
-				closeActive = false;
-				if(playerConfiguration.detail.data.playlist.position === 'right') {
-					$("#sambaads-embed").addClass('pull-left');
-				}
-				videosJsArea.removeClass('bradesco-player-frame');
-				videosJsArea.removeClass('active-native-frame');
-				bradescoFrame.removeClass('active-native-frame');
-				frameClose.removeClass('active');
-				$(".vjs-control-bar").css({"display":"flex"});
-				$(".sambaads-playlist").show();
-				
-				window.setTimeout(function(){
-					videoTitleBar.removeClass('inactive');
-				},2500);
-			});
-		};
-
-
 	// var toroRadarFrame = function(videoId) {
 	// 		self.setCurrentNative($('#toro-frame'));
 
@@ -1294,6 +1209,90 @@ SambaAdsPlayerControllerNative = function (){
 		// 			adsType.playlistFrame(videoId);
 		// 		}
 		// 	};
+	
+	self.bradescoFrame = function() {
+		var self = this;
+
+			if(!self.vastData.impression_url)
+				return;
+
+			self.setCurrentNative($('#bradesco-frame'));
+
+			var videosJsArea = $('#video_js_player'),
+				bradescoFrame = $('#bradesco-frame'),
+				frameClose = bradescoFrame.find('.frame-close'),
+				videoTitleBar = $('#video-title-bar'),
+				closeActive = true,
+				impression_trigger = false;
+
+			self.nativeTimerTrigger = function(event) {
+				if(closeActive) {
+					var currentTime = parseInt(event.detail.data.position);
+
+					if(currentTime >= 2) {
+						videosJsArea.addClass('native-frame');
+						videosJsArea.addClass('bradesco-player-frame');
+					//}
+					//if(currentTime == 10) {
+						if(!impression_trigger){
+							impression_trigger = true;
+							$(".vjs-control-bar").css({"display":"none"});
+							$(".sambaads-playlist").hide();
+							$("#sambaads-embed").removeClass('pull-left');
+							self.trackImpression(self.vastData.impression_url);
+						}
+						videosJsArea.addClass('active-native-frame');
+						bradescoFrame.addClass('active-native-frame');
+						videoTitleBar.addClass('inactive');
+					}
+					if(currentTime >= 10) {
+						frameClose.addClass('active');
+					}
+				}
+			};
+
+			var currentStopFunction = function(event) {
+				    $(".vjs-control-bar").css({"display":"flex"});
+					videosJsArea.removeClass('active-native-frame');
+					bradescoFrame.removeClass('active-native-frame');
+					videosJsArea.removeClass('native-frame');
+					$(".sambaads-playlist").show();
+					videosJsArea.removeClass('bradesco-player-frame');
+					frameClose.removeClass('active');
+					videoTitleBar.removeClass('inactive');
+					if(playerConfiguration.detail.data.playlist.position === 'right') {
+						$("#sambaads-embed").addClass('pull-left');
+					}
+					self.nativeTimerTrigger = function(){};
+				};
+
+			SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
+
+			frameTrigger = $('.frame-trigger');
+			frameTrigger.off();	
+			frameTrigger.on('click', function(event){
+				event.preventDefault();
+				window.open(self.vastData.click_url);
+			});
+			
+			frameClose.on('click', function(event){
+				event.preventDefault();
+				closeActive = false;
+				if(playerConfiguration.detail.data.playlist.position === 'right') {
+					$("#sambaads-embed").addClass('pull-left');
+				}
+				videosJsArea.removeClass('bradesco-player-frame');
+				videosJsArea.removeClass('active-native-frame');
+				bradescoFrame.removeClass('active-native-frame');
+				frameClose.removeClass('active');
+				$(".vjs-control-bar").css({"display":"flex"});
+				$(".sambaads-playlist").show();
+				
+				window.setTimeout(function(){
+					videoTitleBar.removeClass('inactive');
+				},2500);
+			});
+		};
 
 	self.oiAd = function() {
 			var self = this;
@@ -1311,8 +1310,7 @@ SambaAdsPlayerControllerNative = function (){
 					var url = self.vastData.custom_ad.source;
 					url = url.replace('[timestamp]',timestamp);
 
-					console.log(url);
-					var banner = '<iframe src="' + url + '" width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'
+					var banner = '<iframe src="' + url + '" width="' + self.vastData.custom_ad.width + '" height="' + self.vastData.custom_ad.height + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'
 					
 					//banner = '<iframe src="http://secure-gl.imrworldwide.com/u/t/00/05/19/29/300x250_survey.html?ce=YContent&ci=nlsnci991&am=3&r=' + timestamp + '" width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'	
 					
@@ -1349,13 +1347,24 @@ SambaAdsPlayerControllerNative = function (){
 				if(self.vastData.impression_url){
 					startPlaylistFrameAd();
 				}
+
+				var currentStopFunction = function(event) {
+				    showClose = false;
+					$playlistAdArea.removeClass('active');
+					$currentPlaylistAd.removeClass('active');
+					$closeButton.removeClass('active');
+
+					self.nativeTimerTrigger = function(){};
+				};
+
+				SambaAdsPlayerMessageBroker().addEventListener(Event.NATIVE_STOP, currentStopFunction);
 			};
 
 			if(playerConfiguration.detail.data.playlist.position === 'right') {
 				oiPlaylistFrame();
 			} 
 		};
-
+	
 	self.genericLoad = function(){
 		var tags = self.video.dfp_tags + ",native";
 		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
@@ -1487,17 +1496,28 @@ SambaAdsPlayerControllerNative = function (){
 	self.startNative = function(e){
 		self.video = e.detail.data;
 
+		self.vastData = {
+			impression_url: '',
+			click_url: '',
+			custom_ad: ''
+		};
+
 		var ownerId = e.detail.data.owner_id,
 			videoId = e.detail.data.media_id;
 
 		self.nativeTimerTrigger = function(event){};
 		self.stopNativeFunction = function(event){};
 
-		 		//glamboxFrame(videoId);
-				//self.bradescoFrame();
-				self.genericLoad();
-				//relatedOffersAd(videoId);
+		var currentAd = function(){};
 
+		 	currentAd = function() {
+		 		//glamboxFrame(videoId);
+				 self.genericLoad();
+				 //bradescoFrame();
+				//relatedOffersAd(videoId);
+		 	}
+
+		currentAd();
 	};
 
 	self.setCurrentNative = function(nativeEl) {
@@ -1525,14 +1545,9 @@ SambaAdsPlayerControllerNative = function (){
 		}
 	};
 
-	self.teste = true;
-	self.vastData = {
-				impression_url: '',
-				click_url: '',
-				custom_ad: ''
-			};
-	self.loadVastTag = function(tagUrl, callback, dtype="xml"){
-		
+	self.loadVastTag = function(tagUrl, callback, dtype){
+
+		dtype = dtype === '' ? dtype : "xml";
 		$.ajax({
 	        type: "get",
 	        url:  tagUrl,
@@ -1550,21 +1565,9 @@ SambaAdsPlayerControllerNative = function (){
 					}
 				}
 
-				// if(dtype != 'xml'){
-						//data = '{"advertiser": "oi","source": "http://secure-gl.imrworldwide.com/u/t/00/05/19/29/300x250_survey.html?ce=YContent&ci=nlsnci991&am=3&r=[timestamp]","width": "300","height": "250","type": "iframe"}';
-						//vastData.object = JSON.parse(data);
-						//console.log(vastData.object);
-				// }
-
-				if(dtype == 'xml' && typeof data.getElementsByTagName("VASTAdTagURI")[0] !== 'undefined') {
-		
-				//if(self.teste){
-				//	self.teste = false;
+    			if(dtype == 'xml' && typeof data.getElementsByTagName("VASTAdTagURI")[0] !== 'undefined') {
 					el = data.getElementsByTagName("VASTAdTagURI")[0].childNodes[0];
 					self.loadVastTag(el.nodeValue,function(vastData, data){
-					//self.loadVastTag("https://mfa.predicta.predicta.net/mrm-ad/ad/script/?;c=3740;sc=8149;p=59",function(vastData, data){
-					//	console.log(data);
-					//	console.log(vastData);
 						self.vastData.custom_ad = JSON.parse(data);
 						if(typeof callback === 'function') {
 							callback(self.vastData, data);
@@ -1577,8 +1580,6 @@ SambaAdsPlayerControllerNative = function (){
 				}
 	        },
 	        error: function(xhr, status) {
-				console.log(xhr);
-				console.log(status);
 	            console.log("error");
 	        }
     	});

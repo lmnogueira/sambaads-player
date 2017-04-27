@@ -93,6 +93,10 @@ gulp.task("build-javascripts-player", function(){
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
+    // .on('error', function(e){
+    //         console.log(e);
+    //      })
+
     gulp.src(paths.scripts + "player.js")
         .pipe(sourcemaps.init())
         .pipe(preprocess({context: contextEnv}))
