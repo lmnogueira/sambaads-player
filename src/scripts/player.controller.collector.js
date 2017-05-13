@@ -83,7 +83,7 @@ SambaAdsPlayerControllerCollector = function (){
 
 				self.sendGif(evtObject);
 
-				if((parseInt(self.media.media_id) == 112796) && (percent == 0)){
+				if((parseInt(self.media.media_id) == 112796) && (percent == 2)){
 					self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/impressions?" + Date.now());
 				}
 
