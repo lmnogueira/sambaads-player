@@ -83,10 +83,6 @@ SambaAdsPlayerControllerCollector = function (){
 
 				self.sendGif(evtObject);
 
-				if((parseInt(self.media.media_id) == 112796) && (percent == 2)){
-					self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/impressions?" + Date.now());
-				}
-
 				if((parseInt(self.media.media_id) == 112796) && (percent == 100)){
 					self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/starts?" + Date.now());
 				}
@@ -123,6 +119,10 @@ SambaAdsPlayerControllerCollector = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.media = e.detail.data;
+
+		if((parseInt(self.media.media_id) == 112796)){
+			self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/impressions?" + Date.now());
+		}
 	});
 };
 
