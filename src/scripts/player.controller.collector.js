@@ -83,8 +83,12 @@ SambaAdsPlayerControllerCollector = function (){
 
 				self.sendGif(evtObject);
 
-				if((parseInt(self.media.media_id) == 93888) && (percent == 100)){
-					self.trackPixel();
+				if((parseInt(self.media.media_id) == 112796) && (percent == 0)){
+					self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/impressions?" + Date.now());
+				}
+
+				if((parseInt(self.media.media_id) == 112796) && (percent == 100)){
+					self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/starts?" + Date.now());
 				}
 			}
 
@@ -92,8 +96,8 @@ SambaAdsPlayerControllerCollector = function (){
 
 	};
 
-	self.trackPixel = function(){
-		$.get('https://ras.reamp.com.br/pxl?znid=336924&dvrtsrd=1000284').done(function(msg) {
+	self.trackPixel = function(url){
+		$.get(url).done(function(msg) {
 			//alert("success load cont");
 		}).error(function(){
 			//alert("error load cont");
