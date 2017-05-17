@@ -1575,9 +1575,7 @@ SambaAdsPlayerControllerNative = function (){
 
 	self.startNative = function(e){
 		self.video = e.detail.data;
-
-		console.log(window.lucas);
-
+		
 		self.vastData = {
 			impression_url: '',
 			click_url: '',

@@ -192,6 +192,7 @@ VpaidNonLinear.prototype.overlay2OnClick_ = function() {
  * Starts the ad.
  */
 VpaidNonLinear.prototype.startAd = function() {
+  var self = this;
   this.log('Starting ad');
 //   var style = document.createElement('style');
 //   style.type = 'text/css';
@@ -213,9 +214,11 @@ VpaidNonLinear.prototype.startAd = function() {
 //   img.src = this.imageUrls_[1] || '';
 //   this.slot_.appendChild(img);
 //   img.addEventListener('click', this.overlay2OnClick_.bind(this), false);
-
-  this.callEvent_('AdImpression');
-  this.callEvent_('AdStarted');
+ setTimeout(function(){
+   self.callEvent_('AdImpression');
+   self.callEvent_('AdStarted');
+ },10000);
+  
 };
 
 
