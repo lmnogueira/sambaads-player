@@ -214,6 +214,7 @@ VpaidNonLinear.prototype.startAd = function() {
 //   this.slot_.appendChild(img);
 //   img.addEventListener('click', this.overlay2OnClick_.bind(this), false);
 
+  this.callEvent_('AdImpression');
   this.callEvent_('AdStarted');
 };
 
