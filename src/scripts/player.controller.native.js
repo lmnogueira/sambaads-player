@@ -1311,9 +1311,7 @@ SambaAdsPlayerControllerNative = function (){
 					url = url.replace('[timestamp]',timestamp);
 
 					var banner = '<iframe src="' + url + '" width="' + self.vastData.custom_ad.width + '" height="' + self.vastData.custom_ad.height + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'
-					
-					//banner = '<iframe src="http://secure-gl.imrworldwide.com/u/t/00/05/19/29/300x250_survey.html?ce=YContent&ci=nlsnci991&am=3&r=' + timestamp + '" width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'	
-					
+										
 					if(banner){
 						$('#playlist-products-area').html(banner);
 					}
@@ -1344,9 +1342,9 @@ SambaAdsPlayerControllerNative = function (){
 				};
 
 				$productsTrigger.off();
-				if(self.vastData.impression_url){
-					startPlaylistFrameAd();
-				}
+				//if(self.vastData.impression_url){
+				startPlaylistFrameAd();
+				//}
 
 				var currentStopFunction = function(event) {
 				    showClose = false;
@@ -1379,7 +1377,6 @@ SambaAdsPlayerControllerNative = function (){
 				 		 "&correlator=" + new Date().getTime();
 
 			self.loadVastTag(tagUrl, function(vastData, data){
-				console.log(vastData);
 				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
 				 	self.oiAd();
 				} else if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "bradesco") {
@@ -1548,41 +1545,144 @@ SambaAdsPlayerControllerNative = function (){
 	self.loadVastTag = function(tagUrl, callback, dtype){
 
 		dtype = dtype === '' ? dtype : "xml";
-		$.ajax({
-	        type: "get",
-	        url:  tagUrl,
-	        dataType: dtype,
-	        success: function(data) {
-				if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-					var el = data.getElementsByTagName("Impression")[0].childNodes[0];
-					self.vastData.impression_url = el.nodeValue;
-				}
 
-				if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
-					if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
-						el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
-						self.vastData.click_url = el.nodeValue;
-					}
-				}
 
-    			if(dtype == 'xml' && typeof data.getElementsByTagName("VASTAdTagURI")[0] !== 'undefined') {
-					el = data.getElementsByTagName("VASTAdTagURI")[0].childNodes[0];
-					self.loadVastTag(el.nodeValue,function(vastData, data){
-						self.vastData.custom_ad = JSON.parse(data);
-						if(typeof callback === 'function') {
-							callback(self.vastData, data);
-						}
-					},'');
-				} else {
-					if(typeof callback === 'function') {
-						callback(self.vastData, data);
-					}
-				}
-	        },
-	        error: function(xhr, status) {
-	            console.log("error");
-	        }
-    	});
+		//tagUrl = "http://local-player.sambaads.com/native/atract/teste.xml";
+		
+		var videoContent = document.getElementById('playlist-products-area');
+		var adDisplayContainer = new google.ima.AdDisplayContainer( document.getElementById('playlist-ad-area'), videoContent);
+		adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+
+		// Add event listeners
+		adsLoader.addEventListener(
+			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+			onAdsManagerLoaded,
+			false);
+		adsLoader.addEventListener(
+			google.ima.AdErrorEvent.Type.AD_ERROR,
+			onAdError,
+			false);
+
+		function onAdError(adErrorEvent) {
+			// Handle the error logging and destroy the AdsManager
+			//console.log(adErrorEvent);
+			//console.log(adErrorEvent.getError());
+		 	//adsManager.destroy();
+		}
+
+		// An event listener to tell the SDK that our content video
+		// is completed so the SDK can play any post-roll ads.
+		var contentEndedListener = function() {adsLoader.contentComplete();};
+		videoContent.onended = contentEndedListener;
+
+		// Request video ads.
+		var adsRequest = new google.ima.AdsRequest();
+		adsRequest.adTagUrl = tagUrl;
+
+		// Specify the linear and nonlinear slot sizes. This helps the SDK to
+		// select the correct creative if multiple are returned.
+		adsRequest.linearAdSlotWidth = 640;
+		adsRequest.linearAdSlotHeight = 360;
+		adsRequest.nonLinearAdSlotWidth = 640;
+		adsRequest.nonLinearAdSlotHeight = 360;
+
+		adsLoader.requestAds(adsRequest);
+
+		function onAdsManagerLoaded(adsManagerLoadedEvent) {
+			// Get the ads manager.
+
+			adsManager = adsManagerLoadedEvent.getAdsManager(
+				videoContent);  // See API reference for contentPlayback
+			// Add listeners to the required events.
+			adsManager.addEventListener(
+				google.ima.AdErrorEvent.Type.AD_ERROR,
+				onAdError);
+			adsManager.addEventListener(
+				google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
+				onContentPauseRequested);
+			adsManager.addEventListener(
+				google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
+				onContentResumeRequested);
+			adsManager.addEventListener(
+    			google.ima.AdEvent.Type.STARTED,
+    			onAdEvent);
+
+  
+
+			try {
+				// Initialize the ads manager. Ad rules playlist will start at this time.
+				adsManager.init(640, 360, google.ima.ViewMode.NORMAL);
+				// Call start to show ads. Single video and overlay ads will
+				// start at this time; this call will be ignored for ad rules, as ad rules
+				// ads start when the adsManager is initialized.
+				adsManager.start();
+			} catch (adError) {
+				console.log("ERROR");
+				// An error may be thrown if there was a problem with the VAST response.
+			}
+		}
+
+		function onAdEvent(adEvent) {
+			//console.log("start");
+
+		}
+
+		function onContentPauseRequested(adEvent) {
+			var ad = adEvent.getAd();
+			
+			self.vastData.custom_ad = JSON.parse(ad.getTraffickingParametersString());
+			
+			callback(self.vastData,ad);
+			// This function is where you should setup UI for showing ads (e.g.
+			// display ad timer countdown, disable seeking, etc.)
+			videoContent.removeEventListener('ended', contentEndedListener);
+			//videoContent.pause();
+		}
+
+		function onContentResumeRequested(adEvent) {
+			
+			// This function is where you should ensure that your UI is ready
+			// to play content.
+			videoContent.addEventListener('ended', contentEndedListener);
+			//videoContent.play();
+		}
+
+
+		// $.ajax({
+	    //     type: "get",
+	    //     url:  tagUrl,
+	    //     dataType: dtype,
+	    //     success: function(data) {
+		// 		if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+		// 			var el = data.getElementsByTagName("Impression")[0].childNodes[0];
+		// 			self.vastData.impression_url = el.nodeValue;
+		// 		}
+
+		// 		if(dtype == 'xml' && typeof data.getElementsByTagName("Impression")[0] !== 'undefined') {
+		// 			if(typeof data.getElementsByTagName("ClickThrough")[0] !== 'undefined') {
+		// 				el = data.getElementsByTagName("ClickThrough")[0].childNodes[0];
+		// 				self.vastData.click_url = el.nodeValue;
+		// 			}
+		// 		}
+
+    	// 		if(dtype == 'xml' && typeof data.getElementsByTagName("VASTAdTagURI")[0] !== 'undefined') {
+		// 			el = data.getElementsByTagName("VASTAdTagURI")[0].childNodes[0];
+		// 			self.loadVastTag(el.nodeValue,function(vastData, data){
+		// 				self.vastData.custom_ad = JSON.parse(data);
+		// 				if(typeof callback === 'function') {
+		// 					callback(self.vastData, data);
+		// 				}
+		// 			},'');
+		// 		} else {
+		// 			if(typeof callback === 'function') {
+		// 				callback(self.vastData, data);
+		// 			}
+		// 		}
+	    //     },
+	    //     error: function(xhr, status) {
+	    //         console.log("error");
+	    //     }
+    	// });
 	}
 
 	self.stopNative = function(e){
