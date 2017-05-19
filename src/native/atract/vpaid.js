@@ -214,12 +214,13 @@ VpaidNonLinear.prototype.startAd = function() {
 //   img.src = this.imageUrls_[1] || '';
 //   this.slot_.appendChild(img);
 //   img.addEventListener('click', this.overlay2OnClick_.bind(this), false);
-   self.callEvent_('AdImpression');
    self.callEvent_('AdStarted');
+   self.callEvent_('AdImpression');
 
-   self.callEvent_('AdVideoComplete');
-   self.stopAd();
-  
+    setTimeout(function(){
+        self.callEvent_('AdVideoComplete');
+        self.stopAd();
+    },4000);
 };
 
 
