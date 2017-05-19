@@ -103,18 +103,18 @@ VpaidNonLinear.prototype.initAd = function(
     creativeData,
     environmentVars) {
   // slot and videoSlot are passed as part of the environmentVars
-  this.attributes_['width'] = width;
-  this.attributes_['height'] = height;
+  this.attributes_['width'] = 0;//width;
+  this.attributes_['height'] = 0;//height;
   this.attributes_['viewMode'] = viewMode;
   this.attributes_['desiredBitrate'] = desiredBitrate;
   this.slot_ = environmentVars.slot;
-  this.videoSlot_ = environmentVars.videoSlot;
+  //this.videoSlot_ = environmentVars.videoSlot;
 
   var data = JSON.parse(creativeData['AdParameters']);
   this.imageUrls_ = data.overlays || [];
   this.videos_ = data.videos || [];
 
-  this.log('initAd ' + width + 'x' + height +
+  this.log('initAd ' + this.attributes_['width'] + 'x' + this.attributes_['height'] +
       ' ' + viewMode + ' ' + desiredBitrate);
   this.callEvent_('AdLoaded');
 };
@@ -125,8 +125,8 @@ VpaidNonLinear.prototype.initAd = function(
  * @private
  */
 VpaidNonLinear.prototype.updateVideoPlayerSize_ = function() {
-  this.videoSlot_.setAttribute('width', this.attributes_['width']);
-  this.videoSlot_.setAttribute('height', this.attributes_['height']);
+  //this.videoSlot_.setAttribute('width', this.attributes_['width']);
+  //this.videoSlot_.setAttribute('height', this.attributes_['height']);
 };
 
 
@@ -170,21 +170,21 @@ VpaidNonLinear.prototype.overlay2OnClick_ = function() {
   var foundSource = false;
   for (var i = 0; i < this.videos_.length; i++) {
     // Choose the first video with a supported mimetype.
-    if (this.videoSlot_.canPlayType(this.videos_[i].mimetype) != '') {
-      this.videoSlot_.setAttribute('src', this.videos_[i].url);
-      foundSource = true;
-      break;
-    }
+    // if (this.videoSlot_.canPlayType(this.videos_[i].mimetype) != '') {
+    //   this.videoSlot_.setAttribute('src', this.videos_[i].url);
+    //   foundSource = true;
+    //   break;
+    // }
   }
   if (!foundSource) {
     // Unable to find a source video.
     this.callEvent_('AdError');
   }
-  this.videoSlot_.addEventListener(
-      'ended',
-      this.stopAd.bind(this),
-      false);
-  this.videoSlot_.play();
+//   this.videoSlot_.addEventListener(
+//       'ended',
+//       this.stopAd.bind(this),
+//       false);
+  //this.videoSlot_.play();
 };
 
 
@@ -217,6 +217,8 @@ VpaidNonLinear.prototype.startAd = function() {
  setTimeout(function(){
    self.callEvent_('AdImpression');
    self.callEvent_('AdStarted');
+
+   self.stopAd();
  },10000);
   
 };
@@ -273,7 +275,7 @@ VpaidNonLinear.prototype.resizeAd = function(width, height, viewMode) {
  */
 VpaidNonLinear.prototype.pauseAd = function() {
   this.log('pauseAd');
-  this.videoSlot_.pause();
+  //this.videoSlot_.pause();
   this.callEvent_('AdPaused');
 };
 
@@ -283,7 +285,7 @@ VpaidNonLinear.prototype.pauseAd = function() {
  */
 VpaidNonLinear.prototype.resumeAd = function() {
   this.log('resumeAd');
-  this.videoSlot_.play();
+  //this.videoSlot_.play();
   this.callEvent_('AdResumed');
 };
 

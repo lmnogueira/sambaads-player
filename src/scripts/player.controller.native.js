@@ -1478,6 +1478,8 @@ SambaAdsPlayerControllerNative = function (){
 			self.loadVastTag(tagUrl, function(vastData, data){
 				if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "oi"){
 				  	self.oiAd();
+				} else if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "Bradesco"){
+				  	self.oiAd();
 				} else if(vastData.custom_ad != undefined && vastData.custom_ad.advertiser == "autoline") {
 					 self.autolineFrame(vastData.custom_ad.ad_type);
 				} 
@@ -1677,18 +1679,16 @@ SambaAdsPlayerControllerNative = function (){
 
 		// Specify the linear and nonlinear slot sizes. This helps the SDK to
 		// select the correct creative if multiple are returned.
-		adsRequest.linearAdSlotWidth = 640;
-		adsRequest.linearAdSlotHeight = 360;
-		adsRequest.nonLinearAdSlotWidth = 640;
-		adsRequest.nonLinearAdSlotHeight = 360;
+		adsRequest.linearAdSlotWidth = 0;
+		adsRequest.linearAdSlotHeight = 0;
+		adsRequest.nonLinearAdSlotWidth = 0;
+		adsRequest.nonLinearAdSlotHeight = 0;
 
 		adsLoader.requestAds(adsRequest);
 
 		function onAdsManagerLoaded(adsManagerLoadedEvent) {
 			// Get the ads manager.
-
-			adsManager = adsManagerLoadedEvent.getAdsManager(
-				videoContent);  // See API reference for contentPlayback
+			adsManager = adsManagerLoadedEvent.getAdsManager(videoContent);  // See API reference for contentPlayback
 			// Add listeners to the required events.
 			adsManager.addEventListener(
 				google.ima.AdErrorEvent.Type.AD_ERROR,
@@ -1702,8 +1702,10 @@ SambaAdsPlayerControllerNative = function (){
 			adsManager.addEventListener(
     			google.ima.AdEvent.Type.STARTED,
     			onAdEvent);
+			adsManager.addEventListener(
+    			google.ima.AdEvent.Type.COMPLETE,
+    			onAdEventComplete);
 
-  
 
 			try {
 				// Initialize the ads manager. Ad rules playlist will start at this time.
@@ -1721,6 +1723,10 @@ SambaAdsPlayerControllerNative = function (){
 		function onAdEvent(adEvent) {
 			//console.log("start");
 
+		}
+
+		function onAdEventComplete(adEvent) {
+			console.log("complete");
 		}
 
 		function onContentPauseRequested(adEvent) {
