@@ -1542,8 +1542,10 @@ SambaAdsPlayerControllerNative = function (){
 					if(currentTime === 0) {
 						$timeLeft.html(secondsToTime(parseInt(event.detail.data.duration)));
 					} if(currentTime >= adStartSeconds) {
+						console.log(1);
 						fullAdStart();
 					} if(currentTime >= 14) {
+						console.log(2);
 						$fullAdClose.addClass('active');
 					} if(currentTime >= adStartSeconds && currentVideoDuration === 0) {
 						currentVideoDuration = parseInt(event.detail.data.duration) - adStartSeconds;
@@ -1688,32 +1690,31 @@ SambaAdsPlayerControllerNative = function (){
 
 		function onAdsManagerLoaded(adsManagerLoadedEvent) {
 			// Get the ads manager.
-			adsManager = adsManagerLoadedEvent.getAdsManager(videoContent);  // See API reference for contentPlayback
+			self.adsManager = adsManagerLoadedEvent.getAdsManager(videoContent);  // See API reference for contentPlayback
 			// Add listeners to the required events.
-			adsManager.addEventListener(
+			self.adsManager.addEventListener(
 				google.ima.AdErrorEvent.Type.AD_ERROR,
 				onAdError);
-			adsManager.addEventListener(
+			self.adsManager.addEventListener(
 				google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
 				onContentPauseRequested);
-			adsManager.addEventListener(
+			self.adsManager.addEventListener(
 				google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
 				onContentResumeRequested);
-			adsManager.addEventListener(
+			self.adsManager.addEventListener(
     			google.ima.AdEvent.Type.STARTED,
     			onAdEvent);
-			adsManager.addEventListener(
+			self.adsManager.addEventListener(
     			google.ima.AdEvent.Type.COMPLETE,
     			onAdEventComplete);
 
 
 			try {
 				// Initialize the ads manager. Ad rules playlist will start at this time.
-				adsManager.init(640, 360, google.ima.ViewMode.NORMAL);
+				self.adsManager.init(640, 360, google.ima.ViewMode.NORMAL);
 				// Call start to show ads. Single video and overlay ads will
 				// start at this time; this call will be ignored for ad rules, as ad rules
 				// ads start when the adsManager is initialized.
-				adsManager.start();
 			} catch (adError) {
 				console.log("ERROR");
 				// An error may be thrown if there was a problem with the VAST response.
@@ -1751,6 +1752,15 @@ SambaAdsPlayerControllerNative = function (){
 			//videoContent.play();
 		}
 
+		self.started = false;
+		self.nativeTimerTrigger = function(event) {
+				var currentTime = parseInt(event.detail.data.position);
+
+				if(!self.started && currentTime >= 4) {
+					self.started = true;
+					self.adsManager.start();
+				}
+		};
 
 		// $.ajax({
 	    //     type: "get",
