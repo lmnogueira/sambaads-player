@@ -1450,7 +1450,21 @@ SambaAdsPlayerControllerNative = function (){
 	
 	self.genericLoad = function(){
 		var tags = self.video.dfp_tags + ",native";
-		var custom_params = encodeURIComponent("duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+
+		var navegg_tags = "nvg_gender="+ playerConfiguration.detail.data.navegg_perfil.gender
+ 		+ "&nvg_age=" + playerConfiguration.detail.data.navegg_perfil.age
+ 		+ "&nvg_educat=" + playerConfiguration.detail.data.navegg_perfil.education
+ 		+ "&nvg_marita=" + playerConfiguration.detail.data.navegg_perfil.marital
+ 		+ "&nvg_income=" + playerConfiguration.detail.data.navegg_perfil.income
+ 		+ "&nvg_intere=" + playerConfiguration.detail.data.navegg_perfil.interest.replace(/-/g,",")
+ 		+ "&nvg_produc=" + playerConfiguration.detail.data.navegg_perfil.product.replace(/-/g,",")
+ 		+ "&nvg_career=" + playerConfiguration.detail.data.navegg_perfil.career
+ 		+ "&nvg_brand="  + playerConfiguration.detail.data.navegg_perfil.brand.replace(/-/g,",")
+ 		+ "&nvg_connec=" + playerConfiguration.detail.data.navegg_perfil.connection.replace(/-/g,",")
+ 		+ "&nvg_everyb=" + playerConfiguration.detail.data.navegg_perfil.everybuyer.replace(/-/g,",")
+ 		+ "&nvg_custom=" + playerConfiguration.detail.data.navegg_perfil.custom.replace(/-/g,",");
+
+		var custom_params = encodeURIComponent(navegg_tags + "&duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 	var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
@@ -1575,7 +1589,7 @@ SambaAdsPlayerControllerNative = function (){
 
 	self.startNative = function(e){
 		self.video = e.detail.data;
-		
+
 		self.vastData = {
 			impression_url: '',
 			click_url: '',
@@ -1628,7 +1642,6 @@ SambaAdsPlayerControllerNative = function (){
 	self.loadVastTag = function(tagUrl, callback, dtype){
 
 		dtype = dtype === '' ? dtype : "xml";
-
 
 		//tagUrl = "http://local-player.sambaads.com/native/atract/teste.xml";
 		
