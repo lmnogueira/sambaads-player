@@ -218,6 +218,7 @@ VpaidNonLinear.prototype.startAd = function() {
    self.callEvent_('AdImpression');
    self.callEvent_('AdStarted');
 
+   self.callEvent_('AdVideoComplete');
    self.stopAd();
  },10000);
   
