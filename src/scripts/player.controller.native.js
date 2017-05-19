@@ -1645,7 +1645,7 @@ SambaAdsPlayerControllerNative = function (){
 
 		dtype = dtype === '' ? dtype : "xml";
 
-		tagUrl = "http://local-player.sambaads.com/native/atract/teste.xml";
+		//tagUrl = "http://local-player.sambaads.com/native/atract/teste.xml";
 		
 		var videoContent = document.getElementById('playlist-products-area');
 		var adDisplayContainer = new google.ima.AdDisplayContainer( document.getElementById('playlist-ad-area'), videoContent);
