@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/sambaads.player.css">
     <style type="text/css">
         body { margin: 0px; background: #F5F5F5; padding: 0; }
         #extensive { box-shadow: 0 0 5px #ccc; }
+        .hide {
+            display:none;
+        }
     </style>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- oembed discovery -->
     <link rel="alternate" type="application/json+oembed" href="//player.sambaads.com/services/oembed?url=<%=base_url%>&format=json" title="" />
     <link rel="alternate" type="text/xml+oembed" href="//player.sambaads.com/services/oembed?url=<%=base_url%>&format=xml" title="" />
     <!-- end oembed discovery -->
-    <script id="navegg" type="text/javascript" src="//tag.navdmp.com/tm43244.js"></script>
-
-    <!--videojs-->
-    <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-    <link href="/stylesheets/videojs.ima.css" rel="stylesheet">
-    <link rel="stylesheet" href="" />
-    <!-- If you'd like to support IE8 -->
-    <script src="//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 </head>
 <body>
-<div class="sambaads-player-container">
+<div class="sambaads-player-container hide">
     <div id="full-ad-area" class="full-ad-area" style="overflow:hidden;">
 
     </div>
@@ -353,24 +348,57 @@
             </div>
         </div>
 </div>
-<script src="//vjs.zencdn.net/5.8.8/video.js"></script>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/4.2.1-0/videojs.ads.min.js"></script>
-<script src="/javascripts/videojs.ima.js"></script>
-<script src="/javascripts/sambaads.player.js"></script>
+<script>
+(function(d){
 
-<script type="text/javascript">
-	// START COMSCORE
-	document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "//b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
-	// END COMSCORE
+    window.ycontentLoadCSS = function(href){
+        var link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('type', 'text/css');
+        link.setAttribute('href', href);
+        document.getElementsByTagName('head')[0].appendChild(link)
+    };
 
-	// START SAMBAADS
-    var smb = new SambaAdsPlayerView()
-    //smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
-    var smbCtrl = new SambaAdsPlayerController("vjs_sambaads_player", smb, <%- JSON.stringify(info) %>);
-  // END SAMBAADS
+    window.ycontentLoadJS = function(src, callback){
+        var s = document.createElement('script');
+        s.src = src;
+        s.type = "text/javascript";
+        s.addEventListener('load', callback);
+        s.async = false;    
+        document.getElementsByTagName('head')[0].appendChild(s);
+    };
 
+    window.ycontentOnLoad = function(){
+
+        //player
+        window.ycontentLoadCSS('/stylesheets/sambaads.player.css');
+        //videojs
+        window.ycontentLoadCSS('//vjs.zencdn.net/5.8.8/video-js.css');
+        window.ycontentLoadCSS('/stylesheets/videojs.ima.css');
+
+        window.ycontentLoadJS('//imasdk.googleapis.com/js/sdkloader/ima3.js',function(){
+            window.ycontentLoadJS('//tag.navdmp.com/tm43244.js');
+            window.ycontentLoadJS('//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js');
+            window.ycontentLoadJS('//vjs.zencdn.net/5.8.8/video.js',function(){
+                window.ycontentLoadJS('//cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/4.2.1-0/videojs.ads.min.js');
+                window.ycontentLoadJS('/javascripts/videojs.ima.js');
+            });
+            window.ycontentLoadJS('//code.jquery.com/jquery-1.11.0.min.js', function(){
+                window.ycontentLoadJS((document.location.protocol == "https:" ? "https://sb" : "//b") + ".scorecardresearch.com/beacon.js", function(){
+                    window.ycontentLoadJS('/javascripts/sambaads.player.js', function(){
+                        // START SAMBAADS
+                        var smb = new SambaAdsPlayerView()
+                        //smb.setTitleBar("<%= info.player_info.titlebar %>", "<%= info.player_info.titlebar_style %>");
+                        var smbCtrl = new SambaAdsPlayerController("vjs_sambaads_player", smb, <%- JSON.stringify(info) %>);
+                    });
+                });
+            });
+        });
+     };  
+  
+  d.open().write('<body onload="ycontentOnLoad()">');
+  d.close(); 
+})(document);
 </script>
 </body>
 </html>
