@@ -32,6 +32,7 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 			  		SambaAdsPlayerMessageBroker().send(Event.READY, (this));
 
 			  		$("#video_js_player").removeClass("hide");
+					$(".sambaads-player-container").removeClass("hide");
 				});
 
 	window.sambaads.videoJSPlayer = self.player;

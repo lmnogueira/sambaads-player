@@ -235,7 +235,7 @@ gulp.task('build-errors-pages', function() {
 });
 
 gulp.task('build-templates', function() {
-  return gulp.src(paths.templates + 'iframe.ejs')
+  return gulp.src(paths.templates + 'iframe-optmized.ejs')
     .pipe(inlinesource())
     .pipe(base64())
     .pipe(htmlmin({collapseWhitespace: true}))

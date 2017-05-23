@@ -17,7 +17,7 @@ router.get('/:pid', function(req, res, next) {
 
 			res.header('Content-Type', 'text/html');
 			if(response && response.statusCode == 200){
-				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+				res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 			}else{
 				if(response && nconf.get("DEBUG") == 'true'){
 					res.sendStatus(response.statusCode);
@@ -34,7 +34,7 @@ router.get('/:pid', function(req, res, next) {
 			res.header('Content-Type', 'text/html');
 
 			if(response && response.statusCode == 200){
-				res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+				res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 			}else{
 				if(response && nconf.get("DEBUG") == 'true'){
 					res.sendStatus(response.statusCode);
@@ -56,7 +56,7 @@ router.get('/player/single_player/:media_id/:pid', function(req, res, next) {
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data.json?' + querystring.stringify(req.query), function(error, response, body){
 		res.header('Content-Type', 'text/html');
 		if(response && response.statusCode == 200){
-			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+			res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 		}else{
 			if(response && nconf.get("DEBUG") == 'true'){
 				res.sendStatus(response.statusCode);
@@ -75,7 +75,7 @@ router.get('/player/:category/:size', function(req, res, next) {
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.query.pid + '/data.json?' + querystring.stringify(req.query), function(error, response, body){
 		res.header('Content-Type', 'text/html');
 		if(response && response.statusCode == 200){
-			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+			res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 		}else{
 			if(response && response && nconf.get("DEBUG") == 'true'){
 				res.sendStatus(response.statusCode);
@@ -94,7 +94,7 @@ router.get('/player/:category/:size/:pid', function(req, res, next) {
 	request.get(nconf.get("SMARTSEED_URL") + '/iframe/' + req.params.pid + '/data.json?' + querystring.stringify(req.query), function(error, response, body){
 		res.header('Content-Type', 'text/html');
 		if(response && response.statusCode == 200){
-			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+			res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 		}else{
 			if(response && nconf.get("DEBUG") == 'true'){
 				res.sendStatus(response.statusCode);
@@ -115,7 +115,7 @@ router.get('/player/:category/:size/:pid/:tags', function(req, res, next) {
 		res.header('Content-Type', 'text/html');
 
 		if(response && response.statusCode == 200){
-			res.render('player/iframe', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
+			res.render('player/iframe-optmized', { base_url: urlFinal, info: JSON.parse(body), width:req.query['w'], height: req.query['h']});
 		}else{
 			if(response && nconf.get("DEBUG") == 'true'){
 				res.sendStatus(response.statusCode);
