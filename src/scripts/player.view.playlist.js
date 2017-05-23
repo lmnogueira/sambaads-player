@@ -4,19 +4,9 @@ SambaAdsPlayerViewPlaylist = function (){
 	var self = this;
 	self.vertical_factory_item = $("#playlist-v-item");
 	self.horizontal_factory_item = $("#playlist-h-item");
-	self.player_width = 0;
-	self.player_height = 0;
 	self.lastPlaylistIndex = 0;
 	self.currentPlaylistIndex = 0;
 	self.nextPlaylistIndex = 1;
-
-
-	SambaAdsPlayerMessageBroker().addEventListener(Event.RESIZE, function(e){
-		if (e.detail){
-			self.player_width = e.detail.data.width;
-			self.player_height = e.detail.data.height;
-		}
-	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
 		self.applyStyle(e.detail.data.playlistStyle, e.detail.data.position, e.detail.data.playlistWidth, e.detail.data.playlistHeight);
@@ -131,27 +121,29 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	if(self.count > 1){
 		$(".sambaads-playlist").show();
 	}
-	
-	$("#playlist-h-items").lightSlider({
-		item: 3,
-		autoWidth: true,
-		slideMove: 1, // slidemove will be 1 if loop is true
-		slideMargin: 0,
-		mode: "slide",
-		useCSS: true,
-		loop: true,
-		controls: true,
-		prevHtml: '<i class="icon-previous"></i>',
-        nextHtml: '<i class="icon-next"></i>',
-		pager: false,
-		enableTouch:false,
-        enableDrag:false,
-		onSliderLoad: function() {
-			$('#autoWidth').removeClass('cS-hidden');
-		}
-	});
 
-	$(".nano").nanoScroller();
+	setTimeout(function(){
+		$("#playlist-h-items").lightSlider({
+			item: 3,
+			autoWidth: true,
+			slideMove: 1, // slidemove will be 1 if loop is true
+			slideMargin: 0,
+			mode: "slide",
+			useCSS: true,
+			loop: true,
+			controls: true,
+			prevHtml: '<i class="icon-previous"></i>',
+			nextHtml: '<i class="icon-next"></i>',
+			pager: false,
+			enableTouch:false,
+			enableDrag:false,
+			onSliderLoad: function() {
+				$('#autoWidth').removeClass('cS-hidden');
+			}
+		});
+	},100);
+
+	$(".nano").nanoScroller();	
 
 
 	$( "div.playlist-item" ).click(function(e) {
