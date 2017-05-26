@@ -1464,7 +1464,7 @@ SambaAdsPlayerControllerNative = function (){
  		+ "&nvg_everyb=" + playerConfiguration.detail.data.navegg_perfil.everybuyer.replace(/-/g,",")
  		+ "&nvg_custom=" + playerConfiguration.detail.data.navegg_perfil.custom.replace(/-/g,",");
 
-		var custom_params = encodeURIComponent(navegg_tags + "&duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
+		var custom_params = encodeURIComponent(navegg_tags + "&duration=&CNT_Position=preroll&category=" + self.video.category_name + "&CNT_VideoID=" +  + self.video.hashed_code + "&CNT_PlayerType=singleplayer&CNT_MetaTags=" + tags);
 
 	 	var tagUrl = "https://pubads.g.doubleclick.net/gampad/ads?" +
 				 		 "sz=640x360" +
