@@ -16,7 +16,7 @@ server fetch(:server2), user: fetch(:with_user), roles: %w{app db web}
 server fetch(:server3), user: fetch(:with_user), roles: %w{app db web}
 
 set :nvm_type, :user
-set :nvm_node, 'v0.12.2'
+set :nvm_node, 'v4.4.0'
 set :nvm_map_bins, %w{node npm}
 
 set :npm_flags, '--no-spin'

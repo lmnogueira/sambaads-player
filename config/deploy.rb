@@ -81,12 +81,12 @@ end
 set :forever_pid_path, -> {"#{shared_path}/player.pid"}
 set :newrelic_log_path, -> { "#{current_path}/newrelic_agent.log" }
 
-namespace :forever do
-  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} forever start -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www" }
-  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} forever restart -a --pidFile #{fetch(:forever_pid_path)} --uid #{fetch(:node_env)}_player #{current_path}/app/bin/www"}
-  set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} forever stop #{fetch(:node_env)}_player"}
+namespace :pm2 do
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 start #{current_path}/app/bin/www --pid #{fetch(:forever_pid_path)} --name #{fetch(:node_env)}_player -i 0" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} mp2 reload  #{fetch(:node_env)}_player --pid #{fetch(:forever_pid_path)} -i 0"}
+  set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} pm2 stop #{fetch(:node_env)}_player"}
 
-  desc "restart forever"
+  desc "restart pm2"
   task :restart do
     on roles :all do
       within current_path do
@@ -95,7 +95,7 @@ namespace :forever do
     end
   end
 
-  desc "start forever"
+  desc "start pm2"
   task :start do
     on roles :all do
       within current_path do
@@ -104,7 +104,7 @@ namespace :forever do
     end
   end
 
-  desc "stop forever"
+  desc "stop pm2"
   task :stop do
     on roles :all do
       within current_path do
@@ -116,7 +116,7 @@ end
 
 after 'deploy:updated', 'npm:install'
 after 'npm:install', 'gulp:build'
-after 'deploy:published', 'forever:restart'
+after 'deploy:published', 'pm2:restart'
 
 namespace :monit do
   desc "Setup all Monit configuration"

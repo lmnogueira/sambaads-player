@@ -66,22 +66,20 @@ SambaAdsPlayerAdvertising = function (){
 
 
  			var loc = window.location.toString();
+			var not_function = 0;
+			if(typeof window.sambaads.videoJSPlayer.ima === 'function'){
+				window.sambaads.videoJSPlayer.ima(options);
+				not_function = 1;
+			}
+
+			window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
+
 			params_ads_check = loc.split('?')[1];
+
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
-                var not_function = 0;
-                if(typeof window.sambaads.videoJSPlayer.ima === 'function'){
-                    window.sambaads.videoJSPlayer.ima(options);
-                    not_function = 1;
-                }
-
-                window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
-                //window.sambaads.videoJSPlayer.ima.initializeAdDisplayContainer();
                 window.sambaads.videoJSPlayer.ima.requestAds();
-
- 			} else {
-              window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
-                //window.sambaads.videoJSPlayer.src({type: 'video/mp4', src: self.playingNow.sources[0].file});
-            }
+ 			}
+			  
  			//if(self.playingNow.sponsored){
  				SambaAdsPlayerMessageBroker().send(Event.NATIVE_START, self.playingNow);
  			//}
