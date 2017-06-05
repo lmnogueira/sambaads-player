@@ -1,7 +1,7 @@
 {
   "name": "sambaads-player",
   "engines": {
-    "node": ">=0.10.0"
+    "node": "4.4.0"
   },
   "devDependencies": {
     "body-parser": "^1.14.1",

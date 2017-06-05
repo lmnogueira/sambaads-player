@@ -82,8 +82,8 @@ set :forever_pid_path, -> {"#{shared_path}/player.pid"}
 set :newrelic_log_path, -> { "#{current_path}/newrelic_agent.log" }
 
 namespace :pm2 do
-  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 start #{current_path}/app/bin/www --pid #{fetch(:forever_pid_path)} --name #{fetch(:node_env)}_player -i 0" }
-  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} mp2 reload  #{fetch(:node_env)}_player --pid #{fetch(:forever_pid_path)} -i 0"}
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 start #{current_path}/app/bin/www --pid #{fetch(:forever_pid_path)} --name #{fetch(:node_env)}_player -f -i 0" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} mp2 reload  #{fetch(:node_env)}_player --pid #{fetch(:forever_pid_path)} -f -i 0"}
   set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} pm2 stop #{fetch(:node_env)}_player"}
 
   desc "restart pm2"
