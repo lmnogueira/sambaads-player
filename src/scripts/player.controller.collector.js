@@ -120,7 +120,9 @@ SambaAdsPlayerControllerCollector = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.media = e.detail.data;
 
+
 		if([117514,117515,114885].indexOf(parseInt(self.media.media_id)) > -1){
+			console.log("pixel");
 			self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N416407.2485700Y-CONTENT/B11125712.152853381;dc_trk_aid=322939942;dc_trk_cid=80850009;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" );
 		}
 	});
