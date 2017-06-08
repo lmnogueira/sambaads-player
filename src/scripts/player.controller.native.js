@@ -1758,7 +1758,8 @@ SambaAdsPlayerControllerNative = function (){
 
 				if(!self.started && currentTime >= 4) {
 					self.started = true;
-					self.adsManager.start();
+					if(self.adsManager)
+						self.adsManager.start();
 				}
 		};
 
