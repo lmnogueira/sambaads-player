@@ -82,9 +82,11 @@ set :forever_pid_path, -> {"#{shared_path}/player.pid"}
 set :newrelic_log_path, -> { "#{current_path}/newrelic_agent.log" }
 
 namespace :pm2 do
-  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 stop #{fetch(:node_env)}_player && pm2 start #{current_path}/app/bin/www --pid #{fetch(:forever_pid_path)} --name #{fetch(:node_env)}_player -i 0" }
-  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 reload  #{fetch(:node_env)}_player --pid #{fetch(:forever_pid_path)} -i 0"}
+  set :command_start, -> { "NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)}  pm2 start #{current_path}/app/bin/www --pid #{fetch(:forever_pid_path)} --name #{fetch(:node_env)}_player -i 0" }
+  set :command_restart, -> {"NODE_ENV=#{fetch(:node_env)} NEW_RELIC_LOG=#{fetch(:newrelic_log_path)} pm2 restart  #{fetch(:node_env)}_player --pid #{fetch(:forever_pid_path)} -i 5"}
   set :command_stop, -> {"NODE_ENV=#{fetch(:node_env)} pm2 stop #{fetch(:node_env)}_player"}
+  set :command_scale, -> {"NODE_ENV=#{fetch(:node_env)} pm2 scale #{fetch(:node_env)}_player +1"}
+  set :command_reset_scale, -> {"NODE_ENV=#{fetch(:node_env)} pm2 scale #{fetch(:node_env)}_player 4"}
 
   desc "restart pm2"
   task :restart do
@@ -100,6 +102,24 @@ namespace :pm2 do
     on roles :all do
       within current_path do
         execute fetch(:command_start)
+      end
+    end
+  end
+
+  desc "scale pm2"
+  task :scale do
+    on roles :all do
+      within current_path do
+        execute fetch(:command_scale)
+      end
+    end
+  end
+
+  desc "reset scale pm2"
+  task :reset_scale do
+    on roles :all do
+      within current_path do
+        execute fetch(:command_reset_scale)
       end
     end
   end

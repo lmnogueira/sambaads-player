@@ -120,8 +120,8 @@ SambaAdsPlayerControllerCollector = function (){
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.media = e.detail.data;
 
-		if((parseInt(self.media.media_id) == 112796)){
-			self.trackPixel("https://00px.net/tracking/eyJjciI6MTM3OTUsImNhIjozMTIsInBsIjoxMDI4N30=/impressions?" + Date.now());
+		if([117514,117515,114885].indexOf(parseInt(a)) > -1){
+			self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N416407.2485700Y-CONTENT/B11125712.152853381;dc_trk_aid=322939942;dc_trk_cid=80850009;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" );
 		}
 	});
 };
