@@ -33,7 +33,7 @@ SambaAdsPlayerViewDescriptionBar = function (){
 	});
 
 	SambaAdsPlayerViewDescriptionBar.prototype.setTitleBar = function(title_text, color){
-		if(title_text.length == 0){
+		if(!title_text || title_text.length == 0){
 			$("#titlebar").hide();
 		} else {
 			$("#titlebar").css("backgroundColor", (color == '' ? '#000000': color));
