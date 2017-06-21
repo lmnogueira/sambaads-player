@@ -1723,6 +1723,7 @@ SambaAdsPlayerControllerNative = function (){
 		}
 
 		function onAdError (adEvent){
+			console.log("error");
 			adDisplayContainer.destroy();
 		}
 
