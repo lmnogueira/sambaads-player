@@ -232,6 +232,8 @@
       adsRequest.nonLinearAdSlotHeight =
           this.settings.nonLinearHeight || (this.getPlayerHeight() / 3);
 
+      adsRequest.setAdWillAutoPlay(this.settings.adWillAutoPlay);
+
       this.adsLoader.requestAds(adsRequest);
     }.bind(this);
 
@@ -308,7 +310,7 @@
     };
 
     /**
-    * Start ad playback, or content video playback in the absence of a
+     * Start ad playback, or content video playback in the absence of a
      * pre-roll. **NOTE**: This method only needs to be called if you provide
      * your own readyCallback as the second parameter to player.ima(). If you
      * only provide options and do not provide your own readyCallback,
@@ -357,9 +359,7 @@
       var errorMessage = adErrorEvent.getError !== undefined ? adErrorEvent.getError() : adErrorEvent.stack;
       window.console.log('Ad error: ' + errorMessage);
       this.vjsControls.show();
-      if (this.adsManager) {
-          this.adsManager.destroy();
-      }
+      this.adsManager.destroy();
       this.adContainerDiv.style.display = 'none';
       this.player.trigger({ type: 'adserror', data: { AdError: errorMessage, AdErrorEvent: adErrorEvent }});
     }.bind(this);
@@ -433,6 +433,9 @@
           this.currentAd.getAdPodInfo().getPodIndex() != -1 ) {
         this.player.ads.endLinearAdMode();
       }
+      // Hide controls in case of future non-linear ads. They'll be unhidden in
+      // content_pause_requested.
+      this.controlsDiv.style.display = 'none';
       this.countdownDiv.innerHTML = '';
     }.bind(this);
 
@@ -483,6 +486,8 @@
         // Bump container when controls are shown
        addClass_(this.adContainerDiv, 'bumpable-ima-ad-container');
       }
+      // For non-linear ads that show after a linear ad.
+      this.adContainerDiv.style.display = 'block';
     }.bind(this);
 
     /**
@@ -536,15 +541,15 @@
     }.bind(this);
 
     this.getPlayerWidth = function() {
-      var retVal = parseInt(getComputedStyle(this.player.el()).width, 10) ||
-          this.player.width();
-      return retVal;
+      var computedStyle = getComputedStyle(this.player.el()) || {};
+
+      return parseInt(computedStyle.width, 10) || this.player.width();
     }.bind(this);
 
     this.getPlayerHeight = function() {
-      var retVal = parseInt(getComputedStyle(this.player.el()).height, 10) ||
-          this.player.height();
-      return retVal;
+      var computedStyle = getComputedStyle(this.player.el()) || {};
+
+      return parseInt(computedStyle.height, 10) || this.player.height();
     }.bind(this);
 
     /**
@@ -776,9 +781,6 @@
       this.adsActive = false;
       this.adPlaying = false;
       this.player.on('ended', this.localContentEndedListener);
-      if (this.currentAd && this.currentAd.isLinear()) {
-        this.adContainerDiv.style.display = 'none';
-      }
       this.vjsControls.show();
       this.player.ads.endLinearAdMode();
       if (this.adTrackingTimer) {
@@ -786,6 +788,11 @@
         // ad's current time.
         clearInterval(this.adTrackingTimer);
       }
+      // Reset the content time we give the SDK. Fixes an issue where requesting
+      // VMAP followed by VMAP would play the second mid-rolls as pre-rolls if
+      // the first playthrough of the video passed the second response's
+      // mid-roll time.
+      this.contentPlayheadTracker.currentTime = 0;
       if (this.adsManager) {
         this.adsManager.destroy();
         this.adsManager = null;
@@ -869,6 +876,17 @@
       resetIMA_();
       this.settings.adsResponse = adsResponse ? adsResponse : this.settings.adsResponse;
       changeSource_(contentSrc, playOnLoad);
+    }.bind(this);
+
+    /**
+     * Changes the ad tag. You will need to call requestAds after this method
+     * for the new ads to be requested.
+     * @param {?string} adTag The ad tag to be requested the next time requestAds
+     *     is called.
+     */
+    this.changeAdTag = function(adTag) {
+      resetIMA_();
+      this.settings.adTagUrl = adTag;
     }.bind(this);
 
     /**
@@ -1020,7 +1038,7 @@
     /**
      * Current plugin version.
      */
-    this.VERSION = '0.2.0';
+    this.VERSION = '0.6.0';
 
     /**
      * Stores user-provided settings.
@@ -1332,6 +1350,12 @@
     this.controlPrefix = (this.settings.id + '_') || '';
 
     this.contentPlayer = document.getElementById(this.settings['id'] + '_html5_api');
+
+    // Detect inline options
+    if(this.contentPlayer.hasAttribute('autoplay')){
+      this.settings['adWillAutoPlay'] = this.settings['adWillAutoPlay'] || true;
+    }
+
     // Default showing countdown timer to true.
     this.showCountdown = true;
     if (this.settings['showCountdown'] == false) {
@@ -1370,6 +1394,14 @@
 
     if (this.settings['locale']) {
       google.ima.settings.setLocale(this.settings['locale']);
+    }
+
+    if (this.settings['disableFlashAds']) {
+      google.ima.settings.setDisableFlashAds(this.settings['disableFlashAds']);
+    }
+
+    if (this.settings['disableCustomPlaybackForIOS10Plus']) {
+      google.ima.settings.setDisableCustomPlaybackForIOS10Plus(this.settings['disableCustomPlaybackForIOS10Plus']);
     }
 
     createAdContainer_();
@@ -1411,10 +1443,13 @@
     }
     player.on('readyforpreroll', readyCallback);
     player.ready(function() {
+      onVolumeChange_();
       player.on('fullscreenchange', onFullscreenChange_);
       player.on('volumechange', onVolumeChange_);
     });
   };
 
-  videojs.plugin('ima', init);
+  // Cross-compatibility for Video.js 5 and 6.
+  var registerPlugin = videojs.registerPlugin || videojs.plugin;
+  registerPlugin('ima', init);
 });

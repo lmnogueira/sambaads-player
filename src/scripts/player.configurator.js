@@ -108,17 +108,6 @@ SambaAdsPlayerConfigurator.prototype.configureDimensions = function(){
 	this.configureDimensionsPlayer();
 }
 
-SambaAdsPlayerConfigurator.prototype.generateUniqueScore = function() {
-	var self = this;
-
-	// function generate() {
-	// 	return 1;
-	// };
-
-	// self.configuration.user.unique_score = generate();
-};
-
-
 SambaAdsPlayerConfigurator.prototype.generateGuid = function() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)

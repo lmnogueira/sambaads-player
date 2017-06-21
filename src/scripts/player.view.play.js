@@ -6,7 +6,6 @@ SambaAdsPlayerViewPlay = function (){
 	self.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.READY, function(evt){
-		if(!self.isMobile)
 			self.show();		
 	});
 
@@ -20,6 +19,7 @@ SambaAdsPlayerViewPlay = function (){
 	});
 
 	self.displayOverlayPlay.click(function(evt) {
+
 		SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 	});
 };

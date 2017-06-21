@@ -76,8 +76,12 @@ SambaAdsPlayerAdvertising = function (){
 
 			params_ads_check = loc.split('?')[1];
 
-			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){
+			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){	
                 window.sambaads.videoJSPlayer.ima.requestAds();
+				
+				if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+					window.sambaads.videoJSPlayer.play();
+				}
  			}
 			  
  			//if(self.playingNow.sponsored){

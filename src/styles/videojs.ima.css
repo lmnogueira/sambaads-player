@@ -38,10 +38,6 @@
   margin-top: -40px;
 }
 
-.video-js.hide {
-  display: none !important;
-}
-
 .ima-controls-div {
   bottom:0px;
   height: 37px;
@@ -172,3 +168,4 @@
 .ima-non-fullscreen:hover:before, .ima-fullscreen:hover:before {
   text-shadow: 0 0 1em #fff;
 }
+

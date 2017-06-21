@@ -23,8 +23,7 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 					//{fluid:true}, function(){
 					if(options.playlist.length > 0){
 						this.poster(options.playlist[0].image);
-						//this.usingNativeControls(false);
-						this.src({type: 'video/mp4', src: options.playlist[0].sources[0].file});
+						this.usingNativeControls(false);
 					} else {
 						SambaAdsPlayerMessageBroker().send(Event.SETUP_ERROR, (this));
 					}
@@ -39,12 +38,12 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 
 	self.getStatePropagator = setInterval(function(){
 		try{
+						
 			var currentState = self.videojsGetState();
 			var isAds = self._isAds;
 			var currentViewState = window.sambaads.currentViewState || PlayerViewState.INITIALIZE;
 			var dispatch = false;
 
-			
 			if(self.newState === undefined) {
 				currentState = PlayerState.IDLE;
 			}
@@ -54,7 +53,6 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 				self.newState = currentState;
 				dispatch = true;
 			}
-
 
 			if(currentViewState != self.newViewState){
 				self.newViewState = currentViewState;
@@ -216,11 +214,11 @@ SambaAdsPlayerCore.prototype.videojsGetState = function(){
 	// 	state = PlayerState.BUFFERING;
 	// }
 
-	if(self.player.hasStarted_ == false){
+	if(self.player.hasStarted_ === undefined || self.player.hasStarted_ == false){
 		state = PlayerState.IDLE;
 	} else if(self.player.seeking() == 1 || self.player.paused() == 0) {
 		state = PlayerState.PLAYING;
-	} else if(self.player.paused() == 1){
+	} else if((self.player.hasStarted_ == true)  && self.player.paused() == 1){
 		state = PlayerState.PAUSED;
 	}
 
