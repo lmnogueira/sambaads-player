@@ -1689,6 +1689,7 @@ SambaAdsPlayerControllerNative = function (){
 		adsLoader.requestAds(adsRequest);
 
 		function onAdsManagerLoaded(adsManagerLoadedEvent) {
+			console.log(adsManagerLoadedEvent);
 			// Get the ads manager.
 			self.adsManager = adsManagerLoadedEvent.getAdsManager(videoContent);  // See API reference for contentPlayback
 			// Add listeners to the required events.
@@ -1721,8 +1722,12 @@ SambaAdsPlayerControllerNative = function (){
 			}
 		}
 
+		function onAdError (adEvent){
+			adDisplayContainer.destroy();
+		}
+
 		function onAdEvent(adEvent) {
-			//console.log("start");
+			console.log("start");
 
 		}
 
