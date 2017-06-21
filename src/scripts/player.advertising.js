@@ -81,8 +81,9 @@ SambaAdsPlayerAdvertising = function (){
  			}
 			  
  			//if(self.playingNow.sponsored){
+			if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))
  				SambaAdsPlayerMessageBroker().send(Event.NATIVE_START, self.playingNow);
- 			//}
+ 			}
  		}
  	});
 
