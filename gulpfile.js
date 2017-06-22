@@ -15,8 +15,6 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer');
 
-var jwplayer_version = "7.4.4";
-
 var paths = {
     scripts:  './src/scripts/',
     images:   './src/images/',

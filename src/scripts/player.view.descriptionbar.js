@@ -14,8 +14,6 @@ SambaAdsPlayerViewDescriptionBar = function (){
 		self.currentState = e.detail.data.newState;
 		self.currentViewState = e.detail.data.newViewState;
 
-
-
 		if(
 			( (e.detail.data.newState == PlayerState.PAUSED && e.detail.data.newViewState == PlayerViewState.INITIALIZE) || e.detail.data.newState == PlayerState.IDLE && e.detail.data.newViewState == PlayerViewState.INITIALIZE) && !e.detail.data.isAds){
 			self.show();
@@ -41,6 +39,12 @@ SambaAdsPlayerViewDescriptionBar = function (){
 			$("#titlebar-title").text(decodeURIComponent(decodeURIComponent(title_text)));
 		}
 	};
+
+	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAYLIST_CONFIGURED, function(e){
+		self.setTitle(e.detail.data.playlist[0].title);
+		self.setAuthor(e.detail.data.playlist[0].owner_name);
+		self.setViews(e.detail.data.playlist[0].total_views);
+	});
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.setTitle(e.detail.data.title);
