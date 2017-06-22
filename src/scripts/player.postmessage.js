@@ -2,6 +2,8 @@ var SambaAdsPlayerPostMessage = {};
 
 SambaAdsPlayerPostMessage = function (){
 	var self = this;
+	this.firstPlay = true;
+
 	window.sambaads = window.sambaads || {};
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.CONFIGURATION_READY, function(e){
@@ -50,14 +52,11 @@ SambaAdsPlayerPostMessage.prototype.sendMessage = function(smbevent,data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onPlay = function(data){
-	console.log("go_play");
 	if(this.response.publisher_info.auto_start){
 		if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
-			console.log("go_play");
   			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
   		}
   	}
-
 };
 
 SambaAdsPlayerPostMessage.prototype.onPause = function(data){
@@ -83,33 +82,22 @@ SambaAdsPlayerPostMessage.prototype.onVisible = function(data){
 
 	if(data === "true"){
 		if(this.configuration.client.auto_start){
-			if(this.newState != PlayerState.PLAYING){
-				if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
-		  			SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
-		  		}
-
-		  		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
-			} else {
-				SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
+			if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
+				SambaAdsPlayerMessageBroker().send(DoEvent.PLAY);
 			}
 
 			if(this.firstPlay){
 				this.firstPlay = false;
-
-				if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
-					SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
-				}
+				console.log("firstplay");
+				SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
 			}
+			
 		} else {
 			SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 		}
 	} else {
-		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, true);
-
-		if(this.newState == PlayerState.PLAYING){
-			if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
-  				SambaAdsPlayerMessageBroker().send(DoEvent.PAUSE);
-  			}
+		if(this.configuration.player.width > this.configuration.player.pertmitWidthAutoStart) {
+			SambaAdsPlayerMessageBroker().send(DoEvent.PAUSE);
 		}
 	}
 };
@@ -123,10 +111,7 @@ SambaAdsPlayerPostMessage.prototype.onMute = function(data){
 };
 
 SambaAdsPlayerPostMessage.prototype.onMouseOver = function(data){
-	console.log(data);
-	if(this.newstate != PlayerState.IDLE){
-		SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
-	}
+	SambaAdsPlayerMessageBroker().send(DoEvent.MUTE, false);
 };
 
 SambaAdsPlayerPostMessage.prototype.onExpandedCinema = function(data){

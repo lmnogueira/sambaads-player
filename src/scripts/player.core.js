@@ -90,7 +90,9 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 
 		if(currentState == PlayerState.IDLE){
 			SambaAdsPlayerMessageBroker().send(Event.AD_BEFORE_PLAY, self.player);
-		} else if (currentState == PlayerState.PAUSED){
+		} else if (currentState == PlayerState.PAUSED && window.sambaads.currentViewState == PlayerViewState.DISPLAYING_ADS){
+			self.player.ima.adsManager.resume();
+		} else if(currentState == PlayerState.PAUSED){
 			self.player.play();
 		}
 		self.videoCompleted = false;
@@ -98,8 +100,11 @@ SambaAdsPlayerCore.prototype.configurePlayer = function(options){
 
 	SambaAdsPlayerMessageBroker().addEventListener(DoEvent.PAUSE, function(evt){
 		self.player.userActive(false);
+
 		if(self.videojsGetState() == PlayerState.PLAYING){
 			self.player.pause();
+		} else if (self.videojsGetState() == PlayerState.PAUSED && window.sambaads.currentViewState == PlayerViewState.DISPLAYING_ADS){
+			self.player.ima.adsManager.pause();
 		}
 	});
 

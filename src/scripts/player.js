@@ -340,6 +340,8 @@ var ExpandedCinema = function (cw, currentIframe){
         if(!parameters.p)
             return;
 
+        //parameters.request_domain = "10.2.0.73:3002"
+
         iframe_url = "//" + parameters.request_domain + "/iframe/" + parameters.p + "?";
 
         if (parameters.m){

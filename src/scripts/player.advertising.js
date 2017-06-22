@@ -65,15 +65,14 @@ SambaAdsPlayerAdvertising = function (){
  			//}
 
 
- 			var loc = window.location.toString();
-			var not_function = 0;
+ 			
 			if(typeof window.sambaads.videoJSPlayer.ima === 'function'){
 				window.sambaads.videoJSPlayer.ima(options);
-				not_function = 1;
 			}
 
 			window.sambaads.videoJSPlayer.ima.setContentWithAdTag(self.playingNow.sources[0].file,tagUrl,true);
-
+			
+			var loc = window.location.toString();
 			params_ads_check = loc.split('?')[1];
 
 			if(!self.playingNow.sponsored && params_ads_check.indexOf('ads=false')<0){	
