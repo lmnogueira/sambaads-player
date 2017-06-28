@@ -86,6 +86,19 @@ SambaAdsPlayerControllerCollector = function (){
 				if(([117514,117515,114885].indexOf(parseInt(self.media.media_id)) > -1) && (this.time_position == 60)){
 					self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N416407.2485700Y-CONTENT/B11125712.152853381;dc_trk_aid=322939942;dc_trk_cid=80850009;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" );
 				}
+
+				if(([120359].indexOf(parseInt(self.media.media_id)) > -1) && (this.time_position == 2)){
+					var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+					
+					if(isMobile){
+						self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N377801.2485700Y-CONTENT/B20067330.201269957;dc_trk_aid=401159752;dc_trk_cid=90749316;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?");
+					} else {
+						self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N377801.2485700Y-CONTENT/B20067330.201270599;dc_trk_aid=401176290;dc_trk_cid=90749316;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?");
+					}
+
+				}
+
+				
 			}
 
 		};
@@ -119,11 +132,6 @@ SambaAdsPlayerControllerCollector = function (){
 
 	SambaAdsPlayerMessageBroker().addEventListener(Event.PLAY_LIST_ITEM, function(e){
 		self.media = e.detail.data;
-
-
-		// if([117514,117515,114885].indexOf(parseInt(self.media.media_id)) > -1){
-		// 	self.trackPixel("https://ad.doubleclick.net/ddm/trackimp/N416407.2485700Y-CONTENT/B11125712.152853381;dc_trk_aid=322939942;dc_trk_cid=80850009;ord=" + Date.now() + ";dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" );
-		// }
 	});
 };
 
