@@ -84,11 +84,9 @@ gulp.task("build-javascripts-player", function(){
       paths.scripts + "player.controller.timehandler.js",
       paths.scripts + "player.advertising.js"
     ])
-    .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("sambaads.player.js"))
     .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
     // .on('error', function(e){
@@ -96,10 +94,8 @@ gulp.task("build-javascripts-player", function(){
     //      })
 
     gulp.src(paths.scripts + "player.js")
-        .pipe(sourcemaps.init())
         .pipe(preprocess({context: contextEnv}))
         .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/javascripts/'));
 });
 
@@ -133,16 +129,12 @@ gulp.task("dev-javascripts-player", function(){
       paths.scripts + "player.controller.timehandler.js",
       paths.scripts + "player.advertising.js"
     ])
-    .pipe(sourcemaps.init())
     .pipe(preprocess({context: contextEnv}))
     .pipe(concat("sambaads.player.js"))
-    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app/public/javascripts/'));
 
     gulp.src(paths.scripts + "player.js")
-        .pipe(sourcemaps.init())
         .pipe(preprocess({context: contextEnv}))
-        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('app/public/javascripts/'));
 });
 
@@ -194,7 +186,6 @@ gulp.task("build-css", function(){
 
     var mergedStream = merge(css, scss)
            .pipe(concat('styles.css'))
-           .pipe(sourcemaps.init())
            .pipe(autoprefixer({
                browsers: [
                    '> 1%',
@@ -211,7 +202,6 @@ gulp.task("build-css", function(){
            .pipe(concat('sambaads.player.css'))
            .pipe(minify_css())
            .pipe(base64())
-           .pipe(sourcemaps.write('./'))
            .pipe(gulp.dest('app/public/stylesheets/'));
 
     return mergedStream;

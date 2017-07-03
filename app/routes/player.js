@@ -160,7 +160,7 @@ router.get('/teste/:type_player', function(req, res, next) {
 });
 
 router.get('/status/ping', function(req, res) {
-	res.json('ok');
+	res.send('PREDICTASUCCESS');
 });
 
 module.exports = router;
