@@ -78,7 +78,7 @@ SambaAdsPlayerViewPlaylist.prototype.init = function(options){
 	}
 
 	var peso = [0,2,4,6,1];
-	index = 0;
+	index = 1;
 	//peso[Math.floor(Math.random() * 5)]%2
 
 	if(self.playlist[i] && self.playlist[i].sponsored){
